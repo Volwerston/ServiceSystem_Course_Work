@@ -1,0 +1,9 @@
+﻿<div id="cooperationBlock">
+<div class="form-group">
+<select name="cooperationType" class="form-control col-xs-8 col-sm-8 col-md-8 col-lg-8 col-sm-offset-2 col-lg-offset-2 col-md-offset-2" id="cooperationController" name="type">
+<option value="None">Тип взаємодії</option>
+<option value="Session">Сеанс</option>
+<option value="Course">Курс</option>
+</select>
+</div>
+</div>

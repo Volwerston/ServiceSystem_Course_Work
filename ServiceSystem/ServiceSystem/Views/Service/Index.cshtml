@@ -1,0 +1,184 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+        <div class="col-xs-5 col-sm-5 col-lg-5 col-md-5 col-md-offset-4 col-sm-offset-4 col-lg-offset-4">
+@using (Html.BeginForm("Index", "Service", null, FormMethod.Post, new { enctype = "multipart/form-data" } ))
+{
+            <div class="well form-horizontal" id="serviceConstructor">
+                <div id="baseBlock">
+                    <div class="form-group">
+                        <input type="text" name="serviceName" placeholder="Назва послуги" style="margin-bottom: 5px;" class="form-control col-xs-8 col-sm-8 col-md-8 col-lg-8 col-sm-offset-2 col-lg-offset-2 col-md-offset-2" />
+                    </div>
+                    <div class="form-group">
+                        <select class="form-control col-xs-8 col-sm-8 col-md-8 col-lg-8 col-sm-offset-2 col-lg-offset-2 col-md-offset-2" name="serviceCategory">
+                            <option value="None">Категорія</option>
+                            <option value="IT">IT</option>
+                            <option value="Law">Юриспунденція</option>
+                            <option value="Economy">Економіка</option>
+                            <option value="Education">Освіта</option>
+                            <option value="Engineering">Інженерія</option>
+                            <option value="Household">Домогосподарство</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <textarea rows="10" name="serviceDescription" placeholder="Опис послуги" style="margin-bottom: 5px;" class="form-control cos-xs-8 col-sm-8 col-md-8 col-lg-8 col-sm-offset-2 col-lg-offset-2 col-md-offset-2"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <input type="file" name="serviceAttachments" multiple style="margin-bottom: 5px;" class="form-control cos-xs-8 col-sm-8 col-md-8 col-lg-8 col-sm-offset-2 col-lg-offset-2 col-md-offset-2" />
+                    </div>
+                    <div class="form-group">
+                        <select name="serviceType" class="form-control col-xs-8 col-sm-8 col-md-8 col-lg-8 col-sm-offset-2 col-lg-offset-2 col-md-offset-2" id="baseController">
+                            <option value="None">Тип послуги</option>
+                            <option value="Deadline">Дедлайн</option>
+                            <option value="Cooperation">Співпраця</option>
+                        </select>
+                    </div>
+                </div>
+        </div>
+}
+    </div>
+</div>
+
+<input type="button" class="btn btn-block btn-info" style="margin: auto;" value="Шукати послуги" onclick="location.href='@Url.Action("ServiceSearch", "Service")'" />
+
+@section scripts{
+    <script type="text/javascript">
+
+        var priority = ["base", "deadline", "cooperation", "session", "course", "definedCourse", "undefinedCourse"];
+
+        var Builder = function(builderName, ancestorname)
+        {
+            this.ancestorName = ancestorname;
+            this.name = builderName;
+
+            this.Restructure = function()
+            {
+                var index = priority.indexOf(this.ancestorName);
+
+                for(var i = index + 1; i < priority.length; ++i)
+                {
+                    $("#" + priority[i] + "Block").remove();
+                }
+            }
+
+            this.Build = function () {
+
+                if (this.name == "base") {
+                    var toAppend = '@HttpUtility.HtmlDecode(ViewData["baseBlock"].ToString())';
+
+                    toAppend = toAppend.replace(/&quot;/g, "\"");
+                    toAppend = toAppend.replace(/&lt;/g, "<");
+                    toAppend = toAppend.replace(/&gt;/g, ">");
+                    $("#serviceConstructor").append(toAppend);
+                }
+                else if (this.name == "deadline") {
+                    var toAppend = '@HttpUtility.HtmlDecode(ViewData["deadlineBlock"].ToString())';
+
+                    toAppend = toAppend.replace(/&quot;/g, "\"");
+                    toAppend = toAppend.replace(/&lt;/g, "<");
+                    toAppend = toAppend.replace(/&gt;/g, ">");
+
+                    $("#serviceConstructor").append(toAppend);
+                }
+                else if (this.name == "cooperation") {
+                    var toAppend = '@HttpUtility.HtmlDecode(ViewData["cooperationBlock"].ToString())';
+
+                    toAppend = toAppend.replace(/&quot;/g, "\"");
+                    toAppend = toAppend.replace(/&lt;/g, "<");
+                    toAppend = toAppend.replace(/&gt;/g, ">");
+
+                    $("#serviceConstructor").append(toAppend);
+
+                    $("#cooperationController").change(function () {
+
+                        if ($(this).val() == "Session") {
+                            setBuilder(new Builder("session", "cooperation"));
+                        }
+                        else if ($(this).val() == "Course") {
+                            setBuilder(new Builder("course", "cooperation"));
+                        }
+                        else {
+                            setBuilder(new Builder("none", "cooperation"));
+                        }
+                    });
+                }
+                else if (this.name == "session") {
+                    var toAppend = '@HttpUtility.HtmlDecode(ViewData["sessionBlock"].ToString())';
+
+                    toAppend = toAppend.replace(/&quot;/g, "\"");
+                    toAppend = toAppend.replace(/&lt;/g, "<");
+                    toAppend = toAppend.replace(/&gt;/g, ">");
+
+                    $("#serviceConstructor").append(toAppend);
+                }
+                else if (this.name == "course") {
+                    var toAppend = '@HttpUtility.HtmlDecode(ViewData["courseBlock"].ToString())';
+
+                    toAppend = toAppend.replace(/&quot;/g, "\"");
+                    toAppend = toAppend.replace(/&lt;/g, "<");
+                    toAppend = toAppend.replace(/&gt;/g, ">");
+
+                    $("#serviceConstructor").append(toAppend);
+
+                    $("#courseController").change(function () {
+                        if ($(this).val() == "DefinedCourse") {
+                            setBuilder(new Builder("definedCourse", "course"));
+                        }
+                        else if($(this).val() == "UndefinedCourse") {
+                            setBuilder(new Builder("undefinedCourse", "course"));
+                        }
+                        else {
+                            setBuilder(new Builder("none", "course"));
+                        }
+                    });
+                }
+                else if (this.name == "definedCourse") {
+                    var toAppend = '@HttpUtility.HtmlDecode(ViewData["definedCourseBlock"].ToString())';
+
+                    toAppend = toAppend.replace(/&quot;/g, "\"");
+                    toAppend = toAppend.replace(/&lt;/g, "<");
+                    toAppend = toAppend.replace(/&gt;/g, ">");
+
+                    $("#serviceConstructor").append(toAppend);
+                }
+                else if (this.name == "undefinedCourse") {
+                    var toAppend = '@HttpUtility.HtmlDecode(ViewData["undefinedCourseBlock"].ToString())';
+
+                    toAppend = toAppend.replace(/&quot;/g, "\"");
+                    toAppend = toAppend.replace(/&lt;/g, "<");
+                    toAppend = toAppend.replace(/&gt;/g, ">");
+
+                    $("#serviceConstructor").append(toAppend);
+                }
+            }
+        }
+
+        function setBuilder(builder)
+        {
+            builder.Restructure();
+            builder.Build();
+        }
+
+        $(document).ready(function () {
+            $("#baseController").change(function () {
+                if($(this).val() == "Deadline")
+                {
+                    setBuilder(new Builder("deadline", "base"));
+                }
+                else if($(this).val() == "Cooperation")
+                {
+                    setBuilder(new Builder("cooperation", "base"));
+                }
+                else
+                {
+                    setBuilder(new Builder("none", "base"));
+                }
+            });
+
+        });
+    </script>
+    }

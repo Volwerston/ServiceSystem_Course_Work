@@ -1,0 +1,23 @@
+﻿<div class="form-group">
+                    <label class="control-label col-xs-4 col-sm-4 col-md-4 col-lg-4">Оберіть день:</label>
+                    <input type="date" class="form-control" name="deadlineStartDate" />
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-xs-4 col-sm-4 col-md-4 col-lg-4">Оберіть час:</label>
+                    <input type="time" class="form-control" name="deadlineStartDateTime" />
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-xs-4 col-sm-4 col-md-4 col-lg-4">Проміжок часу:</label>
+                    <input name="deadlineDuration" type="text" class="col-xs-2 col-sm-2 col-md-2 col-lg-2" />
+                    <select name="deadlineDurationMeasure" class="col-xs-3 col-sm-3 col-md-3 col-lg-3" id="timeType">
+                        <option value="minutes">хвилин</option>
+                        <option value="hours">годин</option>
+                        <option value="days">днів</option>
+                        <option value="weeks">тижнів</option>
+                        <option value="years">років</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <textarea rows="10" name="applicationDescription" placeholder="Додаткові дані" style="margin: auto;" class="form-control"></textarea>
+                </div>
+                <input type="submit" value="Сформувати заявку" class="btn btn-success btn-block" style="margin: auto;" />           

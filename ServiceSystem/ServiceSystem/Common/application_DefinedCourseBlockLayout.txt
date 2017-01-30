@@ -1,0 +1,6 @@
+﻿                <input type="hidden" value="DefinedCourse" name="applicationType" />
+				<div class="form-group">
+                    <textarea rows="10" name="applicationDescription" placeholder="Додаткові дані" style="margin: auto;" class="form-control"></textarea>
+                </div>
+                <input type="submit" value="Сформувати заявку" class="btn btn-success btn-block" style="margin: auto;" />
+            

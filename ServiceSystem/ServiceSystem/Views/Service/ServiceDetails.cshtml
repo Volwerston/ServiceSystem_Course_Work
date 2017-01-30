@@ -1,0 +1,85 @@
+﻿@model ServiceSystem.Models.Service
+
+@{
+    ViewBag.Title = "SessionDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-sm-offset-2 col-md-offset-2 col-lg-offset-2 well text-center">
+        <h3>@Model.Name</h3>
+        <p>@Model.Description</p>
+        <p>Категорія: @Model.Category</p>
+        @if (Model.MaxPrice != Model.MinPrice)
+        {
+            <p>Мінімальна ціна: @Model.MinPrice грн</p>
+            <p>Максимальна ціна: @Model.MaxPrice грн</p>
+        }
+        else
+        {
+            <p>Ціна: @Model.MinPrice</p>
+        }
+
+        <p>Послуга доступна від @Model.StartDate.ToShortDateString() до @Model.EndDate.ToShortDateString()</p>
+
+            @if (ViewData["PARAMS"] != null)
+            {
+                foreach (var param in (Dictionary<string, string>)ViewData["PARAMS"])
+                {
+                    if (param.Key != "SERVICE_TYPE")
+                    {
+                    <div class="row" style="margin-top: 5px;">
+                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3">
+                            <p><b>@param.Key</b></p>
+                        </div>
+                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 paramText">
+                            <p>@param.Value</p>
+                        </div>
+                    </div>
+                    }
+                }
+            }
+
+        <div class="row">
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <input type="button" class="btn btn-info btn-block" value="Залишити заявку" onclick="location.href='@Url.Action("ApplicationForm", "Service", new { serviceType = ((Dictionary<string, string>)ViewData["PARAMS"])["SERVICE_TYPE"].ToString(), serviceId = Model.Id })'" />
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <input type="button" class="btn btn-info btn-block" value="Задати запитання" />
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        
+        $(document).ready(function () {
+
+            var paramDivs = $(".paramText");
+
+            paramDivs.each(function (index, element) {
+
+                var innerElements = $(this).children();
+
+                innerElements.each(function (i, elem) {
+
+                    var data = $(this).html();
+
+                    data = data.replace(/&gt;/g, ">");
+                    data = data.replace(/&lt;/g, "<");
+                    data = data.replace(/&quot;/, "\"");
+
+                    $(this).empty();
+
+                    $(this).html(data);
+
+                });
+
+            });
+
+        });
+
+    </script>
+    
+    }

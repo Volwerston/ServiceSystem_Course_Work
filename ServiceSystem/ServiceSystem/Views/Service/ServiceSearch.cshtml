@@ -1,0 +1,167 @@
+﻿
+@{
+    ViewBag.Title = "ServiceSearch";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="form-horizontal well" style="margin: auto; display: table;">
+    <div class="form-group">
+        @Html.DropDownList("category", (List<SelectListItem>)ViewData["CATEGORIES"], new { @class = "form-control", style = "margin:auto;", id="category" })
+    </div>
+    <div class="form-group">
+        <input name="name" placeholder="Введіть назву" class="form-control" style="margin: auto;" />
+    </div>
+    <label class="control-label">Оберіть ціну:</label>
+    <div class="form-group" style="margin-top: 10px;">
+        <input name="serviceMinPrice" type="text" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-sm-offset-1 col-md-offset-1 col-lg-offset-1" id="startTimeSun">
+        <div class="text-center col-xs-1 col-sm-1 col-md-1 col-lg-1"><p>грн</p></div>
+        <div class="text-center col-xs-1 col-sm-1 col-md-1 col-lg-1"><p>-</p></div>
+        <input name="serviceMaxPrice" type="text" class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+        <div class="text-center col-xs-1 col-sm-1 col-md-1 col-lg-1"><p>грн</p></div>
+    </div>
+    <label class="control-label text-center">Оберіть час курсу:</label>
+    <div class="form-group" style="margin-top: 10px;">
+        <input name="serviceStartDate" type="date" class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+        <div class="text-center col-xs-2 col-sm-2 col-md-2 col-lg-2"><p>-</p></div>
+        <input name="serviceEndDate" type="date" class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+    </div>
+    <input class="btn btn-success btn-block" id="searchButton" style="margin: auto;" value="Шукати" />
+</div>
+
+<div id="servicesData" style="margin-top: 50px;">
+</div>
+
+@section scripts{
+
+    <script type="text/javascript">
+
+        var lastId = 0;
+
+        var tempName = null;
+        var tempCategory = null;
+        var tempMinPrice = null;
+        var tempMaxPrice = null;
+        var tempStartDate = null;
+        var tempEndDate = null;
+
+        function getDivForService(service)
+        {
+            return '<a href="@Url.Action("ServiceDetails", "Service")?id=' + service.Id + '"\"">'
+            + '<div class="row" style="margin-top: 10px;">'
+         + '<div style="border: 2px solid green; border-radius: 7px; height: 300px;" class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-sm-offset-3 col-md-offset-3 col-lg-offset-3">'
+            + '<h3>' + service.Name + '</h3>'
+            + '<p>' + service.Description + '</p>'
+        + '</div>'
+            + '</div>'
+            + '</a>';
+        }
+
+        $(document).ready(function () {
+
+            $(document).scroll(function () {
+                if ($(document).height() - ($(window).height() + $(window).scrollTop()) < 50) {
+
+                    var toPass = {
+                        Name: tempName,
+                        Category: tempCategory,
+                        ServiceMinPrice: tempMinPrice,
+                        ServiceMaxPrice: tempMaxPrice,
+                        ServiceStartDate: tempStartDate,
+                        ServiceEndDate: tempEndDate,
+                        LastID: lastId
+                    };
+
+                    $.ajax({
+                        type: "POST",
+                        url: "http://localhost:49332/api/ServiceApi",
+                        dataType: "json",
+                        data: JSON.stringify(toPass),
+                        contentType: "application/json; charset=utf-8",
+                        async: false,
+                        success: function (res) {
+
+                            var toProceed = JSON.parse(res);
+
+                            if (toProceed != null) {
+
+                                for (var i = 0; i < toProceed.length; ++i) {
+                                    $("#servicesData").append(getDivForService(toProceed[i]));
+                                }
+
+                                lastId = toProceed[toProceed.length - 1].Id;
+                            }
+                            else {
+
+                                if ($("#servicesData").children().length == 0) {
+                                    $("#servicesData").append('<div class="text-center">Інформації не знайдено</div>');
+                                }
+                            }
+                        },
+                        error: function (xhr, error, message) {
+
+                            alert(message);
+                        }
+                    });
+                }
+            });
+
+            $("#searchButton").click(function () {
+
+                $("#servicesData").empty();
+                lastId = 0;
+
+                tempName = $('input[name="name"]').val();
+                tempCategory = $('#category').val();
+                tempMinPrice = $('input[name="serviceMinPrice"]').val();
+                tempMaxPrice = $('input[name="serviceMaxPrice"]').val();
+                tempStartDate = $('input[name="serviceStartDate"]').val();
+                tempEndDate = $('input[name="serviceEndDate"]').val();
+
+                var toPass = {
+                    Name: tempName,
+                    Category: tempCategory,
+                    ServiceMinPrice: tempMinPrice,
+                    ServiceMaxPrice: tempMaxPrice,
+                    ServiceStartDate: tempStartDate,
+                    ServiceEndDate: tempEndDate,
+                    LastID: lastId
+                };
+
+                $.ajax({
+                    type: "POST",
+                    url: "http://localhost:49332/api/ServiceApi",
+                    dataType: "json",
+                    data: JSON.stringify(toPass),
+                    contentType: "application/json; charset=utf-8",
+                    success: function(res)
+                    {
+
+                        var toProceed = JSON.parse(res);
+
+                        if(toProceed != null)
+                        {
+
+                            for (var i = 0; i < toProceed.length; ++i) {
+                                $("#servicesData").append(getDivForService(toProceed[i]));
+                            }
+
+                            lastId = toProceed[toProceed.length - 1].Id;
+                        }
+                        else {
+                            if ($("#servicesData").children().length == 0) {
+                                $("#servicesData").append('<div class="text-center">Інформації не знайдено</div>');
+                            }
+                        }
+                    },
+                    error: function(res)
+                    {
+                        alert(res.status + " " + res.statusText);
+                    }
+                });
+
+            });
+
+        });
+    </script>
+
+    }

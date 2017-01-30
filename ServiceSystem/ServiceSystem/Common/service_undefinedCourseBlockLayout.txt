@@ -1,0 +1,56 @@
+﻿            <div id="undefinedCourseBlock" style="padding-bottom: 25px;">
+						<input type="hidden" name="constructorType" value="UndefinedCourse" />
+                <label class="control-label text-center">Вкажіть період курсу:</label>
+                <div class="form-group" style="margin-top: 10px;">
+                    <input name="serviceStartDate" type="date" class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                    <div class="text-center col-xs-2 col-sm-2 col-md-2 col-lg-2"><p>-</p></div>
+                    <input name="serviceEndDate" type="date" class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                </div>
+
+                <div class="form-group">
+                    <label for="numOfDays" class="col-xs-8 col-sm-8 col-md-8 col-lg-8">Кількість днів (на тиждень): </label>
+                    <input name="numOfDays" type="text" id="numOfDays" class="col-xs-3 col-sm-3 col-md-3 col-lg-3" style="margin-bottom: 10px;" />
+                </div>
+
+                <div class="form-group">
+                    <label for="dayOneDuration" class="col-xs-3 col-sm-3 col-md-3 col-lg-3">День 1</label>
+                    <input name="dayOneDuration" type="text" class="col-xs-2 col-sm-2 col-md-2 col-lg-2" id="dayOneDuration">
+                    <label for="dayOneDuration" class="col-xs-1 col-sm-1 col-md-1 col-lg-1">хв</label>
+                </div>
+                <div class="form-group">
+                    <label for="dayTwoDuration" class="col-xs-3 col-sm-3 col-md-3 col-lg-3">День 2</label>
+                    <input name="dayTwoDuration" type="text" class="col-xs-2 col-sm-2 col-md-2 col-lg-2" id="dayTwoDuration">
+                    <label for="dayTwoDuration" class="col-xs-1 col-sm-1 col-md-1 col-lg-1">хв</label>
+                </div>
+                <div class="form-group">
+                    <label for="dayThreeDuration" class="col-xs-3 col-sm-3 col-md-3 col-lg-3">День 3</label>
+                    <input name="dayThreeDuration" type="text" class="col-xs-2 col-sm-2 col-md-2 col-lg-2" id="dayThreeDuration">
+                    <label for="dayThreeDuration" class="col-xs-1 col-sm-1 col-md-1 col-lg-1">хв</label>
+                </div>
+                <div class="form-group">
+                    <label for="dayFourDuration" class="col-xs-3 col-sm-3 col-md-3 col-lg-3">День 4</label>
+                    <input name="dayFourDuration" type="text" class="col-xs-2 col-sm-2 col-md-2 col-lg-2" id="dayFourDuration">
+                    <label for="dayFourDuration" class="col-xs-1 col-sm-1 col-md-1 col-lg-1">хв</label>
+                </div>
+                <div class="form-group">
+                    <label for="dayFiveDuration" class="col-xs-3 col-sm-3 col-md-3 col-lg-3">День 5</label>
+                    <input type="text" class="col-xs-2 col-sm-2 col-md-2 col-lg-2" id="dayFiveDuration">
+                    <label for="dayFiveDuration" class="col-xs-1 col-sm-1 col-md-1 col-lg-1">хв</label>
+                </div>
+                <div class="form-group">
+                    <label for="daySixDuration" class="col-xs-3 col-sm-3 col-md-3 col-lg-3">День 6</label>
+                    <input name="daySixDuration" type="text" class="col-xs-2 col-sm-2 col-md-2 col-lg-2" id="daySixDuration">
+                    <label for="daySixDuration" class="col-xs-1 col-sm-1 col-md-1 col-lg-1">хв</label>
+                </div>
+                <div class="form-group">
+                    <label for="daySevenDuration" class="col-xs-3 col-sm-3 col-md-3 col-lg-3">День 7</label>
+                    <input name="daySevenDuration" type="text" class="col-xs-2 col-sm-2 col-md-2 col-lg-2" id="daySevenDuration">
+                    <label for="daySevenDuration" class="col-xs-1 col-sm-1 col-md-1 col-lg-1">хв</label>
+                </div>
+                <label for="priceDefinedCourse" class="control-label col-xs-5 col-sm-5 col-md-5 col-lg-5" style="display: inline;">Вартість курсу:</label>
+                <div class="form-group">
+                    <input name="price" type="text" id="priceDefinedCourse" class="col-xs-3 col-sm-3 col-md-3 col-lg-3" style="display: inline;" />
+                    <label for="priceDefinedCourse" class="control-label col-sm-offset-1 col-md-offset-1 col-lg-offset-1">грн</label>
+                </div>
+				<input class="btn btn-default col-xs-4 col-sm-4 col-md-4 col-lg-4 col-sm-offset-4 col-md-offset-4 col-lg-offset-4" type="submit" value="Додати послугу" />
+            </div>
