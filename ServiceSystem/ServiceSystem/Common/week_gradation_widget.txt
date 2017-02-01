@@ -1,0 +1,11 @@
+﻿            <div id="week_gradation_widget" style="border: 2px solid green; border-radius: 3px; margin-top: 25px; padding: 10px;">
+                <div class="form-group">
+                    <select name="week_gradation_type" class="form-control col-xs-8 col-sm-8 col-md-8 col-lg-8 col-sm-offset-2 col-lg-offset-2 col-md-offset-2" id="cooperationController" name="type">
+                        <option value="none">Формат часу</option>
+                        <option value="day_hour">День/година</option>
+                        <option value="day_duration">День/тривалість</option>
+                    </select>
+                </div>
+                <div id="week_gradation_data" style="margin-top: 25px;">
+                </div>
+            </div>

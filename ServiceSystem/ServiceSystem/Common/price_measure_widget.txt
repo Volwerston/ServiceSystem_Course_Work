@@ -1,0 +1,26 @@
+﻿			    <div id="price_measure_widget_*" style="border: 2px solid green; border-radius: 3px; margin-top: 5px; padding: 10px;">
+                <div class="form-group">
+                    <select name="currency_*" class="col-md-offset-2 col-lg-offset-2 form-control">
+                        <option value="none">Оберіть валюту</option>
+                        <option value="hryvnia">гривня</option>
+                        <option value="dollar">долар</option>
+                        <option value="euro">євро</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <input type="text" name="measure_*" placeholder="Одиниця виміру" class="col-md-offset-2 col-lg-offset-2 form-control" />
+                </div>
+                <div class="form-group">
+                    <input type="text" name="price_*" placeholder="Вартість  (за 1 одиницю виміру)" class="col-md-offset-2 col-lg-offset-2 form-control" />
+                </div>
+                <div class="form-group">
+					<div class="col-md-2 col-lg-2"></div>
+                    <input class="col-xs-1 col-sm-1 col-md-1 col-lg-1" type="checkbox" id="price_measure_description_selector_*" name="price_measure_description_selector_*" />
+                    <label class="col-xs-6 col-sm-6 col-md-6 col-lg-6" for="price_measure_description_selector_*">додати інформацію</label>
+                </div>
+                <div id="price_description_block_*" hidden>
+                    <div class="form-group">
+                        <textarea rows="10" name="price_description_*" placeholder="Додаткова інформація" style="margin-bottom: 5px;" class="form-control cos-xs-8 col-sm-8 col-md-8 col-lg-8 col-sm-offset-2 col-lg-offset-2 col-md-offset-2"></textarea>
+                    </div>
+                </div>
+            </div>

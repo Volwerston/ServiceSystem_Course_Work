@@ -391,11 +391,11 @@ namespace ServiceSystem.Controllers
 
                         service.Description = row["DESCRIPTION"].ToString();
 
-                        service.StartDate = Convert.ToDateTime(row["START_DATE"].ToString());
-                        service.EndDate = Convert.ToDateTime(row["END_DATE"].ToString());
+                        //service.StartDate = Convert.ToDateTime(row["START_DATE"].ToString());
+                        //service.EndDate = Convert.ToDateTime(row["END_DATE"].ToString());
 
-                        service.MinPrice = Convert.ToDouble(row["MIN_PRICE"].ToString());
-                        service.MaxPrice = Convert.ToDouble(row["MAX_PRICE"].ToString());
+                       // service.MinPrice = Convert.ToDouble(row["MIN_PRICE"].ToString());
+                       // service.MaxPrice = Convert.ToDouble(row["MAX_PRICE"].ToString());
 
                         toReturn.Add(service);
                     }
@@ -412,6 +412,18 @@ namespace ServiceSystem.Controllers
                     return null;
                 }
             }
+        }
+
+        public HttpResponseMessage Put([FromBody] Service service)
+        {
+
+            Session session = service as Session;
+
+            Course course = service as Course;
+
+            Deadline deadline = service as Deadline;
+
+            return Request.CreateResponse(HttpStatusCode.OK, "");
         }
 
         public Tuple<Service, Dictionary<string,string>> Get([FromUri]int id)
@@ -439,11 +451,11 @@ namespace ServiceSystem.Controllers
                         toReturn.Item1.Id = Convert.ToInt32(set.Tables[0].Rows[0]["ID"].ToString());
                         toReturn.Item1.Category = set.Tables[0].Rows[0]["CATEGORY_NAME"].ToString();
                         toReturn.Item1.Description = set.Tables[0].Rows[0]["DESCRIPTION"].ToString();
-                        toReturn.Item1.EndDate = Convert.ToDateTime(set.Tables[0].Rows[0]["END_DATE"].ToString());
-                        toReturn.Item1.StartDate = Convert.ToDateTime(set.Tables[0].Rows[0]["START_DATE"].ToString());
-                        toReturn.Item1.Name = set.Tables[0].Rows[0]["NAME"].ToString();
-                        toReturn.Item1.MinPrice = Convert.ToDouble(set.Tables[0].Rows[0]["MIN_PRICE"].ToString());
-                        toReturn.Item1.MaxPrice = Convert.ToDouble(set.Tables[0].Rows[0]["MAX_PRICE"].ToString());
+                        //toReturn.Item1.EndDate = Convert.ToDateTime(set.Tables[0].Rows[0]["END_DATE"].ToString());
+                        //toReturn.Item1.StartDate = Convert.ToDateTime(set.Tables[0].Rows[0]["START_DATE"].ToString());
+                        //toReturn.Item1.Name = set.Tables[0].Rows[0]["NAME"].ToString();
+                        //toReturn.Item1.MinPrice = Convert.ToDouble(set.Tables[0].Rows[0]["MIN_PRICE"].ToString());
+                        //toReturn.Item1.MaxPrice = Convert.ToDouble(set.Tables[0].Rows[0]["MAX_PRICE"].ToString());
 
                         Dictionary<string, string> details = DetailsStrategy.GetDetails(
                             Convert.ToInt32(set.Tables[0].Rows[0]["DETAILS_ID"].ToString()),

@@ -1,0 +1,72 @@
+﻿
+<label class="control-label text-center">Вкажіть дні та час курсу:</label>
+                <div class="form-group" style="margin-top: 10px;">
+                    <input name="mon" type="checkbox" id="mon" class="col-xs-1 col-sm-1 col-md-1 col-lg-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 days" />
+                    <label for="mon" class="col-xs-1 col-sm-1 col-md-1 col-lg-1">Пн</label>
+					<div id="monHours" hidden>
+                    <label style="display:inline;" class="text-center col-xs-1 col-sm-1 col-md-1 col-lg-1" for="startTimeMon">Час:</label>
+                    <input name="monStartTime" type="time" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-sm-offset-1 col-md-offset-1 col-lg-offset-1" id="startTimeMon">
+                    <div class="text-center col-xs-1 col-sm-1 col-md-1 col-lg-1"><p>-</p></div>
+                    <input name="monEndTime" type="time" class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+					</div>
+                </div>
+                <div class="form-group">
+                    <input name="tue" type="checkbox" id="tue" class="col-xs-1 col-sm-1 col-md-1 col-lg-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 days" />
+                    <label for="tue" class="col-xs-1 col-sm-1 col-md-1 col-lg-1">Вт</label>
+					<div id="tueHours" hidden>
+                    <label style="display:inline;" class="text-center col-xs-1 col-sm-1 col-md-1 col-lg-1" for="startTimeTue">Час:</label>
+                    <input name="tueStartTime" type="time" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-sm-offset-1 col-md-offset-1 col-lg-offset-1" id="startTimeTue">
+                    <div class="text-center col-xs-1 col-sm-1 col-md-1 col-lg-1"><p>-</p></div>
+                    <input name="tueEndTime" type="time" class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+					</div>
+                </div>
+                <div class="form-group">
+                    <input name="wed" type="checkbox" id="wed" class="col-xs-1 col-sm-1 col-md-1 col-lg-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 days" />
+                    <label for="wed" class="col-xs-1 col-sm-1 col-md-1 col-lg-1">Ср</label>
+					<div id="wedHours" hidden>
+                    <label style="display:inline;" class="text-center col-xs-1 col-sm-1 col-md-1 col-lg-1" for="startTimeWed">Час:</label>
+                    <input name="wedStartTime" type="time" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-sm-offset-1 col-md-offset-1 col-lg-offset-1" id="startTimeWed">
+                    <div class="text-center col-xs-1 col-sm-1 col-md-1 col-lg-1"><p>-</p></div>
+                    <input name="wedEndTime"  type="time" class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+					</div>
+                </div>
+                <div class="form-group">
+                    <input name="thu" type="checkbox" id="thu" class="col-xs-1 col-sm-1 col-md-1 col-lg-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 days" />
+                    <label for="thu" class="col-xs-1 col-sm-1 col-md-1 col-lg-1">Чт</label>
+					<div id="thuHours" hidden>
+                    <label style="display:inline;" class="text-center col-xs-1 col-sm-1 col-md-1 col-lg-1" for="startTimeThu">Час:</label>
+                    <input name="thuStartTime" type="time" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-sm-offset-1 col-md-offset-1 col-lg-offset-1" id="startTimeThu">
+                    <div class="text-center col-xs-1 col-sm-1 col-md-1 col-lg-1"><p>-</p></div>
+                    <input name="thuEndTime" type="time" class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+					</div>
+                </div>
+                <div class="form-group">
+                    <input name="fri" type="checkbox" id="fri" class="col-xs-1 col-sm-1 col-md-1 col-lg-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 days" />
+                    <label for="fri" class="col-xs-1 col-sm-1 col-md-1 col-lg-1">Пт</label>
+					<div id="friHours" hidden>
+                    <label style="display:inline;" class="text-center col-xs-1 col-sm-1 col-md-1 col-lg-1" for="startTimeFri">Час:</label>
+                    <input name="friStartTime" type="time" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-sm-offset-1 col-md-offset-1 col-lg-offset-1" id="startTimeFri">
+                    <div class="text-center col-xs-1 col-sm-1 col-md-1 col-lg-1"><p>-</p></div>
+                    <input name="friEndTime" type="time" class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+					</div>
+                </div>
+                <div class="form-group">
+                    <input name="sat" type="checkbox" id="sat" class="col-xs-1 col-sm-1 col-md-1 col-lg-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 days" />
+                    <label for="sat" class="col-xs-1 col-sm-1 col-md-1 col-lg-1">Сб</label>
+					<div id="satHours" hidden>
+                    <label style="display:inline;" class="text-center col-xs-1 col-sm-1 col-md-1 col-lg-1" for="startTimeSat">Час:</label>
+                    <input name="satStartTime" type="time" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-sm-offset-1 col-md-offset-1 col-lg-offset-1" id="startTimeSat">
+                    <div class="text-center col-xs-1 col-sm-1 col-md-1 col-lg-1"><p>-</p></div>
+                    <input name="satEndTime" type="time" class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+					</div>
+                </div>
+                <div class="form-group">
+                    <input name="sun" type="checkbox" id="sun" class="col-xs-1 col-sm-1 col-md-1 col-lg-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 days" />
+                    <label for="sun" class="col-xs-1 col-sm-1 col-md-1 col-lg-1">Нд</label>
+					<div id="sunHours" hidden>
+                    <label style="display:inline;" class="text-center col-xs-1 col-sm-1 col-md-1 col-lg-1" for="startTimeSun">Час:</label>
+                    <input name="sunStartTime" type="time" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-sm-offset-1 col-md-offset-1 col-lg-offset-1" id="startTimeSun">
+                    <div class="text-center col-xs-1 col-sm-1 col-md-1 col-lg-1"><p>-</p></div>
+                    <input name="sunEndTime" type="time" class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+					</div>
+                </div>

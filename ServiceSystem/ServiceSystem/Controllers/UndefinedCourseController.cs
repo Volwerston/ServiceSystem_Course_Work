@@ -11,7 +11,7 @@ namespace ServiceSystem.Controllers
 {
     public class UndefinedCourseController : ApiController
     {
-        public HttpResponseMessage Post([FromBody]UndefinedCourse service)
+        public HttpResponseMessage Post([FromBody]Course service)
         {
             using (SqlConnection connection = new SqlConnection(System.Web.Configuration.WebConfigurationManager.ConnectionStrings["DBCS"].ConnectionString))
             {
@@ -26,16 +26,16 @@ namespace ServiceSystem.Controllers
                 parameters.Add("@Category", service.Category);
                 parameters.Add("@StartDate", service.StartDate);
                 parameters.Add("@EndDate", service.EndDate);
-                parameters.Add("@MinPrice", service.Price);
-                parameters.Add("@MaxPrice", service.Price);
+                //parameters.Add("@MinPrice", service.Price);
+                //parameters.Add("@MaxPrice", service.Price);
 
 
                 cmdString += "INSERT INTO UndefinedCourse_Details(TIME_DETAILS) "
                         + "VALUES(@TimeDetails);";
 
-                    UndefinedCourse buf = service as UndefinedCourse;
+                  //  UndefinedCourse buf = service as UndefinedCourse;
 
-                    parameters.Add("@TimeDetails", Newtonsoft.Json.JsonConvert.SerializeObject(buf.DurationsPerDay));
+                   // parameters.Add("@TimeDetails", Newtonsoft.Json.JsonConvert.SerializeObject(buf.DurationsPerDay));
 
                 for (int i = 0; i < service.Attachments.Count(); ++i)
                 {

@@ -20,46 +20,31 @@ namespace ServiceSystem.Controllers
         {
             Dictionary<string, string> toReturn = new Dictionary<string, string>();
 
-            string[] layouts = new string[] {"baseBlock", "deadlineBlock", "cooperationBlock", "sessionBlock",
-                "courseBlock", "definedCourseBlock", "undefinedCourseBlock" };
+            string[] paths = new string[] { "week_gradation_widget_hours", "week_gradation_widget_duration",
+                                            "duration_measure_from_till", "duration_measure_from", "duration_measure_till",
+                                            "service_session_block", "duration_measure_widget", "price_measure_widget",
+                                            "default_property_widget", "service_deadline_block", "service_course_block",
+                                            "week_gradation_widget"};
 
-            foreach (string layout in layouts)
+            foreach (var path in paths)
             {
-                StreamReader reader = new StreamReader("C:\\Users\\Юра\\Desktop\\ServiceSystem\\ServiceSystem\\Common\\service_" + layout + "Layout.txt");
+                StreamReader reader = new StreamReader(Server.MapPath("~/Common/" + path + ".txt"));
+
+                StringBuilder builder = new StringBuilder("");
 
                 string buf = "";
-                StringBuilder toInsert = new StringBuilder("");
 
                 while ((buf = reader.ReadLine()) != null)
                 {
-                    toInsert.Append(buf);
+                    builder.Append(buf);
                 }
 
-                toReturn.Add(layout, toInsert.ToString());
-
-                reader.Close();
+                toReturn.Add(path, builder.ToString());
             }
 
             return toReturn;
         }
 
-
-        [NonAction]
-        public string GetApplicationBlockLayout(string blockType)
-        {
-            StreamReader reader = new StreamReader("C:\\Users\\Юра\\Desktop\\ServiceSystem\\ServiceSystem\\Common\\application_" + blockType + "BlockLayout.txt");
-
-            StringBuilder builder = new StringBuilder("");
-
-            string buf = "";
-
-            while( (buf = reader.ReadLine()) != null)
-            {
-                builder.Append(buf);
-            }
-
-            return builder.ToString();
-        }
 
         // GET: Service
         public ActionResult Index()
@@ -107,34 +92,22 @@ namespace ServiceSystem.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(FormCollection collection, IEnumerable<HttpPostedFileBase> serviceAttachments)
+        public ActionResult Index(FormCollection collection, IEnumerable<HttpPostedFileBase> service_attachments)
         {
-            Service service = ServiceManager.GenerateService(collection, serviceAttachments);
+            Service service = ServiceManager.GenerateService(collection, service_attachments);
 
             using (HttpClient client = new HttpClient())
             {
                 client.BaseAddress = new Uri("http://localhost:49332/");
                 client.DefaultRequestHeaders.Clear();
+
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 
-                HttpResponseMessage response = null;
+                JsonMediaTypeFormatter formatter = new JsonMediaTypeFormatter();
 
-                if (collection["constructorType"] == "Deadline")
-                {
-                    response = client.PostAsJsonAsync("api/Deadline", service as Deadline).Result;
-                }
-                else if(collection["constructorType"] == "Session")
-                {
-                    response = client.PostAsJsonAsync("api/Session", service as Session).Result;
-                }
-                else if (collection["constructorType"] == "DefinedCourse")
-                {
-                    response = client.PostAsJsonAsync("api/DefinedCourse", service as DefinedCourse).Result;
-                }
-                else if (collection["constructorType"] == "UndefinedCourse")
-                {
-                    response = client.PostAsJsonAsync("api/UndefinedCourse", service as UndefinedCourse).Result;
-                }
+                formatter.SerializerSettings.TypeNameHandling = TypeNameHandling.All;
+
+                HttpResponseMessage message = client.PutAsync("api/ServiceApi", service, formatter).Result;
             }
 
           return RedirectToAction("Index");
@@ -164,6 +137,7 @@ namespace ServiceSystem.Controllers
             return View(toReturn.Item1);
         }
 
+        /*
         public ActionResult ApplicationForm(int serviceId, string serviceType)
         {
             if (serviceType == "Deadline")
@@ -183,10 +157,17 @@ namespace ServiceSystem.Controllers
 
                 return View();
         }
-
+        */
 
         public ActionResult Foo()
         {
+            Dictionary<string, string> toPass = GetConstructorBlocks();
+
+            foreach(var node in toPass)
+            {
+                ViewData[node.Key] = node.Value;
+            }
+
             return View();
         }
 

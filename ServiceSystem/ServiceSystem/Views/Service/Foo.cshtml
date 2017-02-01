@@ -5,14 +5,286 @@
 }
 
 <div class="row">
-    <div class="col-xs-5 col-sm-5 col-lg-5 col-md-5 col-md-offset-4 col-sm-offset-4 col-lg-offset-4">
+    <div class="col-xs-5 col-sm-5 col-lg-5 col-md-5 col-md-offset-4 col-lg-offset-4 well form-horizontal">
         @using (Html.BeginForm())
         {
-            <select name="cooperationType" class="form-control col-xs-8 col-sm-8 col-md-8 col-lg-8 col-sm-offset-2 col-lg-offset-2 col-md-offset-2" id="cooperationController" name="type">
-                <option value="None">Тип взаємодії</option>
-                <option value="Session">Сеанс</option>
-                <option value="Course">Курс</option>
-            </select>
+            <div id="week_gradation_widget">
+                <div class="form-group">
+                    <select name="week_gradation_type" class="form-control col-xs-8 col-sm-8 col-md-8 col-lg-8 col-sm-offset-2 col-lg-offset-2 col-md-offset-2" id="cooperationController" name="type">
+                        <option value="none">Формат часу</option>
+                        <option value="day_hour">День/година</option>
+                        <option value="day_duration">День/тривалість</option>
+                    </select>
+                </div>
+                <div id="week_gradation_data" style="margin-top: 25px;">
+                </div>
+            </div>
         }
     </div>
 </div>
+
+
+<div class="row">
+    <div class="col-xs-5 col-sm-5 col-lg-5 col-md-5 col-md-offset-4 col-sm-offset-4 col-lg-offset-4 well form-horizontal">
+        @using (Html.BeginForm())
+        {
+            <div id="price_measure_widget">
+                <div class="form-group">
+                    <select name="currency" class="col-md-offset-2 col-lg-offset-2 form-control">
+                        <option value="none">Оберіть валюту</option>
+                        <option value="hryvnia">гривня</option>
+                        <option value="dollar">долар</option>
+                        <option value="euro">євро</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <input type="text" placeholder="Одиниця виміру" class="col-md-offset-2 col-lg-offset-2 form-control" />
+                </div>
+                <div class="form-group">
+                    <input type="text" placeholder="Вартість  (за 1 одиницю виміру)" class="col-md-offset-2 col-lg-offset-2 form-control" />
+                </div>
+                <div class="form-group">
+                    <input class="col-xs-1 col-sm-1 col-md-1 col-lg-1" type="checkbox" id="description_selector" name="description_selector" />
+                    <label class="col-xs-4 col-sm-4 col-md-4 col-lg-4" for="description_selector">додати інформацію</label>
+                </div>
+                <div id="price_description_block" hidden>
+                    <div class="form-group">
+                        <textarea rows="10" name="description" placeholder="Додаткова інформація" style="margin-bottom: 5px;" class="form-control cos-xs-8 col-sm-8 col-md-8 col-lg-8 col-sm-offset-2 col-lg-offset-2 col-md-offset-2"></textarea>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-xs-5 col-sm-5 col-lg-5 col-md-5 col-md-offset-4 col-sm-offset-4 col-lg-offset-4 well form-horizontal">
+        @using (Html.BeginForm())
+        {
+            <div id="duration_measure_widget">
+                <div class="form-group">
+                    <select name="range_type" class="col-md-offset-2 col-lg-offset-2 form-control">
+                        <option value="none">Тип діапазону</option>
+                        <option value="from_till">від/до</option>
+                        <option value="from">від</option>
+                        <option value="till">до</option>
+                    </select>
+                </div>
+                <div id="duration_measure_data">
+
+                </div>
+                <div class="form-group">
+                    <input class="col-xs-1 col-sm-1 col-md-1 col-lg-1" type="checkbox" id="duration_measure_description_selector" name="description_selector" />
+                    <label class="col-xs-4 col-sm-4 col-md-4 col-lg-4" for="duration_measure_description_selector">додати інформацію</label>
+                </div>
+                <div id="duration_measure_description_block" hidden>
+                    <div class="form-group">
+                        <textarea rows="10" name="duration_measure_description" placeholder="Додаткова інформація" style="margin-bottom: 5px;" class="form-control cos-xs-8 col-sm-8 col-md-8 col-lg-8 col-sm-offset-2 col-lg-offset-2 col-md-offset-2"></textarea>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-5 col-sm-5 col-lg-5 col-md-5 col-md-offset-4 col-sm-offset-4 col-lg-offset-4 well form-horizontal">
+        @using (Html.BeginForm())
+        {
+            <div id="participants_measure_widget">
+                <div class="form-group">
+                    <div class="form-group">
+                        <input class="col-xs-1 col-sm-1 col-md-1 col-lg-1" type="checkbox" id="participants_measure_selector" name="participants_measure_selector" />
+                        <label class="col-xs-6 col-sm-6 col-md-6 col-lg-6" for="participants_measure_selector">обмежити к-сть учасників</label>
+                    </div>
+                    <div id="participants_measure_data_block" hidden class="form-group">
+                        <input type="number" class="form-control col-md-offset-2 col-lg-offset-2" placeholder="Введіть кількість учасників" name="participants_measure_data" />
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-5 col-sm-5 col-lg-5 col-md-5 col-md-offset-4 col-sm-offset-4 col-lg-offset-4 well form-horizontal">
+        @using (Html.BeginForm())
+        {
+            <div id="default_widget">
+                <div class="form-group">
+                    <input type="text" name="property_name" class="form-control col-md-offset-2 col-lg-offset-2" placeholder="Назва властивості" />
+                </div>
+                <div class="form-group">
+                    <select name="property_type" class="form-control col-md-offset-2 col-lg-offset-2">
+                        <option value="none">Тип властивості</option>
+                        <option value="text">Текстовий рядок</option>
+                        <option value="textarea">Текстове поле</option> 
+                        <option value="number">Число</option> 
+                        <option value="date">Дата</option>
+                        <option value="time">Час</option>
+                    </select>
+                </div>
+                <div id="default_widget_data_block" style="margin-top: 25px;">
+
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section scripts{
+    
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $('select[name="property_type"]').change(function () {
+
+            $("#default_widget_data_block").empty();
+
+            if ($(this).val() != "none") {
+                if ($(this).val() == "textarea") {
+                    $("#default_widget_data_block").append('<div class="form-group">'
+                        + '<textarea class="form-control col-md-offset-2 col-lg-offset-2" name="default_widget_value" />'
+                        + '</div>'
+                        );
+                }
+                else {
+                    $("#default_widget_data_block").append('<div class="form-group">'
+                  + '<input type="' + $(this).val() + '" class="form-control col-md-offset-2 col-lg-offset-2" name="default_widget_value" />'
+                  + '</div>'
+                  );
+                }
+            }
+
+        });
+
+        $('select[name="range_type"]').change(function () {
+
+            $("#duration_measure_data").empty();
+
+            if ($(this).val() == "from_till") {
+                var toAppend = '@ViewData["duration_measure_from_till"]';
+
+                toAppend = toAppend.replace(/&quot;/g, "\"");
+                toAppend = toAppend.replace(/&lt;/g, "<");
+                toAppend = toAppend.replace(/&gt;/g, ">");
+
+                $("#duration_measure_data").append(toAppend);
+            }
+            else if ($(this).val() == "from") {
+                var toAppend = '@ViewData["duration_measure_from"]';
+
+                toAppend = toAppend.replace(/&quot;/g, "\"");
+                toAppend = toAppend.replace(/&lt;/g, "<");
+                toAppend = toAppend.replace(/&gt;/g, ">");
+
+                $("#duration_measure_data").append(toAppend);
+            }
+            else if ($(this).val() == "till") {
+                var toAppend = '@ViewData["duration_measure_till"]';
+
+                toAppend = toAppend.replace(/&quot;/g, "\"");
+                toAppend = toAppend.replace(/&lt;/g, "<");
+                toAppend = toAppend.replace(/&gt;/g, ">");
+
+                $("#duration_measure_data").append(toAppend);
+            }
+
+        });
+
+        $("#participants_measure_selector").change(function () {
+
+            if ($(this).is(':checked')) {
+                $("#participants_measure_data_block").removeAttr("hidden");
+            }
+            else {
+                $("#participants_measure_data_block").attr("hidden", true);
+            }
+
+        });
+
+        $("#duration_measure_description_selector").change(function () {
+
+            if ($(this).is(':checked')) {
+                $("#duration_measure_description_block").removeAttr("hidden");
+            }
+            else {
+                $("#duration_measure_description_block").attr("hidden", true);
+            }
+
+        });
+
+        $("#description_selector").change(function () {
+
+            if ($(this).is(':checked')) {
+                $("#price_description_block").removeAttr("hidden");
+            }
+            else {
+                $("#price_description_block").attr("hidden", true);
+            }
+
+        });
+
+        $('select[name="week_gradation_type"]').change(function () {
+
+            $("#week_gradation_data").empty();
+
+            if ($(this).val() == "day_hour") {
+                var toAppend = '@ViewData["week_gradation_widget_hours"]';
+
+                toAppend = toAppend.replace(/&quot;/g, "\"");
+                toAppend = toAppend.replace(/&lt;/g, "<");
+                toAppend = toAppend.replace(/&gt;/g, ">");
+
+                $("#week_gradation_data").append(toAppend);
+
+                $(".days").change(function () {
+
+                    if ($(this).is(':checked')) {
+                        $("#" + $(this).attr('id') + "Hours").removeAttr("hidden");
+                    }
+                    else {
+                        $("#" + $(this).attr('id') + "Hours").hide();
+                    }
+
+                });
+
+            }
+            else if ($(this).val() == "day_duration") {
+                var toAppend = '@ViewData["week_gradation_widget_duration"]';
+
+                toAppend = toAppend.replace(/&quot;/g, "\"");
+                toAppend = toAppend.replace(/&lt;/g, "<");
+                toAppend = toAppend.replace(/&gt;/g, ">");
+
+                $("#week_gradation_data").append(toAppend);
+
+                $('select[name="number_of_days"]').change(function () {
+
+                    $("#days_duration_block").empty();
+
+                    var numOfDays = $(this).val();
+
+                    for (var i = 0; i < numOfDays; ++i) {
+                        $("#days_duration_block").append('<div class="form-group">'
+                        + '<label for="day' + (i + 1) + 'Duration" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3">День ' + (i + 1) + '</label>'
+                        + '<input name="day' + (i + 1) + 'Duration" type="text" class="col-xs-2 col-sm-2 col-md-2 col-lg-2" id="day' + (i + 1) + 'Duration">'
+                        + '<label for="day' + (i + 1) + 'Duration" class="col-xs-1 col-sm-1 col-md-1 col-lg-1">хв</label>'
+                        + '</div>');
+                    }
+
+
+                });
+            }
+
+
+        });
+
+    });
+</script>
+
+
+    
+    }

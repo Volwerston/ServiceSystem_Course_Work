@@ -11,7 +11,7 @@ namespace ServiceSystem.Controllers
 {
     public class DefinedCourseController : ApiController
     {
-        public HttpResponseMessage Post([FromBody]DefinedCourse service)
+        public HttpResponseMessage Post([FromBody]Course service)
         {
             using (SqlConnection connection = new SqlConnection(System.Web.Configuration.WebConfigurationManager.ConnectionStrings["DBCS"].ConnectionString))
             {
@@ -26,17 +26,15 @@ namespace ServiceSystem.Controllers
                 parameters.Add("@Category", service.Category);
                 parameters.Add("@StartDate", service.StartDate);
                 parameters.Add("@EndDate", service.EndDate);
-                parameters.Add("@MinPrice", service.Price);
-                parameters.Add("@MaxPrice", service.Price);
 
 
                 cmdString += "INSERT INTO DefinedCourse_Details(CLIENTS_LIMIT, TIME_DETAILS) "
                         + "VALUES(@ClientsLimit, @TimeDetails);";
 
-                    DefinedCourse buf = service as DefinedCourse;
+                    Course buf = service as Course;
 
-                    parameters.Add("@ClientsLimit", buf.ParticipantsLimited ? buf.ParticipantsNumber : 0);
-                    parameters.Add("@TimeDetails", Newtonsoft.Json.JsonConvert.SerializeObject(buf.Days));
+               //     parameters.Add("@ClientsLimit", buf.ParticipantsLimited ? buf.ParticipantsNumber : 0);
+                //    parameters.Add("@TimeDetails", Newtonsoft.Json.JsonConvert.SerializeObject(buf.Days));
                 
 
                 for (int i = 0; i < service.Attachments.Count(); ++i)

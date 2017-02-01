@@ -7,9 +7,7 @@ namespace ServiceSystem.Models
 {
     public class Deadline: Service
     {
-        public TimeSpan MinDuration { get; set; }
-        public TimeSpan MaxDuration { get; set; }
-        public double MinPrice { get; set; }
-        public double MaxPrice { get; set; }
+        public List<TimeMeasure> TimeMeasures { get; set; }
+        public List<PaymentMeasure> PaymentMeasures { get; set; }
     }
 }
