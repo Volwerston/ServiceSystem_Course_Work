@@ -107,7 +107,7 @@ namespace ServiceSystem.Controllers
 
                 formatter.SerializerSettings.TypeNameHandling = TypeNameHandling.All;
 
-                HttpResponseMessage message = client.PutAsync("api/ServiceApi", service, formatter).Result;
+                HttpResponseMessage message = client.PostAsync("api/ServiceApi/PostService", service, formatter).Result;
             }
 
           return RedirectToAction("Index");
@@ -132,7 +132,14 @@ namespace ServiceSystem.Controllers
                 }
             }
 
-            ViewData["PARAMS"] = toReturn.Item2;
+            if (toReturn.Item2 != null)
+            {
+                ViewData["PARAMS"] = toReturn.Item2;
+            }
+            else
+            {
+                ViewData["PARAMS"] = new Dictionary<string, string>();
+            }
 
             return View(toReturn.Item1);
         }

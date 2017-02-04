@@ -11,6 +11,7 @@ namespace ServiceSystem.Models
         public DateTime EndDate { get; set; }
         public bool IsDefined { get; set; }
         public CourseParams Parameters { get; set; }
+        public List<PaymentMeasure> PaymentMeasures { get; set; }
     }
 
     public class CourseParams

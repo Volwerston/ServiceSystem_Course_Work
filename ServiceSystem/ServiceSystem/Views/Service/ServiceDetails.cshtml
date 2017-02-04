@@ -1,4 +1,5 @@
 ﻿@model ServiceSystem.Models.Service
+@using ServiceSystem.Models
 
 @{
     ViewBag.Title = "SessionDetails";
@@ -10,23 +11,15 @@
         <h3>@Model.Name</h3>
         <p>@Model.Description</p>
         <p>Категорія: @Model.Category</p>
-        @if (Model.MaxPrice != Model.MinPrice)
-        {
-            <p>Мінімальна ціна: @Model.MinPrice грн</p>
-            <p>Максимальна ціна: @Model.MaxPrice грн</p>
-        }
-        else
-        {
-            <p>Ціна: @Model.MinPrice</p>
-        }
-
-        <p>Послуга доступна від @Model.StartDate.ToShortDateString() до @Model.EndDate.ToShortDateString()</p>
 
             @if (ViewData["PARAMS"] != null)
             {
-                foreach (var param in (Dictionary<string, string>)ViewData["PARAMS"])
+                Dictionary<string, string> parameters = (Dictionary<string, string>)ViewData["PARAMS"];
+
+
+                foreach (var param in parameters)
                 {
-                    if (param.Key != "SERVICE_TYPE")
+                    if (param.Key != "SERVICE_TYPE" && param.Key != "Тривалість" && param.Key != "Вартість")
                     {
                     <div class="row" style="margin-top: 5px;">
                         <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3">
@@ -38,9 +31,44 @@
                     </div>
                     }
                 }
+
+                <div class="paramText">
+                    @if (parameters.ContainsKey("Вартість"))
+                    {
+                        <h3>Вартість:</h3>
+                        <div style="margin-top: 10px;" class="text-center">
+                            @parameters["Вартість"]
+                        </div>
+                    }
+
+                    @if (parameters.ContainsKey("Тривалість"))
+                    {
+                        <h3>Тривалість:</h3>
+                        <div style="margin-top: 10px;" class="text-center">
+                            @parameters["Тривалість"]
+                        </div>
+                    }
+                </div>
+
+                if(Model.Properties != null)
+                {
+                    foreach(Property prop in Model.Properties)
+                    {
+                        <div class="row">
+                            <div class="text-center col-xs-6 col-sm-6 col-md-6 col-lg-6 col-md-offset-3 col-lg-offset-3">
+                                <h3>@prop.Name</h3>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-bottom: 10px;">
+                            <div class="text-center col-xs-8 col-sm-8 col-md-8 col-lg-8 col-md-offset-2 col-lg-offset-2">
+                                <h4>@prop.Value</h4>
+                            </div>
+                        </div>
+                    }
+                }
             }
 
-        <div class="row">
+  <div class="row">
             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                 <input type="button" class="btn btn-info btn-block" value="Залишити заявку" onclick="location.href='@Url.Action("ApplicationForm", "Service", new { serviceType = ((Dictionary<string, string>)ViewData["PARAMS"])["SERVICE_TYPE"].ToString(), serviceId = Model.Id })'" />
             </div>

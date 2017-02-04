@@ -236,12 +236,8 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ApplicationController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
-    <Compile Include="Controllers\DeadlineController.cs" />
-    <Compile Include="Controllers\DefinedCourseController.cs" />
     <Compile Include="Controllers\ServiceApiController.cs" />
     <Compile Include="Controllers\ServiceController.cs" />
-    <Compile Include="Controllers\SessionController.cs" />
-    <Compile Include="Controllers\UndefinedCourseController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -275,16 +271,9 @@
     <Content Include="Common\duration_measure_till.txt" />
     <Content Include="Common\duration_measure_widget.txt" />
     <Content Include="Common\price_measure_widget.txt" />
-    <Content Include="Common\service_baseBlockLayout.txt" />
-    <Content Include="Common\service_cooperationBlockLayout.txt" />
-    <Content Include="Common\service_courseBlockLayout.txt" />
     <Content Include="Common\service_course_block.txt" />
-    <Content Include="Common\service_deadlineBlockLayout.txt" />
     <Content Include="Common\service_deadline_block.txt" />
-    <Content Include="Common\service_definedCourseBlockLayout.txt" />
-    <Content Include="Common\service_sessionBlockLayout.txt" />
     <Content Include="Common\service_session_block.txt" />
-    <Content Include="Common\service_undefinedCourseBlockLayout.txt" />
     <Content Include="Common\week_gradation_widget.txt" />
     <Content Include="Common\week_gradation_widget_duration.txt" />
     <Content Include="Common\week_gradation_widget_hours.txt" />

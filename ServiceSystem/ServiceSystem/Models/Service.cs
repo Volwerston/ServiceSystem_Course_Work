@@ -55,7 +55,7 @@ namespace ServiceSystem.Models
 
                 property.Type = collection["property_type_" + a.ToString()];
 
-                property.Value = collection["property_widget_value_" + a.ToString()];
+                property.Value = collection["default_widget_value_" + a.ToString()];
 
                 toReturn.Properties.Add(property);
 
@@ -169,6 +169,8 @@ namespace ServiceSystem.Models
 
                 measure.MinDuration = new TimeSpan(minDays, minHours, minMinutes, 0);
 
+                measure.Description = collection["duration_description_" + a.ToString()];
+
                 toReturn.TimeMeasure.Add(measure);
 
                 ++a;
@@ -187,6 +189,8 @@ namespace ServiceSystem.Models
                 measure.ValueMeasure = collection["measure_" + a.ToString()];
 
                 measure.PricePerUnit = Convert.ToDouble(collection["price_" + a.ToString()]);
+
+                measure.Description = collection["price_description_" + a.ToString()];
 
                 toReturn.PaymentMeasure.Add(measure);
 
@@ -263,6 +267,8 @@ namespace ServiceSystem.Models
 
                 toReturn.TimeMeasures.Add(measure);
 
+                measure.Description = collection["duration_description_" + a.ToString()];
+
                 ++a;
             }
 
@@ -279,6 +285,8 @@ namespace ServiceSystem.Models
                 measure.ValueMeasure = collection["measure_" + a.ToString()];
 
                 measure.PricePerUnit = Convert.ToDouble(collection["price_" + a.ToString()]);
+
+                measure.Description = collection["price_description_" + a.ToString()];
 
                 toReturn.PaymentMeasures.Add(measure);
 
@@ -333,13 +341,32 @@ namespace ServiceSystem.Models
 
             Course toReturn = new Course();
 
-            toReturn.IsDefined = collection["is_week_defined"] == "on" ? true : false;
-
             toReturn.StartDate = Convert.ToDateTime(collection["service_start_date"]);
 
             toReturn.EndDate = Convert.ToDateTime(collection["service_end_date"]);
 
-            if(collection["is_time_defined"] == "on")
+            toReturn.PaymentMeasures = new List<PaymentMeasure>();
+
+            int a = 1;
+
+            while (collection["currency_" + a.ToString()] != null)
+            {
+                PaymentMeasure measure = new PaymentMeasure();
+
+                measure.Currency = collection["currency_" + a.ToString()];
+
+                measure.ValueMeasure = collection["measure_" + a.ToString()];
+
+                measure.PricePerUnit = Convert.ToDouble(collection["price_" + a.ToString()]);
+
+                measure.Description = collection["price_description_" + a.ToString()];
+
+                toReturn.PaymentMeasures.Add(measure);
+
+                ++a;
+            }
+
+            if (collection["is_time_defined"] == "on")
             {
                 toReturn.StartDate = toReturn.StartDate.AddHours(Convert.ToDouble(collection["service_start_time"].Split(':')[0]));
                 toReturn.StartDate = toReturn.StartDate.AddMinutes(Convert.ToDouble(collection["service_start_time"].Split(':')[1]));
@@ -347,9 +374,11 @@ namespace ServiceSystem.Models
                 toReturn.EndDate = toReturn.EndDate.AddHours(Convert.ToDouble(collection["service_end_time"].Split(':')[0]));
                 toReturn.EndDate = toReturn.EndDate.AddMinutes(Convert.ToDouble(collection["service_end_time"].Split(':')[1]));
             }
-
+           
             if(collection["week_gradation_type"] == "day_hour")
             {
+                toReturn.IsDefined = true;
+
                 string[] days = new string[] { "mon", "tue", "wed", "thu", "fri", "sat", "sun" };
 
                 DefinedCourseParams parameters = new DefinedCourseParams();

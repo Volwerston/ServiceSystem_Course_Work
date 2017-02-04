@@ -31,6 +31,11 @@ namespace ServiceSystem
             config.Formatters.JsonFormatter.SerializerSettings.TypeNameHandling = TypeNameHandling.All;
 
             config.Routes.MapHttpRoute(
+            name: "ControllerAndAction",
+            routeTemplate: "api/{controller}/{action}"
+            );
+
+            config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }

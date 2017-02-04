@@ -1,9 +1,0 @@
-﻿            <div id="courseBlock">
-                <div class="form-group">
-                    <select style="courseType" class="form-control col-xs-8 col-sm-8 col-md-8 col-lg-8 col-sm-offset-2 col-lg-offset-2 col-md-offset-2" id="courseController" name="type">
-					<option value="None">Час курсу</option>	
-					<option value="DefinedCourse">Визначений</option>
-					<option value="UndefinedCourse">Невизначений</option>
-					</select> 
-					</div>
-            </div>

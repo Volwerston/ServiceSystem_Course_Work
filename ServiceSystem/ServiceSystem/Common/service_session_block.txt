@@ -89,7 +89,7 @@
                 </div>
                 <div id="duration_measure_description_block_1" hidden>
                     <div class="form-group">
-                        <textarea rows="10" name="duration_measure_description_1" placeholder="Додаткова інформація" style="margin-bottom: 5px;" class="form-control cos-xs-8 col-sm-8 col-md-8 col-lg-8 col-sm-offset-2 col-lg-offset-2 col-md-offset-2"></textarea>
+                        <textarea rows="10" name="duration_description_1" placeholder="Додаткова інформація" style="margin-bottom: 5px;" class="form-control cos-xs-8 col-sm-8 col-md-8 col-lg-8 col-sm-offset-2 col-lg-offset-2 col-md-offset-2"></textarea>
                     </div>
                 </div>
             </div>

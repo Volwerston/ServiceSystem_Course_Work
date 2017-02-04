@@ -4,31 +4,36 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="form-horizontal well" style="margin: auto; display: table;">
-    <div class="form-group">
-        @Html.DropDownList("category", (List<SelectListItem>)ViewData["CATEGORIES"], new { @class = "form-control", style = "margin:auto;", id="category" })
+<div class="row">
+    <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10 col-md-offset-1 col-lg-offset-1">
+        <div class="row">
+            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                <div class="form-horizontal well" style="display: table;">
+                    <div class="form-group">
+                        @Html.DropDownList("category", (List<SelectListItem>)ViewData["CATEGORIES"], new { @class = "form-control", style = "margin:auto;", id = "category" })
+                    </div>
+                    <div class="form-group">
+                        <input name="name" placeholder="Введіть критерій пошуку" class="form-control" style="margin: auto;" />
+                    </div>
+                    <div class="form-group">
+                        <input name="description_search" id="description_search" checked type="checkbox" class="col-xs-1 col-sm-1 col-md-1 col-lg-1" />
+                        <label for="description_search" class="col-xs-8 col-sm-8 col-md-8 col-lg-8">шукати в описі</label>
+                    </div>
+                    <div class="form-group">
+                        <select name="service_type" class="form-control col-xs-8 col-sm-8 col-md-8 col-lg-8" id="baseController">
+                            <option value="None">Оберіть тип</option>
+                            <option value="Session">Сеанс</option>
+                            <option value="Course">Курс</option>
+                            <option value="Deadline">Дедлайн</option>
+                        </select>
+                    </div>
+                    <input class="btn btn-success btn-block" id="searchButton" style="margin: auto;" value="Шукати" />
+                </div>
+            </div>
+            <div class="col-xs-8 col-sm-8 col-lg-8 col-md-8" id="servicesData">
+            </div>
+        </div>
     </div>
-    <div class="form-group">
-        <input name="name" placeholder="Введіть назву" class="form-control" style="margin: auto;" />
-    </div>
-    <label class="control-label">Оберіть ціну:</label>
-    <div class="form-group" style="margin-top: 10px;">
-        <input name="serviceMinPrice" type="text" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-sm-offset-1 col-md-offset-1 col-lg-offset-1" id="startTimeSun">
-        <div class="text-center col-xs-1 col-sm-1 col-md-1 col-lg-1"><p>грн</p></div>
-        <div class="text-center col-xs-1 col-sm-1 col-md-1 col-lg-1"><p>-</p></div>
-        <input name="serviceMaxPrice" type="text" class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-        <div class="text-center col-xs-1 col-sm-1 col-md-1 col-lg-1"><p>грн</p></div>
-    </div>
-    <label class="control-label text-center">Оберіть час курсу:</label>
-    <div class="form-group" style="margin-top: 10px;">
-        <input name="serviceStartDate" type="date" class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
-        <div class="text-center col-xs-2 col-sm-2 col-md-2 col-lg-2"><p>-</p></div>
-        <input name="serviceEndDate" type="date" class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
-    </div>
-    <input class="btn btn-success btn-block" id="searchButton" style="margin: auto;" value="Шукати" />
-</div>
-
-<div id="servicesData" style="margin-top: 50px;">
 </div>
 
 @section scripts{
@@ -39,16 +44,15 @@
 
         var tempName = null;
         var tempCategory = null;
-        var tempMinPrice = null;
-        var tempMaxPrice = null;
-        var tempStartDate = null;
-        var tempEndDate = null;
+        var tempType = null;
+        var tempDescriptionSearch = null;
+
 
         function getDivForService(service)
         {
             return '<a href="@Url.Action("ServiceDetails", "Service")?id=' + service.Id + '"\"">'
-            + '<div class="row" style="margin-top: 10px;">'
-         + '<div style="border: 2px solid green; border-radius: 7px; height: 300px;" class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-sm-offset-3 col-md-offset-3 col-lg-offset-3">'
+            + '<div class="row text-center" style="margin-bottom: 10px;">'
+         + '<div style="border: 2px solid green; border-radius: 7px; min-height: 300px;" class="col-xs-10 col-sm-10 col-md-10 col-lg-10 col-md-offset-1 col-lg-offset-1">'
             + '<h3>' + service.Name + '</h3>'
             + '<p>' + service.Description + '</p>'
         + '</div>'
@@ -64,16 +68,14 @@
                     var toPass = {
                         Name: tempName,
                         Category: tempCategory,
-                        ServiceMinPrice: tempMinPrice,
-                        ServiceMaxPrice: tempMaxPrice,
-                        ServiceStartDate: tempStartDate,
-                        ServiceEndDate: tempEndDate,
+                        Type: tempType,
+                        DescriptionSearch: tempDescriptionSearch,
                         LastID: lastId
                     };
 
                     $.ajax({
                         type: "POST",
-                        url: "http://localhost:49332/api/ServiceApi",
+                        url: "http://localhost:49332/api/ServiceApi/PostServiceParams",
                         dataType: "json",
                         data: JSON.stringify(toPass),
                         contentType: "application/json; charset=utf-8",
@@ -112,24 +114,20 @@
 
                 tempName = $('input[name="name"]').val();
                 tempCategory = $('#category').val();
-                tempMinPrice = $('input[name="serviceMinPrice"]').val();
-                tempMaxPrice = $('input[name="serviceMaxPrice"]').val();
-                tempStartDate = $('input[name="serviceStartDate"]').val();
-                tempEndDate = $('input[name="serviceEndDate"]').val();
+                tempType = $('select[name="service_type"]').val();
+                tempDescriptionSearch = $('input[name="description_search"]').is(":checked");
 
                 var toPass = {
                     Name: tempName,
                     Category: tempCategory,
-                    ServiceMinPrice: tempMinPrice,
-                    ServiceMaxPrice: tempMaxPrice,
-                    ServiceStartDate: tempStartDate,
-                    ServiceEndDate: tempEndDate,
+                    Type: tempType,
+                    DescriptionSearch: tempDescriptionSearch,
                     LastID: lastId
                 };
 
                 $.ajax({
                     type: "POST",
-                    url: "http://localhost:49332/api/ServiceApi",
+                    url: "http://localhost:49332/api/ServiceApi/PostServiceParams",
                     dataType: "json",
                     data: JSON.stringify(toPass),
                     contentType: "application/json; charset=utf-8",
