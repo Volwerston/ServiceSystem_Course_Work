@@ -14,69 +14,83 @@ namespace ServiceSystem.Controllers
 {
 
    
+    [Authorize]
     public class ApplicationController : ApiController
     {
         public HttpResponseMessage Post([FromBody]Application application)
         {
 
-            DeadlineApplication deadlineApp = application as DeadlineApplication;
+           DeadlineApplication deadlineApp = application as DeadlineApplication;
 
-            SessionApplication sessionApp = application as SessionApplication;
+           SessionApplication sessionApp = application as SessionApplication;
 
-            UndefinedCourseApplication dcApp = application as UndefinedCourseApplication;
+           using (SqlConnection connection = new SqlConnection(System.Web.Configuration.WebConfigurationManager.ConnectionStrings["DBCS"].ConnectionString))
+           {
+                string cmdString = "INSERT INTO Applications VALUES(@ServiceId, @ServiceType, @Description, @Username, @DetailsId);";
 
-            using (SqlConnection connection = new SqlConnection(System.Web.Configuration.WebConfigurationManager.ConnectionStrings["DBCS"].ConnectionString))
-            {
-                string cmdString = "INSERT INTO Applications (SERVICE_ID, DESCRIPTION, TIME_DETAILS, USERNAME) "
-                    + "VALUES (@ServiceId, @Description, @TimeDetails, @Username);";
+                Dictionary<string, object> parameters = new Dictionary<string, object>();
 
-                SqlCommand cmd = new SqlCommand(cmdString, connection);
-
-                cmd.Parameters.AddWithValue("@ServiceId", application.ServiceId);
-
-                cmd.Parameters.AddWithValue("@Description", application.Description);
-
-                cmd.Parameters.AddWithValue("@Username", "");
+                parameters.Add("@ServiceId", application.ServiceId);
+                parameters.Add("@ServiceType", application.ServiceType);
+                parameters.Add("@Description", application.Description);
+                parameters.Add("@Username", "");
 
                 if(deadlineApp != null)
                 {
-                    Tuple<bool, DateTime, DateTime, long> tuple = new Tuple<bool, DateTime, DateTime, long>(
-                        deadlineApp.IsByLastDate,
-                        deadlineApp.StartDate,
-                        deadlineApp.EndDate,
-                        deadlineApp.Duration.Ticks
-                        );
+                    if(deadlineApp.StartTime.Year < 1753)
+                    {
+                        deadlineApp.StartTime = new DateTime(1900, 1, 1);
+                    }
 
-                    cmd.Parameters.AddWithValue("@TimeDetails", JsonConvert.SerializeObject(tuple));
+                    if (deadlineApp.EndTime.Year < 1753)
+                    {
+                        deadlineApp.EndTime = new DateTime(1900, 1, 1);
+                    }
+
+                    cmdString = cmdString.Replace("@DetailsId", "IDENT_CURRENT('Deadline_Application_Details') + 1");
+
+                    cmdString += "INSERT INTO Deadline_Application_Details VALUES(@HasLastDate, @StartTime, @EndTime, @Duration);";
+
+                    parameters.Add("@HasLastDate", deadlineApp.HasLastDate);
+                    parameters.Add("@StartTime", deadlineApp.StartTime);
+                    parameters.Add("@EndTime", deadlineApp.EndTime);
+                    parameters.Add("@Duration", deadlineApp.Duration);
+
                 }
                 else if(sessionApp != null)
                 {
-                    Tuple<DateTime, long, long> tuple = new Tuple<DateTime, long, long>(
-                        sessionApp.Date,
-                        sessionApp.StartTime.Ticks,
-                        sessionApp.EndTime.Ticks
-                        );
+                    cmdString = cmdString.Replace("@DetailsId", "IDENT_CURRENT('Session_Application_Details') + 1");
 
-                    cmd.Parameters.AddWithValue("@TimeDetails", JsonConvert.SerializeObject(tuple));
-                }
-                else if(dcApp != null)
-                {
-                    cmd.Parameters.AddWithValue("@TimeDetails", JsonConvert.SerializeObject(dcApp.Days));
+                    cmdString += "INSERT INTO Session_Application_Details VALUES (@SessionStart);";
+
+                    parameters.Add("@SessionStart", sessionApp.SessionStartTime);
                 }
                 else
                 {
-                    cmd.Parameters.AddWithValue("@TimeDetails", DBNull.Value);
+                    cmdString = cmdString.Replace("@DetailsId", "0");
                 }
+
+                SqlCommand cmd = new SqlCommand(cmdString, connection);
+
+                foreach(var parameter in parameters)
+                {
+                    cmd.Parameters.AddWithValue(parameter.Key, parameter.Value);
+                }
+
+                connection.Open();
+                SqlTransaction transaction = connection.BeginTransaction();
+                cmd.Transaction = transaction;
 
                 try
                 {
-                    connection.Open();
                     cmd.ExecuteNonQuery();
+                    transaction.Commit();
 
                     return Request.CreateResponse(HttpStatusCode.OK, "Application successfully added");
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
+                    transaction.Rollback();
                     return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
                 }
             }

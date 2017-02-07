@@ -16,9 +16,35 @@ using Microsoft.Owin.Security.OAuth;
 using ServiceSystem.Models;
 using ServiceSystem.Providers;
 using ServiceSystem.Results;
+using System.Net.Mail;
+using System.Net;
+using System.Data.SqlClient;
+using System.Net.Http.Formatting;
+using System.Data;
+using System.Text;
+using Newtonsoft.Json;
 
 namespace ServiceSystem.Controllers
 {
+    public class LoginTokenResult
+    {
+        public override string ToString()
+        {
+            return AccessToken;
+        }
+
+        [JsonProperty(PropertyName = "access_token")]
+        public string AccessToken { get; set; }
+
+        [JsonProperty(PropertyName = "error")]
+        public string Error { get; set; }
+
+        [JsonProperty(PropertyName = "error_description")]
+        public string ErrorDescription { get; set; }
+
+    }
+
+
     [Authorize]
     [RoutePrefix("api/Account")]
     public class AccountController : ApiController
@@ -49,6 +75,93 @@ namespace ServiceSystem.Controllers
             }
         }
 
+        private bool IsEmailConfirmed(string mail)
+        {
+            bool toReturn = false;
+
+            using (SqlConnection con = new SqlConnection(System.Web.Configuration.WebConfigurationManager.ConnectionStrings["DBCS"].ConnectionString))
+            {
+                string cmdString = "SELECT * FROM AspNetUsers WHERE (Email=@mail) AND (EmailConfirmed=1)";
+
+                SqlDataAdapter da = new SqlDataAdapter(cmdString, con);
+                da.SelectCommand.Parameters.AddWithValue("@mail", mail);
+
+                try
+                {
+                    DataSet set = new DataSet();
+
+                    da.Fill(set);
+
+                    if(set.Tables[0].Rows.Count > 0)
+                    {
+                        toReturn = true;
+                    }
+                }
+                catch
+                {
+                    toReturn = false;
+                }
+            }
+
+            return toReturn;
+        }
+
+        private class TokenParams
+        {
+            public string username { get; set; }
+            public string password { get; set; }
+            public string grant_type { get; set; }
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public HttpResponseMessage CanLogin(Tuple<string, string> tuple)
+        {
+            string email = tuple.Item1;
+            string password = tuple.Item2;
+
+            string toReturn = "";
+
+            bool isConfirmed = IsEmailConfirmed(email);
+
+            if (isConfirmed)
+            {
+                //using (HttpClient client = new HttpClient())
+                //{
+                //    client.DefaultRequestHeaders.Clear();
+
+                //    client.BaseAddress = new Uri("http://localhost:49332/");
+
+                //    TokenParams parameters = new TokenParams
+                //    {
+                //        grant_type = "password",
+                //        password = password,
+                //        username = email
+                //    };
+
+                //    HttpResponseMessage response = client.PostAsync("/token",
+                //         new StringContent(string.Format("grant_type=password&username={0}&password={1}",
+                //        HttpUtility.UrlEncode(email),
+                //        HttpUtility.UrlEncode(password)), Encoding.UTF8,
+                //        "application/x-www-form-urlencoded")).Result;
+
+                //    string resultJSON = response.Content.ReadAsStringAsync().Result;
+                //    LoginTokenResult result = JsonConvert.DeserializeObject<LoginTokenResult>(resultJSON);
+
+                //    if (response.IsSuccessStatusCode)
+                //    {
+                //        toReturn = result.AccessToken;
+                //    }
+                //}
+
+                return Request.CreateResponse(HttpStatusCode.OK, toReturn);
+            }
+            else
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Email is not confirmed");
+            }
+        }
+
         public ISecureDataFormat<AuthenticationTicket> AccessTokenFormat { get; private set; }
 
         // GET api/Account/UserInfo
@@ -64,6 +177,178 @@ namespace ServiceSystem.Controllers
                 HasRegistered = externalLogin == null,
                 LoginProvider = externalLogin != null ? externalLogin.LoginProvider : null
             };
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public async Task<HttpResponseMessage> SetNewUserPassword(Tuple<string, string, string> data)
+        {
+            string request_id = data.Item1;
+            string password = data.Item2;
+
+            using (SqlConnection con = new SqlConnection(System.Web.Configuration.WebConfigurationManager.ConnectionStrings["DBCS"].ConnectionString))
+            {
+                string cmdString = "SELECT * FROM ChangePasswordLog WHERE REQUEST_ID=@id; DELETE FROM ChangePasswordLog WHERE REQUEST_ID=@id;";
+
+                SqlCommand cmd = new SqlCommand(cmdString, con);
+
+                cmd.Parameters.AddWithValue("@id", request_id);
+
+
+                try
+                {
+                    con.Open();
+
+                    DateTime date;
+                    string email = null;
+
+                    using (SqlDataReader rdr = cmd.ExecuteReader())
+                    {
+
+                        if (rdr.Read())
+                        {
+                            email = rdr["EMAIL"].ToString();
+                            date = Convert.ToDateTime(rdr["REQUEST_TIME"].ToString());
+                        }
+                    }
+
+                    string id = GetUserId(con, email);
+
+                    try
+                    {
+                        SetNullPassword(id);
+
+                        await SetPassword(new SetPasswordBindingModel { Id = id, NewPassword = data.Item2, ConfirmPassword = data.Item3 });
+
+                        return Request.CreateResponse(HttpStatusCode.OK, "OK");
+                    }
+                    catch
+                    {
+                        return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Internal server error");
+                    }
+                }
+                catch
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Internal server error");
+                }
+            }
+        }
+
+        private void SetNullPassword(string id)
+        {
+            using (SqlConnection con = new SqlConnection(System.Web.Configuration.WebConfigurationManager.ConnectionStrings["DBCS"].ConnectionString))
+            {
+                string cmdString = "UPDATE AspNetUsers SET PasswordHash=NULL WHERE Id=@id;";
+
+                SqlCommand cmd = new SqlCommand(cmdString, con);
+
+                cmd.Parameters.AddWithValue("@id", id);
+
+                try
+                {
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                }
+                catch
+                {
+                }
+            }
+        }
+
+        private string GetUserId(SqlConnection con, string email)
+        {
+            string toReturn = "";
+
+            string cmdString = "SELECT ID FROM AspNetUsers WHERE Email=@email;";
+
+            SqlCommand cmd = new SqlCommand(cmdString, con);
+
+            cmd.Parameters.AddWithValue("@email", email);
+
+            using (SqlDataReader rdr = cmd.ExecuteReader())
+            {
+                if (rdr.Read())
+                {
+                    return rdr["ID"].ToString();
+                }
+            }
+
+            return toReturn;
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        public HttpResponseMessage ChangeUserPassword(string email)
+        {
+            string guid = Guid.NewGuid().ToString();
+
+            bool letterSent = WriteChangePasswordLetter(email, guid);
+
+            if(letterSent)
+            {
+                using (SqlConnection con = new SqlConnection(System.Web.Configuration.WebConfigurationManager.ConnectionStrings["DBCS"].ConnectionString))
+                { 
+                    string cmdString = "INSERT INTO ChangePasswordLog VALUES(GETDATE(), @RequestId, @mail);";
+
+                    SqlCommand cmd = new SqlCommand(cmdString, con);
+
+                    cmd.Parameters.AddWithValue("@RequestId", guid);
+                    cmd.Parameters.AddWithValue("@mail", email);
+
+                    try
+                    {
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+
+                        return Request.CreateResponse(HttpStatusCode.OK, "Letter was sent");
+                    }
+                    catch
+                    {
+                        return Request.CreateResponse(HttpStatusCode.InternalServerError, "Internal server error");
+                    }
+                }
+            }
+            else
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Letter was not sent");
+            }
+        }
+
+
+        
+        private bool WriteChangePasswordLetter(string email, string guid)
+        {
+            string smtpHost = "smtp.gmail.com";
+            int smtpPort = 587;
+            string smtpUserName = "btsemail1@gmail.com";
+            string smtpUserPass = "btsadmin";
+
+            SmtpClient client = new SmtpClient(smtpHost, smtpPort);
+            client.UseDefaultCredentials = false;
+            client.Credentials = new NetworkCredential(smtpUserName, smtpUserPass);
+            client.EnableSsl = true;
+
+            string msgFrom = smtpUserName;
+            string msgTo = email;
+            string msgSubject = "Password Notification";
+
+            string msgBody = "Please follow this link: http://localhost:49332/Service/SetNewPassword?request_id=" + 
+                guid + " to change your password";
+
+            MailMessage message = new MailMessage(msgFrom, msgTo, msgSubject, msgBody);
+
+            message.IsBodyHtml = true;
+
+            try
+            {
+                client.Send(message);
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         // POST api/Account/Logout
@@ -123,7 +408,7 @@ namespace ServiceSystem.Controllers
                 return BadRequest(ModelState);
             }
 
-            IdentityResult result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword,
+            IdentityResult result = await UserManager.ChangePasswordAsync(model.Id, model.OldPassword,
                 model.NewPassword);
             
             if (!result.Succeeded)
@@ -143,7 +428,7 @@ namespace ServiceSystem.Controllers
                 return BadRequest(ModelState);
             }
 
-            IdentityResult result = await UserManager.AddPasswordAsync(User.Identity.GetUserId(), model.NewPassword);
+            IdentityResult result = await UserManager.AddPasswordAsync(model.Id, model.NewPassword);
 
             if (!result.Succeeded)
             {
@@ -318,6 +603,107 @@ namespace ServiceSystem.Controllers
             return logins;
         }
 
+        private string CreateConfirmationToken()
+        {
+            return Guid.NewGuid().ToString();
+        }
+
+        private bool SetEmailConfirmed(SqlConnection con, string confirmationToken)
+        {
+            bool toReturn = false;
+
+            string cmdString = "UPDATE AspNetUsers SET EmailConfirmed=1 WHERE ConfirmationToken = @token";
+
+            SqlCommand cmd = new SqlCommand(cmdString, con);
+
+            cmd.Parameters.AddWithValue("@token", confirmationToken);
+
+            try
+            {
+                cmd.ExecuteNonQuery();
+                toReturn = true;
+            }
+            catch
+            {
+                toReturn = false;
+            }
+            finally
+            {
+                con.Close();
+            }
+
+            return toReturn;
+        }
+
+        private bool ConfirmAccount(string confirmationToken)
+        {
+            bool toReturn = false;
+
+            using (SqlConnection connection = new SqlConnection(System.Web.Configuration.WebConfigurationManager.ConnectionStrings["DBCS"].ConnectionString))
+            {
+                string cmdString = "SELECT * FROM AspNetUsers WHERE ConfirmationToken=@token;";
+
+                SqlCommand cmd = new SqlCommand(cmdString, connection);
+                cmd.Parameters.AddWithValue("@token", confirmationToken);
+
+                try
+                {
+                    connection.Open();
+                    SqlDataReader rdr = cmd.ExecuteReader();
+
+                    if(rdr.Read())
+                    {
+                        rdr.Close();
+                        toReturn = SetEmailConfirmed(connection, confirmationToken);
+                    }
+                }
+                catch
+                {
+                    toReturn = false;
+                }
+            }
+
+            return toReturn; 
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        public HttpResponseMessage RegisterConfirmation(string token)
+        {
+            if (ConfirmAccount(token))
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, "Email confirmed");
+            }
+
+            return Request.CreateErrorResponse(HttpStatusCode.NotModified, "Wrong confirmation credentials");
+
+        }
+
+        private void SendEmailConfirmation(string to, string username, string confirmationToken)
+        {
+            string smtpHost = "smtp.gmail.com";
+            int smtpPort = 587;
+            string smtpUserName = "btsemail1@gmail.com";
+            string smtpUserPass = "btsadmin";
+
+            SmtpClient client = new SmtpClient(smtpHost, smtpPort);
+            client.UseDefaultCredentials = false;
+            client.Credentials = new NetworkCredential(smtpUserName, smtpUserPass);
+            client.EnableSsl = true;
+
+            string msgFrom = smtpUserName;
+            string msgTo = to;
+            string msgSubject = "Password Notification";
+
+            string msgBody = "Dear " + username + ", <br/><br/>";
+            msgBody += "Please follow this link: http://localhost:49332/Service/ConfirmMail?token=" + confirmationToken + " to confirm your account";
+            MailMessage message = new MailMessage(msgFrom, msgTo, msgSubject, msgBody);
+
+            message.IsBodyHtml = true;
+
+            client.Send(message);
+        }
+
         // POST api/Account/Register
         [AllowAnonymous]
         [Route("Register")]
@@ -328,13 +714,26 @@ namespace ServiceSystem.Controllers
                 return BadRequest(ModelState);
             }
 
-            var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
+            var user = new ApplicationUser() {
+                UserName = model.Email,
+                Email = model.Email,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                FatherName = model.FatherName,
+                Organisation = model.Organisation,
+                ConfirmationToken = CreateConfirmationToken(),
+                EmailConfirmed = false
+            };
 
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
 
             if (!result.Succeeded)
             {
                 return GetErrorResult(result);
+            }
+            else
+            {
+                SendEmailConfirmation(user.Email, user.FirstName, user.ConfirmationToken);
             }
 
             return Ok();
@@ -351,6 +750,7 @@ namespace ServiceSystem.Controllers
                 return BadRequest(ModelState);
             }
 
+
             var info = await Authentication.GetExternalLoginInfoAsync();
             if (info == null)
             {
@@ -360,12 +760,14 @@ namespace ServiceSystem.Controllers
             var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
 
             IdentityResult result = await UserManager.CreateAsync(user);
+
             if (!result.Succeeded)
             {
                 return GetErrorResult(result);
             }
 
             result = await UserManager.AddLoginAsync(user.Id, info.Login);
+
             if (!result.Succeeded)
             {
                 return GetErrorResult(result); 
@@ -404,7 +806,7 @@ namespace ServiceSystem.Controllers
                 {
                     foreach (string error in result.Errors)
                     {
-                        ModelState.AddModelError("", error);
+                        ModelState.AddModelError("error", error);
                     }
                 }
 

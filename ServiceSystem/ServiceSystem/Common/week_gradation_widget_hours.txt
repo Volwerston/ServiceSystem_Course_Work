@@ -1,5 +1,4 @@
-﻿
-<label class="control-label text-center">Вкажіть дні та час курсу:</label>
+﻿<label class="control-label text-center">Вкажіть дні та час курсу:</label>
                 <div class="form-group" style="margin-top: 10px;">
                     <input name="mon" type="checkbox" id="mon" class="col-xs-1 col-sm-1 col-md-1 col-lg-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 days" />
                     <label for="mon" class="col-xs-1 col-sm-1 col-md-1 col-lg-1">Пн</label>

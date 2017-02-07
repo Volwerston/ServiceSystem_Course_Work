@@ -1,4 +1,4 @@
-﻿            <div id="default_property_widget_*" style="border: 2px solid green; border-radius: 3px; margin-top: 5px; padding: 10px;">
+﻿﻿            <div id="default_property_widget_*" style="border: 2px solid green; border-radius: 3px; margin-top: 5px; padding: 10px;">
                 <div class="form-group">
                     <input type="text" name="property_name_*" class="form-control col-md-offset-2 col-lg-offset-2" placeholder="Назва властивості" />
                 </div>

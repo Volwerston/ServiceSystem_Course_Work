@@ -28,7 +28,7 @@ namespace ServiceSystem
             // Web API routes
             config.MapHttpAttributeRoutes();
 
-            config.Formatters.JsonFormatter.SerializerSettings.TypeNameHandling = TypeNameHandling.All;
+            config.Formatters.JsonFormatter.SerializerSettings.TypeNameHandling = TypeNameHandling.Auto;
 
             config.Routes.MapHttpRoute(
             name: "ControllerAndAction",

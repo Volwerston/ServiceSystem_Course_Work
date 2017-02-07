@@ -401,6 +401,7 @@ namespace ServiceSystem.Controllers
         }
     }
 
+    [Authorize]
     public class ServiceApiController : ApiController
     {
         [ActionName("PostServiceParams")]
@@ -593,6 +594,7 @@ namespace ServiceSystem.Controllers
             }
         }
 
+        [AllowAnonymous]
         public Tuple<Service, Dictionary<string,string>> Get([FromUri]int id)
         {
             Tuple<Service, Dictionary<string, string>> toReturn = new Tuple<Service, Dictionary<string, string>>(new Service(), new Dictionary<string, string>());
@@ -617,6 +619,7 @@ namespace ServiceSystem.Controllers
                     {
                         toReturn.Item1.Id = Convert.ToInt32(set.Tables[0].Rows[0]["ID"].ToString());
                         toReturn.Item1.Category = set.Tables[0].Rows[0]["CATEGORIES"].ToString();
+                        toReturn.Item1.Type = set.Tables[0].Rows[0]["TYPE"].ToString();
                         toReturn.Item1.Description = set.Tables[0].Rows[0]["DESCRIPTION"].ToString();
                         toReturn.Item1.Name = set.Tables[0].Rows[0]["NAME"].ToString();
                         toReturn.Item1.AdvancePercent = double.Parse(set.Tables[0].Rows[0]["ADVANCE_PERCENT"].ToString());

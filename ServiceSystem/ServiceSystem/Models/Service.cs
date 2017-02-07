@@ -296,46 +296,6 @@ namespace ServiceSystem.Models
             return toReturn;
         }
 
-        /*
-        private static DefinedCourse GenerateDefinedCourse(FormCollection collection)
-        {
-            DefinedCourse toReturn = new DefinedCourse();
-
-            toReturn.Price = Convert.ToDouble(collection["price"]);
-            
-            if(collection["participantsLimit"] == "on")
-            {
-                toReturn.ParticipantsLimited = true;
-                toReturn.ParticipantsNumber = Convert.ToInt32(collection["participants"]);
-            }
-
-            string[] days = new string[] { "mon", "tue", "wed", "thu", "fri", "sat", "sun" };
-
-            toReturn.Days = new List<Day>();
-
-            for(int i = 0; i < days.Count(); ++i)
-            {
-                if (collection[days[i]] == "on")
-                {
-                    toReturn.Days.Add(new Day
-                    {
-                        DayOfWeek = (DayOfWeek)(i+1),
-                        StartTime = new TimeSpan(
-                            Convert.ToInt32(collection[days[i] + "StartTime"].Split(':')[0]),
-                            Convert.ToInt32(collection[days[i] + "StartTime"].Split(':')[1]),
-                            0),
-                        EndTime = new TimeSpan(
-                            Convert.ToInt32(collection[days[i] + "EndTime"].Split(':')[0]),
-                            Convert.ToInt32(collection[days[i] + "EndTime"].Split(':')[1]),
-                            0),
-                    });
-                }
-            }
-
-            return toReturn;
-        }
-        */
-
         private static Course GenerateCourse(FormCollection collection)
         {
 
@@ -441,6 +401,7 @@ namespace ServiceSystem.Models
         public string Name { get; set; }
         public string Description { get; set; }
         public string Category { get; set; }
+        public string Type { get; set; }
         public List<File> Attachments { get; set; }
         public double AdvancePercent { get; set; }
         public List<Property> Properties { get; set; }

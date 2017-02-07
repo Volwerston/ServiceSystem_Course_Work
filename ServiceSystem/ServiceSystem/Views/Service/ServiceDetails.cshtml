@@ -70,7 +70,7 @@
 
   <div class="row">
             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                <input type="button" class="btn btn-info btn-block" value="Залишити заявку" onclick="location.href='@Url.Action("ApplicationForm", "Service", new { serviceType = ((Dictionary<string, string>)ViewData["PARAMS"])["SERVICE_TYPE"].ToString(), serviceId = Model.Id })'" />
+                <input type="button" class="btn btn-info btn-block" value="Залишити заявку" id="application_create" />
             </div>
             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                 <input type="button" class="btn btn-info btn-block" value="Задати запитання" />
@@ -78,6 +78,25 @@
         </div>
     </div>
 </div>
+
+<div class="row" hidden id="application_holder">
+    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-md-offset-2 col-lg-offset-2">
+        @using (Html.BeginForm("ServiceDetails", "Service", new { serviceId = Model.Id }, 
+            FormMethod.Post, new { @class = "form-horizontal well" }))
+        {
+            if (Model.Type == "Session")
+            {
+                @Html.Partial("_SessionApplication");
+            }
+            else if(Model.Type == "Deadline")
+            {
+                @Html.Partial("_DeadlineApplication");
+            }
+            @Html.Partial("_Application");
+        }
+    </div>
+</div>
+
 
 @section scripts{
     <script type="text/javascript">
@@ -101,6 +120,27 @@
                     $(this).empty();
 
                     $(this).html(data);
+
+
+                    $("#application_create").click(function () {
+
+                        $("#application_holder").removeAttr("hidden");
+
+                    });
+
+                    $('input[name="deadline_type"]').change(function () {
+
+                        if($(this).val() == "from_some_date")
+                        {
+                            $("#from_some_date").removeAttr("hidden");
+                            $("#by_last_date").attr("hidden", true);
+                        }
+                        else if($(this).val() == "by_last_date")
+                        {
+                            $("#by_last_date").removeAttr("hidden");
+                            $("#from_some_date").attr("hidden", true);
+                        }
+                    });
 
                 });
 

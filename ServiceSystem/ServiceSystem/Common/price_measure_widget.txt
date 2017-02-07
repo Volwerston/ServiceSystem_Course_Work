@@ -1,4 +1,4 @@
-﻿			    <div id="price_measure_widget_*" style="border: 2px solid green; border-radius: 3px; margin-top: 5px; padding: 10px;">
+﻿ <div id="price_measure_widget_*" style="border: 2px solid green; border-radius: 3px; margin-top: 5px; padding: 10px;">
                 <div class="form-group">
                     <select name="currency_*" class="col-md-offset-2 col-lg-offset-2 form-control">
                         <option value="none">Оберіть валюту</option>

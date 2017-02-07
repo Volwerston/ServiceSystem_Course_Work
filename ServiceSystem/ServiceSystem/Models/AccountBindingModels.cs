@@ -30,6 +30,8 @@ namespace ServiceSystem.Models
         [Display(Name = "Confirm new password")]
         [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        public string Id { get; set; }
     }
 
     public class RegisterBindingModel
@@ -48,6 +50,16 @@ namespace ServiceSystem.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [Required]
+        public string FirstName { get; set; }
+
+        [Required]
+        public string LastName { get; set; }
+
+        public string FatherName { get; set; }
+
+        public string Organisation { get; set; }
     }
 
     public class RegisterExternalBindingModel
@@ -80,5 +92,8 @@ namespace ServiceSystem.Models
         [Display(Name = "Confirm new password")]
         [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [Required]
+        public string Id { get; set; }
     }
 }

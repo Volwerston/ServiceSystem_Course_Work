@@ -1,6 +1,0 @@
-﻿<input type="hidden" value="Deadline" name="applicationType" />
-<label class="control-label">Оберіть тип дедлайну:</label>
-                <div class="form-group" style="margin: auto; margin-top: 10px;">
-                    <p><input type="radio" name="deadlineType" value="byLastDate" /> До конкретного дня </p>
-                    <p><input type="radio" name="deadlineType" value="fromSomeDate" /> Певний проміжок часу від конкретного дня </p>
-                </div>

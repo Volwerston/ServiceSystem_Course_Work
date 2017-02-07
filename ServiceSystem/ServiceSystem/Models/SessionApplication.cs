@@ -5,10 +5,9 @@ using System.Web;
 
 namespace ServiceSystem.Models
 {
-    public class SessionApplication : Application
+    public class SessionApplication: Application
     {
-        public DateTime Date { get; set; }
-        public TimeSpan StartTime { get; set; }
-        public TimeSpan EndTime { get; set; }
+        public int DetailsId { get; set; }
+        public DateTime SessionStartTime { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿				<div style="border: 2px solid green; border-radius: 3px; margin-top: 5px; padding: 10px;">
+﻿<div style="border: 2px solid green; border-radius: 3px; margin-top: 5px; padding: 10px;">
 				<div id="duration_measure_widget_1" style="border: 2px solid green; border-radius: 3px; margin-top: 5px; padding: 10px;">
                 <div class="form-group">
                     <select name="range_type_1" class="col-md-offset-2 col-lg-offset-2 form-control">

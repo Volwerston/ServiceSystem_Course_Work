@@ -1,4 +1,4 @@
-﻿                <div class="form-group">
+﻿<div class="form-group">
                     <select name="number_of_days" class="form-control col-xs-8 col-sm-8 col-md-8 col-lg-8 col-sm-offset-2 col-lg-offset-2 col-md-offset-2" id="cooperationController">
                         <option value="none">К-сть днів</option>
 						<option value="1">1</option>

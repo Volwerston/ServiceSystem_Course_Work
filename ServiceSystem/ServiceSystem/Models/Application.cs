@@ -15,75 +15,87 @@ namespace ServiceSystem.Models
         {
             Application toReturn = null;
 
-            switch(collection["applicationType"])
+            switch (collection["applicationType"])
             {
                 case "Deadline":
                     toReturn = GenerateDeadlineApplication(collection);
+
+                    toReturn.ServiceType = "Deadline";
                     break;
                 case "Session":
                     toReturn = GenerateSessionApplication(collection);
+
+                    toReturn.ServiceType = "Session";
                     break;
-                case "UndefinedCourse":
-                    toReturn = GenerateUndefinedCourseApplication(collection);
-                    break;
-                case "DefinedCourse":
-                    toReturn = new Application(); 
+                default:
+                    toReturn = new Application();
+
+                    toReturn.ServiceType = "Course";
                     break;
             }
 
+            toReturn.Description = collection["details_description"];
+
             toReturn.ServiceId = serviceId;
 
-            toReturn.Description = collection["applicationDescription"];
-
             return toReturn;
+        }
+
+        private static Application GenerateCourseApplication(FormCollection collection)
+        {
+            throw new NotImplementedException();
         }
 
         private static Application GenerateDeadlineApplication(FormCollection collection)
         {
             DeadlineApplication toReturn = new DeadlineApplication();
 
-            if(collection["deadlineType"] == "byLastDate")
+            if(collection["deadline_type"] == "by_last_date")
             {
-                toReturn.IsByLastDate = true;
+                toReturn.HasLastDate = true;
 
-                toReturn.EndDate = Convert.ToDateTime(collection["deadlineLastDate"]);
+                toReturn.EndTime = Convert.ToDateTime(collection["deadline_last_date"]);
 
-                toReturn.EndDate = toReturn.EndDate.AddHours(int.Parse(collection["deadlineLastDateTime"].Split(':')[0]));
+                toReturn.EndTime = toReturn.EndTime.AddHours(
+                    Convert.ToInt32(collection["deadline_last_time"].Split(':')[0])
+                    );
 
-                toReturn.EndDate = toReturn.EndDate.AddMinutes(int.Parse(collection["deadlineLastDateTime"].Split(':')[1]));
+                toReturn.EndTime = toReturn.EndTime.AddMinutes(
+                    Convert.ToInt32(collection["deadline_last_time"].Split(':')[1])
+                    );
             }
-            else if(collection["deadlineType"] == "fromSomeDate")
+            else if(collection["deadline_type"] == "from_some_date")
             {
-                toReturn.IsByLastDate = false;
+                toReturn.StartTime = Convert.ToDateTime(collection["deadline_start_date"]);
 
-                toReturn.StartDate = Convert.ToDateTime(collection["deadlineStartDate"]);
+                toReturn.StartTime = toReturn.StartTime.AddHours(
+                    Convert.ToInt32(collection["deadline_start_time"].Split(':')[0])
+                    );
 
-                toReturn.StartDate = toReturn.StartDate.AddHours(int.Parse(collection["deadlineStartDateTime"].Split(':')[0]));
+                toReturn.StartTime = toReturn.StartTime.AddMinutes(
+                    Convert.ToInt32(collection["deadline_start_time"].Split(':')[1])
+                    );
 
-                toReturn.StartDate = toReturn.StartDate.AddMinutes(int.Parse(collection["deadlineStartDateTime"].Split(':')[1]));
-
-                if(collection["deadlineDurationMeasure"] == "minutes")
+                switch (collection["deadline_duration_measure"])
                 {
-                    toReturn.Duration = new TimeSpan(0, 0, int.Parse(collection["deadlineDuration"]), 0);
-                }
-                else if(collection["deadlineDurationMeasure"] == "hours")
-                {
-                    toReturn.Duration = new TimeSpan(0, int.Parse(collection["deadlineDuration"]), 0, 0);
-                }
-                else if(collection["deadlineDurationMeasure"] == "days")
-                {
-                    toReturn.Duration = new TimeSpan(int.Parse(collection["deadlineDuration"]), 0, 0, 0);
-                }
-                else if(collection["deadlineDurationMeasure"] == "weeks")
-                {
-                    toReturn.Duration = new TimeSpan(7 * int.Parse(collection["deadlineDuration"]), 0, 0, 0);
-                }
-                else if(collection["deadlineDurationMeasure"] == "months")
-                {
-                    toReturn.Duration = new TimeSpan(30 * int.Parse(collection["deadlineDuration"]), 0, 0, 0);
+                    case "minutes":
+                        toReturn.Duration = new TimeSpan(0, 0, Convert.ToInt32(collection["deadline_duration"]), 0);
+                        break;
+                    case "hours":
+                        toReturn.Duration = new TimeSpan(0, Convert.ToInt32(collection["deadline_duration"]), 0, 0);
+                        break;
+                    case "days":
+                        toReturn.Duration = new TimeSpan(Convert.ToInt32(collection["deadline_duration"]), 0, 0, 0);
+                        break;
+                    case "weeks":
+                        toReturn.Duration = new TimeSpan(7 * Convert.ToInt32(collection["deadline_duration"]), 0, 0, 0);
+                        break;
+                    case "months":
+                        toReturn.Duration = new TimeSpan(30 * Convert.ToInt32(collection["deadline_duration"]), 0, 0, 0);
+                        break;
                 }
             }
-
+         
             return toReturn;
         }
 
@@ -91,59 +103,26 @@ namespace ServiceSystem.Models
         {
             SessionApplication toReturn = new SessionApplication();
 
-            toReturn.Date = Convert.ToDateTime(collection["sessionDate"]);
+            toReturn.SessionStartTime = Convert.ToDateTime(collection["service_day"]);
 
-            toReturn.StartTime = new TimeSpan(
-                int.Parse(collection["sessionStartTime"].Split(':')[0]),
-                int.Parse(collection["sessionStartTime"].Split(':')[1]),
-                0
+            toReturn.SessionStartTime = toReturn.SessionStartTime.AddHours(
+                Convert.ToInt32(collection["start_time"].Split(':')[0])
                 );
 
-
-            toReturn.EndTime = new TimeSpan(
-                int.Parse(collection["sessionEndTime"].Split(':')[0]),
-                int.Parse(collection["sessionEndTime"].Split(':')[1]),
-                0
+            toReturn.SessionStartTime = toReturn.SessionStartTime.AddMinutes(
+                Convert.ToInt32(collection["start_time"].Split(':')[1])
                 );
-
-            return toReturn;
-        }
-
-        private static Application GenerateUndefinedCourseApplication(FormCollection collection)
-        {
-            UndefinedCourseApplication toReturn = new UndefinedCourseApplication();
-
-            string[] days = new string[] { "mon", "tue", "wed", "thu", "fri", "sat", "sun" };
-
-            toReturn.Days = new List<Day>();
-
-            for (int i = 0; i < days.Count(); ++i)
-            {
-                if (collection[days[i]] == "on")
-                {
-                    toReturn.Days.Add(new Day
-                    {
-                        DayOfWeek = (DayOfWeek)(i + 1),
-                        StartTime = new TimeSpan(
-                            Convert.ToInt32(collection[days[i] + "StartTime"].Split(':')[0]),
-                            Convert.ToInt32(collection[days[i] + "StartTime"].Split(':')[1]),
-                            0),
-                        EndTime = new TimeSpan(
-                            Convert.ToInt32(collection[days[i] + "EndTime"].Split(':')[0]),
-                            Convert.ToInt32(collection[days[i] + "EndTime"].Split(':')[1]),
-                            0),
-                    });
-                }
-            }
 
             return toReturn;
         }
     }
+        
 
     public class Application
     {
         public int Id { get; set; }
         public int ServiceId { get; set; }
         public string Description { get; set; }
+        public string ServiceType { get; set; }
     }
 }
