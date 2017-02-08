@@ -80,6 +80,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -339,6 +340,7 @@
     <Content Include="Views\Service\GetToken.cshtml" />
     <Content Include="Views\Service\ChangePassword.cshtml" />
     <Content Include="Views\Service\SetNewPassword.cshtml" />
+    <Content Include="Views\Service\InternalAccountPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

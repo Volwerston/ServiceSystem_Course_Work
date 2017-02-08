@@ -1,0 +1,44 @@
+﻿@model ServiceSystem.Models.UserInfoViewModel
+
+@{
+    ViewBag.Title = "InternalAccountPage";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div style="border: 2px solid green; border-radius: 5px; max-width: 80%; padding: 20px; margin: auto;">
+    <div class="row" style="padding: 10px;">
+        <div class="col-xs-4 col-sm-4 col-lg-4 col-md-4 text-center" style="border: 2px solid green; border-radius: 5px;">
+            <p>Here is user's photo</p>
+        </div>
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-md-offset-1 col-lg-offset-1" style="border: 2px solid green; border-radius: 5px;">
+            <div>
+                <dl class="dl-horizontal">
+                    <dt>
+                        ПІБ:
+                    </dt>
+
+                    <dd>
+                        <p>@Model.LastName @Model.FirstName @Model.FatherName</p>
+                    </dd>
+
+                    <dt>
+                        Організація:
+                    </dt>
+
+                    <dd>
+                        <p>@Html.DisplayFor(model => model.Organisation)</p>
+                    </dd>
+
+                    <dt>
+                        E-mail:
+                    </dt>
+
+                    <dd>
+                        <p>@Model.Email</p>
+                    </dd>
+
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>

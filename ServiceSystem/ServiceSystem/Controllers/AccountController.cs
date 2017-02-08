@@ -23,11 +23,41 @@ using System.Net.Http.Formatting;
 using System.Data;
 using System.Text;
 using Newtonsoft.Json;
+using System.Security.Principal;
 
 namespace ServiceSystem.Controllers
 {
+
+    public static class IDentityExtension
+    {
+        public static string GetFirstName(this IIdentity identity)
+        {
+            var claim = ((ClaimsIdentity)identity).FindFirst("FirstName");
+            return (claim != null) ? claim.Value : string.Empty;
+        }
+
+        public static string GetLastName(this IIdentity identity)
+        {
+            var claim = ((ClaimsIdentity)identity).FindFirst("LastName");
+            return (claim != null) ? claim.Value : string.Empty;
+        }
+
+        public static string GetFatherName(this IIdentity identity)
+        {
+            var claim = ((ClaimsIdentity)identity).FindFirst("FatherName");
+            return (claim != null) ? claim.Value : string.Empty;
+        }
+
+        public static string GetOrganisation(this IIdentity identity)
+        {
+            var claim = ((ClaimsIdentity)identity).FindFirst("Organisation");
+            return (claim != null) ? claim.Value : string.Empty;
+        }
+    }
+
     public class LoginTokenResult
     {
+
         public override string ToString()
         {
             return AccessToken;
@@ -79,6 +109,8 @@ namespace ServiceSystem.Controllers
         {
             bool toReturn = false;
 
+            
+
             using (SqlConnection con = new SqlConnection(System.Web.Configuration.WebConfigurationManager.ConnectionStrings["DBCS"].ConnectionString))
             {
                 string cmdString = "SELECT * FROM AspNetUsers WHERE (Email=@mail) AND (EmailConfirmed=1)";
@@ -102,6 +134,8 @@ namespace ServiceSystem.Controllers
                     toReturn = false;
                 }
             }
+
+            
 
             return toReturn;
         }
@@ -175,7 +209,11 @@ namespace ServiceSystem.Controllers
             {
                 Email = User.Identity.GetUserName(),
                 HasRegistered = externalLogin == null,
-                LoginProvider = externalLogin != null ? externalLogin.LoginProvider : null
+                LoginProvider = externalLogin != null ? externalLogin.LoginProvider : null,
+                FatherName = User.Identity.GetFatherName(),
+                FirstName = User.Identity.GetFirstName(),
+                LastName = User.Identity.GetLastName(),
+                Organisation = User.Identity.GetOrganisation()
             };
         }
 

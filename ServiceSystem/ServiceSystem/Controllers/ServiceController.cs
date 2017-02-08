@@ -3,22 +3,19 @@ using ServiceSystem.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Text;
-using System.Threading;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.Caching;
+using System.Runtime.Caching;
 
 namespace ServiceSystem.Controllers
 {
+
     public class ServiceController : Controller
     {
         private Dictionary<string, string> constructorBlocks;
-
-        private string access_token = "";
 
         [NonAction]
         public Dictionary<string, string> GetConstructorBlocks()
@@ -174,7 +171,13 @@ namespace ServiceSystem.Controllers
         [HttpPost]
         public string GetToken(string token)
         {
-            access_token = token;
+            ObjectCache cache = MemoryCache.Default;
+
+            CacheItemPolicy policy = new CacheItemPolicy();
+            policy.AbsoluteExpiration =
+                DateTimeOffset.Now.AddHours(1);
+
+            cache.Set("access_token", token, policy);
 
             return JsonConvert.SerializeObject("OK");
         }
@@ -202,13 +205,15 @@ namespace ServiceSystem.Controllers
         {
             Dictionary<string, string> categories = new Dictionary<string, string>();
 
+            ObjectCache cache = MemoryCache.Default;
+
             using (HttpClient client = new HttpClient())
             {
                 client.BaseAddress = new Uri("http://localhost:49332/");
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 
-                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", access_token);
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", cache["access_token"] as string);
 
                 HttpResponseMessage message = client.GetAsync("api/Category").Result;
 
@@ -237,6 +242,8 @@ namespace ServiceSystem.Controllers
         {
             Application toAdd = ApplicationManager.GenerateApplication(serviceId, collection);
 
+            ObjectCache cache = MemoryCache.Default;
+
             using (HttpClient client = new HttpClient())
             {
                 client.BaseAddress = new Uri("http://localhost:49332/");
@@ -244,7 +251,7 @@ namespace ServiceSystem.Controllers
 
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 
-                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", access_token);
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", cache["access_token"] as string);
   
                 JsonMediaTypeFormatter formatter = new JsonMediaTypeFormatter();
 
@@ -260,6 +267,7 @@ namespace ServiceSystem.Controllers
         public ActionResult Main(FormCollection collection, IEnumerable<HttpPostedFileBase> service_attachments)
         {
             Service service = ServiceManager.GenerateService(collection, service_attachments);
+            ObjectCache cache = MemoryCache.Default;
 
             using (HttpClient client = new HttpClient())
             {
@@ -268,7 +276,7 @@ namespace ServiceSystem.Controllers
 
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 
-                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", access_token);
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", cache["access_token"] as string);
 
                 JsonMediaTypeFormatter formatter = new JsonMediaTypeFormatter();
 
@@ -281,9 +289,27 @@ namespace ServiceSystem.Controllers
         }
 
         [Authorize]
+        public ActionResult InternalAccountPage()
+        {
+            UserInfoViewModel model = new UserInfoViewModel
+            {
+                    Email = User.Identity.Name,
+                    FirstName = User.Identity.GetFirstName(),
+                    LastName = User.Identity.GetLastName(),
+                    FatherName = User.Identity.GetFatherName(),
+                    Organisation = User.Identity.GetOrganisation(),
+                    HasRegistered = true,
+                    LoginProvider = null
+            };
+
+                return View(model);
+        }
+
+        [Authorize]
         public ActionResult ServiceDetails(int id)
         {
             Tuple<Service, Dictionary<string, string>> toReturn = null;
+            ObjectCache cache = MemoryCache.Default;
 
             using (HttpClient client = new HttpClient())
             {
@@ -291,7 +317,7 @@ namespace ServiceSystem.Controllers
 
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", access_token);
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", cache["access_token"] as string);
 
                 HttpResponseMessage response = client.GetAsync("api/ServiceApi?id=" + id.ToString()).Result;
 
