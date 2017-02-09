@@ -140,7 +140,7 @@ namespace ServiceSystem.Controllers
                 }
             }
 
-            return RedirectToAction("SetNewPassword", request_id);
+            return RedirectToAction("SetNewPassword", "Service", request_id);
         }
 
         [HttpPost]

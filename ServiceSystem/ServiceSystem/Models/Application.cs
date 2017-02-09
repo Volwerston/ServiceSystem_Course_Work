@@ -116,7 +116,7 @@ namespace ServiceSystem.Models
             return toReturn;
         }
     }
-        
+
 
     public class Application
     {
@@ -124,5 +124,9 @@ namespace ServiceSystem.Models
         public int ServiceId { get; set; }
         public string Description { get; set; }
         public string ServiceType { get; set; }
+        public string Status { get; set; }
+        public DateTime StatusChangeDate { get; set; }
+        public string ServiceName { get; set; }
+        public string Username { get; set; }
     }
 }

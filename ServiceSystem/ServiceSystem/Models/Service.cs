@@ -39,7 +39,7 @@ namespace ServiceSystem.Models
 
             toReturn.Category = collection["service_category"];
 
-            toReturn.AdvancePercent = 0.5; // CHANGE!!!        
+            toReturn.AdvancePercent = Convert.ToDouble(collection["advance_percent"]);      
 
             toReturn.Attachments = new List<File>();
 

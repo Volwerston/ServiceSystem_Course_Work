@@ -314,14 +314,14 @@ namespace ServiceSystem.Controllers
 
                     toReturn.Add("Вартість", StringifyPaymentMeasures(measures));
 
-                    if (set.Tables[0].Rows[0]["COURSE_PARAMETERS"].ToString() != "null")
+                    if (set.Tables[0].Rows[0]["COURSE_PARAMS"].ToString() != "null")
                     {
                         bool isDefined = Convert.ToBoolean(set.Tables[0].Rows[0]["IS_DEFINED"].ToString());
 
                         if (isDefined)
                         {
                             DefinedCourseParams parameters = JsonConvert.DeserializeObject<DefinedCourseParams>(
-                                set.Tables[0].Rows[0]["COURSE_PARAMETERS"].ToString()
+                                set.Tables[0].Rows[0]["COURSE_PARAMS"].ToString()
                                 );
 
                             toReturn.Add("Розклад", StringifyDaysMeasures(parameters.Days));
@@ -329,7 +329,7 @@ namespace ServiceSystem.Controllers
                         else
                         {
                             UndefinedCourseParams parameters = JsonConvert.DeserializeObject<UndefinedCourseParams>(
-                                set.Tables[0].Rows[0]["COURSE_PARAMETERS"].ToString()
+                                set.Tables[0].Rows[0]["COURSE_PARAMS"].ToString()
                                 );
 
                             StringBuilder daysBuilder = new StringBuilder("");
@@ -356,54 +356,54 @@ namespace ServiceSystem.Controllers
 
             return toReturn;
         }
-
-        private static Dictionary<string, string> GetUndefinedCourseDetails(int detailsId, SqlConnection con)
-        {
-            Dictionary<string, string> toReturn = new Dictionary<string, string>();
-
-            string cmdString = "SELECT * FROM UndefinedCourse_Details WHERE ID=@Id;";
-
-            SqlDataAdapter da = new SqlDataAdapter(cmdString, con);
-            da.SelectCommand.Parameters.AddWithValue("@Id", detailsId);
-
-            DataSet set = new DataSet();
-
-            try
-            {
-                da.Fill(set);
-
-                if (set.Tables[0].Rows.Count > 0)
-                {
-                    int[] days = JsonConvert.DeserializeObject<int[]>(set.Tables[0].Rows[0]["TIME_DETAILS"].ToString());
-
-                    StringBuilder daySchedule = new StringBuilder("");
-                
-                    for(int i = 0; i < days.Count(); ++i)
-                    {
-                        daySchedule.Append("День " + (i + 1).ToString());
-
-                        daySchedule.Append(": " + days[i].ToString() + " хвилин " + "<br/>");
-                    }
-
-                    toReturn.Add("Час проведення курсу:", daySchedule.ToString());
-                }
-                else
-                {
-                    toReturn = null;
-                }
-            }
-            catch
-            {
-                toReturn = null;
-            }
-
-            return toReturn;
-        }
     }
+
 
     [Authorize]
     public class ServiceApiController : ApiController
     {
+
+        [ActionName("UserCreatedServices")]
+        [HttpGet]
+        public HttpResponseMessage GetServices()
+        {
+            List<Service> toReturn = new List<Service>();
+
+            using (SqlConnection connection = new SqlConnection(System.Web.Configuration.WebConfigurationManager.ConnectionStrings["DBCS"].ConnectionString))
+            {
+                string cmdString = "SELECT ID, NAME, TYPE, CATEGORIES from Services WHERE USERNAME=@username;";
+
+                SqlDataAdapter da = new SqlDataAdapter(cmdString, connection);
+
+                da.SelectCommand.Parameters.AddWithValue("@username", User.Identity.Name);
+
+                DataSet set = new DataSet();
+
+                try
+                {
+                    da.Fill(set);
+
+                    foreach (DataRow row in set.Tables[0].Rows)
+                    {
+                        Service service = new Service();
+
+                        service.Id = Convert.ToInt32(row["ID"].ToString());
+                        service.Name = row["NAME"].ToString();
+                        service.Type = row["TYPE"].ToString();
+                        service.Category = row["CATEGORIES"].ToString();
+
+                        toReturn.Add(service);
+                    }
+                }
+                catch(Exception ex)
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
+                }
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, toReturn);
+        }
+
         [ActionName("PostServiceParams")]
         public string Post([FromBody]ServiceParams parameters)
         {
@@ -506,7 +506,7 @@ namespace ServiceSystem.Controllers
 
             Deadline deadline = service as Deadline;
 
-            string cmdString = "INSERT INTO Services VALUES(@Name, @Categories, @Description, @AdvancePercent, @Properties, @Type, @DetailsId);";
+            string cmdString = "INSERT INTO Services VALUES(@Name, @Categories, @Description, @AdvancePercent, @Properties, @Type, @DetailsId, @Username);";
 
             Dictionary<string, object> parameters = new Dictionary<string, object>();
 
@@ -518,6 +518,7 @@ namespace ServiceSystem.Controllers
                 parameters.Add("@Description", service.Description);
                 parameters.Add("@AdvancePercent", service.AdvancePercent);
                 parameters.Add("@Properties", JsonConvert.SerializeObject(service.Properties));
+                parameters.Add("@Username", User.Identity.Name);
 
 
                 if (session != null)

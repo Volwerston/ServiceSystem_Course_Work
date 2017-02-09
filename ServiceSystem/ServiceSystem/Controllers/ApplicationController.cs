@@ -3,6 +3,7 @@ using Newtonsoft.Json.Linq;
 using ServiceSystem.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
@@ -26,14 +27,15 @@ namespace ServiceSystem.Controllers
 
            using (SqlConnection connection = new SqlConnection(System.Web.Configuration.WebConfigurationManager.ConnectionStrings["DBCS"].ConnectionString))
            {
-                string cmdString = "INSERT INTO Applications VALUES(@ServiceId, @ServiceType, @Description, @Username, @DetailsId);";
+                string cmdString = "INSERT INTO Applications VALUES(@ServiceId, @ServiceType, @Description, @Username, @DetailsId, @Status, GETDATE() );";
 
                 Dictionary<string, object> parameters = new Dictionary<string, object>();
 
                 parameters.Add("@ServiceId", application.ServiceId);
                 parameters.Add("@ServiceType", application.ServiceType);
                 parameters.Add("@Description", application.Description);
-                parameters.Add("@Username", "");
+                parameters.Add("@Username", User.Identity.Name);
+                parameters.Add("@Status", "PENDING");
 
                 if(deadlineApp != null)
                 {
@@ -94,6 +96,49 @@ namespace ServiceSystem.Controllers
                     return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
                 }
             }
+        }
+
+
+        [ActionName("GetServiceApplications")]
+        public HttpResponseMessage GetServiceApplications()
+        {
+            List<Application> toReturn = new List<Application>();
+
+            using (SqlConnection connection = new SqlConnection(System.Web.Configuration.WebConfigurationManager.ConnectionStrings["DBCS"].ConnectionString))
+            {
+                SqlDataAdapter da = new SqlDataAdapter("spGetApplicationsForUserServices", connection);
+
+                da.SelectCommand.CommandType = System.Data.CommandType.StoredProcedure;
+
+                da.SelectCommand.Parameters.AddWithValue("@Username", User.Identity.Name);
+
+                try
+                {
+                    DataSet set = new DataSet();
+
+                    da.Fill(set);
+
+                    foreach(DataRow row in set.Tables[0].Rows)
+                    {
+                        Application app = new Application();
+
+                        app.Id = Convert.ToInt32(row["ApplicationId"].ToString());
+                        app.ServiceName = row["ServiceName"].ToString();
+                        app.Username = row["Username"].ToString();
+                        app.Status = row["Status"].ToString();
+                        app.StatusChangeDate = Convert.ToDateTime(row["StatusChangeDate"].ToString());
+
+                        toReturn.Add(app);
+                    }
+
+                }
+                catch(Exception ex)
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
+                }
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, toReturn);
         }
     }
 }
