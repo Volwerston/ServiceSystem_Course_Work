@@ -1,0 +1,115 @@
+﻿@model ServiceSystem.Models.Application
+@using ServiceSystem.Models
+@using System.Globalization
+
+@{
+    ViewBag.Title = "ApplicationDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    List<SelectListItem> toPass = new List<SelectListItem>();
+
+    foreach (var measure in (List<PaymentMeasure>)ViewData["ServicePaymentMeasures"])
+    {
+        switch (measure.Currency)
+        {
+            case "hryvnia":
+                toPass.Add(new SelectListItem
+                {
+                    Text = String.Format("{0}/{1}", CultureInfo.GetCultureInfo("uk-UA").NumberFormat.CurrencySymbol, measure.ValueMeasure),
+                    Value = String.Format("{0}_{1}", measure.Currency, measure.ValueMeasure)
+                }
+                    );
+                break;
+            case "dollar":
+                toPass.Add(new SelectListItem
+                {
+                    Text = String.Format("{0}/{1}", CultureInfo.GetCultureInfo("en-US").NumberFormat.CurrencySymbol, measure.ValueMeasure),
+                    Value = String.Format("{0}_{1}", measure.Currency, measure.ValueMeasure)
+                }
+    );
+                break;
+            case "euro":
+                toPass.Add(new SelectListItem
+                {
+                    Text = String.Format("{0}/{1}", CultureInfo.GetCultureInfo("de-DE").NumberFormat.CurrencySymbol, measure.ValueMeasure),
+                    Value = String.Format("{0}_{1}", measure.Currency, measure.ValueMeasure)
+                }
+    );
+                break;
+        }
+    }
+}
+
+<div class="row">
+    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-md-offset-2 col-lg-offset-2" style="border: 2px solid green; border-radius: 3px; padding: 10px;">
+        <table class="table table-bordered" style="padding: 10px;">
+            <tbody>
+                <tr>
+                    <td>Замовник</td>
+                    <td>@Model.Username</td>
+                </tr>
+                <tr>
+                    <td>Останні зміни</td>
+                    <td>@Model.StatusChangeDate</td>
+                </tr>
+                <tr>
+                    <td>Статус</td>
+                    <td>@Model.Status</td>
+                </tr>
+                <tr>
+                    <td>Назва сервісу</td>
+                    <td>@Model.ServiceName</td>
+                </tr>
+                <tr>
+                    <td>Деталі</td>
+                    @if (Model.Description.Trim() != "")
+                    {
+                    <td>@Model.Description</td>
+        }
+                    else
+                    {
+                        <td>-</td>
+                    }
+                </tr>
+            </tbody>
+        </table>
+
+        @if (User.Identity.Name == ViewData["ServiceProviderName"].ToString())
+        {
+            <input type="button" name="form_application" class="btn btn-success btn-block" style="margin-top: 10px; margin: auto;" value="Сформувати заявку" />
+
+            <div id="application_form_holder" hidden>
+                @Html.Partial("~/Views/Shared/_Bill.cshtml", toPass)
+            </div>
+        }
+
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('input[name="form_application"]').click(function () {
+                $("#application_form_holder").removeAttr("hidden");
+            });
+
+            $('input[name="has_time_limit"]').change(function () {
+                if ($(this).is(":checked")) {
+                    $("#time_limit_holder").removeAttr("hidden");
+                }
+                else {
+                    $("#time_limit_holder").attr("hidden", true);
+                }
+            });
+
+            $('input[name="add_comment"]').change(function () {
+                if ($(this).is(":checked")) {
+                    $("#comment_holder").removeAttr("hidden");
+                }
+                else {
+                    $("#comment_holder").attr("hidden", true);
+                }
+            });
+        });
+    </script>
+}

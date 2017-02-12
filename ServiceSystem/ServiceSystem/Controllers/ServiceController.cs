@@ -195,7 +195,6 @@ namespace ServiceSystem.Controllers
             {
                 ViewData[block.Key] = block.Value;
             }
-
             
             return View();
         }
@@ -261,6 +260,46 @@ namespace ServiceSystem.Controllers
             }
 
             return RedirectToAction("ServiceDetails", new { id = serviceId });
+        }
+
+        public ActionResult ApplicationDetails(int id)
+        {
+            Tuple<string, Application, List<PaymentMeasure>> applicationCredentials = null;
+
+            ObjectCache cache = MemoryCache.Default;
+
+            using (HttpClient client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Clear();
+                client.BaseAddress = new Uri("http://localhost:49332");
+                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", cache["access_token"] as string);
+
+                HttpResponseMessage response = client.GetAsync("api/Application/GetApplicationById?id=" + id.ToString()).Result;
+
+                if(response.IsSuccessStatusCode)
+                {
+                    applicationCredentials = response.Content.ReadAsAsync<Tuple<string, Application, List<PaymentMeasure>>>().Result;
+                }
+            }
+
+            if(applicationCredentials != null && 
+                (User.Identity.Name == applicationCredentials.Item1 ||
+                User.Identity.Name == applicationCredentials.Item2.Username))
+            {
+                ViewData["ServiceProviderName"] = applicationCredentials.Item1;
+                ViewData["ServicePaymentMeasures"] = applicationCredentials.Item3;
+
+                return View(applicationCredentials.Item2);
+            }
+
+                return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public ActionResult ApplicationDetails(FormCollection collection)
+        {
+            return null;
         }
 
         [HttpPost]

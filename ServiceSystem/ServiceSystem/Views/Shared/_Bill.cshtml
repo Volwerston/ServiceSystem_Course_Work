@@ -1,0 +1,46 @@
+﻿@model IEnumerable<SelectListItem>
+
+<div class="row" style="margin-top: 10px;">
+    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-sm-offset-2 col-md-offset-2" style="border: 2px solid green; border-radius: 3px;padding: 10px;">
+        @using (Html.BeginForm("AccountDetails", "Service", null, FormMethod.Post, new { @class = "form-horizontal text-center" }))
+        {
+            <label for="date_limit" class="control-label">Оберіть міру ціни:</label>
+            <div class="form-group">
+                @Html.DropDownList("price_measure", Model, new { @class = "form-control", style="margin: auto;" })
+            </div>       
+            <div class="form-group">
+                <input type="number" style="margin: auto;" placeholder="К-сть одиниць виміру" name="items_number" class="form-control" />
+            </div>
+            <div class="form-group">
+                <input type="number" style="margin: auto;" placeholder="Передоплата" name="advance_percent" class="form-control" />
+            </div>
+            <div class="form-group">
+                <input type="text" style="margin: auto;" placeholder="Вартість  послуги" name="price" class="form-control" />
+            </div>
+            <label for="date_limit" class="control-label">Оплатити до:</label>
+            <div class="form-group">
+                <input type="date" style="margin: auto;" class="form-control" name="date_limit" id="date_limit" />
+            </div>
+            <div class="form-group">
+                <input type="checkbox" name="has_time_limit" id="has_time_limit" />
+                <label for="has_time_limit">уточнити час</label>
+            </div>
+            <div id="time_limit_holder" hidden>
+                <label for="time_limit" class="control-label">Межа часу:</label>
+                <div class="form-group">
+                    <input type="time" style="margin: auto;" class="form-control" name="time_limit" id="time_limit" />
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="checkbox" name="add_comment" />
+                <label for="add_comment">додати коментар</label>
+            </div>
+            <div id="comment_holder" hidden>
+                <div class="form-group">
+                   <textarea name="comment_text" style="margin: auto;" class="form-control" placeholder="Ваш коментар" rows="10">
+                   </textarea>
+                </div>
+            </div>
+        }
+    </div>
+</div>

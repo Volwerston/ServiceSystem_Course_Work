@@ -98,6 +98,48 @@ namespace ServiceSystem.Controllers
             }
         }
 
+        [ActionName("GetApplicationById")]
+        public HttpResponseMessage GetAppById(int id)
+        {
+
+            string serviceProviderName = "";
+            Application application = new Application();
+            List<PaymentMeasure> servicePaymentMeasures = new List<PaymentMeasure>();
+
+            using (SqlConnection connection = new SqlConnection(System.Web.Configuration.WebConfigurationManager.ConnectionStrings["DBCS"].ConnectionString))
+            {
+                SqlDataAdapter da = new SqlDataAdapter("spGetApplicationById", connection);
+
+                da.SelectCommand.CommandType = CommandType.StoredProcedure;
+
+                da.SelectCommand.Parameters.AddWithValue("@Id", id);
+
+                DataSet set = new DataSet();
+
+                try
+                {
+                    da.Fill(set);
+
+                    if(set.Tables[0].Rows.Count > 0)
+                    {
+                        application.Id = Convert.ToInt32(set.Tables[0].Rows[0]["Id"].ToString());
+                        application.Username = set.Tables[0].Rows[0]["Username"].ToString();
+                        application.StatusChangeDate = Convert.ToDateTime(set.Tables[0].Rows[0]["StatusChangeDate"].ToString());
+                        application.Status = set.Tables[0].Rows[0]["Status"].ToString();
+                        application.ServiceName = set.Tables[0].Rows[0]["Name"].ToString();
+                        application.Description = set.Tables[0].Rows[0]["Description"].ToString();
+                        serviceProviderName = set.Tables[0].Rows[0]["ServiceProviderName"].ToString();
+                        servicePaymentMeasures = JsonConvert.DeserializeObject<List<PaymentMeasure>>(set.Tables[0].Rows[0]["PaymentMeasures"].ToString());
+                    }
+                }
+                catch(Exception ex)
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
+                }
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, new Tuple<string, Application, List<PaymentMeasure>>(serviceProviderName, application, servicePaymentMeasures));        
+        }
 
         [ActionName("GetServiceApplications")]
         public HttpResponseMessage GetServiceApplications()
@@ -127,6 +169,7 @@ namespace ServiceSystem.Controllers
                         app.Username = row["Username"].ToString();
                         app.Status = row["Status"].ToString();
                         app.StatusChangeDate = Convert.ToDateTime(row["StatusChangeDate"].ToString());
+
 
                         toReturn.Add(app);
                     }
