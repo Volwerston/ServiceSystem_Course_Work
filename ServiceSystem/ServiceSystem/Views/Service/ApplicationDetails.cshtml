@@ -79,7 +79,8 @@
             <input type="button" name="form_application" class="btn btn-success btn-block" style="margin-top: 10px; margin: auto;" value="Сформувати заявку" />
 
             <div id="application_form_holder" hidden>
-                @Html.Partial("~/Views/Shared/_Bill.cshtml", toPass)
+                @Html.Partial("~/Views/Shared/_Bill.cshtml", toPass, 
+               new ViewDataDictionary() {  new KeyValuePair<string, object>("ApplicationId", (int)ViewData["ApplicationId"])})
             </div>
         }
 

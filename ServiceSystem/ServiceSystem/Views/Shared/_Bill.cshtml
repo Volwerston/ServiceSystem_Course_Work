@@ -2,8 +2,9 @@
 
 <div class="row" style="margin-top: 10px;">
     <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-sm-offset-2 col-md-offset-2" style="border: 2px solid green; border-radius: 3px;padding: 10px;">
-        @using (Html.BeginForm("AccountDetails", "Service", null, FormMethod.Post, new { @class = "form-horizontal text-center" }))
+        @using (Html.BeginForm("ApplicationDetails", "Service", null, FormMethod.Post, new { @class = "form-horizontal text-center" }))
         {
+            <input type="hidden" value="@ViewData["ApplicationId"]" name="application_id" />
             <label for="date_limit" class="control-label">Оберіть міру ціни:</label>
             <div class="form-group">
                 @Html.DropDownList("price_measure", Model, new { @class = "form-control", style="margin: auto;" })
@@ -41,6 +42,7 @@
                    </textarea>
                 </div>
             </div>
+            <input type="submit" class="btn btn-block btn-success" style="margin: auto" value="ОК" />
         }
     </div>
 </div>

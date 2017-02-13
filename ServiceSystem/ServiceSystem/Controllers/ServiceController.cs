@@ -289,6 +289,7 @@ namespace ServiceSystem.Controllers
             {
                 ViewData["ServiceProviderName"] = applicationCredentials.Item1;
                 ViewData["ServicePaymentMeasures"] = applicationCredentials.Item3;
+                ViewData["ApplicationId"] = id;
 
                 return View(applicationCredentials.Item2);
             }
@@ -299,7 +300,24 @@ namespace ServiceSystem.Controllers
         [HttpPost]
         public ActionResult ApplicationDetails(FormCollection collection)
         {
-            return null;
+            Bill toAdd = Bill.GenerateBill(collection);
+
+            using (HttpClient client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+
+                client.BaseAddress = new Uri("http://localhost:49332/");
+
+                HttpResponseMessage response = client.PostAsJsonAsync("api/Bill", toAdd).Result;
+
+                if(response.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("ApplicationDetails", "Service", new { id = toAdd.ApplicationId });
+                }
+            }
+
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
