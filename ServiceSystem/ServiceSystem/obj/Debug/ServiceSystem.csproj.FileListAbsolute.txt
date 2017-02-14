@@ -358,3 +358,7 @@ C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\System.We
 C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\obj\Debug\ServiceSystem.csprojResolveAssemblyReference.cache
 C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\obj\Debug\ServiceSystem.dll
 C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\obj\Debug\ServiceSystem.pdb
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\itextsharp.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\itextsharp.pdfa.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\itextsharp.xtra.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\itextsharp.xml

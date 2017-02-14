@@ -14,6 +14,14 @@ namespace ServiceSystem.Models
         public DateTime PaymentDeadline { get; set; }
         public string Currency { get; set; }
 
+        public string ProviderFirstName { get; set; }
+        public string ProviderLastName { get; set; }
+        public string ProviderFatherName { get; set; }
+
+        public string CustomerFirstName { get; set; }
+        public string CustomerLastName { get; set; }
+        public string CustomerFatherName { get; set; }
+
         public static Bill GenerateBill(FormCollection collection)
         {
             Bill toReturn = new Bill();

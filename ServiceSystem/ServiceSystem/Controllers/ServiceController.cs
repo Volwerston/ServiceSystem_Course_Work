@@ -7,8 +7,13 @@ using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Text;
 using System.Web;
+using System.Linq;
 using System.Web.Mvc;
 using System.Runtime.Caching;
+
+using iTextSharp;
+using iTextSharp.text.pdf;
+using iTextSharp.text;
 
 namespace ServiceSystem.Controllers
 {
@@ -16,6 +21,147 @@ namespace ServiceSystem.Controllers
     public class ServiceController : Controller
     {
         private Dictionary<string, string> constructorBlocks;
+
+        private void GeneratePDFDocument(Bill toAdd)
+        {
+            string pathToAdd = String.Format(@"D:\Bills\{0}\{1}\{2}\{3}.pdf",
+                                              toAdd.StatusChangeTime.Year.ToString(),
+                                              toAdd.StatusChangeTime.Month.ToString(),
+                                              toAdd.StatusChangeTime.Day.ToString(),
+                                              toAdd.Id);
+
+            DirectoryInfo info = new DirectoryInfo(@"D:\Bills");
+
+            if(info.GetDirectories().Where(x => x.Name == toAdd.StatusChangeTime.Year.ToString()).Count() == 0)
+            {
+                info = info.CreateSubdirectory(toAdd.StatusChangeTime.Year.ToString());
+            }
+            else
+            {
+                info = new DirectoryInfo(info.FullName + @"\" + toAdd.StatusChangeTime.Year.ToString());
+            }
+
+
+            if (info.GetDirectories().Where(x => x.Name == toAdd.StatusChangeTime.Month.ToString()).Count() == 0)
+            {
+                info = info.CreateSubdirectory(toAdd.StatusChangeTime.Month.ToString());
+            }
+            else
+            {
+                info = new DirectoryInfo(info.FullName + @"\" + toAdd.StatusChangeTime.Month.ToString());
+            }
+
+            if (info.GetDirectories().Where(x => x.Name == toAdd.StatusChangeTime.Day.ToString()).Count() == 0)
+            {
+                info = info.CreateSubdirectory(toAdd.StatusChangeTime.Day.ToString());
+            }
+            else
+            {
+                info = new DirectoryInfo(info.FullName + @"\" + toAdd.StatusChangeTime.Day.ToString());
+            }
+
+            BaseFont baseFont = BaseFont.CreateFont(@"D:\arial.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+            Font font = new Font(baseFont, Font.DEFAULTSIZE, Font.NORMAL);
+
+            Document document = new Document(PageSize.LETTER, 10, 10, 42, 35);
+
+            PdfWriter writer = PdfWriter.GetInstance(document, new FileStream(pathToAdd, FileMode.Create));
+            
+
+            document.Open();
+
+            Paragraph p = new Paragraph("Квитанція №" + toAdd.Id.ToString(), font);
+            p.Alignment = Element.ALIGN_CENTER;
+            p.SpacingAfter = 30;
+
+            document.Add(p);
+
+            PdfPTable table = new PdfPTable(2);
+
+
+            table.AddCell(new Phrase("Послугу надав", font));
+            table.AddCell(new Phrase(toAdd.ProviderLastName + " " + toAdd.ProviderFirstName + " " + toAdd.ProviderFatherName, font));
+
+            table.AddCell(new Phrase("Замовник", font));
+            table.AddCell(new Phrase(toAdd.CustomerLastName + " " + toAdd.CustomerFirstName + " " + toAdd.CustomerFatherName, font));
+
+            table.AddCell(new Phrase("Ціна", font));
+            table.AddCell((toAdd.Price * toAdd.AdvancePercent / Convert.ToDouble(100)).ToString());
+
+            table.AddCell(new Phrase("Валюта", font));
+
+            switch (toAdd.Currency)
+            {
+                case "hryvnia":
+                    table.AddCell(new Phrase("гривня", font));
+                    break;
+                case "dollar":
+                    table.AddCell(new Phrase("євро", font));
+                    break;
+                case "euro":
+                    table.AddCell(new Phrase("долар", font));
+                    break;
+            }
+
+            table.AddCell(new Phrase("Сплатити до", font));
+            table.AddCell(toAdd.PaymentDeadline.ToString());
+
+            table.HorizontalAlignment = Element.ALIGN_CENTER;
+
+
+            document.Add(table);
+
+            document.Close();
+        }
+
+        private byte[] GetApplication(int application_id)
+        {
+
+            Bill bill = null;
+
+            using (HttpClient client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+
+                client.BaseAddress = new Uri("http://localhost:49332/");
+
+                HttpResponseMessage response = client.GetAsync("api/Bill?application_id=" + application_id).Result;
+
+                if(response.IsSuccessStatusCode)
+                {
+                    bill = response.Content.ReadAsAsync<Bill>().Result;
+                }
+            }
+
+            if (bill != null)
+            {
+                string fullPath = String.Format(@"D:\Bills\{0}\{1}\{2}\{3}.pdf",
+                                      bill.StatusChangeTime.Year.ToString(),
+                                      bill.StatusChangeTime.Month.ToString(),
+                                      bill.StatusChangeTime.Day.ToString(),
+                                      bill.Id);
+
+                FileInfo fileInfo = new FileInfo(fullPath);
+
+                if (!fileInfo.Exists)
+                {
+                    GeneratePDFDocument(bill);
+
+                     fileInfo = new FileInfo(fullPath);
+                }
+
+                long fileLength = fileInfo.Length;
+                FileStream fs = new FileStream(fullPath, FileMode.Open, FileAccess.Read);
+                BinaryReader br = new BinaryReader(fs);
+
+                return br.ReadBytes((int)fileLength);
+            }
+            else
+            {
+                return null;
+            }
+        }
 
         [NonAction]
         public Dictionary<string, string> GetConstructorBlocks()
@@ -283,7 +429,17 @@ namespace ServiceSystem.Controllers
                 }
             }
 
-            if(applicationCredentials != null && 
+            if(User.Identity.Name == applicationCredentials.Item2.Username)
+            {
+
+                byte[] application_pdf = GetApplication(id);
+
+                var base64 = Convert.ToBase64String(application_pdf);
+                string toAdd = string.Format("data:application/pdf;base64, {0}", base64);
+                ViewData["FileSource"] = toAdd;
+            }
+
+            if (applicationCredentials != null && 
                 (User.Identity.Name == applicationCredentials.Item1 ||
                 User.Identity.Name == applicationCredentials.Item2.Username))
             {
@@ -312,7 +468,7 @@ namespace ServiceSystem.Controllers
                 HttpResponseMessage response = client.PostAsJsonAsync("api/Bill", toAdd).Result;
 
                 if(response.IsSuccessStatusCode)
-                {
+                { 
                     return RedirectToAction("ApplicationDetails", "Service", new { id = toAdd.ApplicationId });
                 }
             }

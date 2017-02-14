@@ -74,9 +74,16 @@
             </tbody>
         </table>
 
+        @if (ViewData.ContainsKey("FileSource"))
+        {
+            <div class="row">
+            <embed src="@ViewData["FileSource"]" class="col-xs-10 col-sm-10 col-md-10 col-lg-10 col-md-offset-1 col-lg-offset-1" style="min-height: 500px;" />
+            </div>
+        }
+
         @if (User.Identity.Name == ViewData["ServiceProviderName"].ToString())
         {
-            <input type="button" name="form_application" class="btn btn-success btn-block" style="margin-top: 10px; margin: auto;" value="Сформувати заявку" />
+            <input type="button" name="form_application" class="btn btn-success btn-block" style="margin: auto;" value="Сформувати заявку" />
 
             <div id="application_form_holder" hidden>
                 @Html.Partial("~/Views/Shared/_Bill.cshtml", toPass, 
