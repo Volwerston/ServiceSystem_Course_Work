@@ -194,7 +194,7 @@
                     {
                         $.ajax({
                             method: "GET",
-                            url: "http://localhost:49332/api/ServiceApi/UserCreatedServices",
+                            url: "http://servicesystem.somee.com/api/ServiceApi/UserCreatedServices",
                             headers: {
                                 Authorization: 'Bearer ' + localStorage.getItem("access_token"),
                             },
@@ -224,7 +224,7 @@
                     if ($("#panel_body_2").children().length == 0) {
                         $.ajax({
                             method: "GET",
-                            url: "http://localhost:49332/api/Application/GetServiceApplications",
+                            url: "http://servicesystem.somee.com/api/Application/GetServiceApplications",
                             headers: {
                                 Authorization: 'Bearer ' + localStorage.getItem("access_token"),
                             },

@@ -35,6 +35,7 @@ namespace ServiceSystem.Controllers
                         bill.Id = Convert.ToInt32(set.Tables[0].Rows[0]["BillId"].ToString());
                         bill.Price = Convert.ToDouble(set.Tables[0].Rows[0]["BillPrice"].ToString());
                         bill.StatusChangeTime = Convert.ToDateTime(set.Tables[0].Rows[0]["BillStatusChangeTime"].ToString());
+                        bill.Status = set.Tables[0].Rows[0]["BillStatus"].ToString();
                         bill.AdvancePercent = Convert.ToDouble(set.Tables[0].Rows[0]["AdvancePercent"].ToString());
                         bill.CustomerFatherName = set.Tables[0].Rows[0]["CustomerFatherName"].ToString();
                         bill.CustomerLastName = set.Tables[0].Rows[0]["CustomerLastName"].ToString();
@@ -43,8 +44,11 @@ namespace ServiceSystem.Controllers
                         bill.ProviderLastName = set.Tables[0].Rows[0]["ProviderLastName"].ToString();
                         bill.ProviderFirstName = set.Tables[0].Rows[0]["ProviderFirstName"].ToString();
                         bill.Currency = set.Tables[0].Rows[0]["BillCurrency"].ToString();
-                        bill.PaymentDeadline = Convert.ToDateTime(set.Tables[0].Rows[0]["BillPaymentDeadline"].ToString());
+                        bill.AdvanceTimeLimit = Convert.ToDateTime(set.Tables[0].Rows[0]["BillAdvanceDeadline"].ToString());
+                        bill.MainTimeLimit = Convert.ToDateTime(set.Tables[0].Rows[0]["BillMainDeadline"].ToString());
+                        bill.WM_Purse = set.Tables[0].Rows[0]["WM_Purse"].ToString();
                     }
+                    else bill = null;
 
                     return Request.CreateResponse(HttpStatusCode.OK, bill);
                 }
@@ -55,14 +59,13 @@ namespace ServiceSystem.Controllers
             }
         }
 
-
         public HttpResponseMessage Post([FromBody]Bill bill)
         {
             DateTime changeTime = DateTime.Now;
 
             using (SqlConnection connection = new SqlConnection(System.Web.Configuration.WebConfigurationManager.ConnectionStrings["DBCS"].ConnectionString))
             {
-                string cmdString = "INSERT INTO Bills VALUES(@AppId, @Status, @AdvancePercent, @Price, @StatusChangeTime, @Currency, @NextDeadline);";
+                string cmdString = "INSERT INTO Bills VALUES(@AppId, @Status, @AdvancePercent, @Price, @StatusChangeTime, @Currency, @AdvanceDeadline, @MainDeadline, @Purse);";
 
                 SqlCommand cmd = new SqlCommand(cmdString, connection);
 
@@ -74,7 +77,9 @@ namespace ServiceSystem.Controllers
                 cmd.Parameters.AddWithValue("@Price", bill.Price);
                 cmd.Parameters.AddWithValue("@StatusChangeTime", bill.StatusChangeTime);
                 cmd.Parameters.AddWithValue("@Currency", bill.Currency);
-                cmd.Parameters.AddWithValue("@NextDeadline", bill.PaymentDeadline);
+                cmd.Parameters.AddWithValue("@AdvanceDeadline", bill.AdvanceTimeLimit);
+                cmd.Parameters.AddWithValue("@MainDeadline", bill.MainTimeLimit);
+                cmd.Parameters.AddWithValue("@Purse", bill.WM_Purse);
 
                 try
                 {

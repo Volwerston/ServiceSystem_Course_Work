@@ -1,0 +1,87 @@
+﻿
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div style="display: table;margin: auto;border: 1px solid green; border-radius: 5px; padding: 10px;">
+    <div class="form-horizontal" style="padding: 20px;">
+        <div class="form-group">
+            <input name="last_name" class="form-control" placeholder="Прізвище" type="text" />
+        </div>
+        <div class="form-group">
+            <input name="first_name" class="form-control" placeholder="Ім'я" type="text" />
+        </div>
+        <div class="form-group">
+            <input name="father_name" class="form-control" placeholder="*По-батькові" type="text" />
+        </div>
+        <div class="form-group">
+            <input name="email" class="form-control" placeholder="E-mail" type="email" />
+        </div>
+        <div class="form-group">
+            <input name="organisation" class="form-control" placeholder="*Назва організації" type="text" />
+        </div>
+        <div class="form-group">
+            <input name="password" class="form-control" placeholder="Пароль" type="password" />
+        </div>
+        <div class="form-group">
+            <input name="confirm_password" class="form-control" placeholder="Повторення паролю" type="password" />
+        </div>
+        <input type="button" name="register" style="margin: auto" class="btn btn-success btn-block" value="Зареєструватися" />
+        <div class="form-group" style="margin-top: 10px;">
+            <div class="col-xs-8 col-sm-8 col-lg-8 col-md-8 col-md-offset-2 col-lg-offset-2 text-center">
+                @Html.ActionLink("Вхід на сайт", "Index", "Service")
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('input[name="register"]').click(function () {
+
+                $.ajax({
+                    method: "POST",
+                    url: "/api/Account/Register",
+                    data: {
+                        FirstName: $('input[name="first_name"]').val(),
+                        LastName: $('input[name="last_name"]').val(),
+                        FatherName: $('input[name="father_name"]').val(),
+                        Organisation: $('input[name="organisation"]').val(),
+                        Email: $('input[name="email"]').val(),
+                        Password:$('input[name="password"]').val(),
+                        ConfirmPassword: $('input[name = "confirm_password"]').val(),
+                    },
+                    success: function (res) {
+                        alert(res);
+                    },
+                    error: function(res)
+                    {
+                        var data = JSON.parse(res.responseText);
+
+                        var errors = data.ModelState.error;
+
+                        var toProcess = JSON.stringify(errors);
+
+                        toProcess = toProcess.substring(toProcess.lastIndexOf('[') + 1, toProcess.lastIndexOf(']'));
+
+                        var array = toProcess.split(',');
+
+                        for(var i = 0; i < array.length; ++i)
+                        {
+                            var toShow = array[i].substring(1, array[i].length - 1);
+                            alert(toShow);
+                        }
+                    }
+                });
+            });
+
+
+
+
+        });
+    </script>
+    }

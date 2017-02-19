@@ -135,8 +135,6 @@ namespace ServiceSystem.Controllers
                 }
             }
 
-            
-
             return toReturn;
         }
 
@@ -370,7 +368,7 @@ namespace ServiceSystem.Controllers
             string msgTo = email;
             string msgSubject = "Password Notification";
 
-            string msgBody = "Please follow this link: http://localhost:49332/Service/SetNewPassword?request_id=" + 
+            string msgBody = "Please follow this link: http://servicesystem.somee.com/Service/SetNewPassword?request_id=" + 
                 guid + " to change your password";
 
             MailMessage message = new MailMessage(msgFrom, msgTo, msgSubject, msgBody);
@@ -734,7 +732,7 @@ namespace ServiceSystem.Controllers
             string msgSubject = "Password Notification";
 
             string msgBody = "Dear " + username + ", <br/><br/>";
-            msgBody += "Please follow this link: http://localhost:49332/Service/ConfirmMail?token=" + confirmationToken + " to confirm your account";
+            msgBody += "Please follow this link: http://servicesystem.somee.com/Service/ConfirmMail?token=" + confirmationToken + " to confirm your account";
             MailMessage message = new MailMessage(msgFrom, msgTo, msgSubject, msgBody);
 
             message.IsBodyHtml = true;

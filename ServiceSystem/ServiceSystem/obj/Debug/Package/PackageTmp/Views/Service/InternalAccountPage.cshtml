@@ -1,0 +1,255 @@
+﻿@model ServiceSystem.Models.UserInfoViewModel
+
+@{
+    ViewBag.Title = "InternalAccountPage";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div style="border: 2px solid green; border-radius: 5px; max-width: 80%; padding: 20px; margin: auto;">
+    <div class="row" style="padding: 10px;">
+        <div class="col-xs-4 col-sm-4 col-lg-4 col-md-4 text-center" style="border: 2px solid green; border-radius: 5px;">
+            <p>Here is user's photo</p>
+        </div>
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-md-offset-1 col-lg-offset-1" style="border: 2px solid green; border-radius: 5px;">
+            <div>
+                <dl class="dl-horizontal">
+                    <dt>
+                        ПІБ:
+                    </dt>
+
+                    <dd>
+                        <p>@Model.LastName @Model.FirstName @Model.FatherName</p>
+                    </dd>
+
+                    <dt>
+                        Організація:
+                    </dt>
+
+                    <dd>
+                        <p>@Html.DisplayFor(model => model.Organisation)</p>
+                    </dd>
+
+                    <dt>
+                        E-mail:
+                    </dt>
+
+                    <dd>
+                        <p>@Model.Email</p>
+                    </dd>
+
+                </dl>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="padding: 10px;">
+        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-md-offset-2 col-lg-offset-2">
+            <div class="panel-group" id="accordion">
+                <div class="panel panel-default">
+                    <div class="panel-heading"  id="panel_1">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+                                Послуги
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapse1" class="panel-collapse collapse">
+                        <div class="panel-body" id="panel_body_1">
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" id="panel_2">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
+                                Заявки
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapse2" class="panel-collapse collapse">
+                        <div class="panel-body" id="panel_body_2">
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" id="panel_3">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">
+                                Діалоги
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapse3" class="panel-collapse collapse">
+                        <div class="panel-body" id="panel_body_3">
+                            <p class="text-center">Інформації не знайдено</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+@section scripts{
+    
+    <script type="text/javascript">
+
+        function GetDivForService(service)
+        {
+            return '<a href="@Url.Action("ServiceDetails", "Service")' + '?id=' + service.Id + '\">'
+                    + '<div style="padding: 5px;">'
+                    + '<div class="row" style="margin-top: 5px; border: 1px solid green; border-radius: 3px;">'
+                    + '<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">'
+                    + '<p>' + service.Id + '</p>'
+                    + '</div>'
+                    + '<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" style="word-break: break-all">'
+                    + '<p>' + service.Name + '</p>'
+                    + '</div>'
+                    + '<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3" style="word-break: break-all">'
+                    + '<p>' + service.Type + '</p>'
+                    + '</div>'
+                    + '<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3" style="word-break: break-all">'
+                    + '<p>' + service.Category + '</p>'
+                    + '</div>'
+                    + '</div>'
+                    + '</div>'
+                    + '</a>';
+        }
+
+        function GetDivForApplicationHeader() {
+            return  '<div style="padding: 3px;">'
+                    +'<div class="row" style="margin-top: 5px; border: 1px solid green; border-radius: 3px;">'
+                    + '<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">'
+                    + '<p><b>ID</b></p>'
+                    + '</div>'
+                    + '<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">'
+                    + '<p><b>Назва</b></p>'
+                    + '</div>'
+                    + '<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">'
+                    + '<p><b>Замовник</b></p>'
+                    + '</div>'
+                    + '<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">'
+                    + '<p><b>Статус</b></p>'
+                    + '</div>'
+                    + '<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">'
+                    + '<p><b>Остання зміна</b></p>'
+                    + '</div>'
+                    + '</div>'
+                    + '</div>';
+        }
+
+
+        function GetDivForApplication(app) {
+            return '<a href="@Url.Action("ApplicationDetails", "Service")' + '?id=' + app.Id + '\">'
+                    + '<div style="padding: 5px;">'
+                    + '<div class="row" style="margin-top: 5px; border: 1px solid green; border-radius: 3px;">'
+                    + '<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">'
+                    + '<p>' + app.Id + '</p>'
+                    + '</div>'
+                    + '<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3" style="word-break: break-all">'
+                    + '<p>' + app.ServiceName + '</p>'
+                    + '</div>'
+                    + '<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3" style="word-break: break-all">'
+                    + '<p>' + app.Username + '</p>'
+                    + '</div>'
+                    + '<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" style="word-break: break-all">'
+                    + '<p>' + app.Status + '</p>'
+                    + '</div>'
+                    + '<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3" style="word-break: break-all">'
+                    + '<p>' + app.StatusChangeDate + '</p>'
+                    + '</div>'
+                    + '</div>'
+                    + '</div>'
+                    + '</a>';
+        }
+
+        function GetDivForServiceHeader() {
+            return '<div style="padding: 3px;">'
+                    + '<div class="row" style="margin-top: 5px; border: 1px solid green; border-radius: 3px;">'
+                    + '<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">'
+                    + '<p><b>ID</b></p>'
+                    + '</div>'
+                    + '<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">'
+                    + '<p><b>Сервіс</b></p>'
+                    + '</div>'
+                    + '<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">'
+                    + '<p><b>Тип</b></p>'
+                    + '</div>'
+                    + '<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">'
+                    + '<p><b>Категорія</b></p>'
+                    + '</div>'
+                    + '</div>'
+                    + '</div>';
+        }
+
+        $(document).ready(function (){
+
+            $("#panel_1").click(function () {
+
+                if(!($("#collapse1").hasClass("in")))
+                {
+                    if($("#panel_body_1").children().length == 0)
+                    {
+                        $.ajax({
+                            method: "GET",
+                            url: "http://servicesystem.somee.com/api/ServiceApi/UserCreatedServices",
+                            headers: {
+                                Authorization: 'Bearer ' + localStorage.getItem("access_token"),
+                            },
+                            contentType: "application/json; charset=utf-8",
+                            success: function(res)
+                            {
+                                $("#panel_body_1").append(GetDivForServiceHeader());
+                                for(var i = 0; i < res.length; ++i)
+                                {
+                                    $("#panel_body_1").append(GetDivForService(res[i]));
+                                }
+                            },
+                            error: function(res)
+                            {
+                                alert("ERROR: " + res.responseText);
+                            }
+                        });
+                    }
+                }
+
+            });
+
+            $("#panel_2").click(function () {
+
+
+                if (!($("#collapse2").hasClass("in"))) {
+                    if ($("#panel_body_2").children().length == 0) {
+                        $.ajax({
+                            method: "GET",
+                            url: "http://servicesystem.somee.com/api/Application/GetServiceApplications",
+                            headers: {
+                                Authorization: 'Bearer ' + localStorage.getItem("access_token"),
+                            },
+                            contentType: "application/json; charset=utf-8",
+                            success: function (res) {
+                                $("#panel_body_2").append(GetDivForApplicationHeader());
+                                for (var i = 0; i < res.length; ++i) {
+                                    $("#panel_body_2").append(GetDivForApplication(res[i]));
+                                }
+                            },
+                            error: function (res) {
+                                alert("ERROR: " + res.responseText);
+                            }
+                        });
+                    }
+                }
+
+            });
+
+
+
+
+        });
+
+
+    </script>
+    
+    }

@@ -1,0 +1,153 @@
+﻿@model ServiceSystem.Models.Service
+@using ServiceSystem.Models
+
+@{
+    ViewBag.Title = "SessionDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-sm-offset-2 col-md-offset-2 col-lg-offset-2 well text-center">
+        <h3>@Model.Name</h3>
+        <p>@Model.Description</p>
+        <p>Категорія: @Model.Category</p>
+
+            @if (ViewData["PARAMS"] != null)
+            {
+                Dictionary<string, string> parameters = (Dictionary<string, string>)ViewData["PARAMS"];
+
+
+                foreach (var param in parameters)
+                {
+                    if (param.Key != "SERVICE_TYPE" && param.Key != "Тривалість" && param.Key != "Вартість")
+                    {
+                    <div class="row" style="margin-top: 5px;">
+                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3">
+                            <p><b>@param.Key</b></p>
+                        </div>
+                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 paramText">
+                            <p>@param.Value</p>
+                        </div>
+                    </div>
+                    }
+                }
+
+                <div class="paramText">
+                    @if (parameters.ContainsKey("Вартість"))
+                    {
+                        <h3>Вартість:</h3>
+                        <div style="margin-top: 10px;" class="text-center">
+                            @parameters["Вартість"]
+                        </div>
+                    }
+
+                    @if (parameters.ContainsKey("Тривалість"))
+                    {
+                        <h3>Тривалість:</h3>
+                        <div style="margin-top: 10px;" class="text-center">
+                            @parameters["Тривалість"]
+                        </div>
+                    }
+                </div>
+
+                if(Model.Properties != null)
+                {
+                    foreach(Property prop in Model.Properties)
+                    {
+                        <div class="row">
+                            <div class="text-center col-xs-6 col-sm-6 col-md-6 col-lg-6 col-md-offset-3 col-lg-offset-3">
+                                <h3>@prop.Name</h3>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-bottom: 10px;">
+                            <div class="text-center col-xs-8 col-sm-8 col-md-8 col-lg-8 col-md-offset-2 col-lg-offset-2">
+                                <h4>@prop.Value</h4>
+                            </div>
+                        </div>
+                    }
+                }
+            }
+
+  <div class="row">
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <input type="button" class="btn btn-info btn-block" value="Залишити заявку" id="application_create" />
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <input type="button" class="btn btn-info btn-block" value="Задати запитання" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" hidden id="application_holder">
+    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-md-offset-2 col-lg-offset-2">
+        @using (Html.BeginForm("ServiceDetails", "Service", new { serviceId = Model.Id }, 
+            FormMethod.Post, new { @class = "form-horizontal well" }))
+        {
+            if (Model.Type == "Session")
+            {
+                @Html.Partial("_SessionApplication");
+            }
+            else if(Model.Type == "Deadline")
+            {
+                @Html.Partial("_DeadlineApplication");
+            }
+            @Html.Partial("_Application");
+        }
+    </div>
+</div>
+
+
+@section scripts{
+    <script type="text/javascript">
+        
+        $(document).ready(function () {
+
+            var paramDivs = $(".paramText");
+
+            paramDivs.each(function (index, element) {
+
+                var innerElements = $(this).children();
+
+                innerElements.each(function (i, elem) {
+
+                    var data = $(this).html();
+
+                    data = data.replace(/&gt;/g, ">");
+                    data = data.replace(/&lt;/g, "<");
+                    data = data.replace(/&quot;/, "\"");
+
+                    $(this).empty();
+
+                    $(this).html(data);
+
+
+                    $("#application_create").click(function () {
+
+                        $("#application_holder").removeAttr("hidden");
+
+                    });
+
+                    $('input[name="deadline_type"]').change(function () {
+
+                        if($(this).val() == "from_some_date")
+                        {
+                            $("#from_some_date").removeAttr("hidden");
+                            $("#by_last_date").attr("hidden", true);
+                        }
+                        else if($(this).val() == "by_last_date")
+                        {
+                            $("#by_last_date").removeAttr("hidden");
+                            $("#from_some_date").attr("hidden", true);
+                        }
+                    });
+
+                });
+
+            });
+
+        });
+
+    </script>
+    
+    }

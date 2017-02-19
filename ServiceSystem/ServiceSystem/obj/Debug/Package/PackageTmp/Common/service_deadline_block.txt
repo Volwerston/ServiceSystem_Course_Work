@@ -1,0 +1,65 @@
+﻿<div style="border: 2px solid green; border-radius: 3px; margin-top: 5px; padding: 10px;">
+				<div id="duration_measure_widget_1" style="border: 2px solid green; border-radius: 3px; margin-top: 5px; padding: 10px;">
+                <div class="form-group">
+                    <select name="range_type_1" class="col-md-offset-2 col-lg-offset-2 form-control">
+                        <option value="none">Тип діапазону</option>
+                        <option value="from_till">від/до</option>
+                        <option value="from">від</option>
+                        <option value="till">до</option>
+                    </select>
+                </div>
+                <div id="duration_measure_data_1">
+
+                </div>
+                <div class="form-group">
+					<div class="col-md-2 col-lg-2"></div>
+                    <input class="col-xs-1 col-sm-1 col-md-1 col-lg-1" type="checkbox" id="duration_measure_description_selector_1" name="duration_measure_description_selector_1" />
+                    <label class="col-xs-6 col-sm-6 col-md-6 col-lg-6" for="duration_measure_description_selector_1">додати інформацію</label>
+                </div>
+                <div id="duration_measure_description_block_1" hidden>
+                    <div class="form-group">
+                        <textarea rows="10" name="duration_description_1" placeholder="Додаткова інформація" style="margin-bottom: 5px;" class="form-control cos-xs-8 col-sm-8 col-md-8 col-lg-8 col-sm-offset-2 col-lg-offset-2 col-md-offset-2"></textarea>
+                    </div>
+                </div>
+            </div>
+			<div id="duration_measures">
+
+			</div>
+			<div class="form-group" style="margin-top: 10px;">
+			<input type="button" class="btn btn-default col-md-offset-1 col-lg-offset-1" name="add_duration_measure_selector" value="+ додати міру часу" />
+			<input type="button" class="btn btn-default col-md-offset-1 col-lg-offset-1" disabled name="remove_duration_measure_selector" value="- видалити міру часу" />
+			   </div> 
+				<div id="price_measure_widget_1" style="border: 2px solid green; border-radius: 3px; margin-top: 25px; padding: 10px;">
+                <div class="form-group">
+                    <select name="currency_1" class="col-md-offset-2 col-lg-offset-2 form-control">
+                        <option value="none">Оберіть валюту</option>
+                        <option value="hryvnia">гривня</option>
+                        <option value="dollar">долар</option>
+                        <option value="euro">євро</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <input type="text" name="measure_1" placeholder="Одиниця виміру" class="col-md-offset-2 col-lg-offset-2 form-control" />
+                </div>
+                <div class="form-group">
+                    <input type="text" name="price_1" placeholder="Вартість  (за 1 одиницю виміру)" class="col-md-offset-2 col-lg-offset-2 form-control" />
+                </div>
+                <div class="form-group">
+				    <div class="col-2 col-lg-2"></div>
+                    <input class="col-xs-1 col-sm-1 col-md-1 col-lg-1" type="checkbox" id="price_measure_description_selector_1" name="price_measure_description_selector_1" />
+                    <label class="col-xs-6 col-sm-6 col-md-6 col-lg-6" for="price_measure_description_selector_1">додати інформацію</label>
+                </div>
+                <div id="price_description_block_1" hidden>
+                    <div class="form-group">
+                        <textarea rows="10" name="price_description_1" placeholder="Додаткова інформація" style="margin-bottom: 5px;" class="form-control cos-xs-8 col-sm-8 col-md-8 col-lg-8 col-sm-offset-2 col-lg-offset-2 col-md-offset-2"></textarea>
+                    </div>
+                </div>
+            </div>
+			<div id="price_measures">
+
+			</div>
+			<div class="form-group" style="margin-top: 10px;">
+			<input type="button" class="btn btn-default col-md-offset-1 col-lg-offset-1" name="add_price_measure_selector" value="+ додати міру ціни" />
+			<input type="button" class="btn btn-default col-md-offset-1 col-lg-offset-1" disabled name="remove_price_measure_selector" value="- видалити міру ціни" />
+			</div>
+		</div>
