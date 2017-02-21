@@ -7,6 +7,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Data;
+using System.Text;
 
 namespace ServiceSystem.Controllers
 {
@@ -22,6 +23,8 @@ namespace ServiceSystem.Controllers
                 da.SelectCommand.CommandType = CommandType.StoredProcedure;
                 da.SelectCommand.Parameters.AddWithValue("@Id", application_id);
 
+                Dictionary<string, string> additionalParams = new Dictionary<string, string>();
+
                 DataSet set = new DataSet();
 
                 try
@@ -35,7 +38,6 @@ namespace ServiceSystem.Controllers
                         bill.Id = Convert.ToInt32(set.Tables[0].Rows[0]["BillId"].ToString());
                         bill.Price = Convert.ToDouble(set.Tables[0].Rows[0]["BillPrice"].ToString());
                         bill.StatusChangeTime = Convert.ToDateTime(set.Tables[0].Rows[0]["BillStatusChangeTime"].ToString());
-                        bill.Status = set.Tables[0].Rows[0]["BillStatus"].ToString();
                         bill.AdvancePercent = Convert.ToDouble(set.Tables[0].Rows[0]["AdvancePercent"].ToString());
                         bill.CustomerFatherName = set.Tables[0].Rows[0]["CustomerFatherName"].ToString();
                         bill.CustomerLastName = set.Tables[0].Rows[0]["CustomerLastName"].ToString();
@@ -46,11 +48,29 @@ namespace ServiceSystem.Controllers
                         bill.Currency = set.Tables[0].Rows[0]["BillCurrency"].ToString();
                         bill.AdvanceTimeLimit = Convert.ToDateTime(set.Tables[0].Rows[0]["BillAdvanceDeadline"].ToString());
                         bill.MainTimeLimit = Convert.ToDateTime(set.Tables[0].Rows[0]["BillMainDeadline"].ToString());
-                        bill.WM_Purse = set.Tables[0].Rows[0]["WM_Purse"].ToString();
+                        bill.Type = set.Tables[0].Rows[0]["Type"].ToString();
+
+                        if(set.Tables[0].Rows[0]["Type"].ToString() == "WEBMONEY")
+                        {
+                            additionalParams.Add("WMPurse", set.Tables[0].Rows[0]["WMPurse"].ToString());
+                        }
+                        else
+                        {
+                            additionalParams.Add("Account", set.Tables[0].Rows[0]["Account"].ToString());
+                            additionalParams.Add("EDRPOU", set.Tables[0].Rows[0]["EDRPOU"].ToString());
+                            additionalParams.Add("MFO", set.Tables[0].Rows[0]["MFO"].ToString());
+                        }
                     }
                     else bill = null;
 
-                    return Request.CreateResponse(HttpStatusCode.OK, bill);
+                    if (bill != null)
+                    {
+                        return Request.CreateResponse(HttpStatusCode.OK, new Tuple<Bill, Dictionary<string, string>>(bill, additionalParams));
+                    }
+                    else
+                    {
+                        return Request.CreateResponse<Tuple<Bill, Dictionary<string, string>>>(HttpStatusCode.OK, null);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -63,31 +83,65 @@ namespace ServiceSystem.Controllers
         {
             DateTime changeTime = DateTime.Now;
 
+            WebmoneyBill wmBill = bill as WebmoneyBill;
+            BankBill pbBill = bill as BankBill;
+
             using (SqlConnection connection = new SqlConnection(System.Web.Configuration.WebConfigurationManager.ConnectionStrings["DBCS"].ConnectionString))
             {
-                string cmdString = "INSERT INTO Bills VALUES(@AppId, @Status, @AdvancePercent, @Price, @StatusChangeTime, @Currency, @AdvanceDeadline, @MainDeadline, @Purse);";
+                StringBuilder cmdBuilder = new StringBuilder("");
+                cmdBuilder.Append("INSERT INTO Bills VALUES(@AppId, @AdvancePercent, @Price, @StatusChangeTime, @Currency, @AdvanceDeadline, @MainDeadline,@Type, @DetailsId);");
+                cmdBuilder.Append("UPDATE Applications SET STATUS='ADVANCE_PENDING' WHERE ID=@AppId;");
 
-                SqlCommand cmd = new SqlCommand(cmdString, connection);
+                Dictionary<string, object> values = new Dictionary<string, object>();
 
                 bill.StatusChangeTime = changeTime;
 
-                cmd.Parameters.AddWithValue("@AppId", bill.ApplicationId);
-                cmd.Parameters.AddWithValue("@Status", bill.Status);
-                cmd.Parameters.AddWithValue("@AdvancePercent", bill.AdvancePercent);
-                cmd.Parameters.AddWithValue("@Price", bill.Price);
-                cmd.Parameters.AddWithValue("@StatusChangeTime", bill.StatusChangeTime);
-                cmd.Parameters.AddWithValue("@Currency", bill.Currency);
-                cmd.Parameters.AddWithValue("@AdvanceDeadline", bill.AdvanceTimeLimit);
-                cmd.Parameters.AddWithValue("@MainDeadline", bill.MainTimeLimit);
-                cmd.Parameters.AddWithValue("@Purse", bill.WM_Purse);
+                values.Add("@AppId", bill.ApplicationId);
+                values.Add("@AdvancePercent", bill.AdvancePercent);
+                values.Add("@Price", bill.Price);
+                values.Add("@StatusChangeTime", bill.StatusChangeTime);
+                values.Add("@Currency", bill.Currency);
+                values.Add("@AdvanceDeadline", bill.AdvanceTimeLimit);
+                values.Add("@MainDeadline", bill.MainTimeLimit);
+
+                if(wmBill != null)
+                {
+                    cmdBuilder = cmdBuilder.Replace("@DetailsId", "IDENT_CURRENT('Webmoney_Details') + 1");
+                    cmdBuilder.Append("INSERT INTO Webmoney_Details VALUES(@Purse);");
+
+                    values.Add("@Type", "WEBMONEY");
+                    values.Add("@Purse", wmBill.WM_Purse);
+                }
+                else if(pbBill != null)
+                {
+                    cmdBuilder = cmdBuilder.Replace("@DetailsId", "IDENT_CURRENT('Bank_Details') + 1");
+                    cmdBuilder.Append("INSERT INTO Bank_Details VALUES(@Account, @EDRPOU, @MFO);");
+
+                    values.Add("@Type", "BANK");
+                    values.Add("@Account", pbBill.Account);
+                    values.Add("@EDRPOU", pbBill.EDRPOU);
+                    values.Add("@MFO", pbBill.MFO);
+                }
+
+                SqlCommand cmd = new SqlCommand(cmdBuilder.ToString(), connection);
+
+                foreach(var kvp in values)
+                {
+                    cmd.Parameters.AddWithValue(kvp.Key, kvp.Value);
+                }
+
+                connection.Open();
+                SqlTransaction transaction = connection.BeginTransaction();
+                cmd.Transaction = transaction;
 
                 try
                 {
-                    connection.Open();
                     cmd.ExecuteNonQuery();
+                    transaction.Commit();
                 }
                 catch(Exception ex)
                 {
+                    transaction.Rollback();
                     return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
                 }
             }

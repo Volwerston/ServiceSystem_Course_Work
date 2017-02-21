@@ -318,9 +318,9 @@ namespace ServiceSystem.Controllers
         {
             string guid = Guid.NewGuid().ToString();
 
-            bool letterSent = WriteChangePasswordLetter(email, guid);
+            string letterSent = WriteChangePasswordLetter(email, guid);
 
-            if(letterSent)
+            if(letterSent == "OK")
             {
                 using (SqlConnection con = new SqlConnection(System.Web.Configuration.WebConfigurationManager.ConnectionStrings["DBCS"].ConnectionString))
                 { 
@@ -338,21 +338,21 @@ namespace ServiceSystem.Controllers
 
                         return Request.CreateResponse(HttpStatusCode.OK, "Letter was sent");
                     }
-                    catch
+                    catch(Exception ex)
                     {
-                        return Request.CreateResponse(HttpStatusCode.InternalServerError, "Internal server error");
+                        return Request.CreateResponse(HttpStatusCode.InternalServerError, ex.Message);
                     }
                 }
             }
             else
             {
-                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Letter was not sent");
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, letterSent);
             }
         }
 
 
         
-        private bool WriteChangePasswordLetter(string email, string guid)
+        private string WriteChangePasswordLetter(string email, string guid)
         {
             string smtpHost = "smtp.gmail.com";
             int smtpPort = 587;
@@ -368,7 +368,7 @@ namespace ServiceSystem.Controllers
             string msgTo = email;
             string msgSubject = "Password Notification";
 
-            string msgBody = "Please follow this link: http://servicesystem.somee.com/Service/SetNewPassword?request_id=" + 
+            string msgBody = "Please follow this link: http://localhost:49332/Service/SetNewPassword?request_id=" + 
                 guid + " to change your password";
 
             MailMessage message = new MailMessage(msgFrom, msgTo, msgSubject, msgBody);
@@ -379,11 +379,12 @@ namespace ServiceSystem.Controllers
             {
                 client.Send(message);
 
-                return true;
+                return "OK";
             }
-            catch
+            catch(Exception ex)
             {
-                return false;
+                return ex.Message;
+
             }
         }
 
@@ -732,7 +733,7 @@ namespace ServiceSystem.Controllers
             string msgSubject = "Password Notification";
 
             string msgBody = "Dear " + username + ", <br/><br/>";
-            msgBody += "Please follow this link: http://servicesystem.somee.com/Service/ConfirmMail?token=" + confirmationToken + " to confirm your account";
+            msgBody += "Please follow this link: http://localhost:49332/Service/ConfirmMail?token=" + confirmationToken + " to confirm your account";
             MailMessage message = new MailMessage(msgFrom, msgTo, msgSubject, msgBody);
 
             message.IsBodyHtml = true;

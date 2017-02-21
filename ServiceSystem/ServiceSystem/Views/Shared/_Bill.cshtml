@@ -41,7 +41,27 @@
                 </div>
             </div>
             <div class="form-group">
-                <input type="text" name="wm_purse" class="form-control" style="margin: auto;" placeholder="Ваш WMU гаманець" />
+                <label for="payment_selector" class="control-label text-center">Оберіть спосіб оплати</label>
+                <select class="form-control" name="payment_selector" style="margin: auto;">
+                    <option value="wm">Webmoney</option>
+                    <option value="privat">ПриватБанк</option>
+                </select>
+            </div>
+            <div id="wm_container">
+                <div class="form-group">
+                    <input type="text" name="wm_purse" class="form-control" style="margin: auto;" placeholder="Ваш WMU гаманець" />
+                </div>
+            </div>
+            <div id="privat_container" hidden>
+                <div class="form-group">
+                    <input type="text" name="account" placeholder="Номер рахунку" class="form-control" style="margin: auto" />
+                </div>
+                <div class="form-group">
+                    <input type="text" name="edrpou" placeholder="ЄДРПОУ банку" class="form-control" style="margin: auto" />
+                </div>
+                <div class="form-group">
+                    <input type="text" name="mfo" placeholder="МФО банку" class="form-control" style="margin: auto" />
+                </div>
             </div>
             <div class="form-group">
                 <input type="checkbox" name="add_comment" />

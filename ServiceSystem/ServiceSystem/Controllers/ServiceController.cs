@@ -22,14 +22,14 @@ namespace ServiceSystem.Controllers
     {
         private Dictionary<string, string> constructorBlocks;
 
-        private void GeneratePDFDocument(Bill toAdd, BillType type)
+        private void GeneratePDFDocument(Tuple<Bill, Dictionary<string,string>> toAdd, BillType type)
         {
             string pathToAdd = String.Format(Server.MapPath(@"~\Common\Bills") + @"\{0}\{1}\{2}\{3}" 
                                             + (type == BillType.ADVANCE ? "_advance" : "_main") + ".pdf",
-                                              toAdd.StatusChangeTime.Year.ToString(),
-                                              toAdd.StatusChangeTime.Month.ToString(),
-                                              toAdd.StatusChangeTime.Day.ToString(),
-                                              toAdd.Id);
+                                              toAdd.Item1.StatusChangeTime.Year.ToString(),
+                                              toAdd.Item1.StatusChangeTime.Month.ToString(),
+                                              toAdd.Item1.StatusChangeTime.Day.ToString(),
+                                              toAdd.Item1.Id);
 
             DirectoryInfo info = new DirectoryInfo(Server.MapPath(@"~\Common"));
 
@@ -42,32 +42,32 @@ namespace ServiceSystem.Controllers
                 info = new DirectoryInfo(info.FullName + @"\Bills");
             }
 
-            if (info.GetDirectories().Where(x => x.Name == toAdd.StatusChangeTime.Year.ToString()).Count() == 0)
+            if (info.GetDirectories().Where(x => x.Name == toAdd.Item1.StatusChangeTime.Year.ToString()).Count() == 0)
             {
-                info = info.CreateSubdirectory(toAdd.StatusChangeTime.Year.ToString());
+                info = info.CreateSubdirectory(toAdd.Item1.StatusChangeTime.Year.ToString());
             }
             else
             {
-                info = new DirectoryInfo(info.FullName + @"\" + toAdd.StatusChangeTime.Year.ToString());
+                info = new DirectoryInfo(info.FullName + @"\" + toAdd.Item1.StatusChangeTime.Year.ToString());
             }
 
 
-            if (info.GetDirectories().Where(x => x.Name == toAdd.StatusChangeTime.Month.ToString()).Count() == 0)
+            if (info.GetDirectories().Where(x => x.Name == toAdd.Item1.StatusChangeTime.Month.ToString()).Count() == 0)
             {
-                info = info.CreateSubdirectory(toAdd.StatusChangeTime.Month.ToString());
+                info = info.CreateSubdirectory(toAdd.Item1.StatusChangeTime.Month.ToString());
             }
             else
             {
-                info = new DirectoryInfo(info.FullName + @"\" + toAdd.StatusChangeTime.Month.ToString());
+                info = new DirectoryInfo(info.FullName + @"\" + toAdd.Item1.StatusChangeTime.Month.ToString());
             }
 
-            if (info.GetDirectories().Where(x => x.Name == toAdd.StatusChangeTime.Day.ToString()).Count() == 0)
+            if (info.GetDirectories().Where(x => x.Name == toAdd.Item1.StatusChangeTime.Day.ToString()).Count() == 0)
             {
-                info = info.CreateSubdirectory(toAdd.StatusChangeTime.Day.ToString());
+                info = info.CreateSubdirectory(toAdd.Item1.StatusChangeTime.Day.ToString());
             }
             else
             {
-                info = new DirectoryInfo(info.FullName + @"\" + toAdd.StatusChangeTime.Day.ToString());
+                info = new DirectoryInfo(info.FullName + @"\" + toAdd.Item1.StatusChangeTime.Day.ToString());
             }
 
             BaseFont baseFont = BaseFont.CreateFont(Server.MapPath("~/Common/arial.ttf"), BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
@@ -80,7 +80,7 @@ namespace ServiceSystem.Controllers
 
             document.Open();
 
-            Paragraph p = new Paragraph("Квитанція №" + toAdd.Id.ToString(), font);
+            Paragraph p = new Paragraph("Квитанція №" + toAdd.Item1.Id.ToString(), font);
             p.Alignment = Element.ALIGN_CENTER;
             p.SpacingAfter = 30;
 
@@ -89,25 +89,25 @@ namespace ServiceSystem.Controllers
             PdfPTable table = new PdfPTable(2);
 
             table.AddCell(new Phrase("Послугу надав", font));
-            table.AddCell(new Phrase(toAdd.ProviderLastName + " " + toAdd.ProviderFirstName + " " + toAdd.ProviderFatherName, font));
+            table.AddCell(new Phrase(toAdd.Item1.ProviderLastName + " " + toAdd.Item1.ProviderFirstName + " " + toAdd.Item1.ProviderFatherName, font));
 
             table.AddCell(new Phrase("Замовник", font));
-            table.AddCell(new Phrase(toAdd.CustomerLastName + " " + toAdd.CustomerFirstName + " " + toAdd.CustomerFatherName, font));
+            table.AddCell(new Phrase(toAdd.Item1.CustomerLastName + " " + toAdd.Item1.CustomerFirstName + " " + toAdd.Item1.CustomerFatherName, font));
 
             table.AddCell(new Phrase("Ціна", font));
 
             if (type == BillType.ADVANCE)
             {
-                table.AddCell((toAdd.Price * toAdd.AdvancePercent / Convert.ToDouble(100)).ToString());
+                table.AddCell((toAdd.Item1.Price * toAdd.Item1.AdvancePercent / Convert.ToDouble(100)).ToString());
             }
             else
             {
-                table.AddCell((toAdd.Price * (1 - toAdd.AdvancePercent / Convert.ToDouble(100))).ToString());
+                table.AddCell((toAdd.Item1.Price * (1 - toAdd.Item1.AdvancePercent / Convert.ToDouble(100))).ToString());
             }
 
             table.AddCell(new Phrase("Валюта", font));
 
-            switch (toAdd.Currency)
+            switch (toAdd.Item1.Currency)
             {
                 case "hryvnia":
                     table.AddCell(new Phrase("гривня", font));
@@ -124,14 +124,31 @@ namespace ServiceSystem.Controllers
 
             if (type == BillType.ADVANCE)
             {
-                table.AddCell(toAdd.AdvanceTimeLimit.ToString());
+                table.AddCell(toAdd.Item1.AdvanceTimeLimit.ToString());
             }
             else
             {
-                table.AddCell(toAdd.MainTimeLimit.ToString());
+                table.AddCell(toAdd.Item1.MainTimeLimit.ToString());
             }
 
             table.HorizontalAlignment = Element.ALIGN_CENTER;
+
+            if(toAdd.Item1.Type == "WEBMONEY")
+            {
+                table.AddCell(new Phrase("Гаманець для оплати", font));
+                table.AddCell(toAdd.Item2["WMPurse"].ToString());
+            }
+            else
+            {
+                table.AddCell(new Phrase("Номер рахунку для оплати", font));
+                table.AddCell(toAdd.Item2["Account"].ToString());
+
+                table.AddCell(new Phrase("ЄДРПОУ", font));
+                table.AddCell(toAdd.Item2["EDRPOU"].ToString());
+
+                table.AddCell(new Phrase("МФО", font));
+                table.AddCell(toAdd.Item2["MFO"].ToString());
+            }
 
 
             document.Add(table);
@@ -139,46 +156,46 @@ namespace ServiceSystem.Controllers
             document.Close();
         }
 
-        private Tuple<byte[],Bill> GetApplication(int application_id)
+        private Tuple<byte[],Bill> GetApplication(int application_id, Application app)
         {
 
-            Bill bill = null;
+            Tuple<Bill, Dictionary<string, string>> billData = null;
 
             using (HttpClient client = new HttpClient())
             {
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 
-                client.BaseAddress = new Uri("http://servicesystem.somee.com/");
+                client.BaseAddress = new Uri("http://localhost:49332/");
 
                 HttpResponseMessage response = client.GetAsync("api/Bill?application_id=" + application_id).Result;
 
                 if (response.IsSuccessStatusCode)
                 {
-                    bill = response.Content.ReadAsAsync<Bill>().Result;
+                    billData = response.Content.ReadAsAsync<Tuple<Bill,Dictionary<string,string>>>().Result;
                 }
             }
 
-            if (bill != null)
+            if (billData != null)
             {
                 string fullPath = String.Format(Server.MapPath(@"~\Common\Bills") + @"\{0}\{1}\{2}\{3}"
-                                                + (bill.Status == "ADVANCE_PENDING" ? "_advance" : "_main") + ".pdf",
-                                      bill.StatusChangeTime.Year.ToString(),
-                                      bill.StatusChangeTime.Month.ToString(),
-                                      bill.StatusChangeTime.Day.ToString(),
-                                      bill.Id);
+                                                + (app.Status == "ADVANCE_PENDING"  ? "_advance" : "_main") + ".pdf",
+                                      billData.Item1.StatusChangeTime.Year.ToString(),
+                                      billData.Item1.StatusChangeTime.Month.ToString(),
+                                      billData.Item1.StatusChangeTime.Day.ToString(),
+                                      billData.Item1.Id);
 
                 FileInfo fileInfo = new FileInfo(fullPath);
 
                 if (!fileInfo.Exists)
                 {
-                    if (bill.Status == "ADVANCE_PENDING")
+                    if (app.Status == "ADVANCE_PENDING")
                     {
-                        GeneratePDFDocument(bill, BillType.ADVANCE);
+                        GeneratePDFDocument(billData, BillType.ADVANCE);
                     }
-                    else if (bill.Status == "MAIN_PENDING")
+                    else if (app.Status == "MAIN_PENDING")
                     {
-                        GeneratePDFDocument(bill, BillType.MAIN);
+                        GeneratePDFDocument(billData, BillType.MAIN);
                     }
 
                     fileInfo = new FileInfo(fullPath);
@@ -188,7 +205,7 @@ namespace ServiceSystem.Controllers
                 FileStream fs = new FileStream(fullPath, FileMode.Open, FileAccess.Read);
                 BinaryReader br = new BinaryReader(fs);
 
-                return new Tuple<byte[], Bill>(br.ReadBytes((int)fileLength), bill);
+                return new Tuple<byte[], Bill>(br.ReadBytes((int)fileLength), billData.Item1);
             }
             else
             {
@@ -235,7 +252,7 @@ namespace ServiceSystem.Controllers
         {
             using (HttpClient client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://servicesystem.somee.com/");
+                client.BaseAddress = new Uri("http://localhost:49332/");
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 
@@ -274,7 +291,7 @@ namespace ServiceSystem.Controllers
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 
-                client.BaseAddress = new Uri("http://servicesystem.somee.com/");
+                client.BaseAddress = new Uri("http://localhost:49332/");
 
                 HttpResponseMessage response = client.GetAsync("api/Account/ChangeUserPassword?email=" + email).Result;
 
@@ -307,7 +324,7 @@ namespace ServiceSystem.Controllers
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 
-                client.BaseAddress = new Uri("http://servicesystem.somee.com/");
+                client.BaseAddress = new Uri("http://localhost:49332/");
 
                 HttpResponseMessage response = client.PostAsJsonAsync("api/Account/SetNewUserPassword",
                     new Tuple<string, string, string>(request_id, password, confirm_password)
@@ -329,7 +346,7 @@ namespace ServiceSystem.Controllers
             {
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-                client.BaseAddress = new Uri("http://servicesystem.somee.com/");
+                client.BaseAddress = new Uri("http://localhost:49332/");
 
                 HttpResponseMessage response = client.PostAsync(
                     "api/Account/CanLogin", new Tuple<string, string>(email, password), new JsonMediaTypeFormatter()
@@ -388,7 +405,7 @@ namespace ServiceSystem.Controllers
 
             using (HttpClient client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://servicesystem.somee.com/");
+                client.BaseAddress = new Uri("http://localhost:49332/");
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 
@@ -424,7 +441,7 @@ namespace ServiceSystem.Controllers
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 
-                client.BaseAddress = new Uri("http://servicesystem.somee.com/");
+                client.BaseAddress = new Uri("http://localhost:49332/");
                 HttpResponseMessage response = client.PostAsJsonAsync("api/Webmoney/PostTransactionData", wmData).Result;
 
                 if(!response.IsSuccessStatusCode)
@@ -456,7 +473,7 @@ namespace ServiceSystem.Controllers
 
             using (HttpClient client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://servicesystem.somee.com/");
+                client.BaseAddress = new Uri("http://localhost:49332/");
                 client.DefaultRequestHeaders.Clear();
 
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
@@ -482,7 +499,7 @@ namespace ServiceSystem.Controllers
             using (HttpClient client = new HttpClient())
             {
                 client.DefaultRequestHeaders.Clear();
-                client.BaseAddress = new Uri("http://servicesystem.somee.com/");
+                client.BaseAddress = new Uri("http://localhost:49332/");
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
                 client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", cache["access_token"] as string);
 
@@ -494,14 +511,11 @@ namespace ServiceSystem.Controllers
                 }
             }
 
-            if (User.Identity.Name == applicationCredentials.Item2.Username)
-            {
-
                 Tuple<byte[], Bill> application_data = null;
 
-                try
+                if(applicationCredentials.Item2.Status != "NO_BILL" && applicationCredentials.Item2.Status != "MAIN_PAID")
                 {
-                    application_data = GetApplication(id);
+                    application_data = GetApplication(id, applicationCredentials.Item2);
 
                     if (application_data.Item2 != null)
                     {
@@ -517,13 +531,6 @@ namespace ServiceSystem.Controllers
                 }
 
                 }
-                catch (Exception ex)
-                {
-                    return RedirectToAction("Main", "Service", new { message = ex.Message });
-                }
-            }
-
-
 
             if (applicationCredentials != null && 
                 (User.Identity.Name == applicationCredentials.Item1 ||
@@ -542,16 +549,20 @@ namespace ServiceSystem.Controllers
         [HttpPost]
         public ActionResult ApplicationDetails(FormCollection collection)
         { 
-            Bill toAdd = Bill.GenerateBill(collection);
+            Bill toAdd = BillGenerator.GenerateBill(collection);
 
             using (HttpClient client = new HttpClient())
             {
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 
-                client.BaseAddress = new Uri("http://servicesystem.somee.com/");
+                client.BaseAddress = new Uri("http://localhost:49332/");
 
-                HttpResponseMessage response = client.PostAsJsonAsync("api/Bill", toAdd).Result;
+                JsonMediaTypeFormatter formatter = new JsonMediaTypeFormatter();
+
+                formatter.SerializerSettings.TypeNameHandling = TypeNameHandling.All;
+
+                HttpResponseMessage response = client.PostAsync("api/Bill", toAdd, formatter).Result;
 
                 if(response.IsSuccessStatusCode)
                 { 
@@ -570,7 +581,7 @@ namespace ServiceSystem.Controllers
 
             using (HttpClient client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://servicesystem.somee.com/");
+                client.BaseAddress = new Uri("http://localhost:49332/");
                 client.DefaultRequestHeaders.Clear();
 
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
@@ -612,7 +623,7 @@ namespace ServiceSystem.Controllers
 
             using (HttpClient client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://servicesystem.somee.com/");
+                client.BaseAddress = new Uri("http://localhost:49332/");
 
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));

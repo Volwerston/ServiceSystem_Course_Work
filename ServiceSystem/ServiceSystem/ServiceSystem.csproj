@@ -245,6 +245,7 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ApplicationController.cs" />
+    <Compile Include="Controllers\BankBillController.cs" />
     <Compile Include="Controllers\BillController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\ServiceApiController.cs" />
@@ -261,9 +262,11 @@
     <Compile Include="Models\Deadline.cs" />
     <Compile Include="Models\DeadlineApplication.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\BankBill.cs" />
     <Compile Include="Models\Service.cs" />
     <Compile Include="Models\Session.cs" />
     <Compile Include="Models\SessionApplication.cs" />
+    <Compile Include="Models\WebmoneyBill.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Results\ChallengeResult.cs" />

@@ -35,7 +35,7 @@ namespace ServiceSystem.Controllers
                 parameters.Add("@ServiceType", application.ServiceType);
                 parameters.Add("@Description", application.Description);
                 parameters.Add("@Username", User.Identity.Name);
-                parameters.Add("@Status", "PENDING");
+                parameters.Add("@Status", "NO_BILL");
 
                 if(deadlineApp != null)
                 {
@@ -140,6 +140,49 @@ namespace ServiceSystem.Controllers
 
             return Request.CreateResponse(HttpStatusCode.OK, new Tuple<string, Application, List<PaymentMeasure>>(serviceProviderName, application, servicePaymentMeasures));        
         }
+
+        [ActionName("GetUserApplications")]
+        public HttpResponseMessage GetUserApplications()
+        {
+            List<Application> toReturn = new List<Application>();
+
+            using (SqlConnection connection = new SqlConnection(System.Web.Configuration.WebConfigurationManager.ConnectionStrings["DBCS"].ConnectionString))
+            {
+                SqlDataAdapter da = new SqlDataAdapter("spGetUserApplications", connection);
+
+                da.SelectCommand.CommandType = System.Data.CommandType.StoredProcedure;
+
+                da.SelectCommand.Parameters.AddWithValue("@Username", User.Identity.Name);
+
+                try
+                {
+                    DataSet set = new DataSet();
+
+                    da.Fill(set);
+
+                    foreach(DataRow row in set.Tables[0].Rows)
+                    {
+                        Application app = new Application();
+
+                        app.Id = Convert.ToInt32(row["AppId"].ToString());
+                        app.ServiceName = row["ServiceName"].ToString();
+                        app.Username = User.Identity.Name;
+                        app.Status = row["Status"].ToString();
+                        app.StatusChangeDate = Convert.ToDateTime(row["StatusChangeDate"].ToString());
+
+                        toReturn.Add(app);
+                    }
+
+                }
+                catch(Exception ex)
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
+                }
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, toReturn);
+        }
+
 
         [ActionName("GetServiceApplications")]
         public HttpResponseMessage GetServiceApplications()

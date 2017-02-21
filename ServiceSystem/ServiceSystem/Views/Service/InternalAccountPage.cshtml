@@ -61,7 +61,7 @@
                     <div class="panel-heading" id="panel_2">
                         <h4 class="panel-title">
                             <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
-                                Заявки
+                                Заявки на мої послуги
                             </a>
                         </h4>
                     </div>
@@ -74,12 +74,25 @@
                     <div class="panel-heading" id="panel_3">
                         <h4 class="panel-title">
                             <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">
-                                Діалоги
+                                Залишені мною заявки
                             </a>
                         </h4>
                     </div>
                     <div id="collapse3" class="panel-collapse collapse">
                         <div class="panel-body" id="panel_body_3">
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" id="panel_4">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">
+                                Діалоги
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapse4" class="panel-collapse collapse">
+                        <div class="panel-body" id="panel_body_4">
                             <p class="text-center">Інформації не знайдено</p>
                         </div>
                     </div>
@@ -194,17 +207,21 @@
                     {
                         $.ajax({
                             method: "GET",
-                            url: "http://servicesystem.somee.com/api/ServiceApi/UserCreatedServices",
+                            url: "http://localhost:49332/api/ServiceApi/UserCreatedServices",
                             headers: {
                                 Authorization: 'Bearer ' + localStorage.getItem("access_token"),
                             },
                             contentType: "application/json; charset=utf-8",
                             success: function(res)
                             {
-                                $("#panel_body_1").append(GetDivForServiceHeader());
-                                for(var i = 0; i < res.length; ++i)
-                                {
-                                    $("#panel_body_1").append(GetDivForService(res[i]));
+                                if (res.length > 0) {
+                                    $("#panel_body_1").append(GetDivForServiceHeader());
+                                    for (var i = 0; i < res.length; ++i) {
+                                        $("#panel_body_1").append(GetDivForService(res[i]));
+                                    }
+                                }
+                                else {
+                                    $("#panel_body_1").append('<p class="text-center">Сервісів не знайдено</p>');
                                 }
                             },
                             error: function(res)
@@ -218,21 +235,25 @@
             });
 
             $("#panel_2").click(function () {
-
-
                 if (!($("#collapse2").hasClass("in"))) {
                     if ($("#panel_body_2").children().length == 0) {
                         $.ajax({
                             method: "GET",
-                            url: "http://servicesystem.somee.com/api/Application/GetServiceApplications",
+                            url: "http://localhost:49332/api/Application/GetServiceApplications",
                             headers: {
                                 Authorization: 'Bearer ' + localStorage.getItem("access_token"),
                             },
                             contentType: "application/json; charset=utf-8",
                             success: function (res) {
-                                $("#panel_body_2").append(GetDivForApplicationHeader());
-                                for (var i = 0; i < res.length; ++i) {
-                                    $("#panel_body_2").append(GetDivForApplication(res[i]));
+
+                                if (res.length > 0) {
+                                    $("#panel_body_2").append(GetDivForApplicationHeader());
+                                    for (var i = 0; i < res.length; ++i) {
+                                        $("#panel_body_2").append(GetDivForApplication(res[i]));
+                                    }
+                                }
+                                else {
+                                    $("#panel_body_2").append('<p class="text-center">Заявок не знайдено</p>');
                                 }
                             },
                             error: function (res) {
@@ -245,7 +266,35 @@
             });
 
 
+            $("#panel_3").click(function () {
+                if (!($("#collapse3").hasClass("in"))) {
+                    if ($("#panel_body_3").children().length == 0) {
+                        $.ajax({
+                            method: "GET",
+                            url: "http://localhost:49332/api/Application/GetUserApplications",
+                            headers: {
+                                Authorization: 'Bearer ' + localStorage.getItem("access_token"),
+                            },
+                            contentType: "application/json; charset=utf-8",
+                            success: function (res) {
+                                if (res.length > 0) {
+                                    $("#panel_body_3").append(GetDivForApplicationHeader());
+                                    for (var i = 0; i < res.length; ++i) {
+                                        $("#panel_body_3").append(GetDivForApplication(res[i]));
+                                    }
+                                }
+                                else {
+                                    $("#panel_body_3").append('<p class="text-center">Заявок не знайдено</p>');
+                                }
+                            },
+                            error: function (res) {
+                                alert("ERROR: " + res.responseText);
+                            }
+                        });
+                    }
+                }
 
+            });
 
         });
 

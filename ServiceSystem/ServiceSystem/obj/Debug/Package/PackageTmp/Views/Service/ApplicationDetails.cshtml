@@ -26,7 +26,7 @@
                     Text = String.Format("{0}/{1}", CultureInfo.GetCultureInfo("en-US").NumberFormat.CurrencySymbol, measure.ValueMeasure),
                     Value = String.Format("{0}_{1}", measure.Currency, measure.ValueMeasure)
                 }
-    );
+                );
                 break;
             case "euro":
                 toPass.Add(new SelectListItem
@@ -34,7 +34,7 @@
                     Text = String.Format("{0}/{1}", CultureInfo.GetCultureInfo("de-DE").NumberFormat.CurrencySymbol, measure.ValueMeasure),
                     Value = String.Format("{0}_{1}", measure.Currency, measure.ValueMeasure)
                 }
-    );
+                );
                 break;
         }
     }
@@ -45,18 +45,17 @@
     {
         bill = (Bill)ViewData["Bill"];
 
-        if (bill.Status == "ADVANCE_PENDING")
+        if (Model.Status == "ADVANCE_PENDING")
         {
             bill.Price = (bill.Price * bill.AdvancePercent) / Convert.ToDouble(100);
         }
-        else if (bill.Status == "MAIN_PENDING")
+        else if (Model.Status == "MAIN_PENDING")
         {
             bill.Price = bill.Price * (1 - bill.AdvancePercent / Convert.ToDouble(100));
         }
     }
 }
 
-<p>@bill.Status</p>
 
 <div class="row">
     <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-md-offset-2 col-lg-offset-2" style="border: 2px solid green; border-radius: 3px; padding: 10px;">
@@ -83,7 +82,7 @@
                     @if (Model.Description.Trim() != "")
                     {
                     <td>@Model.Description</td>
-        }
+                    }
                     else
                     {
                         <td>-</td>
@@ -94,9 +93,13 @@
 
         @if (ViewData.ContainsKey("FileSource"))
         {
-            <div class="row">
-            <embed src="@ViewData["FileSource"]" class="col-xs-10 col-sm-10 col-md-10 col-lg-10 col-md-offset-1 col-lg-offset-1" style="min-height: 500px;" />
-            </div>
+                <div class="row">
+                    <embed src="@ViewData["FileSource"]" class="col-xs-10 col-sm-10 col-md-10 col-lg-10 col-md-offset-1 col-lg-offset-1" style="min-height: 500px;" />
+                </div>
+        }
+        else if(Model.Status == "MAIN_PAID")
+        {
+            <p class="text-center">Послугу повністю оплачено</p>
         }
 
         @if (User.Identity.Name == ViewData["ServiceProviderName"].ToString() && !ViewData.ContainsKey("FileSource"))
@@ -109,8 +112,8 @@
             </div>
         }
 
-
-        @if (User.Identity.Name == Model.Username && bill != null && bill.Status != "MAIN_PAID")
+        
+        @if (User.Identity.Name == Model.Username && Model.Status != "MAIN_PAID" && Model.Status != "NO_BILL")
         {
             <form id=pay name=pay method="POST" action="https://merchant.webmoney.ru/lmi/payment.asp" accept-charset="windows-1251">
                     <input type="hidden" name="LMI_PAYMENT_AMOUNT" value="@bill.Price" />
