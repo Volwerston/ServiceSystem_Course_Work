@@ -156,7 +156,7 @@ namespace ServiceSystem.Controllers
             document.Close();
         }
 
-        private Tuple<byte[],Bill> GetApplication(int application_id, Application app)
+        private Tuple<byte[],Bill, Dictionary<string, string>> GetApplication(int application_id, Application app)
         {
 
             Tuple<Bill, Dictionary<string, string>> billData = null;
@@ -205,11 +205,11 @@ namespace ServiceSystem.Controllers
                 FileStream fs = new FileStream(fullPath, FileMode.Open, FileAccess.Read);
                 BinaryReader br = new BinaryReader(fs);
 
-                return new Tuple<byte[], Bill>(br.ReadBytes((int)fileLength), billData.Item1);
+                return new Tuple<byte[], Bill, Dictionary<string,string>>(br.ReadBytes((int)fileLength), billData.Item1, billData.Item2);
             }
             else
             {
-                return new Tuple<byte[], Bill>(null, null);
+                return new Tuple<byte[], Bill, Dictionary<string,string>>(null, null, null);
             }
         }
 
@@ -511,7 +511,7 @@ namespace ServiceSystem.Controllers
                 }
             }
 
-                Tuple<byte[], Bill> application_data = null;
+                Tuple<byte[], Bill, Dictionary<string, string>> application_data = null;
 
                 if(applicationCredentials.Item2.Status != "NO_BILL" && applicationCredentials.Item2.Status != "MAIN_PAID")
                 {
@@ -521,6 +521,14 @@ namespace ServiceSystem.Controllers
                     {
                         ViewData["Bill"] = application_data.Item2;
                     }
+
+                if (application_data.Item3 != null)
+                {
+                    if(application_data.Item3.ContainsKey("WMPurse"))
+                    {
+                        ViewData["WMPurse"] = application_data.Item3["WMPurse"];
+                    }
+                }
 
 
                 if (application_data.Item1 != null)

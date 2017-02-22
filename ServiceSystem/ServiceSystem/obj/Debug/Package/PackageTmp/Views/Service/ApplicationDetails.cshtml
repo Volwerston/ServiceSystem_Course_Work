@@ -54,6 +54,15 @@
             bill.Price = bill.Price * (1 - bill.AdvancePercent / Convert.ToDouble(100));
         }
     }
+
+    int bill_id = bill == null ? 0 : bill.Id;
+
+    string wmPurse = "0";
+
+    if(ViewData.ContainsKey("WMPurse"))
+    {
+        wmPurse = ViewData["WMPurse"].ToString();
+    }
 }
 
 
@@ -102,7 +111,7 @@
             <p class="text-center">Послугу повністю оплачено</p>
         }
 
-        @if (User.Identity.Name == ViewData["ServiceProviderName"].ToString() && !ViewData.ContainsKey("FileSource"))
+        @if (User.Identity.Name == ViewData["ServiceProviderName"].ToString() && Model.Status == "NO_BILL")
         {
             <input type="button" name="form_application" class="btn btn-success btn-block" style="margin: auto;" value="Сформувати заявку" />
 
@@ -113,23 +122,85 @@
         }
 
         
-        @if (User.Identity.Name == Model.Username && Model.Status != "MAIN_PAID" && Model.Status != "NO_BILL")
+        @if (User.Identity.Name == Model.Username && Model.Status != "MAIN_PAID" && Model.Status != "NO_BILL" && bill.Type == "WEBMONEY")
         {
             <form id=pay name=pay method="POST" action="https://merchant.webmoney.ru/lmi/payment.asp" accept-charset="windows-1251">
                     <input type="hidden" name="LMI_PAYMENT_AMOUNT" value="@bill.Price" />
                     <input type="hidden" name="LMI_PAYMENT_DESC" value="Платіж за квитанцією # @bill.Id" />
                     <input type="hidden" name="LMI_PAYMENT_NO" value="@bill.Id">
-                    <input type="hidden" name="LMI_PAYEE_PURSE" value="@bill.WM_Purse" />
+                    <input type="hidden" name="LMI_PAYEE_PURSE" value="@wmPurse" />
                     <input type="hidden" name="LMI_SIM_MODE" value="0" />
                     <input type="submit" class="btn btn-success btn-block" style="margin: auto;" value="Сплатити квитанцію" />
             </form>
         }
+
+        @if (User.Identity.Name == ViewData["ServiceProviderName"].ToString() && Model.Status != "MAIN_PAID" &&
+                Model.Status != "NO_BILL" && bill.Type == "BANK")
+        {
+            <input type="submit" class="btn btn-success btn-block" style="margin: auto;" data-toggle="modal" data-target="#ask_modal" value="Підтвердити здійснення платежу" />
+        }
+    </div>
+</div>
+
+<div class="modal fade" id="ask_modal" role="dialog">
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <h2 class="text-center">Підтвердіть Вашу дію</h2>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="payment_done" class="btn btn-success">Підтвердити</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Скасувати</button>
+            </div>
+        </div>
+
     </div>
 </div>
 
 @section scripts{
     <script type="text/javascript">
         $(document).ready(function () {
+
+            $("#payment_done").click(function () {
+
+                $.ajax({
+                    method: "POST",
+                    url: "http://servicesystem.somee.com/api/BankBill/ConfirmPayment",
+                    contentType: "application/json; charset=utf-8",
+                    headers: {
+                        Authorization: 'Bearer ' + localStorage.getItem('access_token')
+                    },
+                    dataType: "json",
+                    data: JSON.stringify(@bill_id),
+                    success: function(){
+                        window.location.href = '@Url.Action("ApplicationDetails", "Service", new { id = Model.Id })';
+                    },
+                    error: function(res)
+                    {
+                        alert(res.responseText);
+                    }
+
+                });
+
+            });
+
+            $('select[name="payment_selector"]').change(function () {
+                if($(this).val() == "wm")
+                {
+                    $("#wm_container").removeAttr("hidden");
+                    $("#privat_container").attr("hidden", true);
+                }
+                else if($(this).val() == "privat")
+                {
+                    $("#privat_container").removeAttr("hidden");
+                    $("#wm_container").attr("hidden", true);
+                }
+            });
+
             $('input[name="form_application"]').click(function () {
                 $("#application_form_holder").removeAttr("hidden");
             });

@@ -56,7 +56,7 @@ namespace ServiceSystem.Controllers
                     parameters.Add("@HasLastDate", deadlineApp.HasLastDate);
                     parameters.Add("@StartTime", deadlineApp.StartTime);
                     parameters.Add("@EndTime", deadlineApp.EndTime);
-                    parameters.Add("@Duration", deadlineApp.Duration);
+                    parameters.Add("@Duration", JsonConvert.SerializeObject(deadlineApp.Duration));
 
                 }
                 else if(sessionApp != null)
