@@ -465,6 +465,35 @@ namespace ServiceSystem.Controllers
         }
 
         [HttpPost]
+        public string GetServiceConsultants(int service_id)
+        {
+            List<ServiceConsultant> consultants = new List<ServiceConsultant>();
+
+            using (HttpClient client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Clear();
+
+                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+
+                client.BaseAddress = new Uri("http://localhost:49332/");
+
+                HttpResponseMessage message = client.GetAsync("api/ServiceConsultants/GetServiceConsultants?service_id=" + service_id.ToString()).Result;
+
+                if(message.IsSuccessStatusCode)
+                {
+                    consultants = message.Content.ReadAsAsync<List<ServiceConsultant>>().Result;
+                }
+            }
+
+            if(consultants.Count() == 0)
+            {
+                consultants = null;
+            }
+
+            return JsonConvert.SerializeObject(consultants);
+        }
+
+        [HttpPost]
         public ActionResult ServiceDetails(int serviceId, FormCollection collection)
         {
             Application toAdd = ApplicationManager.GenerateApplication(serviceId, collection);
@@ -607,6 +636,15 @@ namespace ServiceSystem.Controllers
         }
 
         [Authorize]
+        public ActionResult ConsultantSearch(int service_id)
+        {
+            ViewData["ServiceId"] = service_id;
+
+            return View();
+        }
+
+
+        [Authorize]
         public ActionResult InternalAccountPage()
         {
             UserInfoViewModel model = new UserInfoViewModel
@@ -642,7 +680,27 @@ namespace ServiceSystem.Controllers
                 if(response.IsSuccessStatusCode)
                 {
                     toReturn = response.Content.ReadAsAsync<Tuple<Service, Dictionary<string, string>>>().Result;
+
+
+                    HttpResponseMessage consultantsResponse = client.GetAsync("api/ServiceConsultants/?service_id=" + id).Result;
+
+                    if(consultantsResponse.IsSuccessStatusCode)
+                    {
+                        List<ServiceConsultant> consultants = consultantsResponse.Content.ReadAsAsync<List<ServiceConsultant>>().Result;
+
+                        if(consultants.Count() == 0)
+                        {
+                            consultants = null;
+                        }
+
+                        ViewData["consultants"] = consultants;
+                    }
                 }
+            }
+            
+            if(!ViewData.ContainsKey("consultants"))
+            {
+                ViewData["consultants"] = null;
             }
 
             if (toReturn.Item2 != null)

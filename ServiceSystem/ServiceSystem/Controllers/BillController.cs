@@ -89,7 +89,7 @@ namespace ServiceSystem.Controllers
             using (SqlConnection connection = new SqlConnection(System.Web.Configuration.WebConfigurationManager.ConnectionStrings["DBCS"].ConnectionString))
             {
                 StringBuilder cmdBuilder = new StringBuilder("");
-                cmdBuilder.Append("INSERT INTO Bills VALUES(@AppId, @AdvancePercent, @Price, @StatusChangeTime, @Currency, @AdvanceDeadline, @MainDeadline,@Type, @DetailsId);");
+                cmdBuilder.Append("INSERT INTO Bills VALUES(@AppId, @AdvancePercent, @Price, @StatusChangeTime, @Currency, @Type, @AdvanceDeadline, @MainDeadline, @DetailsId);");
                 cmdBuilder.Append("UPDATE Applications SET STATUS='ADVANCE_PENDING' WHERE ID=@AppId;");
 
                 Dictionary<string, object> values = new Dictionary<string, object>();

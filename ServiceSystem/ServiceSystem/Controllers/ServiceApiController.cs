@@ -364,7 +364,6 @@ namespace ServiceSystem.Controllers
     {
 
         [ActionName("UserCreatedServices")]
-        [HttpGet]
         public HttpResponseMessage GetServices()
         {
             List<Service> toReturn = new List<Service>();
@@ -497,6 +496,79 @@ namespace ServiceSystem.Controllers
             }
         }
 
+        
+        [ActionName("UserNotifications")]
+        public HttpResponseMessage GetUserNotifications()
+        {
+            List<Notification> notificatons = new List<Notification>();
+
+            using (SqlConnection connection = new SqlConnection(System.Web.Configuration.WebConfigurationManager.ConnectionStrings["DBCS"].ConnectionString))
+            {
+                string cmdString = "SELECT ID, SENDER_NAME, RECIPIENT_NAME, SENDING_TIME, TEXT from Notifications WHERE RECIPIENT_NAME=@recipient ORDER BY SENDING_TIME DESC";
+
+                SqlDataAdapter da = new SqlDataAdapter(cmdString, connection);
+
+                da.SelectCommand.Parameters.AddWithValue("@recipient", User.Identity.Name);
+
+                DataSet set = new DataSet();
+
+                try
+                {
+                    connection.Open();
+
+                    da.Fill(set);
+
+                    foreach (DataRow row in set.Tables[0].Rows)
+                    {
+                        Notification notification = new Notification();
+
+                        notification.Id = Convert.ToInt32(row["ID"].ToString());
+                        notification.SenderName = row["SENDER_NAME"].ToString();
+                        notification.RecipientName = row["RECIPIENT_NAME"].ToString();
+                        notification.SendingTime = Convert.ToDateTime(row["SENDING_TIME"].ToString());
+                        notification.Text = row["TEXT"].ToString();
+
+                        notificatons.Add(notification);
+                    }
+                }
+                catch(Exception ex)
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
+                }
+            }
+
+            if(notificatons.Count() == 0)
+            {
+                notificatons = null;
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, notificatons);
+        }
+
+        [HttpPost]
+        [ActionName("DeleteNotification")]
+        public HttpResponseMessage DeleteNotification([FromBody]int note_id)
+        {
+            using (SqlConnection connection = new SqlConnection(System.Web.Configuration.WebConfigurationManager.ConnectionStrings["DBCS"].ConnectionString))
+            {
+                SqlCommand cmd = new SqlCommand("DELETE FROM Notifications WHERE ID=@Id", connection);
+
+                cmd.Parameters.AddWithValue("@Id", note_id);
+
+                try
+                {
+                    connection.Open();
+                    cmd.ExecuteNonQuery();
+
+                    return Request.CreateResponse(HttpStatusCode.OK, "OK");
+                }
+                catch(Exception ex)
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
+                }
+            }
+        }
+
         [ActionName("PostService")]
         public HttpResponseMessage Post([FromBody]Service service)
         {
@@ -623,6 +695,7 @@ namespace ServiceSystem.Controllers
                         toReturn.Item1.Type = set.Tables[0].Rows[0]["TYPE"].ToString();
                         toReturn.Item1.Description = set.Tables[0].Rows[0]["DESCRIPTION"].ToString();
                         toReturn.Item1.Name = set.Tables[0].Rows[0]["NAME"].ToString();
+                        toReturn.Item1.Username = set.Tables[0].Rows[0]["USERNAME"].ToString();
                         toReturn.Item1.AdvancePercent = double.Parse(set.Tables[0].Rows[0]["ADVANCE_PERCENT"].ToString());
                         toReturn.Item1.Properties = JsonConvert.DeserializeObject<List<Property>>(set.Tables[0].Rows[0]["PROPERTIES"].ToString());
 

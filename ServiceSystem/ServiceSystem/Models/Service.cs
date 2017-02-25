@@ -405,6 +405,7 @@ namespace ServiceSystem.Models
         public List<File> Attachments { get; set; }
         public double AdvancePercent { get; set; }
         public List<Property> Properties { get; set; }
+        public string Username { get; set; }
     }
 
     public class Property

@@ -97,6 +97,19 @@
                         </div>
                     </div>
                 </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" id="panel_5">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse5">
+                                Повідомлення
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapse5" class="panel-collapse collapse">
+                        <div class="panel-body" id="panel_body_5">
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -178,6 +191,32 @@
                     + '</a>';
         }
 
+
+        function GetDivForNotification(note) {
+            return '<div style="padding: 5px;" id="notification_' + note.Id + '">'
+                    + '<div class="row" style="margin-top: 5px; border: 1px solid green; border-radius: 3px;">'
+                    + '<div class="row">'
+                    + '<div class="col-sm-offset-11">'
+                    + '<a style="border: none;" class="btn btn-default col-xs-1" id="note_' + note.Id + '">&times;</a>'
+                    + '</div>'
+                    + '</div>'
+                    + '<div class="col-xs-6" style="word-break: break-all;">'
+                    + '<p>From: ' + note.SenderName + '</p>'
+                    + '</div>'
+                    + '<div class="col-xs-6" style="word-break: break-all">'
+                    + '<p>To: ' + note.RecipientName + '</p>'
+                    + '</div>'
+                    + '<div class="col-xs-12" style="word-break: break-all; margin-top: 5px;">'
+                    + '<p>Date: ' + note.SendingTime + '</p>'
+                    + '</div>'
+                    + '<div class="col-xs-12" style="word-break: break-all; margin-top: 5px;">'
+                    + '<p>' + note.Text + '</p>'
+                    + '</div>'
+                    + '</div>'
+                    + '</div>';
+        }
+
+
         function GetDivForServiceHeader() {
             return '<div style="padding: 3px;">'
                     + '<div class="row" style="margin-top: 5px; border: 1px solid green; border-radius: 3px;">'
@@ -197,7 +236,8 @@
                     + '</div>';
         }
 
-        $(document).ready(function (){
+        $(document).ready(function () {
+
 
             $("#panel_1").click(function () {
 
@@ -285,6 +325,67 @@
                                 }
                                 else {
                                     $("#panel_body_3").append('<p class="text-center">Заявок не знайдено</p>');
+                                }
+                            },
+                            error: function (res) {
+                                alert("ERROR: " + res.responseText);
+                            }
+                        });
+                    }
+                }
+
+            });
+
+            $("#panel_5").click(function () {
+
+                if (!($("#collapse5").hasClass("in"))) {
+                    if ($("#panel_body_5").children().length == 0) {
+                        $.ajax({
+                            method: "GET",
+                            url: "http://localhost:49332/api/ServiceApi/UserNotifications",
+                            headers: {
+                                Authorization: 'Bearer ' + localStorage.getItem("access_token"),
+                            },
+                            contentType: "application/json; charset=utf-8",
+                            success: function (res) {
+                                if (res != null) {
+                                    for (var i = 0; i < res.length; ++i) {
+                                        $("#panel_body_5").append(GetDivForNotification(res[i]));
+                                    }
+
+                                    $('a[id^="note"]').click(function () {
+
+                                        var note_id = $(this).attr('id').split('_')[1];
+
+                                        alert(note_id);
+
+                                        $.ajax({
+                                            method: "POST",
+                                            url: "http://localhost:49332/api/ServiceApi/DeleteNotification",
+                                            contentType: "application/json; charset=utf-8",
+                                            dataType: "json",
+                                            data: JSON.stringify(note_id),
+                                            headers: {
+                                                Authorization: 'Bearer ' + localStorage.getItem('access_token')
+                                            },
+                                            success: function(res)
+                                            {
+                                                $("#notification_" + note_id).remove();
+
+                                                if($("#panel_body_5").children().length == 0)
+                                                {
+                                                    $("#panel_body_5").append('<p class="text-center">Повідомлень не знайдено</p>')
+                                                }
+                                            },
+                                            error: function (res) {
+                                                alert(res.responseText);
+                                            }
+                                        });
+
+                                    });
+                                }
+                                else {
+                                    $("#panel_body_5").append('<p class="text-center">Повідомлень не знайдено</p>');
                                 }
                             },
                             error: function (res) {

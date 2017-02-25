@@ -4,15 +4,64 @@
 @{
     ViewBag.Title = "SessionDetails";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    List<ServiceConsultant> consultants = (List<ServiceConsultant>)ViewData["consultants"];
+
+    bool isNotConfirmed = false;
+
+    if(consultants != null)
+    {
+        isNotConfirmed = consultants.Where(x => x.Approved == false && x.Email == User.Identity.Name).Count() > 0;
+    }
 }
 
-<div class="row">
-    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-sm-offset-2 col-md-offset-2 col-lg-offset-2 well text-center">
+@if (isNotConfirmed)
+{
+    <div id="consultant_request">
+        <div class="row">
+            <div class="col-xs-6 col-sm-offset-3 well">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <h3 class="text-center">Вас було запрошено консультантом цього сервісу</h3>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 10px;">
+                    <div class="col-xs-6">
+                        <input type="button" class="btn btn-success btn-block" id="confirm_consultant" value="Підтвердити" />
+                    </div>
+                    <div class="col-xs-6">
+                        <input type="button" class="btn btn-default btn-block" id="reject_consultant" value="Відмовити" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="modal fade" id="ask_modal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <h2 class="text-center">Підтвердіть Вашу дію</h2>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="confirmation_done" class="btn btn-success">Підтвердити</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Скасувати</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" style="margin-top: 10px;">
+    <div class="col-xs-8 col-sm-offset-2 well text-center">
         <h3>@Model.Name</h3>
         <p>@Model.Description</p>
         <p>Категорія: @Model.Category</p>
 
-            @if (ViewData["PARAMS"] != null)
+        @if (ViewData["PARAMS"] != null)
             {
                 Dictionary<string, string> parameters = (Dictionary<string, string>)ViewData["PARAMS"];
 
@@ -29,66 +78,147 @@
                             <p>@param.Value</p>
                         </div>
                     </div>
-                    }
                 }
+            }
 
-                <div class="paramText">
-                    @if (parameters.ContainsKey("Вартість"))
-                    {
-                        <h3>Вартість:</h3>
+            <div class="paramText">
+                @if (parameters.ContainsKey("Вартість"))
+                {
+                    <h3>Вартість:</h3>
                         <div style="margin-top: 10px;" class="text-center">
                             @parameters["Вартість"]
                         </div>
-                    }
+                }
 
-                    @if (parameters.ContainsKey("Тривалість"))
-                    {
-                        <h3>Тривалість:</h3>
+                @if (parameters.ContainsKey("Тривалість"))
+                {
+                    <h3>Тривалість:</h3>
                         <div style="margin-top: 10px;" class="text-center">
                             @parameters["Тривалість"]
                         </div>
-                    }
-                </div>
+                }
+            </div>
 
-                if(Model.Properties != null)
+            if (Model.Properties != null)
+            {
+                foreach (Property prop in Model.Properties)
                 {
-                    foreach(Property prop in Model.Properties)
-                    {
-                        <div class="row">
-                            <div class="text-center col-xs-6 col-sm-6 col-md-6 col-lg-6 col-md-offset-3 col-lg-offset-3">
-                                <h3>@prop.Name</h3>
-                            </div>
+                    <div class="row">
+                        <div class="text-center col-xs-6 col-sm-6 col-md-6 col-lg-6 col-md-offset-3 col-lg-offset-3">
+                            <h3>@prop.Name</h3>
                         </div>
+                    </div>
                         <div class="row" style="margin-bottom: 10px;">
                             <div class="text-center col-xs-8 col-sm-8 col-md-8 col-lg-8 col-md-offset-2 col-lg-offset-2">
                                 <h4>@prop.Value</h4>
                             </div>
                         </div>
-                    }
                 }
             }
+        }
 
-  <div class="row">
-            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                <input type="button" class="btn btn-info btn-block" value="Залишити заявку" id="application_create" />
+        @if (User.Identity.Name != Model.Username)
+        {
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <input type="button" class="btn btn-info btn-block" value="Залишити заявку" id="application_create" />
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <input type="button" class="btn btn-info btn-block" value="Задати запитання" />
+                </div>
             </div>
-            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                <input type="button" class="btn btn-info btn-block" value="Задати запитання" />
+        }
+
+        @if (User.Identity.Name == Model.Username)
+        {
+            <div class="row" style="margin-top: 15px;">
+                <div class="col-xs-10 col-sm-offset-1">
+                    <div class="panel-group" id="accordion">
+                        <div class="panel panel-default">
+                            <div class="panel-heading" id="panel_1">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+                                        Консультанти сервісу
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapse1" class="panel-collapse collapse">
+                                <div class="panel-body" id="panel_body_1">
+                                    @if (consultants != null)
+                                    {
+                                        <div style="padding: 3px;">
+                                            <div class="row" style="margin-top: 5px; border: 1px solid green; border-radius: 3px;">
+                                                <div class="col-xs-1">
+                                                    <h6><b>ID</b></h6>
+                                                </div>
+                                                <div class="col-xs-4">
+                                                    <h6><b>ПІБ</b></h6>
+                                                </div>
+                                                <div class="col-xs-3">
+                                                    <h6><b>E-mail</b></h6>
+                                                </div>
+                                                <div class="col-xs-2">
+                                                    <h6><b>Підтверджений</b></h6>
+                                                </div>
+                                                <div class="col-xs-2">
+                                                    <h6><b>Остання заявка</b></h6>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        foreach (var consultant in consultants)
+                                        {
+                                            <div style="padding: 5px;">
+                                                <div class="row" style="margin-top: 5px; border: 1px solid green; border-radius: 3px;">
+                                                    <div class="col-xs-1">
+                                                        <h6>@consultant.Id</h6>
+                                                    </div>
+                                                    <div class="col-xs-4" style="word-break: break-all">
+                                                        <h6>@consultant.Surname @consultant.Name  @consultant.FatherName</h6>
+                                                    </div>
+                                                    <div class="col-xs-3" style="word-break: break-all">
+                                                        <h6> @consultant.Email</h6>
+                                                    </div>
+                                                    <div class="col-xs-2" style="word-break: break-all">
+                                                        <h6>@consultant.Approved</h6>
+                                                    </div>
+                                                    <div class="col-xs-2" style="word-break: break-all">
+                                                        <h6>@consultant.LastAssignmentTime</h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <p class="text-center">Жодного консультанта не знайдено</p>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
+            <div class="row" style="margin-top: 10px;">
+                <div class="col-xs-4 col-sm-offset-4">
+                    <input type="button" onclick='location.href="@Url.Action("ConsultantSearch", "Service", new { service_id = Model.Id })"' id="invite_consultants" class="btn btn-success btn-block" value="Запросити" />
+                </div>
+            </div>
+        }
+
     </div>
 </div>
 
 <div class="row" hidden id="application_holder">
     <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-md-offset-2 col-lg-offset-2">
-        @using (Html.BeginForm("ServiceDetails", "Service", new { serviceId = Model.Id }, 
-            FormMethod.Post, new { @class = "form-horizontal well" }))
+        @using (Html.BeginForm("ServiceDetails", "Service", new { serviceId = Model.Id },
+                FormMethod.Post, new { @class = "form-horizontal well" }))
         {
             if (Model.Type == "Session")
             {
                 @Html.Partial("_SessionApplication");
             }
-            else if(Model.Type == "Deadline")
+            else if (Model.Type == "Deadline")
             {
                 @Html.Partial("_DeadlineApplication");
             }
@@ -100,8 +230,46 @@
 
 @section scripts{
     <script type="text/javascript">
-        
+
+        var confirmConsultant = null;
+
         $(document).ready(function () {
+
+            $("#confirm_consultant").click(function (e) {
+                confirmConsultant = true;
+
+                $("#ask_modal").modal('show');
+            });
+
+            $("#reject_consultant").click(function (e) {
+                confirmConsultant = false;
+
+                $("#ask_modal").modal('show');
+            });
+
+            $("#confirmation_done").click(function () {
+
+                $.ajax({
+                    method: "POST",
+                    url: "http://localhost:49332/api/ServiceConsultants/ConfirmConsultant",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    headers: {
+                        Authorization: 'Bearer ' + localStorage.getItem("access_token"),
+                    },
+                    data: JSON.stringify(confirmConsultant),
+                    success: function (res) {
+                        $("#consultant_request").remove();
+                        $("#ask_modal").modal('hide');
+                    },
+                    error: function (res) {
+                        alert(res.responseText);
+
+                        $("#ask_modal").modal('hide');
+                    }
+                });
+
+            });
 
             var paramDivs = $(".paramText");
 
@@ -141,7 +309,6 @@
                             $("#from_some_date").attr("hidden", true);
                         }
                     });
-
                 });
 
             });
@@ -149,5 +316,5 @@
         });
 
     </script>
-    
-    }
+
+}

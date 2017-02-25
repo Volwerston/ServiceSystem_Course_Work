@@ -249,6 +249,7 @@
     <Compile Include="Controllers\BillController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\ServiceApiController.cs" />
+    <Compile Include="Controllers\ServiceConsultantsController.cs" />
     <Compile Include="Controllers\ServiceController.cs" />
     <Compile Include="Controllers\WebmoneyController.cs" />
     <Compile Include="Global.asax.cs">
@@ -263,7 +264,9 @@
     <Compile Include="Models\DeadlineApplication.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\BankBill.cs" />
+    <Compile Include="Models\Notification.cs" />
     <Compile Include="Models\Service.cs" />
+    <Compile Include="Models\ServiceConsultant.cs" />
     <Compile Include="Models\Session.cs" />
     <Compile Include="Models\SessionApplication.cs" />
     <Compile Include="Models\WebmoneyBill.cs" />
@@ -360,6 +363,7 @@
     <Content Include="Views\Service\InternalAccountPage.cshtml" />
     <Content Include="Views\Service\ApplicationDetails.cshtml" />
     <Content Include="Views\Shared\_Bill.cshtml" />
+    <Content Include="Views\Service\ConsultantSearch.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
