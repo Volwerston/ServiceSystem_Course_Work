@@ -357,8 +357,6 @@
 
                                         var note_id = $(this).attr('id').split('_')[1];
 
-                                        alert(note_id);
-
                                         $.ajax({
                                             method: "POST",
                                             url: "http://localhost:49332/api/ServiceApi/DeleteNotification",

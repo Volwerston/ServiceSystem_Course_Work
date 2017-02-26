@@ -571,7 +571,8 @@ namespace ServiceSystem.Controllers
 
             if (applicationCredentials != null && 
                 (User.Identity.Name == applicationCredentials.Item1 ||
-                User.Identity.Name == applicationCredentials.Item2.Username))
+                User.Identity.Name == applicationCredentials.Item2.Username ||
+                User.Identity.Name == applicationCredentials.Item2.ConsultantName))
             {
                 ViewData["ServiceProviderName"] = applicationCredentials.Item1;
                 ViewData["ServicePaymentMeasures"] = applicationCredentials.Item3;
