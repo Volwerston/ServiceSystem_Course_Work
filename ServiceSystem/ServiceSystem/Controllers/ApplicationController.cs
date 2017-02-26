@@ -27,7 +27,7 @@ namespace ServiceSystem.Controllers
 
            using (SqlConnection connection = new SqlConnection(System.Web.Configuration.WebConfigurationManager.ConnectionStrings["DBCS"].ConnectionString))
            {
-                string cmdString = "INSERT INTO Applications VALUES(@ServiceId, @ServiceType, @Description, @Username, @DetailsId, @Status, GETDATE() );";
+                string cmdString = "INSERT INTO Applications VALUES(@ServiceId, @ServiceType, @Description, @Username, @DetailsId, @Status, GETDATE(), NULL);";
 
                 Dictionary<string, object> parameters = new Dictionary<string, object>();
 
@@ -130,6 +130,7 @@ namespace ServiceSystem.Controllers
                         application.Description = set.Tables[0].Rows[0]["Description"].ToString();
                         serviceProviderName = set.Tables[0].Rows[0]["ServiceProviderName"].ToString();
                         servicePaymentMeasures = JsonConvert.DeserializeObject<List<PaymentMeasure>>(set.Tables[0].Rows[0]["PaymentMeasures"].ToString());
+                        application.ConsultantName = set.Tables[0].Rows[0]["ConsultantName"].ToString();
                     }
                 }
                 catch(Exception ex)
@@ -169,6 +170,7 @@ namespace ServiceSystem.Controllers
                         app.Username = User.Identity.Name;
                         app.Status = row["Status"].ToString();
                         app.StatusChangeDate = Convert.ToDateTime(row["StatusChangeDate"].ToString());
+                        app.ConsultantName = row["ConsultantName"].ToString();
 
                         toReturn.Add(app);
                     }
@@ -212,6 +214,7 @@ namespace ServiceSystem.Controllers
                         app.Username = row["Username"].ToString();
                         app.Status = row["Status"].ToString();
                         app.StatusChangeDate = Convert.ToDateTime(row["StatusChangeDate"].ToString());
+                        app.ConsultantName = row["ConsultantName"].ToString();
 
 
                         toReturn.Add(app);

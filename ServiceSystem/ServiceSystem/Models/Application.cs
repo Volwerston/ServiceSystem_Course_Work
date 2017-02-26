@@ -128,5 +128,6 @@ namespace ServiceSystem.Models
         public DateTime StatusChangeDate { get; set; }
         public string ServiceName { get; set; }
         public string Username { get; set; }
+        public string ConsultantName { get; set; }
     }
 }

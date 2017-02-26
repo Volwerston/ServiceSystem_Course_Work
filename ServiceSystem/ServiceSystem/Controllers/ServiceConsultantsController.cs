@@ -110,7 +110,6 @@ namespace ServiceSystem.Controllers
 
         [Authorize]
         [HttpPost]
-        [ActionName("ConfirmConsultant")]
         public HttpResponseMessage ConfirmConsultant([FromBody]bool confirm)
         {
             using (SqlConnection connection = new SqlConnection(System.Web.Configuration.WebConfigurationManager.ConnectionStrings["DBCS"].ConnectionString))
@@ -139,6 +138,40 @@ namespace ServiceSystem.Controllers
                 catch(Exception ex)
                 {
                     return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
+                }
+            }
+        }
+
+        [Authorize]
+        [HttpPost]
+        public HttpResponseMessage DeleteConsultant([FromBody]int id)
+        {
+            using (SqlConnection connection = new SqlConnection(System.Web.Configuration.WebConfigurationManager.ConnectionStrings["DBCS"].ConnectionString))
+            {
+                SqlCommand cmd = new SqlCommand("spDeleteConsultant", connection);
+
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@Id", id);
+
+                try
+                {
+                    connection.Open();
+                    int code = (int)cmd.ExecuteScalar();
+
+                    if(code == 0)
+                    {
+                        return Request.CreateResponse(HttpStatusCode.MethodNotAllowed, 
+                            "Impossible to delete consultant since he has not finished dialogues");
+                    }
+                    else
+                    {
+                        return Request.CreateResponse(HttpStatusCode.OK, "OK");
+                    }
+                }
+                catch(Exception ex)
+                {
+                    return Request.CreateResponse(HttpStatusCode.InternalServerError, ex.Message);
                 }
             }
         }

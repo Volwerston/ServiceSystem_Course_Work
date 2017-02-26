@@ -168,8 +168,8 @@
 
                                         foreach (var consultant in consultants)
                                         {
-                                            <div style="padding: 5px;">
-                                                <div class="row" style="margin-top: 5px; border: 1px solid green; border-radius: 3px;">
+                                            <div style="padding: 5px;" id="consultant_@consultant.Id">
+                                                <div class="row" style="margin-top: 5px; border: 1px solid green; border-radius: 3px; padding: 5px;">
                                                     <div class="col-xs-1">
                                                         <h6>@consultant.Id</h6>
                                                     </div>
@@ -184,6 +184,9 @@
                                                     </div>
                                                     <div class="col-xs-2" style="word-break: break-all">
                                                         <h6>@consultant.LastAssignmentTime</h6>
+                                                    </div>
+                                                    <div class="col-xs-12 col-sm-4 col-sm-offset-4">
+                                                        <input type="button" class="btn btn-success btn-block btn-xs" name="remove_@consultant.Id" value="Видалити" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -227,13 +230,63 @@
     </div>
 </div>
 
+<div class="modal fade" id="delete_modal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <h2 class="text-center">Підтвердіть Вашу дію</h2>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="deletion_done" data-dismiss="modal" class="btn btn-success">Підтвердити</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Скасувати</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 @section scripts{
     <script type="text/javascript">
 
         var confirmConsultant = null;
+        var id = null;
 
         $(document).ready(function () {
+
+            $('input[name^="remove"]').click(function(){        
+                id = $(this).attr('name').split('_')[1];
+
+                $("#delete_modal").modal('show');
+            });
+
+            $("#deletion_done").click(function () {
+                $.ajax({
+                    method: "POST",
+                    url: "http://localhost:49332/api/ServiceConsultants/DeleteConsultant",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    headers: {
+                        Authorization: 'Bearer ' + localStorage.getItem("access_token"),
+                    },
+                    data: JSON.stringify(id),
+                    success: function(res){
+                        $("#consultant_" + id).remove();
+
+                        if($("#panel_body_1").children().length == 1)
+                        {
+                            $("#panel_body_1").empty();
+                            $("#panel_body_1").append('<p class="text-center">Жодного консультанта не знайдено</p>');
+                        }
+                    },
+                    error: function (res) {
+                        alert(res.responseText);
+                    }           
+                });
+            });
+
 
             $("#confirm_consultant").click(function (e) {
                 confirmConsultant = true;
