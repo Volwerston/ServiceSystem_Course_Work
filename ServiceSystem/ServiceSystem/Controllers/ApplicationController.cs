@@ -27,7 +27,7 @@ namespace ServiceSystem.Controllers
 
            using (SqlConnection connection = new SqlConnection(System.Web.Configuration.WebConfigurationManager.ConnectionStrings["DBCS"].ConnectionString))
            {
-                string cmdString = "INSERT INTO Applications VALUES(@ServiceId, @ServiceType, @Description, @Username, @DetailsId, @Status, GETDATE(), NULL);";
+                string cmdString = "INSERT INTO Applications VALUES(@ServiceId, @ServiceType, @Description, @Username, @DetailsId, @Status, GETDATE(), NULL, NULL);";
 
                 Dictionary<string, object> parameters = new Dictionary<string, object>();
 

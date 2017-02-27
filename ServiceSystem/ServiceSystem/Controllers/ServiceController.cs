@@ -281,8 +281,6 @@ namespace ServiceSystem.Controllers
             return View();
         }
 
-
-
         [HttpPost]
         public ActionResult ChangePassword(string email)
         {
@@ -714,6 +712,37 @@ namespace ServiceSystem.Controllers
             }
 
             return View(toReturn.Item1);
+        }
+
+
+        [Authorize]
+        public ActionResult Dialogue(int id)
+        {
+            List<string> participants = null;
+
+            using (HttpClient client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+
+                client.BaseAddress = new Uri("http://localhost:49332/");
+
+                HttpResponseMessage response = client.GetAsync("api/Dialogue/GetDialogueParticipants?dialogue_id=" + id.ToString()).Result;
+
+                if(response.IsSuccessStatusCode)
+                {
+                    participants = response.Content.ReadAsAsync<List<string>>().Result;
+                }
+            }
+
+            if(participants != null && participants.Where(x => x == User.Identity.Name).Count() > 0)
+            {
+                ViewData["room_id"] = id;
+
+                return View();
+            }
+
+            return RedirectToAction("Index");
         }
     }
 }
