@@ -14,19 +14,18 @@ using System.Web.Http.ModelBinding;
 namespace ServiceSystem.Controllers
 {
 
-   
     [Authorize]
     public class ApplicationController : ApiController
     {
         public HttpResponseMessage Post([FromBody]Application application)
         {
 
-           DeadlineApplication deadlineApp = application as DeadlineApplication;
+            DeadlineApplication deadlineApp = application as DeadlineApplication;
 
-           SessionApplication sessionApp = application as SessionApplication;
+            SessionApplication sessionApp = application as SessionApplication;
 
-           using (SqlConnection connection = new SqlConnection(System.Web.Configuration.WebConfigurationManager.ConnectionStrings["DBCS"].ConnectionString))
-           {
+            using (SqlConnection connection = new SqlConnection(System.Web.Configuration.WebConfigurationManager.ConnectionStrings["DBCS"].ConnectionString))
+            {
                 string cmdString = "INSERT INTO Applications VALUES(@ServiceId, @ServiceType, @Description, @Username, @DetailsId, @Status, GETDATE(), NULL, NULL);";
 
                 Dictionary<string, object> parameters = new Dictionary<string, object>();
@@ -37,9 +36,9 @@ namespace ServiceSystem.Controllers
                 parameters.Add("@Username", User.Identity.Name);
                 parameters.Add("@Status", "NO_BILL");
 
-                if(deadlineApp != null)
+                if (deadlineApp != null)
                 {
-                    if(deadlineApp.StartTime.Year < 1753)
+                    if (deadlineApp.StartTime.Year < 1753)
                     {
                         deadlineApp.StartTime = new DateTime(1900, 1, 1);
                     }
@@ -59,7 +58,7 @@ namespace ServiceSystem.Controllers
                     parameters.Add("@Duration", JsonConvert.SerializeObject(deadlineApp.Duration));
 
                 }
-                else if(sessionApp != null)
+                else if (sessionApp != null)
                 {
                     cmdString = cmdString.Replace("@DetailsId", "IDENT_CURRENT('Session_Application_Details') + 1");
 
@@ -74,7 +73,7 @@ namespace ServiceSystem.Controllers
 
                 SqlCommand cmd = new SqlCommand(cmdString, connection);
 
-                foreach(var parameter in parameters)
+                foreach (var parameter in parameters)
                 {
                     cmd.Parameters.AddWithValue(parameter.Key, parameter.Value);
                 }
@@ -94,6 +93,33 @@ namespace ServiceSystem.Controllers
                 {
                     transaction.Rollback();
                     return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
+                }
+            }
+        }
+
+        [HttpPost]
+        public HttpResponseMessage PostMark([FromBody]CommentParams estimate)
+        {
+            using (SqlConnection connection = new SqlConnection(System.Web.Configuration.WebConfigurationManager.ConnectionStrings["DBCS"].ConnectionString))
+            {
+                string cmdString = "INSERT INTO Estimates VALUES(@AppId, @Mark, @Comment);";
+
+                SqlCommand cmd = new SqlCommand(cmdString, connection);
+
+                cmd.Parameters.AddWithValue("@AppId", estimate.ApplicationId);
+                cmd.Parameters.AddWithValue("@Mark", estimate.Mark);
+                cmd.Parameters.AddWithValue("@Comment", estimate.Comment);
+
+                try
+                {
+                    connection.Open();
+                    cmd.ExecuteNonQuery();
+
+                    return Request.CreateResponse(HttpStatusCode.OK, "OK");
+                }
+                catch(Exception ex)
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
                 }
             }
         }
@@ -131,6 +157,14 @@ namespace ServiceSystem.Controllers
                         serviceProviderName = set.Tables[0].Rows[0]["ServiceProviderName"].ToString();
                         servicePaymentMeasures = JsonConvert.DeserializeObject<List<PaymentMeasure>>(set.Tables[0].Rows[0]["PaymentMeasures"].ToString());
                         application.ConsultantName = set.Tables[0].Rows[0]["ConsultantName"].ToString();
+                        application.DialogueId = Convert.ToInt32(set.Tables[0].Rows[0]["DialogueId"].ToString());
+
+                        if (set.Tables[0].Rows[0]["Mark"] != DBNull.Value)
+                        {
+                            application.Mark = Convert.ToInt32(set.Tables[0].Rows[0]["Mark"].ToString());
+                        }
+
+                        application.FinalEstimate = set.Tables[0].Rows[0]["FinalEstimate"].ToString();
                     }
                 }
                 catch(Exception ex)
@@ -171,6 +205,7 @@ namespace ServiceSystem.Controllers
                         app.Status = row["Status"].ToString();
                         app.StatusChangeDate = Convert.ToDateTime(row["StatusChangeDate"].ToString());
                         app.ConsultantName = row["ConsultantName"].ToString();
+                        app.DialogueId = Convert.ToInt32(row["DialogueId"].ToString());
 
                         toReturn.Add(app);
                     }
@@ -215,6 +250,7 @@ namespace ServiceSystem.Controllers
                         app.Status = row["Status"].ToString();
                         app.StatusChangeDate = Convert.ToDateTime(row["StatusChangeDate"].ToString());
                         app.ConsultantName = row["ConsultantName"].ToString();
+                        app.DialogueId = Convert.ToInt32(row["DialogueId"].ToString());
 
 
                         toReturn.Add(app);

@@ -129,5 +129,8 @@ namespace ServiceSystem.Models
         public string ServiceName { get; set; }
         public string Username { get; set; }
         public string ConsultantName { get; set; }
+        public int DialogueId { get; set; }
+        public int? Mark { get; set; }
+        public string FinalEstimate { get; set; }
     }
 }

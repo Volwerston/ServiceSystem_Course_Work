@@ -1,6 +1,5 @@
 ﻿@model ServiceSystem.Models.Service
 @using ServiceSystem.Models
-
 @{
     ViewBag.Title = "SessionDetails";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -9,12 +8,11 @@
 
     bool isNotConfirmed = false;
 
-    if(consultants != null)
+    if (consultants != null)
     {
         isNotConfirmed = consultants.Where(x => x.Approved == false && x.Email == User.Identity.Name).Count() > 0;
     }
 }
-
 @if (isNotConfirmed)
 {
     <div id="consultant_request">
@@ -37,7 +35,6 @@
         </div>
     </div>
 }
-
 <div class="modal fade" id="ask_modal" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -54,13 +51,11 @@
         </div>
     </div>
 </div>
-
 <div class="row" style="margin-top: 10px;">
     <div class="col-xs-8 col-sm-offset-2 well text-center">
         <h3>@Model.Name</h3>
         <p>@Model.Description</p>
         <p>Категорія: @Model.Category</p>
-
         @if (ViewData["PARAMS"] != null)
             {
                 Dictionary<string, string> parameters = (Dictionary<string, string>)ViewData["PARAMS"];
@@ -85,17 +80,16 @@
                 @if (parameters.ContainsKey("Вартість"))
                 {
                     <h3>Вартість:</h3>
-                        <div style="margin-top: 10px;" class="text-center">
-                            @parameters["Вартість"]
-                        </div>
+                    <div style="margin-top: 10px;" class="text-center">
+                        @parameters["Вартість"]
+                    </div>
                 }
-
                 @if (parameters.ContainsKey("Тривалість"))
                 {
                     <h3>Тривалість:</h3>
-                        <div style="margin-top: 10px;" class="text-center">
-                            @parameters["Тривалість"]
-                        </div>
+                    <div style="margin-top: 10px;" class="text-center">
+                        @parameters["Тривалість"]
+                    </div>
                 }
             </div>
 
@@ -108,15 +102,14 @@
                             <h3>@prop.Name</h3>
                         </div>
                     </div>
-                        <div class="row" style="margin-bottom: 10px;">
-                            <div class="text-center col-xs-8 col-sm-8 col-md-8 col-lg-8 col-md-offset-2 col-lg-offset-2">
-                                <h4>@prop.Value</h4>
-                            </div>
+                    <div class="row" style="margin-bottom: 10px;">
+                        <div class="text-center col-xs-8 col-sm-8 col-md-8 col-lg-8 col-md-offset-2 col-lg-offset-2">
+                            <h4>@prop.Value</h4>
                         </div>
+                    </div>
                 }
             }
         }
-
         @if (User.Identity.Name != Model.Username)
         {
             <div class="row">
@@ -128,7 +121,6 @@
                 </div>
             </div>
         }
-
         @if (User.Identity.Name == Model.Username)
         {
             <div class="row" style="margin-top: 15px;">
@@ -208,9 +200,60 @@
                 </div>
             </div>
         }
-
     </div>
 </div>
+<div class="row">
+    <div class="col-xs-8 col-sm-offset-2 well">
+        <div class="col-xs-12">
+            <h3 class="text-center">Часті запитання</h3>
+        </div>
+        <div class="col-xs-12 col-sm-10 col-sm-offset-1" id="faq_container">
+            @if(ViewData.ContainsKey("FAQ") && (List<FAQ>)ViewData["FAQ"] != null)
+            {
+                foreach(var faq in (List<FAQ>)ViewData["FAQ"])
+                {
+                    if(User.Identity.Name == Model.Username)
+                    { 
+                        @Html.Partial("_ProviderFAQ", faq);
+                    }
+                    else
+                    {
+                        @Html.Partial("_CustomerFAQ", faq);
+                    }
+                }
+            }
+            else
+            {
+                <p class="empty_message text-center">Запитань не знайдено.</p>
+            }
+        </div>
+
+        @if(User.Identity.Name == Model.Username)
+        {
+            <br/>
+            <hr/>
+            <br/>
+            <div class="col-xs-11 col-sm-10 col-sm-offset-1">
+                <div class="row">
+                    <form class="col-xs-12 col-sm-6 col-sm-offset-3" style="border: 2px solid green; border-radius: 3px; padding: 10px;">
+                            <div class="form-group">
+                                <input type="text" class="form-control" style="margin: auto;" placeholder="Запитання" name="question" />
+                            </div>
+                            <div class="form-group">
+                                <textarea name="answer" class="form-control" style="margin: auto;" placeholder="Відповідь" rows="10"></textarea>
+                            </div>
+                        <div class="form-group">
+                            <div class="col-xs-12 col-sm-8 col-sm-offset-2">
+                                <input id="add_faq" type="button" class="btn btn-block btn-success" value="Додати" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
 
 <div class="row" hidden id="application_holder">
     <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-md-offset-2 col-lg-offset-2">
@@ -229,7 +272,6 @@
         }
     </div>
 </div>
-
 <div class="modal fade" id="delete_modal" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -247,16 +289,124 @@
     </div>
 </div>
 
+<div class="modal fade" id="faq_delete_modal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <h2 class="text-center">Підтвердіть Вашу дію</h2>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="faq_deletion_done" data-dismiss="modal" class="btn btn-success">Підтвердити</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Скасувати</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 @section scripts{
     <script type="text/javascript">
 
         var confirmConsultant = null;
         var id = null;
+        var faq_id = null;
+
+
+        function GetDivForFAQ(faq)
+        {
+            return '<div class="row" id="faq_' + faq.Id + '" style="border: 2px solid green; border-radius: 3px; padding: 10px; margin: 10px;">'
+                   + '<a href="#" class="close pull-right" id="close_' + faq.Id + '"><span class="glyphicon glyphicon-remove"></span></a>'
+                   + '<div class="col-xs-12">'
+                   + '<h4 class="text-center">Запитання</h4>'
+                   + '</div>'
+                   + '<div class="col-xs-12" style="background-color: lightgray">'
+                   + '<p>' + faq.Question + '</p>'
+                   + '</div>'
+                   + '<div class="col-xs-12">'
+                   + '<h4 class="text-center">Відповідь</h4>'
+                   + '</div>'
+                   + '<div class="col-xs-12" style="background-color: lightgray">'
+                   + '<p>' + faq.Answer + '</p>'
+                   + '</div>'
+                   + '</div>';
+        }
 
         $(document).ready(function () {
 
-            $('input[name^="remove"]').click(function(){        
+            $('a[class^="close"]').click(function (e) {
+                e.preventDefault();
+
+                faq_id = $(this).attr('id').split('_')[1];
+
+                $("#faq_delete_modal").modal('show');
+            });
+
+            $("#faq_deletion_done").click(function () {
+
+                $("#faq_delete_modal").modal('hide');
+
+                $.ajax({
+                    method: "DELETE",
+                    url: "/api/FAQ/Delete?id=" + faq_id,
+                    contentType: "application/json; charset=utf-8",
+                    success: function (res) {
+                        if($("#faq_container").children().length == 1)
+                        {
+                            $("#faq_container").empty();
+                            $("#faq_container").append('<p class="empty_message text-center">Запитань не знайдено.</p>');
+                        }
+                        else {
+                            $("#faq_" + faq_id).remove();
+                        }
+                    },
+                    error: function (res) {
+                        alert(res.responseText);
+                    }
+                });
+
+            });
+
+            $("#add_faq").click(function () {
+
+                var toPass = {
+                    Id: 0,
+                    ServiceId: '@Model.Id',
+                    Question: $('input[name="question"]').val(),
+                    Answer: $('textarea[name="answer"]').val()
+                };
+
+                $.ajax({
+                    method: "POST",
+                    url: "/api/FAQ/Post",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    data: JSON.stringify(toPass),
+                    success: function (res) {
+                        if ($("#faq_container").find(".empty_message").length > 0) {
+                            $("#faq_container").empty();
+                        }
+
+                        toPass.Id = JSON.parse(res);
+
+                        $("#faq_container").append(GetDivForFAQ(toPass));
+
+                        $('#close_' + toPass.Id).click(function (e) {
+                            e.preventDefault();
+
+                            faq_id = toPass.Id;
+
+                            $("#faq_delete_modal").modal('show');
+                        });
+                    },
+                    error: function (res) {
+                        alert(res.responseText);
+                    }
+                });
+            });
+
+            $('input[name^="remove"]').click(function () {
                 id = $(this).attr('name').split('_')[1];
 
                 $("#delete_modal").modal('show');
@@ -265,25 +415,24 @@
             $("#deletion_done").click(function () {
                 $.ajax({
                     method: "POST",
-                    url: "http://localhost:49332/api/ServiceConsultants/DeleteConsultant",
+                    url: "/api/ServiceConsultants/DeleteConsultant",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     headers: {
                         Authorization: 'Bearer ' + localStorage.getItem("access_token"),
                     },
                     data: JSON.stringify(id),
-                    success: function(res){
+                    success: function (res) {
                         $("#consultant_" + id).remove();
 
-                        if($("#panel_body_1").children().length == 1)
-                        {
+                        if ($("#panel_body_1").children().length == 1) {
                             $("#panel_body_1").empty();
                             $("#panel_body_1").append('<p class="text-center">Жодного консультанта не знайдено</p>');
                         }
                     },
                     error: function (res) {
                         alert(res.responseText);
-                    }           
+                    }
                 });
             });
 
@@ -304,7 +453,7 @@
 
                 $.ajax({
                     method: "POST",
-                    url: "http://localhost:49332/api/ServiceConsultants/ConfirmConsultant",
+                    url: "/api/ServiceConsultants/ConfirmConsultant",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     headers: {
@@ -351,13 +500,11 @@
 
                     $('input[name="deadline_type"]').change(function () {
 
-                        if($(this).val() == "from_some_date")
-                        {
+                        if ($(this).val() == "from_some_date") {
                             $("#from_some_date").removeAttr("hidden");
                             $("#by_last_date").attr("hidden", true);
                         }
-                        else if($(this).val() == "by_last_date")
-                        {
+                        else if ($(this).val() == "by_last_date") {
                             $("#by_last_date").removeAttr("hidden");
                             $("#from_some_date").attr("hidden", true);
                         }
@@ -369,5 +516,4 @@
         });
 
     </script>
-
 }

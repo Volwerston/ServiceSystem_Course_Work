@@ -8,34 +8,39 @@
 
     List<SelectListItem> toPass = new List<SelectListItem>();
 
-    foreach (var measure in (List<PaymentMeasure>)ViewData["ServicePaymentMeasures"])
+    List<PaymentMeasure> measures = (List<PaymentMeasure>)ViewData["ServicePaymentMeasures"];
+
+    if (measures != null)
     {
-        switch (measure.Currency)
+        foreach (var measure in (List<PaymentMeasure>)ViewData["ServicePaymentMeasures"])
         {
-            case "hryvnia":
-                toPass.Add(new SelectListItem
-                {
-                    Text = String.Format("{0}/{1}", CultureInfo.GetCultureInfo("uk-UA").NumberFormat.CurrencySymbol, measure.ValueMeasure),
-                    Value = String.Format("{0}_{1}", measure.Currency, measure.ValueMeasure)
-                }
+            switch (measure.Currency)
+            {
+                case "hryvnia":
+                    toPass.Add(new SelectListItem
+                    {
+                        Text = String.Format("{0}/{1}", CultureInfo.GetCultureInfo("uk-UA").NumberFormat.CurrencySymbol, measure.ValueMeasure),
+                        Value = String.Format("{0}_{1}", measure.Currency, measure.ValueMeasure)
+                    }
+                        );
+                    break;
+                case "dollar":
+                    toPass.Add(new SelectListItem
+                    {
+                        Text = String.Format("{0}/{1}", CultureInfo.GetCultureInfo("en-US").NumberFormat.CurrencySymbol, measure.ValueMeasure),
+                        Value = String.Format("{0}_{1}", measure.Currency, measure.ValueMeasure)
+                    }
                     );
-                break;
-            case "dollar":
-                toPass.Add(new SelectListItem
-                {
-                    Text = String.Format("{0}/{1}", CultureInfo.GetCultureInfo("en-US").NumberFormat.CurrencySymbol, measure.ValueMeasure),
-                    Value = String.Format("{0}_{1}", measure.Currency, measure.ValueMeasure)
-                }
-                );
-                break;
-            case "euro":
-                toPass.Add(new SelectListItem
-                {
-                    Text = String.Format("{0}/{1}", CultureInfo.GetCultureInfo("de-DE").NumberFormat.CurrencySymbol, measure.ValueMeasure),
-                    Value = String.Format("{0}_{1}", measure.Currency, measure.ValueMeasure)
-                }
-                );
-                break;
+                    break;
+                case "euro":
+                    toPass.Add(new SelectListItem
+                    {
+                        Text = String.Format("{0}/{1}", CultureInfo.GetCultureInfo("de-DE").NumberFormat.CurrencySymbol, measure.ValueMeasure),
+                        Value = String.Format("{0}_{1}", measure.Currency, measure.ValueMeasure)
+                    }
+                    );
+                    break;
+            }
         }
     }
 
@@ -71,7 +76,7 @@
 <div class="row">
     <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-md-offset-2 col-lg-offset-2" style="border: 2px solid green; border-radius: 3px; padding: 10px;">
         <table class="table table-bordered" style="padding: 10px;">
-            <tbody>
+            <tbody id="application_params">
                 <tr>
                     <td>Замовник</td>
                     <td>@Model.Username</td>
@@ -107,6 +112,25 @@
                     @consultant
                 </td>
                 </tr>
+                @if (Model.Mark != null)
+                {
+                    <tr>
+                        <td>
+                            Оцінка користувача
+                        </td>
+                        <td>
+                            @Model.Mark
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Фінальний коментар користувача
+                        </td>
+                        <td>
+                            @Model.FinalEstimate
+                        </td>
+                    </tr>
+                }
             </tbody>
         </table>
 
@@ -119,6 +143,44 @@
         else if(Model.Status == "MAIN_PAID")
         {
             <p class="text-center">Послугу повністю оплачено</p>
+
+            if (Model.Mark == null && User.Identity.Name == Model.Username)
+            {
+                <div class="row" id="comment_holder">
+                    <div class="col-sm-6 col-sm-offset-3">
+                        <div class="row" style="border: 1px solid green; border-radius: 3px;">
+                            <div class="col-sm-8" style="padding: 10px; display: table; margin: auto;">
+                                <h4 class="text-center">Оцінка обслуговування</h4>
+                                <label for="mark" class="control-label text-center" style="display: block;">
+                                    Бал (1-10)
+                                </label>
+                                <div class="form-horizontal">
+                                    <div class="form-group">
+                                        <select class="form-control col-sm-offset-2" name="mark">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <textarea class="form-control col-sm-offset-2" rows="10" name="comment" placeholder="Comment..."></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="button" id="submit_mark" value="OK" class="btn btn-block btn-success col-sm-8 col-sm-offset-2" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
         }
 
         @if ((User.Identity.Name == ViewData["ServiceProviderName"].ToString() || User.Identity.Name == Model.ConsultantName) 
@@ -155,7 +217,12 @@
         {
             <input type="submit" class="btn btn-success btn-block" style="margin: auto;" data-toggle="modal" data-target="#ask_modal" value="Підтвердити здійснення платежу" />
         }
-    </div>
+
+        @if (Model.Status != "MAIN_PAID")
+        {
+        <input type="button" onclick="location.href='@Url.Action("Dialogue", "Service", new { id = Model.DialogueId })'" class="btn btn-success btn-block" style="margin: auto;" value="До діалогу" />
+        }
+     </div>
 </div>
 
 <div class="modal fade" id="ask_modal" role="dialog">
@@ -179,11 +246,41 @@
     <script type="text/javascript">
         $(document).ready(function () {
 
+            $("#submit_mark").click(function () {
+
+                var toPass = {
+                    Mark: $('select[name="mark"]').val(),
+                    Comment: $('textarea[name="comment"]').val(),
+                    ApplicationId: '@Model.Id'
+                };
+
+                $.ajax({
+                    method: "POST",
+                    url: "/api/Application/PostMark",
+                    contentType: "application/json; charset=utf-8",
+                    headers: {
+                        Authorization: 'Bearer ' + localStorage.getItem('access_token')
+                    },
+                    dataType: "json",
+                    data: JSON.stringify(toPass),
+                    success: function (res) {
+                        $("#comment_holder").attr("hidden", true);
+
+                        $("#application_params").append('<tr><td>Оцінка користувача</td><td>' + toPass.Mark +
+                            '</td></tr><tr><td>Фінальний коментар користувача</td><td>' + toPass.Comment + '</td></tr>');
+                    },
+                    error: function (res) {
+                        alert(res.responseText);
+                    }
+                });
+
+            })
+
             $("#payment_done").click(function () {
 
                 $.ajax({
                     method: "POST",
-                    url: "http://localhost:49332/api/BankBill/ConfirmPayment",
+                    url: "/api/BankBill/ConfirmPayment",
                     contentType: "application/json; charset=utf-8",
                     headers: {
                         Authorization: 'Bearer ' + localStorage.getItem('access_token')

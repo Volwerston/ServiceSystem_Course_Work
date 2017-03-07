@@ -1,0 +1,92 @@
+﻿
+@{
+    ViewBag.Title = "Dialogue";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-xs-10 col-sm-offset-1" style="border: 2px solid green; border-radius: 3px; padding: 10px;">
+        <div class="row">
+            <div class="col-xs-12 col-sm-8 col-sm-offset-2" id="message_container" style="border: 2px solid green; max-height: 300px; overflow-y: scroll; overflow-x:hidden; border-radius: 3px; padding: 10px;">
+
+            </div>
+            <div class="col-xs-12 col-sm-8 col-sm-offset-2" style="margin-top: 10px;">
+                <div class="form-horizontal well">
+                    <div class="form-group">
+                        <textarea class="form-control" id="text" style="margin: auto;" rows="10" placeholder="Текст...">
+                        </textarea>
+                    </div>
+                    <div class="form-group">
+                        <input type="button" id="send" class="btn btn-block btn-success" style="margin: auto;" value="Send" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+<script src="~/Scripts/jquery.signalR-2.2.1.min.js"></script>
+<script src="~/signalr/hubs"></script>
+
+<script>
+
+    function GetDivForMessage(mes)
+    {
+        return '<div class="row" style="margin: 10px; padding: 10px; border: 2px solid green; border-radius: 3px;">'
+             + '<div class="col-xs-6" style="word-break:break-all">'
+             + '<p><b>' + mes.SenderName + '</b></p>'
+             + '</div>'
+             + '<div class="col-xs-6">'
+             + '<small>' + mes.SendingTime.split('T')[0] + ' ' + mes.SendingTime.split('T')[1] +'</small>'
+             + '</div>'
+             + '<div class="col-xs-11" style="background-color: lightgrey">'
+             + '<p>' + mes.Text + '</p>'
+             + '</div>'
+             + '</div>'
+    }
+
+    $(function () {
+
+        // Reference the auto-generated proxy for the hub.
+
+        var notification = $.connection.notificationHub;
+        $.connection.hub.qs = "room_id=@ViewData["room_id"]";
+
+ // Client side method for receiving the list of notifications on the connected event from the server
+        notification.client.refreshNotification = function (data) {
+            $("#message_container").empty();
+
+            if (data.length > 0) {
+                for (var i = 0; i < data.length; i++) {
+                    $("#message_container").append(GetDivForMessage(data[i]));
+                }
+            }
+            else {
+                $("#message_container").append('<p class="text-center">Жодного повідомлення не знайдено</p>')
+            }
+        }
+
+//Client side method which will be invoked from the Global.asax.cs file.
+        notification.client.addLatestNotification = function (data) {
+            if (data.RoomId == '@ViewData["room_id"].ToString()') {
+                if ($("#message_container").children().first().hasClass("text-center")) {
+                    $("#message_container").children().first().remove();
+                }
+                $("#message_container").append(GetDivForMessage(data));
+            }
+        }
+
+        // Start the connection.
+        $.connection.hub.start().done(function () {
+
+	//When the send button is clicked get the text and user name and send it to server.
+            $("#send").click(function () {
+                notification.server.sendNotification($("#text").val(), '@User.Identity.Name');
+            });
+
+        });
+    });
+</script>
+    
+    }

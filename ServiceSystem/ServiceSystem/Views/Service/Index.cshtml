@@ -5,10 +5,9 @@
 }
 
 
-@using (Html.BeginForm())
-{
 <div style="display: table;margin: auto;border: 1px solid green; border-radius: 5px; padding: 10px;">
-    <div class="form-horizontal" style="padding: 20px;">
+@using (Html.BeginForm("Index","Service",null, FormMethod.Post, new { @class = "form-horizontal", style = "padding:20px" }))
+{
         <div class="form-group">
             <input name="email" class="form-control" placeholder="E-mail" type="email" />
         </div>
@@ -24,6 +23,24 @@
                 @Html.ActionLink("Відовлення паролю", "ChangePassword", "Service")
             </div>
         </div>
-    </div>
-</div>
 }
+    <input type="submit" style="margin: auto" name="facebook_log_in" class="btn btn-success btn-block" value="Увійти з Facebook" />
+</div>
+
+
+
+@section scripts{
+<script src="~/Scripts/FacebookAuthentication.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            getAccessToken();
+
+            $('input[name="facebook_log_in"]').click(function () {
+                window.location.href = "/api/Account/ExternalLogin?provider=Facebook&response_type=token&client_id=self&redirect_uri=http%3A%2F%2Flocalhost%3A49332%2FService%2FIndex&state=K_MjqwnPFPi_LcRQM_zHKmsKm3ebqIrsc07MnsCsZV41";
+            });
+        });
+
+    </script>
+    
+    }

@@ -8,34 +8,39 @@
 
     List<SelectListItem> toPass = new List<SelectListItem>();
 
-    foreach (var measure in (List<PaymentMeasure>)ViewData["ServicePaymentMeasures"])
+    List<PaymentMeasure> measures = (List<PaymentMeasure>)ViewData["ServicePaymentMeasures"];
+
+    if (measures != null)
     {
-        switch (measure.Currency)
+        foreach (var measure in (List<PaymentMeasure>)ViewData["ServicePaymentMeasures"])
         {
-            case "hryvnia":
-                toPass.Add(new SelectListItem
-                {
-                    Text = String.Format("{0}/{1}", CultureInfo.GetCultureInfo("uk-UA").NumberFormat.CurrencySymbol, measure.ValueMeasure),
-                    Value = String.Format("{0}_{1}", measure.Currency, measure.ValueMeasure)
-                }
+            switch (measure.Currency)
+            {
+                case "hryvnia":
+                    toPass.Add(new SelectListItem
+                    {
+                        Text = String.Format("{0}/{1}", CultureInfo.GetCultureInfo("uk-UA").NumberFormat.CurrencySymbol, measure.ValueMeasure),
+                        Value = String.Format("{0}_{1}", measure.Currency, measure.ValueMeasure)
+                    }
+                        );
+                    break;
+                case "dollar":
+                    toPass.Add(new SelectListItem
+                    {
+                        Text = String.Format("{0}/{1}", CultureInfo.GetCultureInfo("en-US").NumberFormat.CurrencySymbol, measure.ValueMeasure),
+                        Value = String.Format("{0}_{1}", measure.Currency, measure.ValueMeasure)
+                    }
                     );
-                break;
-            case "dollar":
-                toPass.Add(new SelectListItem
-                {
-                    Text = String.Format("{0}/{1}", CultureInfo.GetCultureInfo("en-US").NumberFormat.CurrencySymbol, measure.ValueMeasure),
-                    Value = String.Format("{0}_{1}", measure.Currency, measure.ValueMeasure)
-                }
-                );
-                break;
-            case "euro":
-                toPass.Add(new SelectListItem
-                {
-                    Text = String.Format("{0}/{1}", CultureInfo.GetCultureInfo("de-DE").NumberFormat.CurrencySymbol, measure.ValueMeasure),
-                    Value = String.Format("{0}_{1}", measure.Currency, measure.ValueMeasure)
-                }
-                );
-                break;
+                    break;
+                case "euro":
+                    toPass.Add(new SelectListItem
+                    {
+                        Text = String.Format("{0}/{1}", CultureInfo.GetCultureInfo("de-DE").NumberFormat.CurrencySymbol, measure.ValueMeasure),
+                        Value = String.Format("{0}_{1}", measure.Currency, measure.ValueMeasure)
+                    }
+                    );
+                    break;
+            }
         }
     }
 
@@ -63,6 +68,8 @@
     {
         wmPurse = ViewData["WMPurse"].ToString();
     }
+
+    string consultant = Model.ConsultantName == null ? "-" : Model.ConsultantName;
 }
 
 
@@ -97,6 +104,14 @@
                         <td>-</td>
                     }
                 </tr>
+                <tr>
+                <td>
+                    Заявку обслуговує
+                </td>
+                <td>
+                    @consultant
+                </td>
+                </tr>
             </tbody>
         </table>
 
@@ -111,7 +126,8 @@
             <p class="text-center">Послугу повністю оплачено</p>
         }
 
-        @if (User.Identity.Name == ViewData["ServiceProviderName"].ToString() && Model.Status == "NO_BILL")
+        @if ((User.Identity.Name == ViewData["ServiceProviderName"].ToString() || User.Identity.Name == Model.ConsultantName) 
+            && Model.Status == "NO_BILL")
         {
             <input type="button" name="form_application" class="btn btn-success btn-block" style="margin: auto;" value="Сформувати заявку" />
 
@@ -122,7 +138,10 @@
         }
 
         
-        @if (User.Identity.Name == Model.Username && Model.Status != "MAIN_PAID" && Model.Status != "NO_BILL" && bill.Type == "WEBMONEY")
+        @if (User.Identity.Name == Model.Username 
+            && Model.Status != "MAIN_PAID" 
+            && Model.Status != "NO_BILL" 
+            && bill.Type == "WEBMONEY")
         {
             <form id=pay name=pay method="POST" action="https://merchant.webmoney.ru/lmi/payment.asp" accept-charset="windows-1251">
                     <input type="hidden" name="LMI_PAYMENT_AMOUNT" value="@bill.Price" />
@@ -134,17 +153,23 @@
             </form>
         }
 
-        @if (User.Identity.Name == ViewData["ServiceProviderName"].ToString() && Model.Status != "MAIN_PAID" &&
-                Model.Status != "NO_BILL" && bill.Type == "BANK")
+        @if ((User.Identity.Name == ViewData["ServiceProviderName"].ToString() || User.Identity.Name == Model.ConsultantName) 
+                && Model.Status != "MAIN_PAID" 
+                && Model.Status != "NO_BILL" 
+                && bill.Type == "BANK")
         {
             <input type="submit" class="btn btn-success btn-block" style="margin: auto;" data-toggle="modal" data-target="#ask_modal" value="Підтвердити здійснення платежу" />
         }
-    </div>
+
+        @if (Model.Status != "MAIN_PAID")
+        {
+        <input type="button" onclick="location.href='@Url.Action("Dialogue", "Service", new { id = Model.DialogueId })'" class="btn btn-success btn-block" style="margin: auto;" value="До діалогу" />
+        }
+     </div>
 </div>
 
 <div class="modal fade" id="ask_modal" role="dialog">
     <div class="modal-dialog">
-
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -157,7 +182,6 @@
                 <button type="button" class="btn btn-default" data-dismiss="modal">Скасувати</button>
             </div>
         </div>
-
     </div>
 </div>
 
@@ -169,7 +193,7 @@
 
                 $.ajax({
                     method: "POST",
-                    url: "http://servicesystem.somee.com/api/BankBill/ConfirmPayment",
+                    url: "/api/BankBill/ConfirmPayment",
                     contentType: "application/json; charset=utf-8",
                     headers: {
                         Authorization: 'Bearer ' + localStorage.getItem('access_token')

@@ -31,36 +31,20 @@ namespace ServiceSystem
 
         private void RegisterNotification()
         {
-            //Get the connection string from the Web.Config file. Make sure that the key exists and it is the connection string for the Notification Database and the NotificationList Table that we created
-
             string connectionString = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
 
-            //We have selected the entire table as the command, so SQL Server executes this script and sees if there is a change in the result, raise the event
-            string commandText = @"
-                                    Select
-                                        dbo.Messages.ID,
-                                        dbo.Messages.TEXT,
-                                        dbo.Messages.SENDER_NAME,
-                                        dbo.Messages.SENDING_TIME,
-                                        dbo.Messages.DIALOGUE_ID                                      
-                                    From
-                                        dbo.Messages                                    
-                                    ";
+            string commandText = "Select dbo.Messages.ID, dbo.Messages.TEXT, dbo.Messages.SENDER_NAME,dbo.Messages.SENDING_TIME, dbo.Messages.DIALOGUE_ID From dbo.Messages";
 
-            //Start the SQL Dependency
             SqlDependency.Start(connectionString);
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-
                 using (SqlCommand command = new SqlCommand(commandText, connection))
                 {
                     connection.Open();
                     var sqlDependency = new SqlDependency(command);
 
-
                     sqlDependency.OnChange += new OnChangeEventHandler(sqlDependency_OnChange);
 
-                    // NOTE: You have to execute the command, or the notification will never fire.
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
                     }
@@ -72,7 +56,6 @@ namespace ServiceSystem
         {
             if (e.Info == SqlNotificationInfo.Insert)
             {
-                //This is how signalrHub can be accessed outside the SignalR Hub Notification.cs file
                 var context = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
 
                 List<Message> objList = new List<Message>();
@@ -96,12 +79,10 @@ namespace ServiceSystem
 
                 foreach (var item in objList)
                 {
-                    //replace domain name with your own domain name
                     context.Clients.All.addLatestNotification(item);
                 }
 
             }
-            //Call the RegisterNotification method again
             RegisterNotification();
         }
     }

@@ -25,6 +25,7 @@ using System.Text;
 using Newtonsoft.Json;
 using System.Security.Principal;
 
+
 namespace ServiceSystem.Controllers
 {
 
@@ -75,8 +76,8 @@ namespace ServiceSystem.Controllers
     }
 
 
-    [Authorize]
-    [RoutePrefix("api/Account")]
+    [System.Web.Http.Authorize]
+    [System.Web.Http.RoutePrefix("api/Account")]
     public class AccountController : ApiController
     {
         private const string LocalLoginProvider = "Local";
@@ -92,6 +93,7 @@ namespace ServiceSystem.Controllers
             UserManager = userManager;
             AccessTokenFormat = accessTokenFormat;
         }
+
 
         public ApplicationUserManager UserManager
         {
@@ -214,6 +216,9 @@ namespace ServiceSystem.Controllers
                 Organisation = User.Identity.GetOrganisation()
             };
         }
+
+       
+
 
         [AllowAnonymous]
         [HttpPost]
@@ -780,13 +785,8 @@ namespace ServiceSystem.Controllers
         [OverrideAuthentication]
         [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
         [Route("RegisterExternal")]
-        public async Task<IHttpActionResult> RegisterExternal(RegisterExternalBindingModel model)
+        public async Task<IHttpActionResult> RegisterExternal()
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
 
             var info = await Authentication.GetExternalLoginInfoAsync();
             if (info == null)
@@ -794,7 +794,7 @@ namespace ServiceSystem.Controllers
                 return InternalServerError();
             }
 
-            var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
+            var user = new ApplicationUser() { UserName = info.Email, Email = info.Email };
 
             IdentityResult result = await UserManager.CreateAsync(user);
 

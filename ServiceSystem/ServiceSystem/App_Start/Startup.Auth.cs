@@ -10,6 +10,10 @@ using Microsoft.Owin.Security.OAuth;
 using Owin;
 using ServiceSystem.Providers;
 using ServiceSystem.Models;
+using Microsoft.Owin.Security.Facebook;
+using System.Net;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace ServiceSystem
 {
@@ -55,9 +59,31 @@ namespace ServiceSystem
             //    consumerKey: "",
             //    consumerSecret: "");
 
-            //app.UseFacebookAuthentication(
-            //    appId: "",
-            //    appSecret: "");
+            app.UseFacebookAuthentication(
+                appId: "345453675848203",
+                appSecret: "f08f2116a756a511d419441ba3fe8e99"
+                );
+
+            var facebookOptions = new FacebookAuthenticationOptions()
+            {
+                AppId = "345453675848203",
+                AppSecret = "f08f2116a756a511d419441ba3fe8e99",
+                BackchannelHttpHandler = new Facebook.FacebookBackChannelHandler(),
+                SignInAsAuthenticationType = DefaultAuthenticationTypes.ExternalCookie,
+                Scope = { "email" },
+                UserInformationEndpoint = "https://graph.facebook.com/v2.4/me?fields=id,email,name"
+                //Provider = new FacebookAuthenticationProvider()
+                //{
+                //    OnAuthenticated = (context) =>
+                //    {       
+                //        context.Identity.AddClaim(new System.Security.Claims.Claim("urn:facebook:email", context.Email));
+                //        return Task.FromResult(0);
+                //    }
+                //}
+        };
+
+            //facebookOptions.Scope.Add("email");
+            app.UseFacebookAuthentication(facebookOptions);
 
             //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             //{

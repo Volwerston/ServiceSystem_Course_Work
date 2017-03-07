@@ -247,7 +247,7 @@
                     {
                         $.ajax({
                             method: "GET",
-                            url: "http://localhost:49332/api/ServiceApi/UserCreatedServices",
+                            url: "/api/ServiceApi/UserCreatedServices",
                             headers: {
                                 Authorization: 'Bearer ' + localStorage.getItem("access_token"),
                             },
@@ -279,7 +279,7 @@
                     if ($("#panel_body_2").children().length == 0) {
                         $.ajax({
                             method: "GET",
-                            url: "http://localhost:49332/api/Application/GetServiceApplications",
+                            url: "/api/Application/GetServiceApplications",
                             headers: {
                                 Authorization: 'Bearer ' + localStorage.getItem("access_token"),
                             },
@@ -311,7 +311,7 @@
                     if ($("#panel_body_3").children().length == 0) {
                         $.ajax({
                             method: "GET",
-                            url: "http://localhost:49332/api/Application/GetUserApplications",
+                            url: "/api/Application/GetUserApplications",
                             headers: {
                                 Authorization: 'Bearer ' + localStorage.getItem("access_token"),
                             },
@@ -342,7 +342,7 @@
                     if ($("#panel_body_5").children().length == 0) {
                         $.ajax({
                             method: "GET",
-                            url: "http://localhost:49332/api/ServiceApi/UserNotifications",
+                            url: "/api/ServiceApi/UserNotifications",
                             headers: {
                                 Authorization: 'Bearer ' + localStorage.getItem("access_token"),
                             },
@@ -359,7 +359,7 @@
 
                                         $.ajax({
                                             method: "POST",
-                                            url: "http://localhost:49332/api/ServiceApi/DeleteNotification",
+                                            url: "/api/ServiceApi/DeleteNotification",
                                             contentType: "application/json; charset=utf-8",
                                             dataType: "json",
                                             data: JSON.stringify(note_id),

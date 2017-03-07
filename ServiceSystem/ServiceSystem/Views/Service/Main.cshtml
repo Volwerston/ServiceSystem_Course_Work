@@ -79,7 +79,7 @@ else
             $("#exit_button").click(function () {
                 $.ajax({
                     method: "POST",
-                    url: 'http://localhost:49332/api/Account/Logout',
+                    url: '/api/Account/Logout',
                     contentType: "application/json; charset=utf-8",
                     headers: {
                         Authorization: 'Bearer ' + localStorage.getItem("access_token")

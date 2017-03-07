@@ -14,6 +14,11 @@ using System.Runtime.Caching;
 using iTextSharp;
 using iTextSharp.text.pdf;
 using iTextSharp.text;
+using Facebook;
+using System.Threading.Tasks;
+using Microsoft.Owin.Security;
+using System.Security.Claims;
+using Microsoft.AspNet.Identity;
 
 namespace ServiceSystem.Controllers
 {
@@ -73,87 +78,86 @@ namespace ServiceSystem.Controllers
             BaseFont baseFont = BaseFont.CreateFont(Server.MapPath("~/Common/arial.ttf"), BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
             Font font = new Font(baseFont, Font.DEFAULTSIZE, Font.NORMAL);
 
-            Document document = new Document(PageSize.LETTER, 10, 10, 42, 35);
-
-            PdfWriter writer = PdfWriter.GetInstance(document, new FileStream(pathToAdd, FileMode.Create));
-
-
-            document.Open();
-
-            Paragraph p = new Paragraph("Квитанція №" + toAdd.Item1.Id.ToString(), font);
-            p.Alignment = Element.ALIGN_CENTER;
-            p.SpacingAfter = 30;
-
-            document.Add(p);
-
-            PdfPTable table = new PdfPTable(2);
-
-            table.AddCell(new Phrase("Послугу надав", font));
-            table.AddCell(new Phrase(toAdd.Item1.ProviderLastName + " " + toAdd.Item1.ProviderFirstName + " " + toAdd.Item1.ProviderFatherName, font));
-
-            table.AddCell(new Phrase("Замовник", font));
-            table.AddCell(new Phrase(toAdd.Item1.CustomerLastName + " " + toAdd.Item1.CustomerFirstName + " " + toAdd.Item1.CustomerFatherName, font));
-
-            table.AddCell(new Phrase("Ціна", font));
-
-            if (type == BillType.ADVANCE)
+            using (Document document = new Document(PageSize.LETTER, 10, 10, 42, 35))
             {
-                table.AddCell((toAdd.Item1.Price * toAdd.Item1.AdvancePercent / Convert.ToDouble(100)).ToString());
+
+                using (PdfWriter writer = PdfWriter.GetInstance(document, new FileStream(pathToAdd, FileMode.Create)))
+                {
+                    document.Open();
+
+                    Paragraph p = new Paragraph("Квитанція №" + toAdd.Item1.Id.ToString(), font);
+                    p.Alignment = Element.ALIGN_CENTER;
+                    p.SpacingAfter = 30;
+
+                    document.Add(p);
+
+                    PdfPTable table = new PdfPTable(2);
+
+                    table.AddCell(new Phrase("Послугу надав", font));
+                    table.AddCell(new Phrase(toAdd.Item1.ProviderLastName + " " + toAdd.Item1.ProviderFirstName + " " + toAdd.Item1.ProviderFatherName, font));
+
+                    table.AddCell(new Phrase("Замовник", font));
+                    table.AddCell(new Phrase(toAdd.Item1.CustomerLastName + " " + toAdd.Item1.CustomerFirstName + " " + toAdd.Item1.CustomerFatherName, font));
+
+                    table.AddCell(new Phrase("Ціна", font));
+
+                    if (type == BillType.ADVANCE)
+                    {
+                        table.AddCell((toAdd.Item1.Price * toAdd.Item1.AdvancePercent / Convert.ToDouble(100)).ToString());
+                    }
+                    else
+                    {
+                        table.AddCell((toAdd.Item1.Price * (1 - toAdd.Item1.AdvancePercent / Convert.ToDouble(100))).ToString());
+                    }
+
+                    table.AddCell(new Phrase("Валюта", font));
+
+                    switch (toAdd.Item1.Currency)
+                    {
+                        case "hryvnia":
+                            table.AddCell(new Phrase("гривня", font));
+                            break;
+                        case "dollar":
+                            table.AddCell(new Phrase("євро", font));
+                            break;
+                        case "euro":
+                            table.AddCell(new Phrase("долар", font));
+                            break;
+                    }
+
+                    table.AddCell(new Phrase("Сплатити до", font));
+
+                    if (type == BillType.ADVANCE)
+                    {
+                        table.AddCell(toAdd.Item1.AdvanceTimeLimit.ToString());
+                    }
+                    else
+                    {
+                        table.AddCell(toAdd.Item1.MainTimeLimit.ToString());
+                    }
+
+                    table.HorizontalAlignment = Element.ALIGN_CENTER;
+
+                    if (toAdd.Item1.Type == "WEBMONEY")
+                    {
+                        table.AddCell(new Phrase("Гаманець для оплати", font));
+                        table.AddCell(toAdd.Item2["WMPurse"].ToString());
+                    }
+                    else
+                    {
+                        table.AddCell(new Phrase("Номер рахунку для оплати", font));
+                        table.AddCell(toAdd.Item2["Account"].ToString());
+
+                        table.AddCell(new Phrase("ЄДРПОУ", font));
+                        table.AddCell(toAdd.Item2["EDRPOU"].ToString());
+
+                        table.AddCell(new Phrase("МФО", font));
+                        table.AddCell(toAdd.Item2["MFO"].ToString());
+                    }
+                    document.Add(table);
+                    document.Close();
+                }
             }
-            else
-            {
-                table.AddCell((toAdd.Item1.Price * (1 - toAdd.Item1.AdvancePercent / Convert.ToDouble(100))).ToString());
-            }
-
-            table.AddCell(new Phrase("Валюта", font));
-
-            switch (toAdd.Item1.Currency)
-            {
-                case "hryvnia":
-                    table.AddCell(new Phrase("гривня", font));
-                    break;
-                case "dollar":
-                    table.AddCell(new Phrase("євро", font));
-                    break;
-                case "euro":
-                    table.AddCell(new Phrase("долар", font));
-                    break;
-            }
-
-            table.AddCell(new Phrase("Сплатити до", font));
-
-            if (type == BillType.ADVANCE)
-            {
-                table.AddCell(toAdd.Item1.AdvanceTimeLimit.ToString());
-            }
-            else
-            {
-                table.AddCell(toAdd.Item1.MainTimeLimit.ToString());
-            }
-
-            table.HorizontalAlignment = Element.ALIGN_CENTER;
-
-            if(toAdd.Item1.Type == "WEBMONEY")
-            {
-                table.AddCell(new Phrase("Гаманець для оплати", font));
-                table.AddCell(toAdd.Item2["WMPurse"].ToString());
-            }
-            else
-            {
-                table.AddCell(new Phrase("Номер рахунку для оплати", font));
-                table.AddCell(toAdd.Item2["Account"].ToString());
-
-                table.AddCell(new Phrase("ЄДРПОУ", font));
-                table.AddCell(toAdd.Item2["EDRPOU"].ToString());
-
-                table.AddCell(new Phrase("МФО", font));
-                table.AddCell(toAdd.Item2["MFO"].ToString());
-            }
-
-
-            document.Add(table);
-
-            document.Close();
         }
 
         private Tuple<byte[],Bill, Dictionary<string, string>> GetApplication(int application_id, Application app)
@@ -168,7 +172,7 @@ namespace ServiceSystem.Controllers
 
                 client.BaseAddress = new Uri("http://localhost:49332/");
 
-                HttpResponseMessage response = client.GetAsync("api/Bill?application_id=" + application_id).Result;
+                HttpResponseMessage response = client.GetAsync("api/Bill/GetBillBroadInfo?application_id=" + application_id).Result;
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -210,6 +214,71 @@ namespace ServiceSystem.Controllers
             else
             {
                 return new Tuple<byte[], Bill, Dictionary<string,string>>(null, null, null);
+            }
+        }
+
+
+        private void RemoveBills(int app_id)
+        {
+            Bill bill = new Bill();
+
+            using (HttpClient client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+
+                client.BaseAddress = new Uri("http://localhost:49332/");
+
+                HttpResponseMessage response = client.GetAsync("api/Bill/GetBillShortInfo?application_id=" + app_id).Result;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    bill = response.Content.ReadAsAsync<Bill>().Result;
+                }
+            }
+
+            if (bill != null)
+            {
+                string advancePath = String.Format(Server.MapPath(@"~\Common\Bills") + @"\{0}\{1}\{2}\{3}"
+                                    + "_advance.pdf",
+                                      bill.StatusChangeTime.Year.ToString(),
+                                      bill.StatusChangeTime.Month.ToString(),
+                                      bill.StatusChangeTime.Day.ToString(),
+                                      bill.Id);
+
+                string mainPath = String.Format(Server.MapPath(@"~\Common\Bills") + @"\{0}\{1}\{2}\{3}"
+                                    + "_main.pdf",
+                                      bill.StatusChangeTime.Year.ToString(),
+                                      bill.StatusChangeTime.Month.ToString(),
+                                      bill.StatusChangeTime.Day.ToString(),
+                                      bill.Id);
+
+                FileInfo advanceBill = new FileInfo(advancePath);
+
+                System.GC.Collect();
+                System.GC.WaitForPendingFinalizers();
+
+                if (advanceBill.Exists)
+                {
+                    advanceBill.Delete();
+                }
+
+                FileInfo mainBill = new FileInfo(mainPath);
+
+                if (mainBill.Exists)
+                {
+                    mainBill.Delete();
+                }
+
+                using (HttpClient client = new HttpClient())
+                {
+                    client.DefaultRequestHeaders.Clear();
+                    client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+
+                    client.BaseAddress = new Uri("http://localhost:49332/");
+
+                    HttpResponseMessage response = client.DeleteAsync("api/Bill/Delete?application_id=" + app_id.ToString()).Result;
+                }
             }
         }
 
@@ -302,7 +371,55 @@ namespace ServiceSystem.Controllers
             return RedirectToAction("ChangePassword");
         }
 
-        public ActionResult SetNewPassword(string request_id)
+
+        private Uri RediredtUri
+        {
+            get
+            {
+                var uriBuilder = new UriBuilder(Request.Url);
+                uriBuilder.Query = null;
+                uriBuilder.Fragment = null;
+                uriBuilder.Path = Url.Action("FacebookCallback");
+                return uriBuilder.Uri;
+            }
+        }
+
+        [AllowAnonymous]
+        public ActionResult Facebook()
+        {
+            var fb = new FacebookClient();
+            var loginUrl = fb.GetLoginUrl(new
+            {
+
+                client_id = "345453675848203",
+                client_secret = "f08f2116a756a511d419441ba3fe8e99",
+                redirect_uri = RediredtUri.AbsoluteUri,
+                response_type = "code",
+                scope = "email"
+            });
+
+            return Redirect(loginUrl.AbsoluteUri);
+        }
+
+        public ActionResult FacebookCallback(string code)
+        {
+            var fb = new FacebookClient();
+            dynamic result = fb.Post("oauth/access_token", new
+            {
+                client_id = "345453675848203",
+                client_secret = "f08f2116a756a511d419441ba3fe8e99",
+                redirect_uri = RediredtUri.AbsoluteUri,
+                code = code
+            });
+            var accessToken = result.access_token;
+            fb.AccessToken = accessToken;
+            dynamic me = fb.Get("me?fields=email");
+            string email = me.email;
+
+            return RedirectToAction("Index", "Home");
+        }
+
+    public ActionResult SetNewPassword(string request_id)
         {
             ViewData["request_id"] = request_id;
 
@@ -567,6 +684,11 @@ namespace ServiceSystem.Controllers
 
                 }
 
+            if (applicationCredentials.Item2.Status == "MAIN_PAID")
+            {
+                RemoveBills(applicationCredentials.Item2.Id);
+            }
+
             if (applicationCredentials != null && 
                 (User.Identity.Name == applicationCredentials.Item1 ||
                 User.Identity.Name == applicationCredentials.Item2.Username ||
@@ -680,7 +802,6 @@ namespace ServiceSystem.Controllers
                 {
                     toReturn = response.Content.ReadAsAsync<Tuple<Service, Dictionary<string, string>>>().Result;
 
-
                     HttpResponseMessage consultantsResponse = client.GetAsync("api/ServiceConsultants/?service_id=" + id).Result;
 
                     if(consultantsResponse.IsSuccessStatusCode)
@@ -694,6 +815,15 @@ namespace ServiceSystem.Controllers
 
                         ViewData["consultants"] = consultants;
                     }
+                }
+
+                response = client.GetAsync("api/FAQ/Get?service_id=" + id.ToString()).Result;
+
+                if(response.IsSuccessStatusCode)
+                {
+                    List<FAQ> toPass = response.Content.ReadAsAsync<List<FAQ>>().Result;
+
+                    ViewData["FAQ"] = toPass;
                 }
             }
             

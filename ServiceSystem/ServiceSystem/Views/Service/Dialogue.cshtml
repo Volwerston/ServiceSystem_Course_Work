@@ -25,26 +25,38 @@
     </div>
 </div>
 
-
 @section scripts{
 <script src="~/Scripts/jquery.signalR-2.2.1.min.js"></script>
 <script src="~/signalr/hubs"></script>
 
 <script>
-    $(function () {
 
-        // Reference the auto-generated proxy for the hub.
+    function GetDivForMessage(mes)
+    {
+        return '<div class="row" style="margin: 10px; padding: 10px; border: 2px solid green; border-radius: 3px;">'
+             + '<div class="col-xs-6" style="word-break:break-all">'
+             + '<p><b>' + mes.SenderName + '</b></p>'
+             + '</div>'
+             + '<div class="col-xs-6">'
+             + '<small>' + mes.SendingTime.split('T')[0] + ' ' + mes.SendingTime.split('T')[1] +'</small>'
+             + '</div>'
+             + '<div class="col-xs-11" style="background-color: lightgrey">'
+             + '<p>' + mes.Text + '</p>'
+             + '</div>'
+             + '</div>'
+    }
+
+    $(function () {
 
         var notification = $.connection.notificationHub;
         $.connection.hub.qs = "room_id=@ViewData["room_id"]";
 
- // Client side method for receiving the list of notifications on the connected event from the server
         notification.client.refreshNotification = function (data) {
             $("#message_container").empty();
 
             if (data.length > 0) {
                 for (var i = 0; i < data.length; i++) {
-                    $("#message_container").append('<div style="border: 3px solid green; padding: 10px;"><p>' + data[i].Id + '</p><p>' + data[i].Text + '</p><p>' + data[i].SenderName + '</p><p>' + data[i].SendingTime + '</p></div>');
+                    $("#message_container").append(GetDivForMessage(data[i]));
                 }
             }
             else {
@@ -52,21 +64,20 @@
             }
         }
 
-//Client side method which will be invoked from the Global.asax.cs file.
         notification.client.addLatestNotification = function (data) {
             if (data.RoomId == '@ViewData["room_id"].ToString()') {
-                $("#message_container").append('<div style="border: 3px solid green; padding: 10px;"><p>' + data.Id + '</p><p>' + data.Text + '</p><p>' + data.SenderName + '</p><p>' + data.SendingTime + '</p></div>');
+                if ($("#message_container").children().first().hasClass("text-center")) {
+                    $("#message_container").children().first().remove();
+                }
+                $("#message_container").append(GetDivForMessage(data));
             }
         }
 
-        // Start the connection.
         $.connection.hub.start().done(function () {
 
-	//When the send button is clicked get the text and user name and send it to server.
             $("#send").click(function () {
                 notification.server.sendNotification($("#text").val(), '@User.Identity.Name');
             });
-
         });
     });
 </script>
