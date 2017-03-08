@@ -15,6 +15,7 @@ using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.Owin.Security;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace ServiceSystem
 {
@@ -37,9 +38,7 @@ namespace ServiceSystem
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
-                AuthenticationMode = AuthenticationMode.Active,
-                LoginPath = new PathString("/Login"),
-                LogoutPath = new PathString("/Logout"),
+                AuthenticationMode = AuthenticationMode.Active
             });
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
@@ -49,7 +48,6 @@ namespace ServiceSystem
             {
                 TokenEndpointPath = new PathString("/Token"),
                 Provider = new ApplicationOAuthProvider(PublicClientId),
-                AuthorizeEndpointPath = new PathString("/api/Account/ExternalLogin"),
                 AccessTokenExpireTimeSpan = TimeSpan.FromDays(14),
                 // In production mode set AllowInsecureHttp = false
                 AllowInsecureHttp = true

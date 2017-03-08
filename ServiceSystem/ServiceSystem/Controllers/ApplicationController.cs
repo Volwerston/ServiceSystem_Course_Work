@@ -14,7 +14,6 @@ using System.Web.Http.ModelBinding;
 namespace ServiceSystem.Controllers
 {
 
-    [Authorize]
     public class ApplicationController : ApiController
     {
         public HttpResponseMessage Post([FromBody]Application application)

@@ -108,7 +108,6 @@ namespace ServiceSystem.Controllers
             }
         }
 
-        [Authorize]
         [HttpPost]
         public HttpResponseMessage ConfirmConsultant([FromBody]bool confirm)
         {
@@ -142,7 +141,7 @@ namespace ServiceSystem.Controllers
             }
         }
 
-        [Authorize]
+    
         [HttpPost]
         public HttpResponseMessage DeleteConsultant([FromBody]int id)
         {

@@ -155,6 +155,8 @@ namespace ServiceSystem.Controllers
             return RedirectToAction("Index", "Service", null);
         }
 
+        
+
         [AllowAnonymous]
         public async Task<ActionResult> ExternalLoginConfirmation()
         {
@@ -192,6 +194,14 @@ namespace ServiceSystem.Controllers
 
             return RedirectToAction("Index", "Service", null);
         }
+
+        public async Task<ActionResult> LoginConfirmation(string name, string password)
+        {
+            await SignInManager.PasswordSignInAsync(name, password, isPersistent: false, shouldLockout:false);
+
+            return RedirectToAction("Index", "Service", null);
+        }
+
 
         protected override void Dispose(bool disposing)
         {

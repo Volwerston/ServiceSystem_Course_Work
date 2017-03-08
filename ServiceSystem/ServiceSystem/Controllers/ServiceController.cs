@@ -338,6 +338,7 @@ namespace ServiceSystem.Controllers
 
         public ActionResult Index()
         {
+
             if (User.Identity.IsAuthenticated)
             {
                 ObjectCache cache = MemoryCache.Default;
@@ -412,31 +413,11 @@ namespace ServiceSystem.Controllers
         [HttpPost]
         public ActionResult Index(string email, string password)
         {
-            //using (HttpClient client = new HttpClient())
-            //{
-            //    client.DefaultRequestHeaders.Clear();
-            //    client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-            //    client.BaseAddress = new Uri("http://localhost:49332/");
-
-            //    HttpResponseMessage response = client.PostAsync(
-            //        "api/Account/CanLogin", new Tuple<string, string>(email, password), new JsonMediaTypeFormatter()
-            //        ).Result;
-
-            //    if (response.IsSuccessStatusCode)
-            //    {
-            //        ViewData["password"] = password;
-            //        ViewData["email"] = email;
-
-            //        return View("GetToken");
-            //    }
-            //}
 
             ViewData["password"] = password;
             ViewData["email"] = email;
 
-            return View("GetToken");
-
-            return RedirectToAction("Index");
+            return RedirectToAction("LoginConfirmation", "ExternalLogin", new { name = email, password = password });
         }
 
         [HttpPost]

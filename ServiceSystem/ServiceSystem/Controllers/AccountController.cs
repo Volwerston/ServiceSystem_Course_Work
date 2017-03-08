@@ -76,7 +76,6 @@ namespace ServiceSystem.Controllers
     }
 
 
-    [System.Web.Http.Authorize]
     [System.Web.Http.RoutePrefix("api/Account")]
     public class AccountController : ApiController
     {

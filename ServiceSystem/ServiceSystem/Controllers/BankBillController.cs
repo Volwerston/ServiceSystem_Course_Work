@@ -8,7 +8,6 @@ using System.Web.Http;
 
 namespace ServiceSystem.Controllers
 {
-    [Authorize]
     public class BankBillController : ApiController
     {
         [ActionName("ConfirmPayment")]

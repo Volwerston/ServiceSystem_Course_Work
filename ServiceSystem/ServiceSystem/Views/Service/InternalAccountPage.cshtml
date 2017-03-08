@@ -340,6 +340,9 @@
 
                 if (!($("#collapse5").hasClass("in"))) {
                     if ($("#panel_body_5").children().length == 0) {
+
+                        alert('Bearer ' + localStorage.getItem("access_token"));
+
                         $.ajax({
                             method: "GET",
                             url: "/api/ServiceApi/UserNotifications",

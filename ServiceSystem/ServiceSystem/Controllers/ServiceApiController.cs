@@ -359,7 +359,6 @@ namespace ServiceSystem.Controllers
     }
 
 
-    [Authorize]
     public class ServiceApiController : ApiController
     {
 
