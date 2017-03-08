@@ -340,6 +340,8 @@ namespace ServiceSystem.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
+                ObjectCache cache = MemoryCache.Default;
+
                 return RedirectToAction("Main", "Service", null);
             }
             return View();
@@ -371,53 +373,6 @@ namespace ServiceSystem.Controllers
             return RedirectToAction("ChangePassword");
         }
 
-
-        private Uri RediredtUri
-        {
-            get
-            {
-                var uriBuilder = new UriBuilder(Request.Url);
-                uriBuilder.Query = null;
-                uriBuilder.Fragment = null;
-                uriBuilder.Path = Url.Action("FacebookCallback");
-                return uriBuilder.Uri;
-            }
-        }
-
-        [AllowAnonymous]
-        public ActionResult Facebook()
-        {
-            var fb = new FacebookClient();
-            var loginUrl = fb.GetLoginUrl(new
-            {
-
-                client_id = "345453675848203",
-                client_secret = "f08f2116a756a511d419441ba3fe8e99",
-                redirect_uri = RediredtUri.AbsoluteUri,
-                response_type = "code",
-                scope = "email"
-            });
-
-            return Redirect(loginUrl.AbsoluteUri);
-        }
-
-        public ActionResult FacebookCallback(string code)
-        {
-            var fb = new FacebookClient();
-            dynamic result = fb.Post("oauth/access_token", new
-            {
-                client_id = "345453675848203",
-                client_secret = "f08f2116a756a511d419441ba3fe8e99",
-                redirect_uri = RediredtUri.AbsoluteUri,
-                code = code
-            });
-            var accessToken = result.access_token;
-            fb.AccessToken = accessToken;
-            dynamic me = fb.Get("me?fields=email");
-            string email = me.email;
-
-            return RedirectToAction("Index", "Home");
-        }
 
     public ActionResult SetNewPassword(string request_id)
         {
@@ -457,24 +412,29 @@ namespace ServiceSystem.Controllers
         [HttpPost]
         public ActionResult Index(string email, string password)
         {
-            using (HttpClient client = new HttpClient())
-            {
-                client.DefaultRequestHeaders.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-                client.BaseAddress = new Uri("http://localhost:49332/");
+            //using (HttpClient client = new HttpClient())
+            //{
+            //    client.DefaultRequestHeaders.Clear();
+            //    client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+            //    client.BaseAddress = new Uri("http://localhost:49332/");
 
-                HttpResponseMessage response = client.PostAsync(
-                    "api/Account/CanLogin", new Tuple<string, string>(email, password), new JsonMediaTypeFormatter()
-                    ).Result;
+            //    HttpResponseMessage response = client.PostAsync(
+            //        "api/Account/CanLogin", new Tuple<string, string>(email, password), new JsonMediaTypeFormatter()
+            //        ).Result;
 
-                if (response.IsSuccessStatusCode)
-                {
-                    ViewData["password"] = password;
-                    ViewData["email"] = email;
+            //    if (response.IsSuccessStatusCode)
+            //    {
+            //        ViewData["password"] = password;
+            //        ViewData["email"] = email;
 
-                    return View("GetToken");
-                }
-            }
+            //        return View("GetToken");
+            //    }
+            //}
+
+            ViewData["password"] = password;
+            ViewData["email"] = email;
+
+            return View("GetToken");
 
             return RedirectToAction("Index");
         }
@@ -493,7 +453,7 @@ namespace ServiceSystem.Controllers
             return JsonConvert.SerializeObject("OK");
         }
 
-        // GET: Service
+        [Authorize]
         public ActionResult Main(string message)
         {
             ViewData["message"] = message;

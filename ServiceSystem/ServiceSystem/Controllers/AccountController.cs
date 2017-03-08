@@ -160,34 +160,6 @@ namespace ServiceSystem.Controllers
 
             if (isConfirmed)
             {
-                //using (HttpClient client = new HttpClient())
-                //{
-                //    client.DefaultRequestHeaders.Clear();
-
-                //    client.BaseAddress = new Uri("http://localhost:49332/");
-
-                //    TokenParams parameters = new TokenParams
-                //    {
-                //        grant_type = "password",
-                //        password = password,
-                //        username = email
-                //    };
-
-                //    HttpResponseMessage response = client.PostAsync("/token",
-                //         new StringContent(string.Format("grant_type=password&username={0}&password={1}",
-                //        HttpUtility.UrlEncode(email),
-                //        HttpUtility.UrlEncode(password)), Encoding.UTF8,
-                //        "application/x-www-form-urlencoded")).Result;
-
-                //    string resultJSON = response.Content.ReadAsStringAsync().Result;
-                //    LoginTokenResult result = JsonConvert.DeserializeObject<LoginTokenResult>(resultJSON);
-
-                //    if (response.IsSuccessStatusCode)
-                //    {
-                //        toReturn = result.AccessToken;
-                //    }
-                //}
-
                 return Request.CreateResponse(HttpStatusCode.OK, toReturn);
             }
             else
@@ -393,7 +365,7 @@ namespace ServiceSystem.Controllers
             }
         }
 
-        // POST api/Account/Logout
+        [HttpGet]
         [Route("Logout")]
         public IHttpActionResult Logout()
         {
@@ -547,38 +519,18 @@ namespace ServiceSystem.Controllers
             return Ok();
         }
 
-        // GET api/Account/ExternalLogin
-        [OverrideAuthentication]
-        [HostAuthentication(DefaultAuthenticationTypes.ExternalCookie)]
         [AllowAnonymous]
-        [Route("ExternalLogin", Name = "ExternalLogin")]
-        public async Task<IHttpActionResult> GetExternalLogin(string provider, string error = null)
+        public async Task<HttpResponseMessage> PostExternalLogin([FromBody]string toPass)
         {
-            if (error != null)
+
+            ExternalLoginData data = JsonConvert.DeserializeObject<ExternalLoginData>(toPass);
+            if (data == null)
             {
-                return Redirect(Url.Content("~/") + "#error=" + Uri.EscapeDataString(error));
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Error");
             }
 
-            if (!User.Identity.IsAuthenticated)
-            {
-                return new ChallengeResult(provider, this);
-            }
-
-            ExternalLoginData externalLogin = ExternalLoginData.FromIdentity(User.Identity as ClaimsIdentity);
-
-            if (externalLogin == null)
-            {
-                return InternalServerError();
-            }
-
-            if (externalLogin.LoginProvider != provider)
-            {
-                Authentication.SignOut(DefaultAuthenticationTypes.ExternalCookie);
-                return new ChallengeResult(provider, this);
-            }
-
-            ApplicationUser user = await UserManager.FindAsync(new UserLoginInfo(externalLogin.LoginProvider,
-                externalLogin.ProviderKey));
+            ApplicationUser user = await UserManager.FindAsync(new UserLoginInfo(data.LoginProvider,
+                data.ProviderKey));
 
             bool hasRegistered = user != null;
 
@@ -592,16 +544,17 @@ namespace ServiceSystem.Controllers
                     CookieAuthenticationDefaults.AuthenticationType);
 
                 AuthenticationProperties properties = ApplicationOAuthProvider.CreateProperties(user.UserName);
+
                 Authentication.SignIn(properties, oAuthIdentity, cookieIdentity);
             }
             else
             {
-                IEnumerable<Claim> claims = externalLogin.GetClaims();
+                IEnumerable<Claim> claims = data.GetClaims();
                 ClaimsIdentity identity = new ClaimsIdentity(claims, OAuthDefaults.AuthenticationType);
                 Authentication.SignIn(identity);
             }
 
-            return Ok();
+            return Request.CreateResponse(HttpStatusCode.OK, "OK");
         }
 
         // GET api/Account/ExternalLogins?returnUrl=%2F&generateState=true
@@ -859,7 +812,7 @@ namespace ServiceSystem.Controllers
             return null;
         }
 
-        private class ExternalLoginData
+        public class ExternalLoginData
         {
             public string LoginProvider { get; set; }
             public string ProviderKey { get; set; }

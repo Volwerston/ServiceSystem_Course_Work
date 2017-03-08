@@ -77,7 +77,7 @@ else
         $(document).ready(function () {
 
             $("#exit_button").click(function () {
-                $.ajax({
+                @*$.ajax({
                     method: "POST",
                     url: '/api/Account/Logout',
                     contentType: "application/json; charset=utf-8",
@@ -92,7 +92,9 @@ else
                     {
                         alert(res.responseText);
                     }
-                });
+                });*@
+
+                window.location.href = 'http://localhost:49332/ExternalLogin/LogOff';
             });
 
             $('select[name="service_type"]').change(function () {

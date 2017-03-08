@@ -30,7 +30,7 @@
                         url: '@Url.Action("GetToken", "Service")',
                         dataType: "json",
                         contentType: "application/json; charset=utf-8",
-                        data: JSON.stringify({ token: localStorage.getItem("access_token") }),
+                        data: JSON.stringify({ token: res.access_token }),
                         success: function(res)
                         {
                             window.location.href = '@Url.Action("Main", "Service")';

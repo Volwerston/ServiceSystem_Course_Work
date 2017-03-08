@@ -34,10 +34,8 @@
     <script type="text/javascript">
         $(document).ready(function () {
 
-            getAccessToken();
-
             $('input[name="facebook_log_in"]').click(function () {
-                window.location.href = "/api/Account/ExternalLogin?provider=Facebook&response_type=token&client_id=self&redirect_uri=http%3A%2F%2Flocalhost%3A49332%2FService%2FIndex&state=K_MjqwnPFPi_LcRQM_zHKmsKm3ebqIrsc07MnsCsZV41";
+                window.location.href = "/ExternalLogin/ExternalLogin?provider=Facebook&response_type=token&client_id=self&redirect_uri=http%3A%2F%2Flocalhost%3A49332%2FService%2FIndex&state=K_MjqwnPFPi_LcRQM_zHKmsKm3ebqIrsc07MnsCsZV41";
             });
         });
 

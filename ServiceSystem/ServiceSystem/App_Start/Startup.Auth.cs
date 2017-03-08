@@ -14,6 +14,7 @@ using Microsoft.Owin.Security.Facebook;
 using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.Owin.Security;
 
 namespace ServiceSystem
 {
@@ -29,10 +30,17 @@ namespace ServiceSystem
             // Configure the db context and user manager to use a single instance per request
             app.CreatePerOwinContext(ApplicationDbContext.Create);
             app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
+            app.CreatePerOwinContext<ApplicationSignInManager>(ApplicationSignInManager.Create);
 
             // Enable the application to use a cookie to store information for the signed in user
             // and to use a cookie to temporarily store information about a user logging in with a third party login provider
-            app.UseCookieAuthentication(new CookieAuthenticationOptions());
+            app.UseCookieAuthentication(new CookieAuthenticationOptions
+            {
+                AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
+                AuthenticationMode = AuthenticationMode.Active,
+                LoginPath = new PathString("/Login"),
+                LogoutPath = new PathString("/Logout"),
+            });
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
             // Configure the application for OAuth based flow
@@ -59,30 +67,30 @@ namespace ServiceSystem
             //    consumerKey: "",
             //    consumerSecret: "");
 
-            app.UseFacebookAuthentication(
-                appId: "345453675848203",
-                appSecret: "f08f2116a756a511d419441ba3fe8e99"
-                );
+            //app.UseFacebookAuthentication(
+            //    appId: "345453675848203",
+            //    appSecret: "f08f2116a756a511d419441ba3fe8e99"
+            //    );
 
             var facebookOptions = new FacebookAuthenticationOptions()
             {
-                AppId = "345453675848203",
-                AppSecret = "f08f2116a756a511d419441ba3fe8e99",
+                AppId = "671006846403592",
+                AppSecret = "7f50b5cf42903a76670884d579ec396e",
                 BackchannelHttpHandler = new Facebook.FacebookBackChannelHandler(),
-                SignInAsAuthenticationType = DefaultAuthenticationTypes.ExternalCookie,
-                Scope = { "email" },
-                UserInformationEndpoint = "https://graph.facebook.com/v2.4/me?fields=id,email,name"
-                //Provider = new FacebookAuthenticationProvider()
-                //{
-                //    OnAuthenticated = (context) =>
-                //    {       
-                //        context.Identity.AddClaim(new System.Security.Claims.Claim("urn:facebook:email", context.Email));
-                //        return Task.FromResult(0);
-                //    }
-                //}
-        };
+                UserInformationEndpoint = "https://graph.facebook.com/v2.4/me?fields=id,email,name",
+                Provider = new FacebookAuthenticationProvider
+                {
+                    OnAuthenticated = context =>
+                    {
+                        context.Identity.AddClaim(new System.Security.Claims.Claim("FacebookAccessToken", context.AccessToken));
+                        return Task.FromResult(true);
+                    }
+                }
+            };
 
-            //facebookOptions.Scope.Add("email");
+            facebookOptions.Scope.Add("email");
+            //facebookOptions.Scope.Add("first_name");
+            //facebookOptions.Scope.Add("last_name");
             app.UseFacebookAuthentication(facebookOptions);
 
             //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()

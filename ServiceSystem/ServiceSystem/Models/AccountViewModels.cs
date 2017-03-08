@@ -12,6 +12,8 @@ namespace ServiceSystem.Models
         public string Url { get; set; }
 
         public string State { get; set; }
+
+        public string Email { get; set; }
     }
 
     public class ManageInfoViewModel
