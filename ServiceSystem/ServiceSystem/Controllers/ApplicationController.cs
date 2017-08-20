@@ -14,11 +14,18 @@ using System.Web.Http.ModelBinding;
 namespace ServiceSystem.Controllers
 {
 
+    public class ChartParams
+    {
+        public int ServiceId { get; set; }
+        public int Year { get; set; }
+        public int Month { get; set; }
+    }
+
     public class ApplicationController : ApiController
     {
+        [ActionName("PostApplication")]
         public HttpResponseMessage Post([FromBody]Application application)
         {
-
             DeadlineApplication deadlineApp = application as DeadlineApplication;
 
             SessionApplication sessionApp = application as SessionApplication;
@@ -97,6 +104,47 @@ namespace ServiceSystem.Controllers
         }
 
         [HttpPost]
+        [ActionName("ServiceStats")]
+        public HttpResponseMessage ServiceStats([FromBody]ChartParams parameters)
+        {
+            using (SqlConnection connection = new SqlConnection(System.Web.Configuration.WebConfigurationManager.ConnectionStrings["DBCS"].ConnectionString))
+            {
+                SqlDataAdapter da = new SqlDataAdapter("spGetServiceApplicationsData", connection);
+
+                da.SelectCommand.CommandType = CommandType.StoredProcedure;
+
+                da.SelectCommand.Parameters.AddWithValue("@ServiceId", parameters.ServiceId);
+                da.SelectCommand.Parameters.AddWithValue("@TimeLimit", new DateTime(parameters.Year, parameters.Month, 1));
+
+                DataSet set = new DataSet();
+
+                try
+                {
+                    ServiceApplicationsData data = new ServiceApplicationsData();
+
+                    data.Consultants = new Dictionary<string, string>();
+
+                    da.Fill(set);
+
+                    foreach(DataRow row in set.Tables[0].Rows)
+                    {
+                        data.Consultants.Add(row["Name"].ToString(), row["Email"].ToString());
+                        data.AdvancePendingApplications = Convert.ToInt32(row["AdvancePendingCount"].ToString());
+                        data.MainPendingApplications = Convert.ToInt32(row["MainPendingCount"].ToString());
+                        data.NoBillApplications = Convert.ToInt32(row["NoBillCount"].ToString());
+                        data.MainPaidApplications = Convert.ToInt32(row["MainPaidCount"].ToString());
+                    }
+
+                    return Request.CreateResponse(HttpStatusCode.OK, data);
+                }
+                catch(Exception ex)
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
+                }
+            }
+        }
+
+        [HttpPost]
         public HttpResponseMessage PostMark([FromBody]CommentParams estimate)
         {
             using (SqlConnection connection = new SqlConnection(System.Web.Configuration.WebConfigurationManager.ConnectionStrings["DBCS"].ConnectionString))
@@ -116,7 +164,7 @@ namespace ServiceSystem.Controllers
 
                     return Request.CreateResponse(HttpStatusCode.OK, "OK");
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
                 }
@@ -145,7 +193,7 @@ namespace ServiceSystem.Controllers
                 {
                     da.Fill(set);
 
-                    if(set.Tables[0].Rows.Count > 0)
+                    if (set.Tables[0].Rows.Count > 0)
                     {
                         application.Id = Convert.ToInt32(set.Tables[0].Rows[0]["Id"].ToString());
                         application.Username = set.Tables[0].Rows[0]["Username"].ToString();
@@ -166,17 +214,17 @@ namespace ServiceSystem.Controllers
                         application.FinalEstimate = set.Tables[0].Rows[0]["FinalEstimate"].ToString();
                     }
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
                 }
             }
 
-            return Request.CreateResponse(HttpStatusCode.OK, new Tuple<string, Application, List<PaymentMeasure>>(serviceProviderName, application, servicePaymentMeasures));        
+            return Request.CreateResponse(HttpStatusCode.OK, new Tuple<string, Application, List<PaymentMeasure>>(serviceProviderName, application, servicePaymentMeasures));
         }
 
         [ActionName("GetUserApplications")]
-        public HttpResponseMessage GetUserApplications()
+        public HttpResponseMessage GetUserApplications(string name)
         {
             List<Application> toReturn = new List<Application>();
 
@@ -186,7 +234,7 @@ namespace ServiceSystem.Controllers
 
                 da.SelectCommand.CommandType = System.Data.CommandType.StoredProcedure;
 
-                da.SelectCommand.Parameters.AddWithValue("@Username", User.Identity.Name);
+                da.SelectCommand.Parameters.AddWithValue("@Username", name);
 
                 try
                 {
@@ -194,7 +242,7 @@ namespace ServiceSystem.Controllers
 
                     da.Fill(set);
 
-                    foreach(DataRow row in set.Tables[0].Rows)
+                    foreach (DataRow row in set.Tables[0].Rows)
                     {
                         Application app = new Application();
 
@@ -210,7 +258,7 @@ namespace ServiceSystem.Controllers
                     }
 
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
                 }
@@ -221,7 +269,7 @@ namespace ServiceSystem.Controllers
 
 
         [ActionName("GetServiceApplications")]
-        public HttpResponseMessage GetServiceApplications()
+        public HttpResponseMessage GetServiceApplications(string name)
         {
             List<Application> toReturn = new List<Application>();
 
@@ -231,7 +279,7 @@ namespace ServiceSystem.Controllers
 
                 da.SelectCommand.CommandType = System.Data.CommandType.StoredProcedure;
 
-                da.SelectCommand.Parameters.AddWithValue("@Username", User.Identity.Name);
+                da.SelectCommand.Parameters.AddWithValue("@Username", name);
 
                 try
                 {
@@ -239,7 +287,7 @@ namespace ServiceSystem.Controllers
 
                     da.Fill(set);
 
-                    foreach(DataRow row in set.Tables[0].Rows)
+                    foreach (DataRow row in set.Tables[0].Rows)
                     {
                         Application app = new Application();
 
@@ -256,7 +304,7 @@ namespace ServiceSystem.Controllers
                     }
 
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
                 }

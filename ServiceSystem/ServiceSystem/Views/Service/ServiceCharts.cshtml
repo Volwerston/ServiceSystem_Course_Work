@@ -1,0 +1,304 @@
+﻿
+@{
+    ViewBag.Title = "ServiceCharts";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row" ng-app="FeedbackApp" style="margin-top: 10px;">
+    <div class="col-xs-8 col-sm-6 col-sm-offset-3" ng-controller="FeedbackController">
+        <div class="row well">
+            <div class="col-xs-6">
+                <input type="text" placeholder="Рік" ng-model="year" name="year" class="form-control" />
+                <input type="hidden" id="service_id_data" value="@ViewData["service_id"].ToString()" />
+                <input type="hidden" id="consultant_model" />
+            </div>
+            <div class="col-xs-6">
+                <select name="month" ng-model="month" class="form-control" style="margin-bottom: 10px;">
+                    <option value="1">Січень</option>
+                    <option value="2">Лютий</option>
+                    <option value="3">Березень</option>
+                    <option value="4">Квітень</option>
+                    <option value="5">Травень</option>
+                    <option value="6">Червень</option>
+                    <option value="7">Липень</option>
+                    <option value="8">Серпень</option>
+                    <option value="9">Вересень</option>
+                    <option value="10">Жовтень</option>
+                    <option value="11">Листопад</option>
+                    <option value="12">Грудень</option>
+                </select>
+            </div>
+            <div class="col-sm-6 col-sm-offset-3">
+                <button type="button" id="find_service_data" class="btn btn-block btn-success">Показати</button>
+            </div>
+        </div>
+        <div class="row well" style="margin-top:15px;" id="service_container" hidden>
+        </div>
+        <div class="row well" style="margin-top:15px;" id="consultant_container" hidden>
+        </div>
+        <div class="row" style="margin-top:15px;">
+            <div class="col-sm-6 col-sm-offset-3">
+                <div id="feedback_toggle" hidden>
+                    <button type="button" ng-click="showFeedbacks()" style="margin-bottom: 10px;" class="btn btn-success btn-block">
+                        Показати відгуки
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="row well" hidden id="feedback_container" style="margin-top:10px;">
+            <div class="col-xs-12">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th ng-click="setOrder('Date')">
+                                Дата
+                                <span class="glyphicon" ng-class="getGlyph('Date')"></span>
+                            </th>
+                            <th ng-click="setOrder('Mark')">
+                                Оцінка
+                                <span class="glyphicon" ng-class="getGlyph('Mark')"></span>
+                            </th>
+                            <th ng-click="setOrder('Comment')">
+                                Коментар
+                                <span class="glyphicon" ng-class="getGlyph('Comment')"></span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="feedback in (filteredFeedbacks = (feedbacks| orderBy:orderItem:isReverse) | limitTo:displayItems:startIndex)">
+                            <td>
+                                {{feedback.Date}}
+                            </td>
+                            <td>
+                                {{feedback.Mark}}
+                            </td>
+                            <td>
+                                {{feedback.Comment}}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <input type="submit" class="btn btn-default btn-sm" value="Prev" ng-click="calculateOffset('Prev')" />
+                            </td>
+                            <td>
+                                <input type="submit" class="btn btn-default btn-sm" value="Next" ng-click="calculateOffset('Next')" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+    <script src="~/Scripts/module_script.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js">
+    </script>
+
+    <script type="text/javascript">
+
+        function drawChart(agent, result) {
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'name');
+            data.addColumn('number', 'value');
+
+            var dataArray = [];
+            $.each(result, function (i, obj) {
+                var myVal = parseFloat(result[i].value);
+                dataArray.push([obj.name, myVal]);
+            });
+
+            data.addRows(dataArray);
+
+            var barchart_options = {
+                title: 'Сумарна кількість замовлень',
+                width: 200,
+                height: 200
+            };
+
+            var piechart_options = {
+                title: 'Відсоткове відношення замовлень',
+                width: 200,
+                height: 200
+            };
+
+            var barchart = new google.visualization.BarChart(
+                document.getElementById(agent + '_barchart_div')
+                );
+
+            var piechart = new google.visualization.PieChart(
+                document.getElementById(agent + '_piechart_div')
+                );
+
+            barchart.draw(data, barchart_options);
+            piechart.draw(data, piechart_options);
+        }
+
+        $(document).ready(function () {
+
+            $("#find_service_data").click(function () {
+
+                if (isNaN(parseFloat($('input[name="year"]').val())) ||
+                    parseFloat($('input[name="year"]').val()) <= 1900 ||
+                    isNaN(parseFloat($('select[name="month"]').val()))
+                    )
+                {
+                    displayMessage("Error", "Неправильні дані")
+                }
+                else{
+                $("#service_container").attr('hidden', false);
+
+                $("#service_container").empty();
+
+                $("#feedback_toggle").attr('hidden', true);
+
+                $("#feedback_container").attr('hidden', true);
+
+                $("#consultant_container").attr('hidden', true);
+
+                var toPass = {
+                    year: $('input[name="year"]').val(),
+                    month: $('select[name="month"]').val(),
+                    service_id: '@ViewData["service_id"].ToString()'
+                };
+
+                $.ajax({
+                    method: "POST",
+                    url: "/Service/GetMonthApplications",
+                    contentType: "application/json",
+                    dataType: "json",
+                    data: JSON.stringify(toPass),
+                    success: function (res) {
+                        if (res != null) {
+                            $("#service_container").append(res);
+                        }
+                        else {
+                            $("#service_container").append('<p>Інформації не знайдено</p>');
+                        }
+                    },
+                    error: function (res) {
+                        $("#service_container").append(res.responseText);
+
+                        if (res.responseText != null) {
+
+                            var result = [
+                                {
+                                    name: 'No Bill Data',
+                                    value: $('input[name="service_no_bill_items"]').val()
+                                },
+                                {
+                                    name: 'Advance Pending Data',
+                                    value: $('input[name="service_advance_pending_items"]').val()
+                                },
+                                {
+                                    name: 'Main Pending Data',
+                                    value: $('input[name="service_main_pending_items"]').val()
+                                },
+                                {
+                                    name: 'Main Paid Data',
+                                    value: $('input[name="service_main_paid_items"]').val()
+                                }
+                            ];
+
+                            google.charts.load('current', {
+                                'packages': ['corechart']
+                            });
+
+                            google.charts.setOnLoadCallback(function () {
+                                drawChart('service', result);
+                            });
+
+
+                            $("#find_consultant_stats").click(function () {
+
+                                if($('select[name="consultant_email"]').val() != null){
+                                $("#consultant_model").val($('select[name="consultant_email"]').val());
+
+                                $("#feedback_container").attr('hidden', true);
+
+                                $("#consultant_container").empty();
+                                $("#consultant_container").removeAttr('hidden');
+
+                                var toPass = {
+                                    year: $('input[name="year"]').val(),
+                                    month: $('select[name="month"]').val(),
+                                    service_id: '@ViewData["service_id"].ToString()',
+                                    email: $('select[name="consultant_email"]').val()
+                                };
+
+                                $.ajax({
+                                    method: "POST",
+                                    url: "/Service/GetConsultantApplications",
+                                    contentType: "application/json",
+                                    dataType: "json",
+                                    data: JSON.stringify(toPass),
+                                    success: function (res) {
+                                        if (res != null) {
+                                            $("#consultant_container").prepend(res);
+                                        }
+                                        else {
+                                            $("#consultant_container").prepend('<p>Інформації не знайдено</p>');
+                                        }
+                                    },
+                                    error: function (res) {
+                                        if (res != null) {
+
+                                            $("#consultant_container").append(res.responseText);
+
+                                            var result = [
+                                         {
+                                             name: 'No Bill Data',
+                                             value: $('input[name="consultant_no_bill_items"]').val()
+                                         },
+                                         {
+                                             name: 'Advance Pending Data',
+                                             value: $('input[name="consultant_advance_pending_items"]').val()
+                                         },
+                                         {
+                                             name: 'Main Pending Data',
+                                             value: $('input[name="consultant_main_pending_items"]').val()
+                                         },
+                                         {
+                                             name: 'Main Paid Data',
+                                             value: $('input[name="consultant_main_paid_items"]').val()
+                                         }
+                                            ];
+
+
+                                            google.charts.load('current', {
+                                                'packages': ['corechart']
+                                            });
+
+                                            google.charts.setOnLoadCallback(function () {
+                                                drawChart('consultant', result);
+                                            });
+
+                                            $("#feedback_toggle").removeAttr('hidden');
+                                        }
+                                        else {
+                                            $("#consultant_container").prepend('<p>Інформації не знайдено</p>');
+                                        }
+                                    }
+                                });
+                            }
+                            });
+                        }
+                        else {
+                            $("#service_container").append('<p>Інформації не знайдено</p>');
+                        }
+                    }
+                });
+            }
+            });
+        });
+
+    </script>
+
+}

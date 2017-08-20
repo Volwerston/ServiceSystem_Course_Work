@@ -1,0 +1,56 @@
+<html>
+<head>
+<title>Pay</title>
+</head>
+<body>
+<form id=pay name=pay method="POST" action="https://merchant.webmoney.ru/lmi/payment.asp" accept-charset="windows-1251" >
+<p>пример платежа через сервис Web Merchant Interface</p>
+<p>заплатить 1 WMZ...</p>
+<p>
+<input type="hidden" name="LMI_PAYMENT_AMOUNT" value="1.0" />
+<input type="hidden" name="LMI_PAYMENT_DESC" value="тестовый платеж" />
+<input type="hidden" name="LMI_PAYMENT_NO" value="1">
+<input type="hidden" name="LMI_PAYEE_PURSE" value="U839318544946" />
+<input type="hidden" name="LMI_SIM_MODE" value="0" />
+</p>
+<p>
+<input type="submit" value="submit" />
+</p>
+</form>
+<script type="text/javascript">
+ function Company(name, count)
+{
+     Company._name = name;
+
+     Company._count = count;
+
+     Company.GetFullName = function () {
+         return Company._name + " " + Company._count.toString();
+     }
+
+     Object.defineProperty(this, "Count", {
+
+         get: function () {
+             return Company._count;
+         },
+         set: function (value) {
+             if (value <= 0) {
+                 alert("Employee count cannot be less or eqval to zero");
+             }
+             else Company._count = value;
+         }
+     });
+ }
+
+ var interLogic = new Company("InterLogic", 100);
+
+ alert(interLogic.Count);
+
+ interLogic.Count = -1;
+
+ alert(interLogic.Count);
+
+ alert(Company.GetFullName());
+</script>
+</body>
+</html>

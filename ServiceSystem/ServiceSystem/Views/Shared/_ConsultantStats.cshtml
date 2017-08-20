@@ -1,0 +1,19 @@
+﻿@model ServiceSystem.Models.ServiceConsultantsData
+
+@{
+    Layout = null;
+}
+
+<input type="hidden" name="consultant_advance_pending_items" value="@Model.AdvancePendingApplications" />
+<input type="hidden" name="consultant_main_pending_items" value="@Model.MainPendingApplications" />
+<input type="hidden" name="consultant_no_bill_items" value="@Model.NoBillApplications" />
+<input type="hidden" name="consultant_main_paid_items" value="@Model.MainPaidApplications" />
+<input type="hidden" name="consultant_average_mark" value="@Model.AverageMark" />
+
+
+<div class="row">
+    <div id="consultant_piechart_div" class="col-sm-8 col-md-6 col-sm-offset-2  col-md-offset-0" style="margin-top: 10px;">
+    </div>
+    <div id="consultant_barchart_div" class="col-sm-8 col-md-6 col-sm-offset-2  col-md-offset-0" style="margin-top: 10px;">
+    </div>
+</div>

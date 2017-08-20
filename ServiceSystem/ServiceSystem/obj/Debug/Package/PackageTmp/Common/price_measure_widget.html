@@ -1,0 +1,29 @@
+﻿ <div id="price_measure_widget_*" style="margin-top: 5px; padding: 10px;border: 1px solid grey;">
+                <div class="form-group">
+                    <select name="currency_*" style="margin: auto;" class="form-control">
+                        <option value="none">Оберіть валюту</option>
+                        <option value="hryvnia">гривня</option>
+                        <option value="dollar">долар</option>
+                        <option value="euro">євро</option>
+                    </select>
+					<label for="currency_*" class="text-danger control-label col-sm-offset-2" hidden id="currency_*_validation"></label>
+                </div>
+                <div class="form-group">
+                    <input type="text" name="measure_*" style="margin: auto;" placeholder="Одиниця виміру" class="form-control" />
+					<label for="measure_*" class="text-danger control-label col-sm-offset-2" hidden id="measure_*_validation"></label>
+                </div>
+                <div class="form-group">
+                    <input type="text" name="price_*" placeholder="Вартість  (за 1 одиницю виміру)" style="margin: auto;" class="form-control" />
+					<label for="price_*" class="text-danger control-label col-sm-offset-2" hidden id="price_*_validation"></label>
+                </div>
+                <div class="form-group">
+					<div class="col-md-2 col-lg-2"></div>
+                    <input class="col-xs-1" type="checkbox" id="price_measure_description_selector_*" name="price_measure_description_selector_*" />
+                    <label class="col-xs-6" for="price_measure_description_selector_*">додати інформацію</label>
+                </div>
+                <div id="price_description_block_*" hidden>
+                    <div class="form-group">
+                        <textarea rows="10" name="price_description_*" placeholder="Додаткова інформація" style="margin-bottom: 5px; margin: auto;" class="form-control"></textarea>
+                    </div>
+                </div>
+            </div>

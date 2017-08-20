@@ -4,20 +4,26 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="row">
-    <div class="col-xs-10 col-sm-offset-1" style="border: 2px solid green; border-radius: 3px; padding: 10px;">
+<div class="row" style="margin-top: 15px;">
+    <div class="col-xs-10 col-sm-offset-1" style="border: 1px solid grey; border-radius: 3px; padding: 20px;">
         <div class="row">
-            <div class="col-xs-12 col-sm-8 col-sm-offset-2" id="message_container" style="border: 2px solid green; max-height: 300px; overflow-y: scroll; overflow-x:hidden; border-radius: 3px; padding: 10px;">
-
-            </div>
-            <div class="col-xs-12 col-sm-8 col-sm-offset-2" style="margin-top: 10px;">
+            <div class="col-sm-8 col-sm-offset-2" id="message_container" style="border: 1px solid grey;background-color: azure; max-height: 500px; overflow-y: scroll; overflow-x:hidden; border-radius: 3px; padding: 10px;">
+           <p class="text-center">Завантаження...</p>
+             </div>
+            <div class="col-sm-8 col-sm-offset-2" style="margin-top: 10px;">
                 <div class="form-horizontal well">
                     <div class="form-group">
                         <textarea class="form-control" id="text" style="margin: auto;" rows="10" placeholder="Текст...">
                         </textarea>
                     </div>
                     <div class="form-group">
-                        <input type="button" id="send" class="btn btn-block btn-success" style="margin: auto;" value="Send" />
+                        <input type="button" id="send_signalr_message" class="btn btn-block btn-success" style="margin: auto;" value="Надіслати" />
+                        @if (ViewData.ContainsKey("IsFromApplication") &&
+                            !Convert.ToBoolean(ViewData["IsFromApplication"].ToString()) &&
+                            User.Identity.Name == ViewData["CustomerEmail"].ToString())
+                        {
+                            <input type="button" id="finish_dialogue" class="btn btn-block btn-success" style="margin: auto; margin-top: 10px;" data-toggle="modal" data-target="#dialogue_delete_modal" value="Видалити діалог" />
+                        }
                     </div>
                 </div>
             </div>
@@ -25,41 +31,129 @@
     </div>
 </div>
 
+<div class="modal fade" id="dialogue_delete_modal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="text-center">Оцініть відповідь консультанта</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row" id="comment_holder">
+                    <div class="col-sm-offset-2">
+                        <div class="row">
+                            <div class="col-sm-8 col-sm-offset-2" style="padding: 10px; display: table; margin: auto;">
+                                <label for="estimate_mark" class="control-label text-center" style="display: block;">
+                                    Бал (1-10)
+                                </label>
+                                <div class="form-horizontal">
+                                    <div class="form-group">
+                                        <select class="form-control col-sm-offset-2" name="estimate_mark">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <textarea class="form-control col-sm-offset-2" rows="10" name="estimate_comment" placeholder="Comment..."></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="delete_dialogue" data-dismiss="modal" class="btn btn-success">Підтвердити</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Скасувати</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 @section scripts{
-<script src="~/Scripts/jquery.signalR-2.2.1.min.js"></script>
-<script src="~/signalr/hubs"></script>
-
 <script>
+    function GetDivForMessage(mes, status) {
+        var toReturn = '<div class="row" style="margin: 10px; padding: 10px; border: 2px solid green; border-radius: 3px;">'
+             + '<div class="col-sm-6" style="word-break:break-all">'
+             + '<p style="display:inline;"><b>' + mes.SenderFullName + '</b></p>';
+        if (status == 'ONLINE') {
+            toReturn += '<span class="label label-success ' + mes.SenderEmail.replace(".", "_").replace("@@", "_") + '">';
+        }
+        else {
+            toReturn += '<span class="label label-default ' + mes.SenderEmail.replace(".", "_").replace("@@", "_") + '">';
+        }
 
-    function GetDivForMessage(mes)
-    {
-        return '<div class="row" style="margin: 10px; padding: 10px; border: 2px solid green; border-radius: 3px;">'
-             + '<div class="col-xs-6" style="word-break:break-all">'
-             + '<p><b>' + mes.SenderName + '</b></p>'
+
+        toReturn += status
              + '</div>'
-             + '<div class="col-xs-6">'
-             + '<small>' + mes.SendingTime.split('T')[0] + ' ' + mes.SendingTime.split('T')[1] +'</small>'
+             + '<div class="col-sm-3">'
+             + '<small>' + mes.SendingTime.split('T')[0] + ' ' + mes.SendingTime.split('T')[1] + '</small>'
              + '</div>'
-             + '<div class="col-xs-11" style="background-color: lightgrey">'
-             + '<p>' + mes.Text + '</p>'
+             + '<div class="col-sm-11" style="margin-top:5px;">'
+             + '<pre>' + mes.Text + '</pre>'
              + '</div>'
              + '</div>'
+
+        return toReturn;
     }
 
     $(function () {
 
-        // Reference the auto-generated proxy for the hub.
+        $("#delete_dialogue").click(function () {
+            var toPass = {
+                Mark: $('select[name="estimate_mark"]').val(),
+                Comment: $('textarea[name="estimate_comment"]').val(),
+                DialogueId: '@ViewData["room_id"].ToString()',
+                ConsultantName: '@ViewData["ConsultantEmail"].ToString()'
+            };
 
-        var notification = $.connection.notificationHub;
+
+            $.ajax({
+                method: "POST",
+                url: "/api/Dialogue/DeleteDialogue",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify(toPass),
+                success: function (res) {
+                    window.location.href = "/Service/Index";
+                },
+                error: function (res) {
+                    displayMessage("Error", res.responseText);
+                }
+            });
+        });
+
         $.connection.hub.qs = "room_id=@ViewData["room_id"]";
 
- // Client side method for receiving the list of notifications on the connected event from the server
-        notification.client.refreshNotification = function (data) {
-            $("#message_container").empty();
+        notification.client.setUserOnline = function (credentials) {
+            $('.' + credentials.Name.replace(".", "_").replace("@@", "_"))
+            .removeClass("label-default")
+            .addClass("label-success")
+            .html("ONLINE");
+        }
 
+        notification.client.setUserOffline = function (credentials) {
+            $('.' + credentials.Name.replace(".", "_").replace("@@", "_"))
+            .removeClass("label-success")
+            .addClass("label-default")
+            .html("OFFLINE");
+        }
+
+
+        notification.client.refreshNotification = function (data, statuses) {
+            $("#message_container").empty();
             if (data.length > 0) {
                 for (var i = 0; i < data.length; i++) {
-                    $("#message_container").append(GetDivForMessage(data[i]));
+                    $("#message_container").append(GetDivForMessage(data[i], statuses[i]));
                 }
             }
             else {
@@ -67,25 +161,14 @@
             }
         }
 
-//Client side method which will be invoked from the Global.asax.cs file.
         notification.client.addLatestNotification = function (data) {
             if (data.RoomId == '@ViewData["room_id"].ToString()') {
                 if ($("#message_container").children().first().hasClass("text-center")) {
                     $("#message_container").children().first().remove();
                 }
-                $("#message_container").append(GetDivForMessage(data));
+                $("#message_container").prepend(GetDivForMessage(data, "ONLINE"));
             }
         }
-
-        // Start the connection.
-        $.connection.hub.start().done(function () {
-
-	//When the send button is clicked get the text and user name and send it to server.
-            $("#send").click(function () {
-                notification.server.sendNotification($("#text").val(), '@User.Identity.Name');
-            });
-
-        });
     });
 </script>
     

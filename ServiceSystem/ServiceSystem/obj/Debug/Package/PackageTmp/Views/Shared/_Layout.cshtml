@@ -6,9 +6,19 @@
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+
+    @if(ViewBag.Title != "Description")
+    {
+        <style>
+            #body_container{
+                min-width: 512px;
+            }
+        </style>
+    }
 </head>
-<body>
-    <!--
+<body style="background-color: gainsboro">
+    
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -17,32 +27,127 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Service System", "Index", "Service", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)</li>
-                    <li>@Html.ActionLink("API", "Index", "Help", new { area = "" }, null)</li>
+                    <li>
+                     @Html.ActionLink("Головна", "Main", "Service",null)
+                    </li>
+                    <li>
+                        @Html.ActionLink("Послуги", "ServiceSearch", "Service", null)
+                    </li>
+                    <li>
+                        @Html.ActionLink("Допомога", "Description", "Service", null)
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        @Html.ActionLink("Особистий кабінет", "InternalAccountPage", "Service", null)
+                    </li>
+                    <li>
+                       <a href="#" id="exit_button">Вийти</a>
+                    </li>
                 </ul>
             </div>
         </div>
     </div>
-    -->
-    <div class="container body-content" style="min-width: 512px;">
+    
+    <div class="container body-content" id="body_container">
         @RenderBody()
-
-        <!--
-        <div style="clear: both;">
-            <hr />
-            <footer>
-                <p>&copy; @DateTime.Now.Year</p>
-            </footer>
-        </div>
-            -->
     </div>
+
+    @{ 
+        int room_id = -1;
+
+        if (ViewData.ContainsKey("room_id"))
+        {
+            room_id = Convert.ToInt32(ViewData["room_id"].ToString());
+        }
+    }
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    <script src="~/Scripts/jquery.signalR-2.2.1.min.js"></script>
+    <script src="~/signalr/hubs"></script>
+    <link href="~/Content/growl.css" rel="stylesheet" />
+    <script src="~/Scripts/growl.js"></script>
+    <script type="text/javascript">
+
+        function displayMessage(aTitle, aText) {
+            if (aTitle == "Success") {
+                $.growl.notice({ title: aTitle, message: aText });
+            }
+            else if (aTitle == "Warning") {
+                $.growl.warning({ title: aTitle, message: aText });
+            }
+            else if (aTitle == "Error") {
+                $.growl.error({ title: aTitle, message: aText });
+            }
+            else {
+                $.growl({ title: aTitle, message: aText });
+            }
+        }
+
+        var notification = null;
+
+        $(document).ready(function () {
+
+            $("#exit_button").click(function () {
+                $.ajax({
+                    method: "POST",
+                    url: '/api/Account/Logout',
+                    contentType: "application/json; charset=utf-8",
+                    headers: {
+                        Authorization: 'Bearer ' + localStorage.getItem("access_token")
+                    },
+                    success: function () {
+                        window.location.href = '@Url.Action("Index", "Service")';
+                    },
+                    error: function (res) {
+                        displayMessage("Error", res.responseText);
+                    }
+                });
+            });
+
+        });
+
+        $(function () {
+
+            notification = $.connection.notificationHub;
+
+            notification.client.addLatestNotification = function (data, participants) {
+                if (data.RoomId == '@room_id') {
+                    if ($("#message_container").children().first().hasClass("text-center")) {
+                        $("#message_container").children().first().remove();
+                    }
+                    $("#message_container").prepend(GetDivForMessage(data, "ONLINE"));
+                }
+                else {
+                    for (var i = 0; i < participants.length; ++i) {
+                        if (participants[i] == '@User.Identity.Name') {
+                            displayMessage("Notification", "You received new message in dialogue " + data.RoomId);
+                            break;
+                        }
+                    }
+                }
+            }
+
+            $.connection.hub.start().done(function () {
+                $("#send_signalr_message").click(function () {
+                    if ($("#text").val().trim() != "") {
+                        notification.server.sendNotification($("#text").val(), '@User.Identity.Name');
+                    }
+                });
+            });
+        });
+    </script>
     @RenderSection("scripts", required: false)
+
+    <footer>
+        <div class="container-fluid text-center" style="height: 35px;">
+            <p>&copy; Yuriy Stetskyi 2016-@DateTime.Now.Year</p>
+        </div>
+    </footer>
 </body>
 </html>

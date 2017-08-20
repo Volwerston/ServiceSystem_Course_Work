@@ -31,7 +31,7 @@ namespace ServiceSystem.Controllers
 
                     return Request.CreateResponse(HttpStatusCode.OK, "OK");
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
                 }
@@ -81,9 +81,9 @@ namespace ServiceSystem.Controllers
                 {
                     da.Fill(set);
 
-                    if(set.Tables[0].Rows.Count > 0)
+                    if (set.Tables[0].Rows.Count > 0)
                     {
-                        foreach(DataRow row in set.Tables[0].Rows)
+                        foreach (DataRow row in set.Tables[0].Rows)
                         {
                             FAQ faq = new FAQ();
 
@@ -102,7 +102,7 @@ namespace ServiceSystem.Controllers
 
                     return Request.CreateResponse(HttpStatusCode.OK, toReturn);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
                 }

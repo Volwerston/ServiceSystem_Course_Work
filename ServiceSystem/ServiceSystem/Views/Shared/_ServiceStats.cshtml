@@ -1,0 +1,35 @@
+﻿@model ServiceSystem.Models.ServiceApplicationsData
+
+@{
+    Layout = null;
+
+    List<SelectListItem> items = new List<SelectListItem>();
+
+    foreach(var kvp in Model.Consultants)
+    {
+        items.Add(new SelectListItem
+        {
+            Value = kvp.Value,
+            Text = kvp.Key
+        });
+    }
+}
+
+<input type="hidden" name="service_advance_pending_items" value="@Model.AdvancePendingApplications" />
+<input type="hidden" name="service_main_pending_items" value="@Model.MainPendingApplications" />
+<input type="hidden" name="service_no_bill_items" value="@Model.NoBillApplications" />
+<input type="hidden" name="service_main_paid_items" value="@Model.MainPaidApplications" />
+
+<div class="row">
+    <div id="service_piechart_div" class="col-sm-8 col-md-6 col-sm-offset-2  col-md-offset-0" style="margin-top: 10px;">
+    </div>
+    <div id="service_barchart_div" class="col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-0" style="margin-top: 10px;">
+    </div>
+</div>
+<h3 class="text-center">Статистика консультантів</h3>
+<div class="row" style="margin-top: 15px">
+        @Html.DropDownList("consultant_email", items, new { @class = "form-control", style="margin: auto;" })
+</div>
+<div class="row" style="margin-top:15px">
+        <input type="button" style="margin: auto;" class="btn btn-block btn-success" id="find_consultant_stats" value="Переглянути" />
+    </div>

@@ -8,6 +8,7 @@ using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Net.Http;
+using System.Text;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
@@ -27,59 +28,80 @@ namespace ServiceSystem
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             RegisterNotification();
             LastRun = DateTime.Now;
+
+            GlobalHost.Configuration.DisconnectTimeout = TimeSpan.FromSeconds(600);
         }
 
         private void RegisterNotification()
         {
+            //Get the connection string from the Web.Config file. Make sure that the key exists and it is the connection string for the Notification Database and the NotificationList Table that we created
+
             string connectionString = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
 
-            string commandText = "Select dbo.Messages.ID, dbo.Messages.TEXT, dbo.Messages.SENDER_NAME,dbo.Messages.SENDING_TIME, dbo.Messages.DIALOGUE_ID From dbo.Messages";
+            //We have selected the entire table as the command, so SQL Server executes this script and sees if there is a change in the result, raise the event
+            string commandText = @"
+                                    Select
+                                        dbo.Messages.ID,
+                                        dbo.Messages.TEXT,
+                                        dbo.Messages.SENDER_NAME,
+                                        dbo.Messages.SENDING_TIME,
+                                        dbo.Messages.DIALOGUE_ID                                      
+                                    From
+                                        dbo.Messages                                    
+                                    ";
 
             SqlDependency.Start(connectionString);
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                using (SqlCommand command = new SqlCommand(commandText, connection))
+                using(SqlCommand command = new SqlCommand(commandText, connection))
                 {
                     connection.Open();
-                    var sqlDependency = new SqlDependency(command);
 
+                    var sqlDependency = new SqlDependency(command);
                     sqlDependency.OnChange += new OnChangeEventHandler(sqlDependency_OnChange);
 
+                    // NOTE: You have to execute the command, or the notification will never fire.
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
                     }
                 }
             }
         }
+
         DateTime LastRun;
         private void sqlDependency_OnChange(object sender, SqlNotificationEventArgs e)
         {
             if (e.Info == SqlNotificationInfo.Insert)
             {
+                //This is how signalrHub can be accessed outside the SignalR Hub Notification.cs file
                 var context = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
 
-                List<Message> objList = new List<Message>();
+                Tuple<List<Message>, List<string>> listTuple = null;
 
                 using (HttpClient client = new HttpClient())
                 {
                     client.DefaultRequestHeaders.Clear();
                     client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 
-                    client.BaseAddress = new Uri("http://localhost:49332/");
+                    client.BaseAddress = new Uri("http://servicesystem1.somee.com/");
 
                     HttpResponseMessage response = client.PostAsJsonAsync("api/Dialogue/GetLatestDialogues", LastRun).Result;
 
                     if(response.IsSuccessStatusCode)
                     {
-                        objList = response.Content.ReadAsAsync<List<Message>>().Result;
+                        listTuple = response.Content.ReadAsAsync<Tuple<List<Message>,List<string>>>().Result;
                     }
                 }
 
                 LastRun = DateTime.Now;
 
-                foreach (var item in objList)
+                foreach (var item in listTuple.Item1)
                 {
-                    context.Clients.All.addLatestNotification(item);
+                    StringBuilder builder = new StringBuilder(item.Text);
+                    builder = builder.Replace("\\r", "\r");
+                    builder = builder.Replace("\\n", "\n");
+                    item.Text = builder.ToString();
+                    context.Clients.All.addLatestNotification(item, listTuple.Item2);
                 }
 
             }

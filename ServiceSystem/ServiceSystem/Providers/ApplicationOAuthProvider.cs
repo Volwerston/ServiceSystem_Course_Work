@@ -71,6 +71,21 @@ namespace ServiceSystem.Providers
             return Task.FromResult<object>(null);
         }
 
+        public override Task ValidateClientRedirectUri(OAuthValidateClientRedirectUriContext context)
+        {
+            if (context.ClientId == _publicClientId)
+            {
+                Uri expectedRootUri = new Uri(context.Request.Uri, "/Service/Index");
+
+                if (expectedRootUri.AbsoluteUri == context.RedirectUri)
+                {
+                    context.Validated();
+                }
+            }
+
+            return Task.FromResult<object>(null);
+        }
+
         public static AuthenticationProperties CreateProperties(string userName)
         {
             IDictionary<string, string> data = new Dictionary<string, string>

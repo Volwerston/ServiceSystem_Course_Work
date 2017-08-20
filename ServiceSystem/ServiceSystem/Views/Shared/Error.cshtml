@@ -2,12 +2,18 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
     <title>Error</title>
 </head>
 <body>
-    <hgroup>
-        <h1>Error.</h1>
-        <h2>An error occurred while processing your request.</h2>
-    </hgroup>
+    <h1>Помилка</h1>
+    <h2>При опрацюванні Вашого запиту відбулася помилка</h2>
+    <div class="row" style="margin-top:10px;">
+        <div class="col-sm-4 col-sm-offset-4">
+            <button class="btn btn-success btn-block" onclick="location.href='@Url.Action("Index", "Service")'">
+                На головну
+            </button>
+        </div>
+    </div>
 </body>
 </html>

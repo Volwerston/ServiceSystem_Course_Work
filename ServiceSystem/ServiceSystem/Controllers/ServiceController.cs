@@ -14,303 +14,14 @@ using System.Runtime.Caching;
 using iTextSharp;
 using iTextSharp.text.pdf;
 using iTextSharp.text;
-using Facebook;
-using System.Threading.Tasks;
-using Microsoft.Owin.Security;
-using System.Security.Claims;
-using Microsoft.AspNet.Identity;
+using ServiceSystem.Common;
+using ServiceSystem.Models.Auxiliary_Classes;
 
 namespace ServiceSystem.Controllers
 {
 
     public class ServiceController : Controller
     {
-        private Dictionary<string, string> constructorBlocks;
-
-        private void GeneratePDFDocument(Tuple<Bill, Dictionary<string,string>> toAdd, BillType type)
-        {
-            string pathToAdd = String.Format(Server.MapPath(@"~\Common\Bills") + @"\{0}\{1}\{2}\{3}" 
-                                            + (type == BillType.ADVANCE ? "_advance" : "_main") + ".pdf",
-                                              toAdd.Item1.StatusChangeTime.Year.ToString(),
-                                              toAdd.Item1.StatusChangeTime.Month.ToString(),
-                                              toAdd.Item1.StatusChangeTime.Day.ToString(),
-                                              toAdd.Item1.Id);
-
-            DirectoryInfo info = new DirectoryInfo(Server.MapPath(@"~\Common"));
-
-            if (info.GetDirectories().Where(x => x.Name == "Bills").Count() == 0)
-            {
-                info = info.CreateSubdirectory("Bills");
-            }
-            else
-            {
-                info = new DirectoryInfo(info.FullName + @"\Bills");
-            }
-
-            if (info.GetDirectories().Where(x => x.Name == toAdd.Item1.StatusChangeTime.Year.ToString()).Count() == 0)
-            {
-                info = info.CreateSubdirectory(toAdd.Item1.StatusChangeTime.Year.ToString());
-            }
-            else
-            {
-                info = new DirectoryInfo(info.FullName + @"\" + toAdd.Item1.StatusChangeTime.Year.ToString());
-            }
-
-
-            if (info.GetDirectories().Where(x => x.Name == toAdd.Item1.StatusChangeTime.Month.ToString()).Count() == 0)
-            {
-                info = info.CreateSubdirectory(toAdd.Item1.StatusChangeTime.Month.ToString());
-            }
-            else
-            {
-                info = new DirectoryInfo(info.FullName + @"\" + toAdd.Item1.StatusChangeTime.Month.ToString());
-            }
-
-            if (info.GetDirectories().Where(x => x.Name == toAdd.Item1.StatusChangeTime.Day.ToString()).Count() == 0)
-            {
-                info = info.CreateSubdirectory(toAdd.Item1.StatusChangeTime.Day.ToString());
-            }
-            else
-            {
-                info = new DirectoryInfo(info.FullName + @"\" + toAdd.Item1.StatusChangeTime.Day.ToString());
-            }
-
-            BaseFont baseFont = BaseFont.CreateFont(Server.MapPath("~/Common/arial.ttf"), BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
-            Font font = new Font(baseFont, Font.DEFAULTSIZE, Font.NORMAL);
-
-            using (Document document = new Document(PageSize.LETTER, 10, 10, 42, 35))
-            {
-
-                using (PdfWriter writer = PdfWriter.GetInstance(document, new FileStream(pathToAdd, FileMode.Create)))
-                {
-                    document.Open();
-
-                    Paragraph p = new Paragraph("Квитанція №" + toAdd.Item1.Id.ToString(), font);
-                    p.Alignment = Element.ALIGN_CENTER;
-                    p.SpacingAfter = 30;
-
-                    document.Add(p);
-
-                    PdfPTable table = new PdfPTable(2);
-
-                    table.AddCell(new Phrase("Послугу надав", font));
-                    table.AddCell(new Phrase(toAdd.Item1.ProviderLastName + " " + toAdd.Item1.ProviderFirstName + " " + toAdd.Item1.ProviderFatherName, font));
-
-                    table.AddCell(new Phrase("Замовник", font));
-                    table.AddCell(new Phrase(toAdd.Item1.CustomerLastName + " " + toAdd.Item1.CustomerFirstName + " " + toAdd.Item1.CustomerFatherName, font));
-
-                    table.AddCell(new Phrase("Ціна", font));
-
-                    if (type == BillType.ADVANCE)
-                    {
-                        table.AddCell((toAdd.Item1.Price * toAdd.Item1.AdvancePercent / Convert.ToDouble(100)).ToString());
-                    }
-                    else
-                    {
-                        table.AddCell((toAdd.Item1.Price * (1 - toAdd.Item1.AdvancePercent / Convert.ToDouble(100))).ToString());
-                    }
-
-                    table.AddCell(new Phrase("Валюта", font));
-
-                    switch (toAdd.Item1.Currency)
-                    {
-                        case "hryvnia":
-                            table.AddCell(new Phrase("гривня", font));
-                            break;
-                        case "dollar":
-                            table.AddCell(new Phrase("євро", font));
-                            break;
-                        case "euro":
-                            table.AddCell(new Phrase("долар", font));
-                            break;
-                    }
-
-                    table.AddCell(new Phrase("Сплатити до", font));
-
-                    if (type == BillType.ADVANCE)
-                    {
-                        table.AddCell(toAdd.Item1.AdvanceTimeLimit.ToString());
-                    }
-                    else
-                    {
-                        table.AddCell(toAdd.Item1.MainTimeLimit.ToString());
-                    }
-
-                    table.HorizontalAlignment = Element.ALIGN_CENTER;
-
-                    if (toAdd.Item1.Type == "WEBMONEY")
-                    {
-                        table.AddCell(new Phrase("Гаманець для оплати", font));
-                        table.AddCell(toAdd.Item2["WMPurse"].ToString());
-                    }
-                    else
-                    {
-                        table.AddCell(new Phrase("Номер рахунку для оплати", font));
-                        table.AddCell(toAdd.Item2["Account"].ToString());
-
-                        table.AddCell(new Phrase("ЄДРПОУ", font));
-                        table.AddCell(toAdd.Item2["EDRPOU"].ToString());
-
-                        table.AddCell(new Phrase("МФО", font));
-                        table.AddCell(toAdd.Item2["MFO"].ToString());
-                    }
-                    document.Add(table);
-                    document.Close();
-                }
-            }
-        }
-
-        private Tuple<byte[],Bill, Dictionary<string, string>> GetApplication(int application_id, Application app)
-        {
-
-            Tuple<Bill, Dictionary<string, string>> billData = null;
-
-            using (HttpClient client = new HttpClient())
-            {
-                client.DefaultRequestHeaders.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-
-                client.BaseAddress = new Uri("http://localhost:49332/");
-
-                HttpResponseMessage response = client.GetAsync("api/Bill/GetBillBroadInfo?application_id=" + application_id).Result;
-
-                if (response.IsSuccessStatusCode)
-                {
-                    billData = response.Content.ReadAsAsync<Tuple<Bill,Dictionary<string,string>>>().Result;
-                }
-            }
-
-            if (billData != null)
-            {
-                string fullPath = String.Format(Server.MapPath(@"~\Common\Bills") + @"\{0}\{1}\{2}\{3}"
-                                                + (app.Status == "ADVANCE_PENDING"  ? "_advance" : "_main") + ".pdf",
-                                      billData.Item1.StatusChangeTime.Year.ToString(),
-                                      billData.Item1.StatusChangeTime.Month.ToString(),
-                                      billData.Item1.StatusChangeTime.Day.ToString(),
-                                      billData.Item1.Id);
-
-                FileInfo fileInfo = new FileInfo(fullPath);
-
-                if (!fileInfo.Exists)
-                {
-                    if (app.Status == "ADVANCE_PENDING")
-                    {
-                        GeneratePDFDocument(billData, BillType.ADVANCE);
-                    }
-                    else if (app.Status == "MAIN_PENDING")
-                    {
-                        GeneratePDFDocument(billData, BillType.MAIN);
-                    }
-
-                    fileInfo = new FileInfo(fullPath);
-                }
-
-                long fileLength = fileInfo.Length;
-                FileStream fs = new FileStream(fullPath, FileMode.Open, FileAccess.Read);
-                BinaryReader br = new BinaryReader(fs);
-
-                return new Tuple<byte[], Bill, Dictionary<string,string>>(br.ReadBytes((int)fileLength), billData.Item1, billData.Item2);
-            }
-            else
-            {
-                return new Tuple<byte[], Bill, Dictionary<string,string>>(null, null, null);
-            }
-        }
-
-
-        private void RemoveBills(int app_id)
-        {
-            Bill bill = new Bill();
-
-            using (HttpClient client = new HttpClient())
-            {
-                client.DefaultRequestHeaders.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-
-                client.BaseAddress = new Uri("http://localhost:49332/");
-
-                HttpResponseMessage response = client.GetAsync("api/Bill/GetBillShortInfo?application_id=" + app_id).Result;
-
-                if (response.IsSuccessStatusCode)
-                {
-                    bill = response.Content.ReadAsAsync<Bill>().Result;
-                }
-            }
-
-            if (bill != null)
-            {
-                string advancePath = String.Format(Server.MapPath(@"~\Common\Bills") + @"\{0}\{1}\{2}\{3}"
-                                    + "_advance.pdf",
-                                      bill.StatusChangeTime.Year.ToString(),
-                                      bill.StatusChangeTime.Month.ToString(),
-                                      bill.StatusChangeTime.Day.ToString(),
-                                      bill.Id);
-
-                string mainPath = String.Format(Server.MapPath(@"~\Common\Bills") + @"\{0}\{1}\{2}\{3}"
-                                    + "_main.pdf",
-                                      bill.StatusChangeTime.Year.ToString(),
-                                      bill.StatusChangeTime.Month.ToString(),
-                                      bill.StatusChangeTime.Day.ToString(),
-                                      bill.Id);
-
-                FileInfo advanceBill = new FileInfo(advancePath);
-
-                System.GC.Collect();
-                System.GC.WaitForPendingFinalizers();
-
-                if (advanceBill.Exists)
-                {
-                    advanceBill.Delete();
-                }
-
-                FileInfo mainBill = new FileInfo(mainPath);
-
-                if (mainBill.Exists)
-                {
-                    mainBill.Delete();
-                }
-
-                using (HttpClient client = new HttpClient())
-                {
-                    client.DefaultRequestHeaders.Clear();
-                    client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-
-                    client.BaseAddress = new Uri("http://localhost:49332/");
-
-                    HttpResponseMessage response = client.DeleteAsync("api/Bill/Delete?application_id=" + app_id.ToString()).Result;
-                }
-            }
-        }
-
-        [NonAction]
-        public Dictionary<string, string> GetConstructorBlocks()
-        {
-            Dictionary<string, string> toReturn = new Dictionary<string, string>();
-
-            string[] paths = new string[] { "week_gradation_widget_hours", "week_gradation_widget_duration",
-                                            "duration_measure_from_till", "duration_measure_from", "duration_measure_till",
-                                            "service_session_block", "duration_measure_widget", "price_measure_widget",
-                                            "default_property_widget", "service_deadline_block", "service_course_block",
-                                            "week_gradation_widget"};
-
-            foreach (var path in paths)
-            {
-                StreamReader reader = new StreamReader(Server.MapPath("~/Common/" + path + ".txt"));
-
-                StringBuilder builder = new StringBuilder("");
-
-                string buf = "";
-
-                while ((buf = reader.ReadLine()) != null)
-                {
-                    builder.Append(buf);
-                }
-
-                toReturn.Add(path, builder.ToString());
-            }
-
-            return toReturn;
-        }
 
         public ActionResult Register()
         {
@@ -319,12 +30,8 @@ namespace ServiceSystem.Controllers
 
         public ActionResult ConfirmMail(string token)
         {
-            using (HttpClient client = new HttpClient())
+            using (HttpClient client = WebApiClient.InitializeClient(Request.Url.Scheme + "://" + Request.Url.Authority + Request.ApplicationPath.TrimEnd('/') + "/"))
             {
-                client.BaseAddress = new Uri("http://localhost:49332/");
-                client.DefaultRequestHeaders.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-
                 HttpResponseMessage message = client.GetAsync("api/Account/RegisterConfirmation?token=" + token.ToString()).Result;
 
                 if (message.IsSuccessStatusCode)
@@ -336,16 +43,48 @@ namespace ServiceSystem.Controllers
             return View("MailConfirmError");
         }
 
-        public ActionResult Index()
+        public ActionResult Index(string message)
         {
-
             if (User.Identity.IsAuthenticated)
             {
-                ObjectCache cache = MemoryCache.Default;
-
                 return RedirectToAction("Main", "Service", null);
             }
-            return View();
+
+            try
+            {
+                if (message != null)
+                {
+                    string[] parameters = message.Split('|');
+                    ViewData["message"] = parameters[1];
+                    ViewData["message_state"] = parameters[0];
+                }
+
+                using (HttpClient client = WebApiClient.InitializeClient(Request.Url.Scheme + "://" + Request.Url.Authority + Request.ApplicationPath.TrimEnd('/') + "/"))
+                {
+                    HttpResponseMessage response = client.GetAsync("api/ServiceApi/SystemStats").Result;
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        SystemStats stats = response.Content.ReadAsAsync<SystemStats>().Result;
+
+                        ViewData["UsersNumber"] = stats.UsersNumber;
+                        ViewData["ServicesNumber"] = stats.ServicesNumber;
+                        ViewData["ApplicationsNumber"] = stats.ApplicationsNumber;
+                        ViewData["DialoguesNumber"] = stats.DialoguesNumber;
+                    }
+                    else
+                    {
+                        return View("Error");
+                    }
+                }
+
+
+                return View();
+            }
+            catch
+            {
+                return View("Error");
+            }
         }
 
         public ActionResult ChangePassword()
@@ -356,28 +95,22 @@ namespace ServiceSystem.Controllers
         [HttpPost]
         public ActionResult ChangePassword(string email)
         {
-            using (HttpClient client = new HttpClient())
+            using (HttpClient client = WebApiClient.InitializeClient(Request.Url.Scheme + "://" + Request.Url.Authority + Request.ApplicationPath.TrimEnd('/') + "/"))
             {
-                client.DefaultRequestHeaders.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-
-                client.BaseAddress = new Uri("http://localhost:49332/");
-
                 HttpResponseMessage response = client.GetAsync("api/Account/ChangeUserPassword?email=" + email).Result;
 
-                if (response.IsSuccessStatusCode)
-                {
-                    return RedirectToAction("Index");
-                }
+                return RedirectToAction("Index");
             }
-
-            return RedirectToAction("ChangePassword");
         }
 
-
-    public ActionResult SetNewPassword(string request_id)
+        public ActionResult SetNewPassword(string request_id, string message = "")
         {
             ViewData["request_id"] = request_id;
+
+            if(message != "")
+            {
+                ViewData["message"] = message;
+            }
 
             return View();
         }
@@ -385,18 +118,13 @@ namespace ServiceSystem.Controllers
         [HttpPost]
         public ActionResult SetNewPassword(string request_id, string password, string confirm_password)
         {
-            if (password != confirm_password)
+            if (password != confirm_password || password == "" || confirm_password == "")
             {
-                return RedirectToAction("SetNewPassword", request_id);
+                return RedirectToAction("SetNewPassword", "Service", new { request_id = request_id, message = "Passwords do not match" });
             }
 
-            using (HttpClient client = new HttpClient())
+            using (HttpClient client = WebApiClient.InitializeClient(Request.Url.Scheme + "://" + Request.Url.Authority + Request.ApplicationPath.TrimEnd('/') + "/"))
             {
-                client.DefaultRequestHeaders.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-
-                client.BaseAddress = new Uri("http://localhost:49332/");
-
                 HttpResponseMessage response = client.PostAsJsonAsync("api/Account/SetNewUserPassword",
                     new Tuple<string, string, string>(request_id, password, confirm_password)
                     ).Result;
@@ -407,17 +135,29 @@ namespace ServiceSystem.Controllers
                 }
             }
 
-            return RedirectToAction("SetNewPassword", "Service", request_id);
+            return RedirectToAction("SetNewPassword", "Service",new { request_id = request_id, message = "Internal Server Error" });
         }
 
         [HttpPost]
-        public ActionResult Index(string email, string password)
+        [ActionName("Index")]
+        public ActionResult Index_Post(string email, string password)
         {
+            using (HttpClient client = WebApiClient.InitializeClient(Request.Url.Scheme + "://" + Request.Url.Authority + Request.ApplicationPath.TrimEnd('/') + "/"))
+            {
+                HttpResponseMessage response = client.PostAsync(
+                    "api/Account/CanLogin", new Tuple<string, string>(email, password), new JsonMediaTypeFormatter()
+                    ).Result;
 
-            ViewData["password"] = password;
-            ViewData["email"] = email;
+                if (response.IsSuccessStatusCode)
+                {
+                    ViewData["password"] = password;
+                    ViewData["email"] = email;
 
-            return RedirectToAction("LoginConfirmation", "ExternalLogin", new { name = email, password = password });
+                    return View("GetToken");
+                }
+            }
+
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
@@ -434,15 +174,19 @@ namespace ServiceSystem.Controllers
             return JsonConvert.SerializeObject("OK");
         }
 
-        [Authorize]
+        [SampleAuthorize]
+        public ActionResult Description()
+        {
+            return View();
+        }
+
+        // GET: Service
+        [SampleAuthorize]
         public ActionResult Main(string message)
         {
             ViewData["message"] = message;
 
-            if (constructorBlocks == null)
-            {
-                constructorBlocks = GetConstructorBlocks();
-            }
+            Dictionary<string, string> constructorBlocks = DocumentGenerator.GetConstructorBlocks();
 
             foreach (var block in constructorBlocks)
             {
@@ -452,52 +196,49 @@ namespace ServiceSystem.Controllers
             return View();
         }
 
-        [Authorize]
+        [SampleAuthorize]
         public ActionResult ServiceSearch()
         {
-            Dictionary<string, string> categories = new Dictionary<string, string>();
-
-            ObjectCache cache = MemoryCache.Default;
-
-            using (HttpClient client = new HttpClient())
+            try
             {
-                client.BaseAddress = new Uri("http://localhost:49332/");
-                client.DefaultRequestHeaders.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                Dictionary<string, string> categories = new Dictionary<string, string>();
 
-                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", cache["access_token"] as string);
+                ObjectCache cache = MemoryCache.Default;
 
-                HttpResponseMessage message = client.GetAsync("api/Category").Result;
-
-                if (message.IsSuccessStatusCode)
+                using (HttpClient client = WebApiClient.InitializeAuthorizedClient(Request.Url.Scheme + "://" + Request.Url.Authority + Request.ApplicationPath.TrimEnd('/') + "/", "Bearer", cache["access_token"] as string))
                 {
-                    categories = message.Content.ReadAsAsync<Dictionary<string, string>>().Result;
+                    HttpResponseMessage message = client.GetAsync("api/Category").Result;
+
+                    if (message.IsSuccessStatusCode)
+                    {
+                        categories = message.Content.ReadAsAsync<Dictionary<string, string>>().Result;
+                    }
                 }
+
+                List<SelectListItem> items = new List<SelectListItem>();
+
+                items.Add(new SelectListItem { Text = "Оберіть категорію", Value = "None" });
+
+                foreach (var category in categories)
+                {
+                    items.Add(new SelectListItem { Text = category.Key, Value = category.Value });
+                }
+
+                ViewData["CATEGORIES"] = items;
+
+                return View();
             }
-
-            List<SelectListItem> items = new List<SelectListItem>();
-
-            items.Add(new SelectListItem { Text = "Оберіть категорію", Value = "None" });
-
-            foreach (var category in categories)
+            catch
             {
-                items.Add(new SelectListItem { Text = category.Key, Value = category.Value });
+                return View("Error");
             }
-
-            ViewData["CATEGORIES"] = items;
-
-            return View();
         }
 
         [HttpPost]
         public ActionResult OnSuccess(WMData wmData)
         {
-            using (HttpClient client = new HttpClient())
+            using (HttpClient client = WebApiClient.InitializeClient(Request.Url.Scheme + "://" + Request.Url.Authority + Request.ApplicationPath.TrimEnd('/') + "/"))
             {
-                client.DefaultRequestHeaders.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-
-                client.BaseAddress = new Uri("http://localhost:49332/");
                 HttpResponseMessage response = client.PostAsJsonAsync("api/Webmoney/PostTransactionData", wmData).Result;
 
                 if(!response.IsSuccessStatusCode)
@@ -506,16 +247,16 @@ namespace ServiceSystem.Controllers
                     {
                         string _message = response.Content.ReadAsAsync<string>().Result;
 
-                        return RedirectToAction("Main", "Service", new { message = _message });
+                        return RedirectToAction("Index", "Service", new { message = _message });
                     }
                     catch
                     {
-                        return RedirectToAction("ServiceSearch", "Service");
+                        return RedirectToAction("Index", "Service");
                     }
                 }
                 else
                 {
-                    return RedirectToAction("InternalAccountPage", "Service");
+                    return RedirectToAction("Index", "Service");
                 }
             }
         }
@@ -525,14 +266,8 @@ namespace ServiceSystem.Controllers
         {
             List<ServiceConsultant> consultants = new List<ServiceConsultant>();
 
-            using (HttpClient client = new HttpClient())
+            using (HttpClient client = WebApiClient.InitializeClient(Request.Url.Scheme + "://" + Request.Url.Authority + Request.ApplicationPath.TrimEnd('/') + "/"))
             {
-                client.DefaultRequestHeaders.Clear();
-
-                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-
-                client.BaseAddress = new Uri("http://localhost:49332/");
-
                 HttpResponseMessage message = client.GetAsync("api/ServiceConsultants/GetServiceConsultants?service_id=" + service_id.ToString()).Result;
 
                 if(message.IsSuccessStatusCode)
@@ -556,20 +291,13 @@ namespace ServiceSystem.Controllers
 
             ObjectCache cache = MemoryCache.Default;
 
-            using (HttpClient client = new HttpClient())
+            using (HttpClient client = WebApiClient.InitializeAuthorizedClient(Request.Url.Scheme + "://" + Request.Url.Authority + Request.ApplicationPath.TrimEnd('/') + "/", "Bearer", cache["access_token"] as string))
             {
-                client.BaseAddress = new Uri("http://localhost:49332/");
-                client.DefaultRequestHeaders.Clear();
-
-                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-
-                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", cache["access_token"] as string);
-  
                 JsonMediaTypeFormatter formatter = new JsonMediaTypeFormatter();
 
                 formatter.SerializerSettings.TypeNameHandling = TypeNameHandling.All;
 
-                HttpResponseMessage message = client.PostAsync("api/Application", toAdd, formatter).Result;
+                HttpResponseMessage message = client.PostAsync("api/Application/PostApplication", toAdd, formatter).Result;
             }
 
             return RedirectToAction("ServiceDetails", new { id = serviceId });
@@ -577,72 +305,69 @@ namespace ServiceSystem.Controllers
 
         public ActionResult ApplicationDetails(int id)
         {
-            Tuple<string, Application, List<PaymentMeasure>> applicationCredentials = null;
-
-            ObjectCache cache = MemoryCache.Default;
-
-            using (HttpClient client = new HttpClient())
+            try
             {
-                client.DefaultRequestHeaders.Clear();
-                client.BaseAddress = new Uri("http://localhost:49332/");
-                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", cache["access_token"] as string);
+                Tuple<string, Application, List<PaymentMeasure>> applicationCredentials = null;
 
-                HttpResponseMessage response = client.GetAsync("api/Application/GetApplicationById?id=" + id.ToString()).Result;
+                ObjectCache cache = MemoryCache.Default;
 
-                if(response.IsSuccessStatusCode)
+                using (HttpClient client = WebApiClient.InitializeAuthorizedClient(Request.Url.Scheme + "://" + Request.Url.Authority + Request.ApplicationPath.TrimEnd('/') + "/", "Bearer", cache["access_token"] as string))
                 {
-                    applicationCredentials = response.Content.ReadAsAsync<Tuple<string, Application, List<PaymentMeasure>>>().Result;
+                    HttpResponseMessage response = client.GetAsync("api/Application/GetApplicationById?id=" + id.ToString()).Result;
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        applicationCredentials = response.Content.ReadAsAsync<Tuple<string, Application, List<PaymentMeasure>>>().Result;
+                    }
                 }
-            }
 
                 Tuple<byte[], Bill, Dictionary<string, string>> application_data = null;
 
-                if(applicationCredentials.Item2.Status != "NO_BILL" && applicationCredentials.Item2.Status != "MAIN_PAID")
+                if (applicationCredentials.Item2.Status != "NO_BILL" && applicationCredentials.Item2.Status != "MAIN_PAID")
                 {
-                    application_data = GetApplication(id, applicationCredentials.Item2);
+                    application_data = DocumentGenerator.GetApplication(id, applicationCredentials.Item2, Request.Url.Scheme + "://" + Request.Url.Authority + Request.ApplicationPath.TrimEnd('/') + "/");
 
                     if (application_data.Item2 != null)
                     {
                         ViewData["Bill"] = application_data.Item2;
                     }
 
-                if (application_data.Item3 != null)
-                {
-                    if(application_data.Item3.ContainsKey("WMPurse"))
+                    if (application_data.Item3 != null)
                     {
-                        ViewData["WMPurse"] = application_data.Item3["WMPurse"];
+                        if (application_data.Item3.ContainsKey("WMPurse"))
+                        {
+                            ViewData["WMPurse"] = application_data.Item3["WMPurse"];
+                        }
                     }
+
+
+                    if (application_data.Item1 != null)
+                    {
+                        var base64 = Convert.ToBase64String(application_data.Item1);
+                        string toAdd = string.Format("data:application/pdf;base64, {0}", base64);
+                        ViewData["FileSource"] = toAdd;
+                    }
+
                 }
 
-
-                if (application_data.Item1 != null)
+                if (applicationCredentials != null &&
+                    (User.Identity.Name == applicationCredentials.Item1 ||
+                    User.Identity.Name == applicationCredentials.Item2.Username ||
+                    User.Identity.Name == applicationCredentials.Item2.ConsultantName))
                 {
-                    var base64 = Convert.ToBase64String(application_data.Item1);
-                    string toAdd = string.Format("data:application/pdf;base64, {0}", base64);
-                    ViewData["FileSource"] = toAdd;
+                    ViewData["ServiceProviderName"] = applicationCredentials.Item1;
+                    ViewData["ServicePaymentMeasures"] = applicationCredentials.Item3;
+                    ViewData["ApplicationId"] = id;
+
+                    return View(applicationCredentials.Item2);
                 }
-
-                }
-
-            if (applicationCredentials.Item2.Status == "MAIN_PAID")
-            {
-                RemoveBills(applicationCredentials.Item2.Id);
-            }
-
-            if (applicationCredentials != null && 
-                (User.Identity.Name == applicationCredentials.Item1 ||
-                User.Identity.Name == applicationCredentials.Item2.Username ||
-                User.Identity.Name == applicationCredentials.Item2.ConsultantName))
-            {
-                ViewData["ServiceProviderName"] = applicationCredentials.Item1;
-                ViewData["ServicePaymentMeasures"] = applicationCredentials.Item3;
-                ViewData["ApplicationId"] = id;
-
-                return View(applicationCredentials.Item2);
-            }
 
                 return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View("Error");
+            }
         }
 
         [HttpPost]
@@ -650,13 +375,8 @@ namespace ServiceSystem.Controllers
         { 
             Bill toAdd = BillGenerator.GenerateBill(collection);
 
-            using (HttpClient client = new HttpClient())
+            using (HttpClient client = WebApiClient.InitializeClient(Request.Url.Scheme + "://" + Request.Url.Authority + Request.ApplicationPath.TrimEnd('/') + "/"))
             {
-                client.DefaultRequestHeaders.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-
-                client.BaseAddress = new Uri("http://localhost:49332/");
-
                 JsonMediaTypeFormatter formatter = new JsonMediaTypeFormatter();
 
                 formatter.SerializerSettings.TypeNameHandling = TypeNameHandling.All;
@@ -672,32 +392,56 @@ namespace ServiceSystem.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult DownloadAttachment(string attachment_name, int service_id)
+        {
+            AttachmentParams parameters = new AttachmentParams()
+            {
+                Name = attachment_name,
+                ServiceId = service_id
+            };
+
+            MemoryCache cache = MemoryCache.Default;
+
+            using (HttpClient client = WebApiClient.InitializeAuthorizedClient(Request.Url.Scheme + "://" + Request.Url.Authority + Request.ApplicationPath.TrimEnd('/') + "/", "Bearer", cache["access_token"] as string))
+            {
+                HttpResponseMessage response = client.PostAsJsonAsync("/api/ServiceApi/GetAttachment", parameters).Result;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    byte[] data = response.Content.ReadAsAsync<byte[]>().Result;
+
+
+                    FileContentResult result = new FileContentResult(data, "application/octet-stream")
+                    {
+                        FileDownloadName = attachment_name
+                    };
+
+                    return result;
+                }
+            }
+
+            return new FileContentResult(null, "");
+        }
+
         [HttpPost]
         public ActionResult Main(FormCollection collection, IEnumerable<HttpPostedFileBase> service_attachments)
         {
             Service service = ServiceManager.GenerateService(collection, service_attachments);
             ObjectCache cache = MemoryCache.Default;
 
-            using (HttpClient client = new HttpClient())
+            using (HttpClient client = WebApiClient.InitializeAuthorizedClient(Request.Url.Scheme + "://" + Request.Url.Authority + Request.ApplicationPath.TrimEnd('/') + "/", "Bearer", cache["access_token"] as string))
             {
-                client.BaseAddress = new Uri("http://localhost:49332/");
-                client.DefaultRequestHeaders.Clear();
-
-                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-
-                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", cache["access_token"] as string);
-
                 JsonMediaTypeFormatter formatter = new JsonMediaTypeFormatter();
 
                 formatter.SerializerSettings.TypeNameHandling = TypeNameHandling.All;
 
-                HttpResponseMessage message = client.PostAsync("api/ServiceApi/PostService", service, formatter).Result;      
+                HttpResponseMessage message = client.PostAsync("api/ServiceApi/PostService", service, formatter).Result;
             }
 
             return RedirectToAction("Main", "Service", null);
         }
 
-        [Authorize]
+        [SampleAuthorize]
         public ActionResult ConsultantSearch(int service_id)
         {
             ViewData["ServiceId"] = service_id;
@@ -705,8 +449,7 @@ namespace ServiceSystem.Controllers
             return View();
         }
 
-
-        [Authorize]
+        [SampleAuthorize]
         public ActionResult InternalAccountPage()
         {
             UserInfoViewModel model = new UserInfoViewModel
@@ -723,97 +466,247 @@ namespace ServiceSystem.Controllers
                 return View(model);
         }
 
-        [Authorize]
+        [SampleAuthorize]
         public ActionResult ServiceDetails(int id)
         {
-            Tuple<Service, Dictionary<string, string>> toReturn = null;
-            ObjectCache cache = MemoryCache.Default;
-
-            using (HttpClient client = new HttpClient())
+            try
             {
-                client.BaseAddress = new Uri("http://localhost:49332/");
+                Tuple<Service, Dictionary<string, string>> toReturn = null;
+                ObjectCache cache = MemoryCache.Default;
 
-                client.DefaultRequestHeaders.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", cache["access_token"] as string);
-
-                HttpResponseMessage response = client.GetAsync("api/ServiceApi?id=" + id.ToString()).Result;
-
-                if(response.IsSuccessStatusCode)
+                using (HttpClient client = WebApiClient.InitializeAuthorizedClient(Request.Url.Scheme + "://" + Request.Url.Authority + Request.ApplicationPath.TrimEnd('/') + "/", "Bearer", cache["access_token"] as string))
                 {
-                    toReturn = response.Content.ReadAsAsync<Tuple<Service, Dictionary<string, string>>>().Result;
+                    HttpResponseMessage response = client.GetAsync("api/ServiceApi?id=" + id.ToString()).Result;
 
-                    HttpResponseMessage consultantsResponse = client.GetAsync("api/ServiceConsultants/?service_id=" + id).Result;
-
-                    if(consultantsResponse.IsSuccessStatusCode)
+                    if (response.IsSuccessStatusCode)
                     {
-                        List<ServiceConsultant> consultants = consultantsResponse.Content.ReadAsAsync<List<ServiceConsultant>>().Result;
+                        toReturn = response.Content.ReadAsAsync<Tuple<Service, Dictionary<string, string>>>().Result;
 
-                        if(consultants.Count() == 0)
+                        HttpResponseMessage consultantsResponse = client.GetAsync("api/ServiceConsultants/?service_id=" + id).Result;
+
+                        if (consultantsResponse.IsSuccessStatusCode)
                         {
-                            consultants = null;
+                            List<ServiceConsultant> consultants = consultantsResponse.Content.ReadAsAsync<List<ServiceConsultant>>().Result;
+
+                            if (consultants.Count() == 0)
+                            {
+                                consultants = null;
+                            }
+
+                            ViewData["consultants"] = consultants;
                         }
 
-                        ViewData["consultants"] = consultants;
+                        response = client.GetAsync("/api/ServiceApi/GetServiceAttachments?service_id=" + id.ToString()).Result;
+
+                        if (response.IsSuccessStatusCode)
+                        {
+                            List<string> names = response.Content.ReadAsAsync<List<string>>().Result;
+
+                            ViewData["Attachments"] = names;
+                        }
+                    }
+
+                    response = client.GetAsync("api/FAQ/Get?service_id=" + id.ToString()).Result;
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        List<FAQ> toPass = response.Content.ReadAsAsync<List<FAQ>>().Result;
+
+                        ViewData["FAQ"] = toPass;
+                    }
+
+                    response = client.GetAsync("api/ServiceApi/GetMediaFiles?service_id=" + id.ToString()).Result;
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        List<MediaFile> files = response.Content.ReadAsAsync<List<MediaFile>>().Result;
+
+                        ViewData["media_files"] = files;
                     }
                 }
 
-                response = client.GetAsync("api/FAQ/Get?service_id=" + id.ToString()).Result;
-
-                if(response.IsSuccessStatusCode)
+                if (!ViewData.ContainsKey("consultants"))
                 {
-                    List<FAQ> toPass = response.Content.ReadAsAsync<List<FAQ>>().Result;
+                    ViewData["consultants"] = null;
+                }
 
-                    ViewData["FAQ"] = toPass;
+                if (toReturn.Item2 != null)
+                {
+                    ViewData["PARAMS"] = toReturn.Item2;
+                }
+                else
+                {
+                    ViewData["PARAMS"] = new Dictionary<string, string>();
+                }
+
+                return View(toReturn.Item1);
+            }
+            catch
+            {
+                return View("Error");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult GetConsultantApplications(string email, int year, int month, int service_id)
+        {
+
+            ConsultantChartParams parameters = new ConsultantChartParams
+            {
+                Year = year,
+                Month = month,
+                ServiceId = service_id,
+                Email = email
+            };
+
+            ServiceConsultantsData data = null;
+
+            using (HttpClient client = WebApiClient.InitializeClient(Request.Url.Scheme + "://" + Request.Url.Authority + Request.ApplicationPath.TrimEnd('/') + "/"))
+            {
+                HttpResponseMessage message = client.PostAsJsonAsync("/api/ServiceConsultants/ConsultantStats", parameters).Result;
+
+                if (message.IsSuccessStatusCode)
+                {
+                    data = message.Content.ReadAsAsync<ServiceConsultantsData>().Result;
                 }
             }
-            
-            if(!ViewData.ContainsKey("consultants"))
+
+            if (data != null)
             {
-                ViewData["consultants"] = null;
+                return PartialView("_ConsultantStats", data);
             }
 
-            if (toReturn.Item2 != null)
+            return null;
+        }
+
+        [SampleAuthorize]
+        public ActionResult ServiceCharts(int id)
+        {
+            try
             {
-                ViewData["PARAMS"] = toReturn.Item2;
+                using (HttpClient client = WebApiClient.InitializeClient(Request.Url.Scheme + "://" + Request.Url.Authority + Request.ApplicationPath.TrimEnd('/') + "/"))
+                {
+                    HttpResponseMessage response = client.GetAsync("/api/ServiceApi/Get?id=" + id.ToString()).Result;
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        Tuple<Service, Dictionary<string, string>> result = response.Content.ReadAsAsync<Tuple<Service, Dictionary<string, string>>>().Result;
+
+                        if (result != null && result.Item1.Username == User.Identity.Name)
+                        {
+                            ViewData["service_id"] = id;
+                            return View();
+                        }
+                    }
+                }
+
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View("Error");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult GetMonthApplications(int year, int month, int service_id)
+        {
+
+            ChartParams parameters = new ChartParams
+            {
+                Year = year,
+                Month = month,
+                ServiceId = service_id
+            };
+
+            ServiceApplicationsData data = null;
+
+            using (HttpClient client = WebApiClient.InitializeClient(Request.Url.Scheme + "://" + Request.Url.Authority + Request.ApplicationPath.TrimEnd('/') + "/"))
+            {
+                HttpResponseMessage message = client.PostAsJsonAsync("/api/Application/ServiceStats", parameters).Result;
+
+                if (message.IsSuccessStatusCode)
+                {
+                    data = message.Content.ReadAsAsync<ServiceApplicationsData>().Result;
+                }
+            }
+
+            if (data != null)
+            {
+                return PartialView("_ServiceStats", data);
+            }
+
+            return null;       
+        }
+
+        [HttpPost]
+        public ActionResult AddMediaFile(FormCollection collection, HttpPostedFileBase local_file)
+        {
+            MediaFile file = new MediaFile();
+
+            file.ServiceId = Convert.ToInt32(collection["service_id"]);
+
+            if (local_file != null)
+            {
+                DocumentGenerator.GenerateLocalDocument(local_file, collection["service_name"]);
+
+                file.Path = "~/Common/MediaFiles/" + collection["service_name"] + "/" + local_file.FileName;
             }
             else
             {
-                ViewData["PARAMS"] = new Dictionary<string, string>();
+                file.Path = collection["url_file"];
             }
 
-            return View(toReturn.Item1);
+            file.Description = collection["media_description"];
+            ObjectCache cache = MemoryCache.Default;
+
+            using (HttpClient client = WebApiClient.InitializeAuthorizedClient(Request.Url.Scheme + "://" + Request.Url.Authority + Request.ApplicationPath.TrimEnd('/') + "/", "Bearer", cache["access_token"] as string))
+            {
+                HttpResponseMessage response = client.PostAsJsonAsync("/api/ServiceApi/AddMediaFile", file).Result;
+            }
+
+                return RedirectToAction("ServiceDetails", new { id = Convert.ToInt32(collection["service_id"]) });
         }
 
-
-        [Authorize]
+        [SampleAuthorize]
         public ActionResult Dialogue(int id)
         {
-            List<string> participants = null;
-
-            using (HttpClient client = new HttpClient())
+            try
             {
-                client.DefaultRequestHeaders.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                List<string> participants = null;
 
-                client.BaseAddress = new Uri("http://localhost:49332/");
-
-                HttpResponseMessage response = client.GetAsync("api/Dialogue/GetDialogueParticipants?dialogue_id=" + id.ToString()).Result;
-
-                if(response.IsSuccessStatusCode)
+                using (HttpClient client = WebApiClient.InitializeClient(Request.Url.Scheme + "://" + Request.Url.Authority + Request.ApplicationPath.TrimEnd('/') + "/"))
                 {
-                    participants = response.Content.ReadAsAsync<List<string>>().Result;
+                    HttpResponseMessage response = client.GetAsync("api/Dialogue/GetDialogueParticipants?dialogue_id=" + id.ToString()).Result;
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        participants = response.Content.ReadAsAsync<List<string>>().Result;
+
+                        response = client.GetAsync("api/Dialogue/IsFromApplication?dialogue_id=" + id.ToString()).Result;
+
+                        if (response.IsSuccessStatusCode)
+                        {
+                            ViewData["IsFromApplication"] = response.Content.ReadAsAsync<bool>().Result;
+                        }
+                    }
                 }
-            }
 
-            if(participants != null && participants.Where(x => x == User.Identity.Name).Count() > 0)
+                if (participants != null && participants.Where(x => x == User.Identity.Name).Count() > 0)
+                {
+                    ViewData["CustomerEmail"] = participants[0];
+                    ViewData["ConsultantEmail"] = participants[1];
+                    ViewData["room_id"] = id;
+
+                    return View();
+                }
+
+                return RedirectToAction("Index");
+            }
+            catch
             {
-                ViewData["room_id"] = id;
-
-                return View();
+                return View("Error");
             }
-
-            return RedirectToAction("Index");
         }
     }
 }

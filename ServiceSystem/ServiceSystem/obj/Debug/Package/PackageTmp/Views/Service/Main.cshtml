@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Main";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -14,16 +14,19 @@ else
 }
 
 <div class="row">
-    <div class="col-xs-5 col-sm-5 col-lg-5 col-md-5 col-md-offset-4 col-sm-offset-4 col-lg-offset-4">
-        @using (Html.BeginForm("Main", "Service", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+    <div class="col-sm-8 col-md-5 col-md-offset-4 col-sm-offset-2">
+        <h3 class="text-center">Створення послуги</h3>
+        <p class="text-center">Заповніть всі дані, необхідні для створення Вашої власної послуги</p>
+        @using (Html.BeginForm("Main", "Service", null, FormMethod.Post, new { enctype = "multipart/form-data", id = "service_form", style="display:table; margin:auto;"}))
         {
             <div class="well form-horizontal" id="serviceConstructor">
-                <div id="constructor_header" style="border: 2px solid green; border-radius: 3px;">
+                <div id="constructor_header" style="border: 1px solid grey; padding-top:10px;">
                     <div class="form-group">
-                        <input type="text" name="service_name" placeholder="Назва послуги" style="margin-bottom: 5px;" class="form-control col-xs-8 col-sm-8 col-md-8 col-lg-8 col-sm-offset-2 col-lg-offset-2 col-md-offset-2" />
+                        <input type="text" name="service_name" placeholder="Назва послуги" style="margin-bottom: 5px; margin: auto;" class="form-control"/>
+                        <label for="service_name" class="text-danger control-label col-sm-offset-2" hidden id="service_name_validation"></label>
                     </div>
                     <div class="form-group">
-                        <select class="form-control col-xs-8 col-sm-8 col-md-8 col-lg-8 col-sm-offset-2 col-lg-offset-2 col-md-offset-2" name="service_category">
+                        <select class="form-control" style="margin: auto;" name="service_category">
                             <option value="None">Категорія</option>
                             <option value="IT">IT</option>
                             <option value="Law">Юриспунденція</option>
@@ -32,23 +35,26 @@ else
                             <option value="Engineering">Інженерія</option>
                             <option value="Household">Домогосподарство</option>
                         </select>
+                        <label for="service_category" class="text-danger control-label col-sm-offset-2" hidden id="service_category_validation"></label>
                     </div>
                     <div class="form-group">
-                        <textarea rows="10" name="service_description" placeholder="Опис послуги" style="margin-bottom: 5px;" class="form-control cos-xs-8 col-sm-8 col-md-8 col-lg-8 col-sm-offset-2 col-lg-offset-2 col-md-offset-2"></textarea>
+                        <textarea rows="10" name="service_description" placeholder="Опис послуги" style="margin-bottom: 5px; margin:auto;" class="form-control"></textarea>
                     </div>
                     <div class="form-group">
-                        <input type="file" name="service_attachments" multiple style="margin-bottom: 5px;" class="form-control cos-xs-8 col-sm-8 col-md-8 col-lg-8 col-sm-offset-2 col-lg-offset-2 col-md-offset-2" />
+                        <input type="file" name="service_attachments" multiple style="margin-bottom: 5px; margin: auto;" class="form-control" />
                     </div>
                     <div class="form-group">
-                        <select name="service_type" class="form-control col-xs-8 col-sm-8 col-md-8 col-lg-8 col-sm-offset-2 col-lg-offset-2 col-md-offset-2" id="baseController">
+                        <select name="service_type" style="margin: auto;" class="form-control" id="baseController">
                             <option value="none">Тип послуги</option>
                             <option value="session">Сеанс</option>
                             <option value="course">Курс</option>
                             <option value="deadline">Дедлайн</option>
                         </select>
+                        <label for="service_type" class="text-danger control-label col-sm-offset-2" hidden id="service_type_validation"></label>
                     </div>
                     <div class="form-group">
-                        <input type="number" class="form-control col-md-offset-2 col-lg-offset-2" placeholder="Початковий внесок (1% - 99%)" name="advance_percent" id="advance_percentage" />
+                        <input type="number" class="form-control" style="margin: auto;" placeholder="Початковий внесок (1% - 99%)" name="advance_percent" id="advance_percentage" />
+                        <label for="advance_percent" class="text-danger control-label col-sm-offset-2" hidden id="advance_percent_validation"></label>
                     </div>
                 </div>
                 <div id="constructor_body" style="margin-top: 10px;">
@@ -57,42 +63,34 @@ else
                 </div>
                 <input type="button" name="add_properties_selector" class="btn btn-default" value="+ додати властивість" />
                 <input type="button" name="remove_properties_selector" disabled class="btn btn-default" value="- видалити властивість" />
-                <div class="row" style="margin-top: 10px;">
-                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-md-offset-3 col-lg-offset-3">
-                        <input type="submit" class="btn btn-info btn-block" value="Сформувати послугу" />
-                    </div>
-                </div>
+                <input type="submit" style="margin: auto; margin-top: 10px;" class="btn btn-info btn-block" value="Сформувати послугу" />
             </div>
         }
     </div>
 </div>
-<input type="button" class="btn btn-block btn-info" style="margin: auto;" value="Шукати послуги" onclick="location.href='@Url.Action("ServiceSearch", "Service")'" />
-<input type="button" id="exit_button" class="btn btn-block btn-info" style="margin: auto; margin-top: 10px;" value="Вийти" />
-<input type="button" class="btn btn-block btn-info" style="margin: auto; margin-top: 10px;" value="Переглянути профіль" onclick="location.href='@Url.Action("InternalAccountPage", "Service")'" />
+<script src="~/Scripts/Validators.js"></script>
 @section scripts{
+
+    <script src="~/Scripts/FacebookAuth.js"></script>
     <script type="text/javascript">
+
+        var validator = new Validator();
 
         var properties = 0;
 
         $(document).ready(function () {
 
-            $("#exit_button").click(function () {
-                $.ajax({
-                    method: "POST",
-                    url: '/api/Account/Logout',
-                    contentType: "application/json; charset=utf-8",
-                    headers: {
-                        Authorization: 'Bearer ' + localStorage.getItem("access_token")
-                    },
-                    success: function()
-                    {
-                        window.location.href = '@Url.Action("Index", "Service")';
-                    },
-                    error: function(res)
-                    {
-                        alert(res.responseText);
-                    }
-                });
+            getAccessToken();
+
+            //for (var i = 0; i < validators.length; ++i) {
+            //    validators[i].Validate();
+            //}
+
+            $("#service_form").submit(function (e) {
+                if (!validator.Validate())
+                {
+                    e.preventDefault();
+                }
             });
 
             $('select[name="service_type"]').change(function () {
@@ -100,6 +98,8 @@ else
                 $("#constructor_body").empty();
 
                 if ($(this).val() == "session") {
+
+                    validator = new SessionValidator();
 
                     var duration_widgets = 1;
                     var price_widgets = 1;
@@ -322,6 +322,8 @@ else
                 }
                 else if ($(this).val() == "course") {
 
+                    validator = new DefinedCourseValidator();
+
                     var toAppend = '@ViewData["service_course_block"].ToString()';
 
                     toAppend = toAppend.replace(/&quot;/g, "\"");
@@ -332,10 +334,12 @@ else
 
                     $('input[name="is_time_defined"]').change(function () {
 
-                        if($(this).is(":checked")) {
+                        if ($(this).is(":checked")) {
+                            validator = new DefinedCourseValidator();
                             $("#course_time_block").removeAttr("hidden");
                         }
                         else {
+                            validator = new DefinedCourseValidator();
                             $("#course_time_block").attr("hidden", true);
                         }
 
@@ -450,9 +454,10 @@ else
 
                                         for (var i = 0; i < numOfDays; ++i) {
                                             $("#days_duration_block").append('<div class="form-group">'
-                                            + '<label for="day' + (i + 1) + 'Duration" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3">День ' + (i + 1) + '</label>'
-                                            + '<input name="day' + (i + 1) + 'Duration" type="text" class="col-xs-2 col-sm-2 col-md-2 col-lg-2" id="day' + (i + 1) + 'Duration">'
-                                            + '<label for="day' + (i + 1) + 'Duration" class="col-xs-1 col-sm-1 col-md-1 col-lg-1">хв</label>'
+                                            + '<label for="day' + (i + 1) + 'Duration" class="col-xs-3 col-sm-offset-3">День ' + (i + 1) + '</label>'
+                                            + '<input name="day' + (i + 1) + 'Duration" type="text" class="col-xs-2" id="day' + (i + 1) + 'Duration">'
+                                            + '<label for="day' + (i + 1) + 'Duration" class="col-xs-1">хв</label>'
+                                            + '<label for="day' + (i + 1) + 'Duration" id="day' + (i + 1) + 'Duration_validation" class="control-label has-error col-sm-offset-2"></label>'
                                             + '</div>');
                                         }
 
@@ -472,6 +477,8 @@ else
 
                 }
                 else if ($(this).val() == "deadline") {
+
+                    validator = new DeadlineValidator();
 
                     var duration_widgets = 1;
                     var price_widgets = 1;
@@ -672,6 +679,9 @@ else
 
                     });
                 }
+                else {
+                    validator = new Validator();
+                }
 
             });
 
@@ -691,8 +701,6 @@ else
 
                 $('select[name="property_type_' + properties + '"]').change(function () {
 
-                    alert($(this).attr('name'));
-
                     var data = $(this).attr('name').split("_");
 
                     var currProperty = data[data.length - 1];
@@ -705,13 +713,15 @@ else
 
                         if ($(this).val() == "textarea") {
                             elem.append('<div class="form-group">'
-                                + '<textarea class="form-control col-md-offset-2 col-lg-offset-2" name="default_widget_value_' + currProperty + '" />'
+                                + '<textarea class="form-control" style="margin: auto;" name="default_widget_value_' + currProperty + '" />'
+                                + '<label for="default_widget_value_' + currProperty + '" class="text-danger control-label col-sm-offset-2" hidden id="default_widget_value_' + currProperty + '_validation"></label>'
                                 + '</div>'
                                 );
                         }
                         else {
                             elem.append('<div class="form-group">'
-                          + '<input type="' + $(this).val() + '" class="form-control col-md-offset-2 col-lg-offset-2" name="default_widget_value_' + currProperty + '"/>'
+                          + '<input type="' + $(this).val() + '" class="form-control" style="margin:auto;" name="default_widget_value_' + currProperty + '"/>'
+                          + '<label for="default_widget_value_' + currProperty + '" class="text-danger control-label col-sm-offset-2" hidden id="default_widget_value_' + currProperty + '_validation"></label>'
                           + '</div>'
                           );
                         }

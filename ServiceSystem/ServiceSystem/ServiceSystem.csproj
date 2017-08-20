@@ -85,18 +85,6 @@
       <HintPath>..\packages\Microsoft.ApplicationInsights.2.2.0\lib\net45\Microsoft.ApplicationInsights.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Microsoft.AspNet.Identity.Owin, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.1\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Microsoft.AspNet.SignalR.Core, Version=2.2.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.2.1\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
       <Private>True</Private>
@@ -189,6 +177,15 @@
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.1\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="Owin">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
@@ -258,13 +255,14 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Common\SampleAuthorizeAttribute.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ApplicationController.cs" />
     <Compile Include="Controllers\BankBillController.cs" />
     <Compile Include="Controllers\BillController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\DialogueController.cs" />
-    <Compile Include="Controllers\ExternalLoginController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\FAQController.cs" />
     <Compile Include="Controllers\ServiceApiController.cs" />
     <Compile Include="Controllers\ServiceConsultantsController.cs" />
@@ -278,20 +276,35 @@
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Application.cs" />
+    <Compile Include="Models\Auxiliary Classes\ApplicationManager.cs" />
+    <Compile Include="Models\Auxiliary Classes\ApplicationUserManagerExtension.cs" />
+    <Compile Include="Models\Auxiliary Classes\BillGenerator.cs" />
+    <Compile Include="Models\Auxiliary Classes\DetailsStrategy.cs" />
+    <Compile Include="Models\Auxiliary Classes\DocumentGenerator.cs" />
+    <Compile Include="Models\Auxiliary Classes\IdentityExtension.cs" />
+    <Compile Include="Models\Auxiliary Classes\LoginTokenResult.cs" />
+    <Compile Include="Models\Auxiliary Classes\ServiceManager.cs" />
+    <Compile Include="Models\Auxiliary Classes\WebApiClient.cs" />
     <Compile Include="Models\Bill.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Course.cs" />
     <Compile Include="Models\Deadline.cs" />
     <Compile Include="Models\DeadlineApplication.cs" />
+    <Compile Include="Models\Dialogue.cs" />
     <Compile Include="Models\FAQ.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\BankBill.cs" />
+    <Compile Include="Models\Auxiliary Classes\MailManager.cs" />
+    <Compile Include="Models\MediaFile.cs" />
     <Compile Include="Models\Message.cs" />
     <Compile Include="Models\Notification.cs" />
     <Compile Include="Models\Service.cs" />
+    <Compile Include="Models\ServiceApplicationsData.cs" />
     <Compile Include="Models\ServiceConsultant.cs" />
+    <Compile Include="Models\ServiceConsultantsData.cs" />
     <Compile Include="Models\Session.cs" />
     <Compile Include="Models\SessionApplication.cs" />
+    <Compile Include="Models\UserSettings.cs" />
     <Compile Include="Models\WebmoneyBill.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
@@ -300,25 +313,28 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
-    <Content Include="Common\duration_measure_from_till.txt" />
-    <Content Include="Common\default_property_widget.txt" />
-    <Content Include="Common\duration_measure_from.txt" />
-    <Content Include="Common\duration_measure_till.txt" />
-    <Content Include="Common\duration_measure_widget.txt" />
-    <Content Include="Common\price_measure_widget.txt" />
-    <Content Include="Common\service_course_block.txt" />
-    <Content Include="Common\service_deadline_block.txt" />
-    <Content Include="Common\service_session_block.txt" />
-    <Content Include="Common\week_gradation_widget.txt" />
-    <Content Include="Common\week_gradation_widget_duration.txt" />
-    <Content Include="Common\week_gradation_widget_hours.txt" />
+    <Content Include="Common\0KU1nvBuEk4.jpg" />
+    <Content Include="Common\duration_measure_from_till.html" />
+    <Content Include="Common\default_property_widget.html" />
+    <Content Include="Common\duration_measure_from.html" />
+    <Content Include="Common\duration_measure_till.html" />
+    <Content Include="Common\duration_measure_widget.html" />
+    <Content Include="Common\price_measure_widget.html" />
+    <Content Include="Common\service_course_block.html" />
+    <Content Include="Common\service_deadline_block.html" />
+    <Content Include="Common\service_session_block.html" />
+    <Content Include="Common\week_gradation_widget.html" />
+    <Content Include="Common\week_gradation_widget_duration.html" />
+    <Content Include="Common\week_gradation_widget_hours.html" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\growl.css" />
+    <Content Include="Content\Site.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\AppValidators.js" />
+    <Content Include="Scripts\BillValidators.js" />
     <Content Include="Areas\HelpPage\Views\Web.config" />
     <Content Include="Areas\HelpPage\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\ResourceModel.cshtml" />
@@ -344,6 +360,10 @@
     <Content Include="Common\arial.ttf" />
     <None Include="Properties\PublishProfiles\Somee.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\FacebookAuth.js" />
+    <Content Include="Scripts\growl.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -354,8 +374,10 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\module_script.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\Validators.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -364,7 +386,6 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Areas\HelpPage\Views\_ViewStart.cshtml" />
-    <Content Include="Content\Site.css" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
@@ -373,7 +394,6 @@
     <Content Include="Views\Service\Main.cshtml" />
     <Content Include="Views\Service\ServiceSearch.cshtml" />
     <Content Include="Views\Service\ServiceDetails.cshtml" />
-    <Content Include="Views\Service\Foo.cshtml" />
     <Content Include="Views\Service\Register.cshtml" />
     <Content Include="Views\Service\Authorize.cshtml" />
     <Content Include="Views\Shared\_Application.cshtml" />
@@ -390,13 +410,21 @@
     <Content Include="Views\Shared\_Bill.cshtml" />
     <Content Include="Views\Service\ConsultantSearch.cshtml" />
     <Content Include="Views\Service\Dialogue.cshtml" />
-    <Content Include="Views\Shared\_CustomerFAQ.cshtml" />
     <Content Include="Views\Shared\_ProviderFAQ.cshtml" />
+    <Content Include="Views\Shared\_CustomerFAQ.cshtml" />
+    <Content Include="Views\Service\ServiceCharts.cshtml" />
+    <Content Include="Views\Shared\_ServiceStats.cshtml" />
+    <Content Include="Views\Shared\_ConsultantStats.cshtml" />
+    <Content Include="Views\Shared\_StartView.cshtml" />
+    <Content Include="Views\Shared\_CustomerMediaFile.cshtml" />
+    <Content Include="Views\Shared\_ProviderMediaFile.cshtml" />
+    <Content Include="Views\Service\Description.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Common\Bills\" />
-    <Folder Include="Views\ExternalLogin\" />
+    <Folder Include="Common\MediaFiles\" />
+    <Folder Include="Views\Error\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

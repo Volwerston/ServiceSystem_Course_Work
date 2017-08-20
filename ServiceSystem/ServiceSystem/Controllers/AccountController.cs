@@ -24,59 +24,13 @@ using System.Data;
 using System.Text;
 using Newtonsoft.Json;
 using System.Security.Principal;
-
+using Facebook;
+using ServiceSystem.Models.Auxiliary_Classes;
 
 namespace ServiceSystem.Controllers
 {
-
-    public static class IDentityExtension
-    {
-        public static string GetFirstName(this IIdentity identity)
-        {
-            var claim = ((ClaimsIdentity)identity).FindFirst("FirstName");
-            return (claim != null) ? claim.Value : string.Empty;
-        }
-
-        public static string GetLastName(this IIdentity identity)
-        {
-            var claim = ((ClaimsIdentity)identity).FindFirst("LastName");
-            return (claim != null) ? claim.Value : string.Empty;
-        }
-
-        public static string GetFatherName(this IIdentity identity)
-        {
-            var claim = ((ClaimsIdentity)identity).FindFirst("FatherName");
-            return (claim != null) ? claim.Value : string.Empty;
-        }
-
-        public static string GetOrganisation(this IIdentity identity)
-        {
-            var claim = ((ClaimsIdentity)identity).FindFirst("Organisation");
-            return (claim != null) ? claim.Value : string.Empty;
-        }
-    }
-
-    public class LoginTokenResult
-    {
-
-        public override string ToString()
-        {
-            return AccessToken;
-        }
-
-        [JsonProperty(PropertyName = "access_token")]
-        public string AccessToken { get; set; }
-
-        [JsonProperty(PropertyName = "error")]
-        public string Error { get; set; }
-
-        [JsonProperty(PropertyName = "error_description")]
-        public string ErrorDescription { get; set; }
-
-    }
-
-
-    [System.Web.Http.RoutePrefix("api/Account")]
+    [Authorize]
+    [RoutePrefix("api/Account")]
     public class AccountController : ApiController
     {
         private const string LocalLoginProvider = "Local";
@@ -93,7 +47,6 @@ namespace ServiceSystem.Controllers
             AccessTokenFormat = accessTokenFormat;
         }
 
-
         public ApplicationUserManager UserManager
         {
             get
@@ -109,8 +62,6 @@ namespace ServiceSystem.Controllers
         private bool IsEmailConfirmed(string mail)
         {
             bool toReturn = false;
-
-            
 
             using (SqlConnection con = new SqlConnection(System.Web.Configuration.WebConfigurationManager.ConnectionStrings["DBCS"].ConnectionString))
             {
@@ -159,6 +110,34 @@ namespace ServiceSystem.Controllers
 
             if (isConfirmed)
             {
+                //using (HttpClient client = new HttpClient())
+                //{
+                //    client.DefaultRequestHeaders.Clear();
+
+                //    client.BaseAddress = new Uri("http://servicesystem1.somee.com/");
+
+                //    TokenParams parameters = new TokenParams
+                //    {
+                //        grant_type = "password",
+                //        password = password,
+                //        username = email
+                //    };
+
+                //    HttpResponseMessage response = client.PostAsync("/token",
+                //         new StringContent(string.Format("grant_type=password&username={0}&password={1}",
+                //        HttpUtility.UrlEncode(email),
+                //        HttpUtility.UrlEncode(password)), Encoding.UTF8,
+                //        "application/x-www-form-urlencoded")).Result;
+
+                //    string resultJSON = response.Content.ReadAsStringAsync().Result;
+                //    LoginTokenResult result = JsonConvert.DeserializeObject<LoginTokenResult>(resultJSON);
+
+                //    if (response.IsSuccessStatusCode)
+                //    {
+                //        toReturn = result.AccessToken;
+                //    }
+                //}
+
                 return Request.CreateResponse(HttpStatusCode.OK, toReturn);
             }
             else
@@ -187,9 +166,6 @@ namespace ServiceSystem.Controllers
                 Organisation = User.Identity.GetOrganisation()
             };
         }
-
-       
-
 
         [AllowAnonymous]
         [HttpPost]
@@ -344,7 +320,7 @@ namespace ServiceSystem.Controllers
             string msgTo = email;
             string msgSubject = "Password Notification";
 
-            string msgBody = "Please follow this link: http://localhost:49332/Service/SetNewPassword?request_id=" + 
+            string msgBody = "Please follow this link: http://servicesystem1.somee.com/Service/SetNewPassword?request_id=" + 
                 guid + " to change your password";
 
             MailMessage message = new MailMessage(msgFrom, msgTo, msgSubject, msgBody);
@@ -364,8 +340,9 @@ namespace ServiceSystem.Controllers
             }
         }
 
-        [HttpGet]
+        // POST api/Account/Logout
         [Route("Logout")]
+        [AllowAnonymous]
         public IHttpActionResult Logout()
         {
             Authentication.SignOut(CookieAuthenticationDefaults.AuthenticationType);
@@ -518,18 +495,42 @@ namespace ServiceSystem.Controllers
             return Ok();
         }
 
+        // GET api/Account/ExternalLogin
+        [OverrideAuthentication]
+        [HostAuthentication(DefaultAuthenticationTypes.ExternalCookie)]
         [AllowAnonymous]
-        public async Task<HttpResponseMessage> PostExternalLogin([FromBody]string toPass)
+        [Route("ExternalLogin", Name = "ExternalLogin")]
+        public async Task<IHttpActionResult> GetExternalLogin(string provider, string error = null)
         {
-
-            ExternalLoginData data = JsonConvert.DeserializeObject<ExternalLoginData>(toPass);
-            if (data == null)
+            if (error != null && provider != "Facebook")
             {
-                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Error");
+                return Redirect(Url.Content("~/") + "#error=" + Uri.EscapeDataString(error));
             }
 
-            ApplicationUser user = await UserManager.FindAsync(new UserLoginInfo(data.LoginProvider,
-                data.ProviderKey));
+            if (!User.Identity.IsAuthenticated)
+            {
+                return new ChallengeResult(provider, this);
+            }
+
+            var data = Request;
+
+
+            ExternalLoginData externalLogin =
+                externalLogin = ExternalLoginData.FromIdentity(User.Identity as ClaimsIdentity);
+
+           if (externalLogin == null)
+            {
+                return InternalServerError();
+            }
+
+            if (externalLogin.LoginProvider != provider)
+            {
+                Authentication.SignOut(DefaultAuthenticationTypes.ExternalCookie);
+                return new ChallengeResult(provider, this);
+            }
+
+            ApplicationUser user = await UserManager.FindAsync(new UserLoginInfo(externalLogin.LoginProvider,
+                externalLogin.ProviderKey));
 
             bool hasRegistered = user != null;
 
@@ -543,17 +544,31 @@ namespace ServiceSystem.Controllers
                     CookieAuthenticationDefaults.AuthenticationType);
 
                 AuthenticationProperties properties = ApplicationOAuthProvider.CreateProperties(user.UserName);
-
                 Authentication.SignIn(properties, oAuthIdentity, cookieIdentity);
             }
             else
             {
-                IEnumerable<Claim> claims = data.GetClaims();
-                ClaimsIdentity identity = new ClaimsIdentity(claims, OAuthDefaults.AuthenticationType);
-                Authentication.SignIn(identity);
+                //IEnumerable<Claim> claims = externalLogin.GetClaims();
+                //ClaimsIdentity identity = new ClaimsIdentity(claims, OAuthDefaults.AuthenticationType);
+                //Authentication.SignIn(identity);
+
+                await RegisterExternal();
+
+                user = await UserManager.FindAsync(new UserLoginInfo(externalLogin.LoginProvider,
+                externalLogin.ProviderKey));
+
+                Authentication.SignOut(DefaultAuthenticationTypes.ExternalCookie);
+
+                ClaimsIdentity oAuthIdentity = await user.GenerateUserIdentityAsync(UserManager,
+                   OAuthDefaults.AuthenticationType);
+                ClaimsIdentity cookieIdentity = await user.GenerateUserIdentityAsync(UserManager,
+                    CookieAuthenticationDefaults.AuthenticationType);
+
+                AuthenticationProperties properties = ApplicationOAuthProvider.CreateProperties(user.UserName);
+                Authentication.SignIn(properties, oAuthIdentity, cookieIdentity);
             }
 
-            return Request.CreateResponse(HttpStatusCode.OK, "OK");
+            return Ok();
         }
 
         // GET api/Account/ExternalLogins?returnUrl=%2F&generateState=true
@@ -673,6 +688,33 @@ namespace ServiceSystem.Controllers
 
         }
 
+
+        [ActionName("PostUserSettings")]
+        public HttpResponseMessage Post([FromBody]UserSettings settings)
+        {
+            using (SqlConnection con = new SqlConnection(System.Web.Configuration.WebConfigurationManager.ConnectionStrings["DBCS"].ConnectionString))
+            {
+                string cmdString = "UPDATE AccountSettings SET MAIL_MESSAGES_ENABLED=@enable WHERE USERNAME=@mail";
+
+                SqlCommand cmd = new SqlCommand(cmdString, con);
+
+                cmd.Parameters.AddWithValue("@enable", settings.ReceiveEmail ? 1 : 0);
+                cmd.Parameters.AddWithValue("@mail", settings.Email);
+
+                try
+                {
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+
+                    return Request.CreateResponse(HttpStatusCode.OK, "OK");
+                }
+                catch(Exception ex)
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
+                }
+            }
+        }
+
         private void SendEmailConfirmation(string to, string username, string confirmationToken)
         {
             string smtpHost = "smtp.gmail.com";
@@ -690,7 +732,7 @@ namespace ServiceSystem.Controllers
             string msgSubject = "Password Notification";
 
             string msgBody = "Dear " + username + ", <br/><br/>";
-            msgBody += "Please follow this link: http://localhost:49332/Service/ConfirmMail?token=" + confirmationToken + " to confirm your account";
+            msgBody += "Please follow this link: http://servicesystem1.somee.com/Service/ConfirmMail?token=" + confirmationToken + " to confirm your account";
             MailMessage message = new MailMessage(msgFrom, msgTo, msgSubject, msgBody);
 
             message.IsBodyHtml = true;
@@ -705,7 +747,7 @@ namespace ServiceSystem.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return BadRequest("Provided data is invalid");
             }
 
             var user = new ApplicationUser() {
@@ -746,16 +788,58 @@ namespace ServiceSystem.Controllers
                 return InternalServerError();
             }
 
-            var user = new ApplicationUser() { UserName = info.Email, Email = info.Email };
+            var accessToken = info.ExternalIdentity.FindFirstValue("FacebookAccessToken");
 
-            IdentityResult result = await UserManager.CreateAsync(user);
+            IdentityResult result = null;
 
-            if (!result.Succeeded)
+            ApplicationUser user = null;
+
+            if (accessToken != null)
             {
-                return GetErrorResult(result);
+                FacebookClient fb = new FacebookClient(accessToken);
+
+                dynamic fbresult = fb.Get("me?fields=first_name,last_name");
+
+                user = new ApplicationUser()
+                {
+                    UserName = info.Email,
+                    Email = info.Email,
+                    Organisation = "",
+                    FatherName = "",
+                    LastName = fbresult.last_name,
+                    FirstName = fbresult.first_name,
+                    EmailConfirmed = true
+                };
+            }
+            else
+            {
+                user = new ApplicationUser()
+                {
+                    UserName = info.Email,
+                    Email = info.Email,
+                    Organisation = "",
+                    FatherName = "",
+                    LastName = "",
+                    FirstName = info.Email,
+                    EmailConfirmed = true
+                };
             }
 
-            result = await UserManager.AddLoginAsync(user.Id, info.Login);
+            result = await UserManager.CreateAsync(user);
+
+            //if (!result.Succeeded)
+            //{
+            //    return GetErrorResult(result);
+            //}
+
+            if (result.Succeeded)
+            {
+                result = await UserManager.AddLoginAsync(user.Id, info.Login);
+            }
+            else
+            {
+                result = UserManager.AddSingleLoginAsync(info.Email, info.Login);
+            }
 
             if (!result.Succeeded)
             {
@@ -811,7 +895,7 @@ namespace ServiceSystem.Controllers
             return null;
         }
 
-        public class ExternalLoginData
+        private class ExternalLoginData
         {
             public string LoginProvider { get; set; }
             public string ProviderKey { get; set; }

@@ -8,9 +8,7 @@
 
     List<SelectListItem> toPass = new List<SelectListItem>();
 
-    List<PaymentMeasure> measures = (List<PaymentMeasure>)ViewData["ServicePaymentMeasures"];
-
-    if (measures != null)
+    if ((List<PaymentMeasure>)ViewData["ServicePaymentMeasures"] != null)
     {
         foreach (var measure in (List<PaymentMeasure>)ViewData["ServicePaymentMeasures"])
         {
@@ -72,10 +70,9 @@
     string consultant = Model.ConsultantName == null ? "-" : Model.ConsultantName;
 }
 
-
-<div class="row">
-    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-md-offset-2 col-lg-offset-2" style="border: 2px solid green; border-radius: 3px; padding: 10px;">
-        <table class="table table-bordered" style="padding: 10px;">
+<div class="row" style="margin-top: 10px;">
+    <div class="col-sm-8 col-sm-offset-2" style="padding: 10px; background-color: azure; border-radius: 5px 5px 0px 0px;">
+        <table class="table table-striped table-bordered" style="padding: 10px; border: 1px solid black;">
             <tbody id="application_params">
                 <tr>
                     <td>Замовник</td>
@@ -97,7 +94,7 @@
                     <td>Деталі</td>
                     @if (Model.Description.Trim() != "")
                     {
-                    <td>@Model.Description</td>
+                        <td>@Model.Description</td>
                     }
                     else
                     {
@@ -105,12 +102,12 @@
                     }
                 </tr>
                 <tr>
-                <td>
-                    Заявку обслуговує
-                </td>
-                <td>
-                    @consultant
-                </td>
+                    <td>
+                        Заявку обслуговує
+                    </td>
+                    <td>
+                        @consultant
+                    </td>
                 </tr>
                 @if (Model.Mark != null)
                 {
@@ -122,64 +119,32 @@
                             @Model.Mark
                         </td>
                     </tr>
-                    <tr>
-                        <td>
-                            Фінальний коментар користувача
-                        </td>
-                        <td>
-                            @Model.FinalEstimate
-                        </td>
-                    </tr>
+                        <tr>
+                            <td>
+                                Фінальний коментар користувача
+                            </td>
+                            <td>
+                                @Model.FinalEstimate
+                            </td>
+                        </tr>
                 }
             </tbody>
         </table>
+    </div>
 
+    <div class="col-sm-8 col-sm-offset-2" style="padding: 10px; background-color: azure; border-radius: 0px 0px 5px 5px; margin-bottom: 10px;">
         @if (ViewData.ContainsKey("FileSource"))
         {
                 <div class="row">
-                    <embed src="@ViewData["FileSource"]" class="col-xs-10 col-sm-10 col-md-10 col-lg-10 col-md-offset-1 col-lg-offset-1" style="min-height: 500px;" />
+                    <embed src="@ViewData["FileSource"]" class="col-xs-10 col-sm-offset-1" style="min-height: 500px;" />
                 </div>
         }
-        else if(Model.Status == "MAIN_PAID")
+        else if (Model.Status == "MAIN_PAID")
         {
-            <p class="text-center">Послугу повністю оплачено</p>
-
+            <p class="text-center"><b>Послугу повністю оплачено</b></p>
             if (Model.Mark == null && User.Identity.Name == Model.Username)
             {
-                <div class="row" id="comment_holder">
-                    <div class="col-sm-6 col-sm-offset-3">
-                        <div class="row" style="border: 1px solid green; border-radius: 3px;">
-                            <div class="col-sm-8" style="padding: 10px; display: table; margin: auto;">
-                                <h4 class="text-center">Оцінка обслуговування</h4>
-                                <label for="mark" class="control-label text-center" style="display: block;">
-                                    Бал (1-10)
-                                </label>
-                                <div class="form-horizontal">
-                                    <div class="form-group">
-                                        <select class="form-control col-sm-offset-2" name="mark">
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                            <option value="4">4</option>
-                                            <option value="5">5</option>
-                                            <option value="6">6</option>
-                                            <option value="7">7</option>
-                                            <option value="8">8</option>
-                                            <option value="9">9</option>
-                                            <option value="10">10</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <textarea class="form-control col-sm-offset-2" rows="10" name="comment" placeholder="Comment..."></textarea>
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="button" id="submit_mark" value="OK" class="btn btn-block btn-success col-sm-8 col-sm-offset-2" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <input type="button" data-toggle="modal" id="show_estimate_modal" data-target="#estimate_modal" value="Оцінити якість послуги" class="btn btn-success btn-block" style="margin: auto;" />
             }
         }
 
@@ -215,15 +180,16 @@
                 && Model.Status != "NO_BILL" 
                 && bill.Type == "BANK")
         {
-            <input type="submit" class="btn btn-success btn-block" style="margin: auto;" data-toggle="modal" data-target="#ask_modal" value="Підтвердити здійснення платежу" />
+            <input type="submit" class="btn btn-success btn-block" style="margin: auto;margin-top: 10px;" data-toggle="modal" data-target="#ask_modal" value="Підтвердити здійснення платежу" />
         }
 
         @if (Model.Status != "MAIN_PAID")
         {
-        <input type="button" onclick="location.href='@Url.Action("Dialogue", "Service", new { id = Model.DialogueId })'" class="btn btn-success btn-block" style="margin: auto;" value="До діалогу" />
+            <input type="button" onclick="location.href='@Url.Action("Dialogue", "Service", new { id = Model.DialogueId })'" class="btn btn-success btn-block" style="margin: auto;margin-top: 10px;" value="До діалогу" />
         }
-     </div>
+    </div>
 </div>
+
 
 <div class="modal fade" id="ask_modal" role="dialog">
     <div class="modal-dialog">
@@ -242,97 +208,148 @@
     </div>
 </div>
 
-@section scripts{
-    <script type="text/javascript">
-        $(document).ready(function () {
+<div class="modal fade" id="estimate_modal" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="text-center">Оцінка обслуговування</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-8 col-sm-offset-2">
+                        <div class="form-horizontal" style="margin: 15px; margin: auto;">
+                            <div class="form-group">
+                                <select class="form-control col-sm-offset-2" name="mark">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <textarea class="form-control col-sm-offset-2" rows="10" name="comment" placeholder="Ваш коментар..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="estimate_done" class="btn btn-success">Підтвердити</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Скасувати</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-            $("#submit_mark").click(function () {
+            @section scripts{
+                <script src="~/Scripts/BillValidators.js"></script>
+                <script type="text/javascript">
+                    var validator = new WebmoneyBillValidator();
 
-                var toPass = {
-                    Mark: $('select[name="mark"]').val(),
-                    Comment: $('textarea[name="comment"]').val(),
-                    ApplicationId: '@Model.Id'
-                };
+                    $(document).ready(function () {
 
-                $.ajax({
-                    method: "POST",
-                    url: "/api/Application/PostMark",
-                    contentType: "application/json; charset=utf-8",
-                    headers: {
-                        Authorization: 'Bearer ' + localStorage.getItem('access_token')
-                    },
-                    dataType: "json",
-                    data: JSON.stringify(toPass),
-                    success: function (res) {
-                        $("#comment_holder").attr("hidden", true);
+                        $("#bill_create_form").submit(function (e) {
+                            if (!validator.Validate()) {
+                                e.preventDefault();
+                            }
+                        });
 
-                        $("#application_params").append('<tr><td>Оцінка користувача</td><td>' + toPass.Mark +
-                            '</td></tr><tr><td>Фінальний коментар користувача</td><td>' + toPass.Comment + '</td></tr>');
-                    },
-                    error: function (res) {
-                        alert(res.responseText);
-                    }
-                });
+                        $("#estimate_done").click(function () {
 
-            })
+                            $("#estimate_modal").modal("hide");
 
-            $("#payment_done").click(function () {
+                            var toPass = {
+                                Mark: $('select[name="mark"]').val(),
+                                Comment: $('textarea[name="comment"]').val(),
+                                ApplicationId: '@Model.Id'
+                            };
 
-                $.ajax({
-                    method: "POST",
-                    url: "/api/BankBill/ConfirmPayment",
-                    contentType: "application/json; charset=utf-8",
-                    headers: {
-                        Authorization: 'Bearer ' + localStorage.getItem('access_token')
-                    },
-                    dataType: "json",
-                    data: JSON.stringify(@bill_id),
-                    success: function(){
-                        window.location.href = '@Url.Action("ApplicationDetails", "Service", new { id = Model.Id })';
-                    },
-                    error: function(res)
-                    {
-                        alert(res.responseText);
-                    }
+                            $.ajax({
+                                method: "POST",
+                                url: "/api/Application/PostMark",
+                                contentType: "application/json; charset=utf-8",
+                                headers: {
+                                    Authorization: 'Bearer ' + localStorage.getItem('access_token')
+                                },
+                                dataType: "json",
+                                data: JSON.stringify(toPass),
+                                success: function (res) {
 
-                });
+                                    $("#application_params").append('<tr><td>Оцінка користувача</td><td>' + toPass.Mark +
+                                        '</td></tr><tr><td>Фінальний коментар користувача</td><td>' + toPass.Comment + '</td></tr>');
 
-            });
+                                    $("#show_estimate_modal").hide();
+                                },
+                                error: function (res) {
+                                    displayMessage("Error", res.responseText);
+                                }
+                            });
 
-            $('select[name="payment_selector"]').change(function () {
-                if($(this).val() == "wm")
-                {
-                    $("#wm_container").removeAttr("hidden");
-                    $("#privat_container").attr("hidden", true);
-                }
-                else if($(this).val() == "privat")
-                {
-                    $("#privat_container").removeAttr("hidden");
-                    $("#wm_container").attr("hidden", true);
-                }
-            });
+                        });
 
-            $('input[name="form_application"]').click(function () {
-                $("#application_form_holder").removeAttr("hidden");
-            });
+                        $("#payment_done").click(function () {
 
-            $('input[name="has_time_limit"]').change(function () {
-                if ($(this).is(":checked")) {
-                    $("#time_limit_holder").removeAttr("hidden");
-                }
-                else {
-                    $("#time_limit_holder").attr("hidden", true);
-                }
-            });
+                            $.ajax({
+                                method: "POST",
+                                url: "/api/BankBill/ConfirmPayment",
+                                contentType: "application/json; charset=utf-8",
+                                headers: {
+                                    Authorization: 'Bearer ' + localStorage.getItem('access_token')
+                                },
+                                dataType: "json",
+                                data: JSON.stringify(@bill_id),
+                                success: function () {
+                                    window.location.href = '@Url.Action("ApplicationDetails", "Service", new { id = Model.Id })';
+                                },
+                                error: function (res) {
+                                    displayMessage("Error", res.responseText);
+                                }
 
-            $('input[name="add_comment"]').change(function () {
-                if ($(this).is(":checked")) {
-                    $("#comment_holder").removeAttr("hidden");
-                }
-                else {
-                    $("#comment_holder").attr("hidden", true);
-                }
-            });
-        });
-    </script>
-}
+                            });
+
+                        });
+
+                        $('select[name="payment_selector"]').change(function () {
+                            if ($(this).val() == "wm") {
+                                validator = new WebmoneyBillValidator();
+                                $("#wm_container").removeAttr("hidden");
+                                $("#privat_container").attr("hidden", true);
+                            }
+                            else if ($(this).val() == "privat") {
+                                validator = new BankBillValidator();
+                                $("#privat_container").removeAttr("hidden");
+                                $("#wm_container").attr("hidden", true);
+                            }
+                        });
+
+                        $('input[name="form_application"]').click(function () {
+                            $("#application_form_holder").removeAttr("hidden");
+                        });
+
+                        $('input[name="has_time_limit"]').change(function () {
+                            if ($(this).is(":checked")) {
+                                $("#time_limit_holder").removeAttr("hidden");
+                            }
+                            else {
+                                $("#time_limit_holder").attr("hidden", true);
+                            }
+                        });
+
+                        $('input[name="add_comment"]').change(function () {
+                            if ($(this).is(":checked")) {
+                                $("#comment_holder").removeAttr("hidden");
+                            }
+                            else {
+                                $("#comment_holder").attr("hidden", true);
+                            }
+                        });
+                    });
+                </script>
+            }

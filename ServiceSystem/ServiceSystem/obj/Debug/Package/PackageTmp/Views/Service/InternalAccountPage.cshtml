@@ -5,12 +5,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div style="border: 2px solid green; border-radius: 5px; max-width: 80%; padding: 20px; margin: auto;">
+<div style="border: 1px solid grey; border-radius: 5px; background-color: lightgray; max-width: 80%; padding: 20px; margin: auto; margin-top: 15px; margin-bottom: 15px;">
     <div class="row" style="padding: 10px;">
-        <div class="col-xs-4 col-sm-4 col-lg-4 col-md-4 text-center" style="border: 2px solid green; border-radius: 5px;">
-            <p>Here is user's photo</p>
-        </div>
-        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-md-offset-1 col-lg-offset-1" style="border: 2px solid green; border-radius: 5px;">
+        <div class="col-sm-10 col-md-6 col-md-offset-3 col-sm-offset-1" style="border: 1px solid grey;background-color: azure; border-radius: 5px;">
             <div>
                 <dl class="dl-horizontal">
                     <dt>
@@ -42,7 +39,7 @@
         </div>
     </div>
     <div class="row" style="padding: 10px;">
-        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-md-offset-2 col-lg-offset-2">
+        <div class="col-xs-12">
             <div class="panel-group" id="accordion">
                 <div class="panel panel-default">
                     <div class="panel-heading"  id="panel_1">
@@ -93,7 +90,6 @@
                     </div>
                     <div id="collapse4" class="panel-collapse collapse">
                         <div class="panel-body" id="panel_body_4">
-                            <p class="text-center">Інформації не знайдено</p>
                         </div>
                     </div>
                 </div>
@@ -107,6 +103,30 @@
                     </div>
                     <div id="collapse5" class="panel-collapse collapse">
                         <div class="panel-body" id="panel_body_5">
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" id="panel_6">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse6">
+                                Налаштування
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapse6" class="panel-collapse collapse">
+                        <div class="panel-body" id="panel_body_6">
+                            <div class="row">
+                                <div class="col-sm-8 col-sm-offset-2">
+                                    <input type="checkbox" name="receive_email" />
+                                    <label for="receive_email">отримувати сповіщення на електронну пошту</label>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-top: 10px;">
+                                <div class="col-sm-4 col-sm-offset-4">
+                                    <input type="button" name="confirm_user_changes" class="btn btn-success btn-block" value="Зберегти" />
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -124,82 +144,127 @@
 
         function GetDivForService(service)
         {
-            return '<a href="@Url.Action("ServiceDetails", "Service")' + '?id=' + service.Id + '\">'
-                    + '<div style="padding: 5px;">'
-                    + '<div class="row" style="margin-top: 5px; border: 1px solid green; border-radius: 3px;">'
-                    + '<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">'
+            var str = '<tr style="cursor: pointer">'
+                    + '<td onclick=\'location.href="@Url.Action("ServiceDetails", "Service")?id=' + service.Id + '"\'>'
                     + '<p>' + service.Id + '</p>'
-                    + '</div>'
-                    + '<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" style="word-break: break-all">'
+                    + '</td>'
+                    + '<td onclick=\'location.href="@Url.Action("ServiceDetails", "Service")?id=' + service.Id + '"\'>'
                     + '<p>' + service.Name + '</p>'
-                    + '</div>'
-                    + '<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3" style="word-break: break-all">'
+                    + '</td>'
+                    + '<td onclick=\'location.href="@Url.Action("ServiceDetails", "Service")?id=' + service.Id + '"\'>'
                     + '<p>' + service.Type + '</p>'
-                    + '</div>'
-                    + '<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3" style="word-break: break-all">'
+                    + '</td>'
+                    + '<td onclick=\'location.href="@Url.Action("ServiceDetails", "Service")?id=' + service.Id + '"\'>'
                     + '<p>' + service.Category + '</p>'
-                    + '</div>'
-                    + '</div>'
-                    + '</div>'
-                    + '</a>';
+                    + '</td>'
+                    + '<td>'
+                    + '<button type="button" onclick=\'location.href="@Url.Action("ServiceCharts", "Service")?id=' + service.Id + '"\' class="btn btn-success btn-block btn-sm">Деталі'
+                    + '</button>'
+                    + '</td>'
+                    + '</tr>';
+
+            return str;
         }
 
-        function GetDivForApplicationHeader() {
-            return  '<div style="padding: 3px;">'
-                    +'<div class="row" style="margin-top: 5px; border: 1px solid green; border-radius: 3px;">'
-                    + '<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">'
+        function GetDivForApplicationHeader(body_id) {
+            return '<div class="table-responsive">'
+            + '<table class="table table-striped table-bordered">'
+            + '<thead>'
+            + '<td>'
+            + '<p><b>ID</b></p>'
+            + '</td>'
+            + '<td>'
+            + '<p><b>Назва</b></p>'
+            + '</td>'
+            + '<td>'
+            + '<p><b>Замовник</b></p>'
+            + '</td>'
+            + '<td>'
+            + '<p><b>Статус</b></p>'
+            + '</td>'
+            + '<td>'
+            + '<p><b>Остання зміна</b></p>'
+            + '</td>'
+            + '</thead>'
+            + '<tbody id="' + body_id + '">'
+            + '</tbody>'
+            + '</table>'
+            + '</div>';
+        }
+
+        function GetDivForDialogueHeader() {
+            return '<div class="table-responsive">'
+            + '<table class="table table-striped table-bordered">'
+                    + '<thead>'
+                    + '<td>'
                     + '<p><b>ID</b></p>'
-                    + '</div>'
-                    + '<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">'
-                    + '<p><b>Назва</b></p>'
-                    + '</div>'
-                    + '<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">'
-                    + '<p><b>Замовник</b></p>'
-                    + '</div>'
-                    + '<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">'
-                    + '<p><b>Статус</b></p>'
-                    + '</div>'
-                    + '<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">'
+                    + '</td>'
+                    + '<td>'
+                    + '<p><b>Повідомлень</b></p>'
+                    + '</td>'
+                    + '<td>'
+                    + '<p><b>Учасників</b></p>'
+                    + '</td>'
+                    + '<td>'
                     + '<p><b>Остання зміна</b></p>'
-                    + '</div>'
-                    + '</div>'
+                    + '</td>'
+                    + '<td>'
+                    + '<p><b>Останнє повідомлення</b></p>'
+                    + '</td>'
+                    + '</thead>'
+                    + '<tbody id="dialogue_table_body">'
+                    + '</tbody>'
+                    + '</table>'
                     + '</div>';
+        }
+
+        function GetDivForDialogue(d) {
+            return '<tr style="cursor: pointer;" onclick=\'location.href="@Url.Action("Dialogue", "Service")?id=' + d.Id + '"\'>'
+                    + '<td>'
+                    + '<p>' + d.Id + '</p>'
+                    + '</td>'
+                    + '<td>'
+                    + '<p>' + d.MessagesNumber + '</p>'
+                    + '</td>'
+                    + '<td>'
+                    + '<p>' + d.ParticipantsNumber + '</p>'
+                    + '</td>'
+                    + '<td>'
+                    + '<p>' + d.LastChangeTime.split('T')[0] + ' ' + d.LastChangeTime.split('T')[1] + '</p>'
+                    + '</td>'
+                    + '<td>'
+                    + '<p class="text-center">' + d.LastMessage + '</p>'
+                    + '</td>'
+                    + '</tr>';
         }
 
 
         function GetDivForApplication(app) {
-            return '<a href="@Url.Action("ApplicationDetails", "Service")' + '?id=' + app.Id + '\">'
-                    + '<div style="padding: 5px;">'
-                    + '<div class="row" style="margin-top: 5px; border: 1px solid green; border-radius: 3px;">'
-                    + '<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">'
+            return  '<tr style="cursor: pointer" onclick=\'location.href="@Url.Action("ApplicationDetails", "Service")?id=' + app.Id + '"\'>'
+                    + '<td>'
                     + '<p>' + app.Id + '</p>'
-                    + '</div>'
-                    + '<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3" style="word-break: break-all">'
+                    + '</td>'
+                    + '<td>'
                     + '<p>' + app.ServiceName + '</p>'
-                    + '</div>'
-                    + '<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3" style="word-break: break-all">'
+                    + '</td>'
+                    + '<td>'
                     + '<p>' + app.Username + '</p>'
-                    + '</div>'
-                    + '<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" style="word-break: break-all">'
+                    + '</td>'
+                    + '<td>'
                     + '<p>' + app.Status + '</p>'
-                    + '</div>'
-                    + '<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3" style="word-break: break-all">'
-                    + '<p>' + app.StatusChangeDate + '</p>'
-                    + '</div>'
-                    + '</div>'
-                    + '</div>'
+                    + '</td>'
+                    + '<td>'
+                    + '<p>' + app.StatusChangeDate.split('T')[0] + ' ' + app.StatusChangeDate.split('T')[1] + '</p>'
+                    + '</td>'
+                    + '</tr>'
                     + '</a>';
         }
 
 
         function GetDivForNotification(note) {
-            return '<div style="padding: 5px;" id="notification_' + note.Id + '">'
+            return '<div style="padding: 5px; margin: 10px;" id="notification_' + note.Id + '">'
+                    + '<a class="close pull-right" id="note_' + note.Id + '">&times;</a>'
                     + '<div class="row" style="margin-top: 5px; border: 1px solid green; border-radius: 3px;">'
-                    + '<div class="row">'
-                    + '<div class="col-sm-offset-11">'
-                    + '<a style="border: none;" class="btn btn-default col-xs-1" id="note_' + note.Id + '">&times;</a>'
-                    + '</div>'
-                    + '</div>'
                     + '<div class="col-xs-6" style="word-break: break-all;">'
                     + '<p>From: ' + note.SenderName + '</p>'
                     + '</div>'
@@ -207,7 +272,7 @@
                     + '<p>To: ' + note.RecipientName + '</p>'
                     + '</div>'
                     + '<div class="col-xs-12" style="word-break: break-all; margin-top: 5px;">'
-                    + '<p>Date: ' + note.SendingTime + '</p>'
+                    + '<p>' + note.SendingTime.split('T')[0] + ' ' + note.SendingTime.split('T')[1] + '</p>'
                     + '</div>'
                     + '<div class="col-xs-12" style="word-break: break-all; margin-top: 5px;">'
                     + '<p>' + note.Text + '</p>'
@@ -218,26 +283,58 @@
 
 
         function GetDivForServiceHeader() {
-            return '<div style="padding: 3px;">'
-                    + '<div class="row" style="margin-top: 5px; border: 1px solid green; border-radius: 3px;">'
-                    + '<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">'
+            return '<div class="table-responsive">'
+                    + '<table class="table table-striped table-bordered">'
+                    + '<thead>'
+                    + '<td>'
                     + '<p><b>ID</b></p>'
-                    + '</div>'
-                    + '<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">'
+                    + '</td>'
+                    + '<td>'
                     + '<p><b>Сервіс</b></p>'
-                    + '</div>'
-                    + '<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">'
+                    + '</td>'
+                    + '<td>'
                     + '<p><b>Тип</b></p>'
-                    + '</div>'
-                    + '<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">'
+                    + '</td>'
+                    + '<td>'
                     + '<p><b>Категорія</b></p>'
-                    + '</div>'
-                    + '</div>'
+                    + '</td>'
+                    + '<td>'
+                    + '<p><b>Статистика</b></p>'
+                    + '</td>'
+                    + '</thead>'
+                    + '<tbody id="service_table_body">'
+                    + '</tbody>'
+                    + '</table>'
                     + '</div>';
         }
 
         $(document).ready(function () {
 
+            $('input[name="confirm_user_changes"]').click(function () {
+
+                var toPass = {
+                    Email: '@Model.Email',
+                    ReceiveEmail: $('input[name="receive_email"]').is(":checked")
+                }
+
+                $.ajax({
+                    method: "POST",
+                    url: "/api/Account/PostUserSettings",
+                    headers: {
+                        Authorization: 'Bearer ' + localStorage.getItem("access_token"),
+                    },
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    data: JSON.stringify(toPass),
+                    success: function (res) {
+                        displayMessage("Success", "Changes successfully submitted");
+                    },
+                    error: function (res) {
+                        displayMessage("Error", res.responseText);
+                    }
+                });
+
+            });
 
             $("#panel_1").click(function () {
 
@@ -248,6 +345,7 @@
                         $.ajax({
                             method: "GET",
                             url: "/api/ServiceApi/UserCreatedServices",
+                            async: false,
                             headers: {
                                 Authorization: 'Bearer ' + localStorage.getItem("access_token"),
                             },
@@ -257,7 +355,8 @@
                                 if (res.length > 0) {
                                     $("#panel_body_1").append(GetDivForServiceHeader());
                                     for (var i = 0; i < res.length; ++i) {
-                                        $("#panel_body_1").append(GetDivForService(res[i]));
+                                        var str = GetDivForService(res[i]);
+                                        $("#service_table_body").prepend(GetDivForService(res[i]));
                                     }
                                 }
                                 else {
@@ -266,7 +365,7 @@
                             },
                             error: function(res)
                             {
-                                alert("ERROR: " + res.responseText);
+                                displayMessage("Error", res.responseText);
                             }
                         });
                     }
@@ -274,12 +373,46 @@
 
             });
 
+
+            $("#panel_4").click(function () {
+
+                if (!($("#collapse4").hasClass("in"))) {
+                    if ($("#panel_body_4").children().length == 0) {
+                        $.ajax({
+                            method: "GET",
+                            url: "/api/Dialogue/UserDialogues",
+                            async: false,
+                            headers: {
+                                Authorization: 'Bearer ' + localStorage.getItem("access_token"),
+                            },
+                            contentType: "application/json; charset=utf-8",
+                            success: function (res) {
+                                if (res != null) {
+                                        $("#panel_body_4").append(GetDivForDialogueHeader());
+                                        for (var i = 0; i < res.length; ++i) {
+                                            var str = GetDivForDialogue(res[i]);
+                                            $("#dialogue_table_body").prepend(GetDivForDialogue(res[i]));
+                                    }
+                                }
+                                else {
+                                    $("#panel_body_4").append('<p class="text-center">Діалогів не знайдено</p>');
+                                }
+                            },
+                            error: function (res) {
+                                displayMessage("Error", res.responseText);
+                            }
+                        });
+                    }
+                }
+            });
+
             $("#panel_2").click(function () {
                 if (!($("#collapse2").hasClass("in"))) {
                     if ($("#panel_body_2").children().length == 0) {
                         $.ajax({
                             method: "GET",
-                            url: "/api/Application/GetServiceApplications",
+                            url: "/api/Application/GetServiceApplications?name=" + '@Model.Email',
+                            async: false,
                             headers: {
                                 Authorization: 'Bearer ' + localStorage.getItem("access_token"),
                             },
@@ -287,9 +420,10 @@
                             success: function (res) {
 
                                 if (res.length > 0) {
-                                    $("#panel_body_2").append(GetDivForApplicationHeader());
+                                    $("#panel_body_2").append(GetDivForApplicationHeader("to_my_app_table_body"));
                                     for (var i = 0; i < res.length; ++i) {
-                                        $("#panel_body_2").append(GetDivForApplication(res[i]));
+                                        var str = GetDivForApplication(res[i]);
+                                        $("#to_my_app_table_body").prepend(GetDivForApplication(res[i]));
                                     }
                                 }
                                 else {
@@ -297,7 +431,7 @@
                                 }
                             },
                             error: function (res) {
-                                alert("ERROR: " + res.responseText);
+                                displayMessage("Error", res.responseText);
                             }
                         });
                     }
@@ -311,16 +445,17 @@
                     if ($("#panel_body_3").children().length == 0) {
                         $.ajax({
                             method: "GET",
-                            url: "/api/Application/GetUserApplications",
+                            url: "/api/Application/GetUserApplications?name=" + '@Model.Email',
+                            async: false,
                             headers: {
                                 Authorization: 'Bearer ' + localStorage.getItem("access_token"),
                             },
                             contentType: "application/json; charset=utf-8",
                             success: function (res) {
                                 if (res.length > 0) {
-                                    $("#panel_body_3").append(GetDivForApplicationHeader());
+                                    $("#panel_body_3").append(GetDivForApplicationHeader("my_app_table_body"));
                                     for (var i = 0; i < res.length; ++i) {
-                                        $("#panel_body_3").append(GetDivForApplication(res[i]));
+                                        $("#my_app_table_body").prepend(GetDivForApplication(res[i]));
                                     }
                                 }
                                 else {
@@ -328,7 +463,7 @@
                                 }
                             },
                             error: function (res) {
-                                alert("ERROR: " + res.responseText);
+                                displayMessage("Error", res.responseText);
                             }
                         });
                     }
@@ -343,6 +478,7 @@
                         $.ajax({
                             method: "GET",
                             url: "/api/ServiceApi/UserNotifications",
+                            async: false,
                             headers: {
                                 Authorization: 'Bearer ' + localStorage.getItem("access_token"),
                             },
@@ -350,7 +486,7 @@
                             success: function (res) {
                                 if (res != null) {
                                     for (var i = 0; i < res.length; ++i) {
-                                        $("#panel_body_5").append(GetDivForNotification(res[i]));
+                                        $("#panel_body_5").prepend(GetDivForNotification(res[i]));
                                     }
 
                                     $('a[id^="note"]').click(function () {
@@ -376,7 +512,7 @@
                                                 }
                                             },
                                             error: function (res) {
-                                                alert(res.responseText);
+                                                displayMessage("Error", res.responseText);
                                             }
                                         });
 
@@ -387,7 +523,7 @@
                                 }
                             },
                             error: function (res) {
-                                alert("ERROR: " + res.responseText);
+                                displayMessage("Error", res.responseText);
                             }
                         });
                     }

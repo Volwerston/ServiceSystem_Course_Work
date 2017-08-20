@@ -7,7 +7,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
     <EncryptedPassword />
-    <_PublishTargetUrl>ftp://servicesystem.somee.com/www.servicesystem.somee.com</_PublishTargetUrl>
+    <_PublishTargetUrl>ftp://servicesystem1.somee.com/www.servicesystem1.somee.com</_PublishTargetUrl>
   </PropertyGroup>
   <ItemGroup>
     <File Include="ApplicationInsights.config">
@@ -91,14 +91,17 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="bin/EntityFramework.SqlServer.dll">
       <publishTime>01/31/2017 20:06:03</publishTime>
     </File>
+    <File Include="bin/Facebook.dll">
+      <publishTime>01/01/0001 00:00:00</publishTime>
+    </File>
     <File Include="bin/itextsharp.dll">
-      <publishTime>07/10/2016 15:33:43</publishTime>
+      <publishTime>10/07/2016 15:33:43</publishTime>
     </File>
     <File Include="bin/itextsharp.pdfa.dll">
-      <publishTime>07/10/2016 15:33:36</publishTime>
+      <publishTime>10/07/2016 15:33:36</publishTime>
     </File>
     <File Include="bin/itextsharp.xtra.dll">
-      <publishTime>07/10/2016 15:33:40</publishTime>
+      <publishTime>10/07/2016 15:33:40</publishTime>
     </File>
     <File Include="bin/Microsoft.AI.Agent.Intercept.dll">
       <publishTime>01/31/2017 20:06:03</publishTime>
@@ -110,7 +113,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/31/2017 20:06:04</publishTime>
     </File>
     <File Include="bin/Microsoft.AI.ServerTelemetryChannel.dll">
-      <publishTime>01/31/2017 20:06:04</publishTime>
+      <publishTime>12/06/2016 15:15:48</publishTime>
     </File>
     <File Include="bin/Microsoft.AI.Web.dll">
       <publishTime>01/31/2017 20:06:04</publishTime>
@@ -122,19 +125,19 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/31/2017 20:06:03</publishTime>
     </File>
     <File Include="bin/Microsoft.AspNet.Identity.Core.dll">
-      <publishTime>01/31/2017 20:06:04</publishTime>
+      <publishTime>04/03/2015 17:07:22</publishTime>
     </File>
     <File Include="bin/Microsoft.AspNet.Identity.EntityFramework.dll">
-      <publishTime>01/31/2017 20:06:04</publishTime>
+      <publishTime>04/03/2015 17:07:22</publishTime>
     </File>
     <File Include="bin/Microsoft.AspNet.Identity.Owin.dll">
-      <publishTime>01/31/2017 20:06:04</publishTime>
+      <publishTime>04/03/2015 17:07:22</publishTime>
     </File>
     <File Include="bin/Microsoft.AspNet.SignalR.Core.dll">
-      <publishTime>07/14/2016 02:35:18</publishTime>
+      <publishTime>03/10/2017 15:38:59</publishTime>
     </File>
     <File Include="bin/Microsoft.AspNet.SignalR.SystemWeb.dll">
-      <publishTime>07/14/2016 02:35:22</publishTime>
+      <publishTime>03/10/2017 15:38:59</publishTime>
     </File>
     <File Include="bin/Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll">
       <publishTime>01/31/2017 20:06:04</publishTime>
@@ -212,10 +215,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/31/2017 20:06:04</publishTime>
     </File>
     <File Include="bin/ServiceSystem.dll">
-      <publishTime>02/03/2017 10:26:05</publishTime>
+      <publishTime>04/11/2017 19:38:29</publishTime>
     </File>
     <File Include="bin/ServiceSystem.pdb">
-      <publishTime>02/03/2017 10:26:05</publishTime>
+      <publishTime>04/11/2017 19:38:29</publishTime>
     </File>
     <File Include="bin/System.Net.Http.Formatting.dll">
       <publishTime>01/31/2017 20:06:04</publishTime>
@@ -236,7 +239,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/31/2017 20:06:04</publishTime>
     </File>
     <File Include="bin/System.Web.Optimization.dll">
-      <publishTime>02/11/2014 14:26:04</publishTime>
+      <publishTime>01/31/2017 20:06:04</publishTime>
     </File>
     <File Include="bin/System.Web.Razor.dll">
       <publishTime>01/31/2017 20:06:04</publishTime>
@@ -253,41 +256,80 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="bin/WebGrease.dll">
       <publishTime>01/31/2017 20:06:04</publishTime>
     </File>
+    <File Include="Common/0KU1nvBuEk4.jpg">
+      <publishTime>04/02/2017 12:47:51</publishTime>
+    </File>
     <File Include="Common/arial.ttf">
-      <publishTime>02/19/2017 21:36:46</publishTime>
+      <publishTime>03/10/2017 15:38:59</publishTime>
+    </File>
+    <File Include="Common/default_property_widget.html">
+      <publishTime>03/31/2017 18:30:21</publishTime>
     </File>
     <File Include="Common/default_property_widget.txt">
-      <publishTime>02/08/2017 21:38:58</publishTime>
+      <publishTime>03/24/2017 00:19:01</publishTime>
+    </File>
+    <File Include="Common/duration_measure_from.html">
+      <publishTime>04/10/2017 20:59:07</publishTime>
     </File>
     <File Include="Common/duration_measure_from.txt">
       <publishTime>02/08/2017 21:38:58</publishTime>
     </File>
+    <File Include="Common/duration_measure_from_till.html">
+      <publishTime>04/10/2017 20:59:16</publishTime>
+    </File>
     <File Include="Common/duration_measure_from_till.txt">
       <publishTime>02/08/2017 21:38:58</publishTime>
+    </File>
+    <File Include="Common/duration_measure_till.html">
+      <publishTime>04/10/2017 20:59:23</publishTime>
     </File>
     <File Include="Common/duration_measure_till.txt">
       <publishTime>02/08/2017 21:38:58</publishTime>
     </File>
+    <File Include="Common/duration_measure_widget.html">
+      <publishTime>04/10/2017 21:04:20</publishTime>
+    </File>
     <File Include="Common/duration_measure_widget.txt">
       <publishTime>02/08/2017 21:38:58</publishTime>
     </File>
+    <File Include="Common/price_measure_widget.html">
+      <publishTime>03/31/2017 18:24:01</publishTime>
+    </File>
     <File Include="Common/price_measure_widget.txt">
-      <publishTime>02/08/2017 21:38:58</publishTime>
+      <publishTime>03/24/2017 00:46:32</publishTime>
+    </File>
+    <File Include="Common/service_course_block.html">
+      <publishTime>04/10/2017 21:23:14</publishTime>
     </File>
     <File Include="Common/service_course_block.txt">
       <publishTime>02/08/2017 21:38:58</publishTime>
     </File>
+    <File Include="Common/service_deadline_block.html">
+      <publishTime>04/10/2017 21:05:16</publishTime>
+    </File>
     <File Include="Common/service_deadline_block.txt">
-      <publishTime>02/08/2017 21:38:59</publishTime>
+      <publishTime>03/24/2017 00:53:41</publishTime>
+    </File>
+    <File Include="Common/service_session_block.html">
+      <publishTime>04/10/2017 21:01:33</publishTime>
     </File>
     <File Include="Common/service_session_block.txt">
       <publishTime>02/08/2017 21:38:59</publishTime>
     </File>
+    <File Include="Common/week_gradation_widget.html">
+      <publishTime>04/10/2017 21:27:34</publishTime>
+    </File>
     <File Include="Common/week_gradation_widget.txt">
       <publishTime>02/08/2017 21:38:59</publishTime>
     </File>
+    <File Include="Common/week_gradation_widget_duration.html">
+      <publishTime>04/10/2017 21:28:35</publishTime>
+    </File>
     <File Include="Common/week_gradation_widget_duration.txt">
       <publishTime>02/08/2017 21:38:59</publishTime>
+    </File>
+    <File Include="Common/week_gradation_widget_hours.html">
+      <publishTime>04/10/2017 21:30:27</publishTime>
     </File>
     <File Include="Common/week_gradation_widget_hours.txt">
       <publishTime>02/08/2017 21:38:59</publishTime>
@@ -297,6 +339,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="Content/bootstrap.min.css">
       <publishTime>01/31/2017 20:06:04</publishTime>
+    </File>
+    <File Include="Content/growl.css">
+      <publishTime>03/30/2017 20:42:38</publishTime>
     </File>
     <File Include="Content/Site.css">
       <publishTime>01/31/2017 20:06:04</publishTime>
@@ -320,13 +365,25 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/31/2017 20:06:04</publishTime>
     </File>
     <File Include="packages.config">
-      <publishTime>02/27/2017 19:50:43</publishTime>
+      <publishTime>03/13/2017 00:53:58</publishTime>
+    </File>
+    <File Include="Scripts/AppValidators.js">
+      <publishTime>03/26/2017 21:25:56</publishTime>
+    </File>
+    <File Include="Scripts/BillValidators.js">
+      <publishTime>03/28/2017 01:15:21</publishTime>
     </File>
     <File Include="Scripts/bootstrap.js">
       <publishTime>01/31/2017 20:06:04</publishTime>
     </File>
     <File Include="Scripts/bootstrap.min.js">
       <publishTime>01/31/2017 20:06:04</publishTime>
+    </File>
+    <File Include="Scripts/FacebookAuth.js">
+      <publishTime>03/23/2017 22:25:18</publishTime>
+    </File>
+    <File Include="Scripts/growl.js">
+      <publishTime>03/30/2017 20:37:49</publishTime>
     </File>
     <File Include="Scripts/jquery-1.10.2.js">
       <publishTime>01/31/2017 20:06:04</publishTime>
@@ -338,10 +395,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/31/2017 20:06:04</publishTime>
     </File>
     <File Include="Scripts/jquery.signalR-2.2.1.js">
-      <publishTime>02/27/2017 19:50:41</publishTime>
+      <publishTime>03/10/2017 15:39:00</publishTime>
     </File>
     <File Include="Scripts/jquery.signalR-2.2.1.min.js">
-      <publishTime>02/27/2017 19:50:41</publishTime>
+      <publishTime>03/10/2017 15:39:00</publishTime>
     </File>
     <File Include="Scripts/jquery.validate.js">
       <publishTime>01/31/2017 20:06:04</publishTime>
@@ -358,41 +415,50 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Scripts/modernizr-2.6.2.js">
       <publishTime>01/31/2017 20:06:04</publishTime>
     </File>
+    <File Include="Scripts/module_script.js">
+      <publishTime>04/06/2017 19:04:33</publishTime>
+    </File>
     <File Include="Scripts/respond.js">
       <publishTime>01/31/2017 20:06:04</publishTime>
     </File>
     <File Include="Scripts/respond.min.js">
       <publishTime>01/31/2017 20:06:04</publishTime>
     </File>
+    <File Include="Scripts/Validators.js">
+      <publishTime>04/10/2017 21:20:21</publishTime>
+    </File>
     <File Include="Scripts/_references.js">
-      <publishTime>02/27/2017 19:50:41</publishTime>
+      <publishTime>03/31/2017 15:38:54</publishTime>
     </File>
     <File Include="Views/Service/ApplicationDetails.cshtml">
-      <publishTime>02/03/2017 10:15:36</publishTime>
+      <publishTime>04/06/2017 00:40:01</publishTime>
     </File>
     <File Include="Views/Service/Authorize.cshtml">
-      <publishTime>02/08/2017 21:38:59</publishTime>
+      <publishTime>04/06/2017 00:38:28</publishTime>
     </File>
     <File Include="Views/Service/ChangePassword.cshtml">
-      <publishTime>02/08/2017 21:38:59</publishTime>
+      <publishTime>03/30/2017 20:17:13</publishTime>
     </File>
     <File Include="Views/Service/ConsultantSearch.cshtml">
-      <publishTime>02/03/2017 10:15:09</publishTime>
+      <publishTime>04/06/2017 23:40:23</publishTime>
+    </File>
+    <File Include="Views/Service/Description.cshtml">
+      <publishTime>04/08/2017 12:29:16</publishTime>
     </File>
     <File Include="Views/Service/Dialogue.cshtml">
-      <publishTime>02/28/2017 16:03:03</publishTime>
+      <publishTime>04/11/2017 20:04:02</publishTime>
     </File>
     <File Include="Views/Service/Foo.cshtml">
       <publishTime>01/02/2017 01:07:46</publishTime>
     </File>
     <File Include="Views/Service/GetToken.cshtml">
-      <publishTime>02/08/2017 21:38:59</publishTime>
+      <publishTime>03/23/2017 19:21:25</publishTime>
     </File>
     <File Include="Views/Service/Index.cshtml">
-      <publishTime>02/20/2017 00:43:51</publishTime>
+      <publishTime>04/11/2017 00:27:33</publishTime>
     </File>
     <File Include="Views/Service/InternalAccountPage.cshtml">
-      <publishTime>03/02/2017 10:57:50</publishTime>
+      <publishTime>04/11/2017 17:06:56</publishTime>
     </File>
     <File Include="Views/Service/MailConfirmError.cshtml">
       <publishTime>02/08/2017 21:38:59</publishTime>
@@ -401,52 +467,70 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/08/2017 21:38:59</publishTime>
     </File>
     <File Include="Views/Service/Main.cshtml">
-      <publishTime>02/03/2017 10:13:45</publishTime>
+      <publishTime>04/11/2017 00:22:49</publishTime>
     </File>
     <File Include="Views/Service/Register.cshtml">
-      <publishTime>02/08/2017 21:38:59</publishTime>
+      <publishTime>03/30/2017 21:04:31</publishTime>
+    </File>
+    <File Include="Views/Service/ServiceCharts.cshtml">
+      <publishTime>04/06/2017 19:18:04</publishTime>
     </File>
     <File Include="Views/Service/ServiceDetails.cshtml">
-      <publishTime>02/03/2017 10:13:23</publishTime>
+      <publishTime>04/11/2017 17:33:06</publishTime>
     </File>
     <File Include="Views/Service/ServiceSearch.cshtml">
-      <publishTime>02/03/2017 10:12:53</publishTime>
+      <publishTime>04/06/2017 23:29:08</publishTime>
     </File>
     <File Include="Views/Service/SetNewPassword.cshtml">
-      <publishTime>02/08/2017 23:29:32</publishTime>
+      <publishTime>04/06/2017 00:42:38</publishTime>
     </File>
     <File Include="Views/Shared/Error.cshtml">
-      <publishTime>01/31/2017 20:06:04</publishTime>
+      <publishTime>03/31/2017 19:47:02</publishTime>
     </File>
     <File Include="Views/Shared/_Application.cshtml">
       <publishTime>02/09/2017 00:40:08</publishTime>
     </File>
     <File Include="Views/Shared/_Bill.cshtml">
-      <publishTime>02/28/2017 19:29:31</publishTime>
+      <publishTime>04/04/2017 17:41:49</publishTime>
+    </File>
+    <File Include="Views/Shared/_ConsultantStats.cshtml">
+      <publishTime>04/06/2017 18:43:42</publishTime>
     </File>
     <File Include="Views/Shared/_CustomerFAQ.cshtml">
-      <publishTime>02/03/2017 10:09:06</publishTime>
+      <publishTime>03/10/2017 23:12:43</publishTime>
+    </File>
+    <File Include="Views/Shared/_CustomerMediaFile.cshtml">
+      <publishTime>04/11/2017 17:32:33</publishTime>
     </File>
     <File Include="Views/Shared/_DeadlineApplication.cshtml">
-      <publishTime>02/08/2017 21:38:59</publishTime>
+      <publishTime>03/26/2017 21:26:27</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>02/27/2017 21:56:23</publishTime>
+      <publishTime>04/08/2017 11:49:25</publishTime>
     </File>
     <File Include="Views/Shared/_ProviderFAQ.cshtml">
-      <publishTime>02/03/2017 09:46:09</publishTime>
+      <publishTime>03/10/2017 23:12:12</publishTime>
+    </File>
+    <File Include="Views/Shared/_ProviderMediaFile.cshtml">
+      <publishTime>04/11/2017 17:28:21</publishTime>
+    </File>
+    <File Include="Views/Shared/_ServiceStats.cshtml">
+      <publishTime>04/06/2017 18:47:23</publishTime>
     </File>
     <File Include="Views/Shared/_SessionApplication.cshtml">
-      <publishTime>02/08/2017 21:38:59</publishTime>
+      <publishTime>03/26/2017 20:58:44</publishTime>
+    </File>
+    <File Include="Views/Shared/_StartView.cshtml">
+      <publishTime>03/30/2017 20:43:01</publishTime>
     </File>
     <File Include="Views/Web.config">
       <publishTime>01/31/2017 20:06:04</publishTime>
     </File>
     <File Include="Views/_ViewStart.cshtml">
-      <publishTime>01/31/2017 20:06:04</publishTime>
+      <publishTime>03/30/2017 21:15:04</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>02/28/2017 21:40:41</publishTime>
+      <publishTime>04/11/2017 00:28:40</publishTime>
     </File>
   </ItemGroup>
 </Project>

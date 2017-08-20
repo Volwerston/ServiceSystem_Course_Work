@@ -1,10 +1,12 @@
 ﻿using Newtonsoft.Json;
 using ServiceSystem.Models;
+using ServiceSystem.Models.Auxiliary_Classes;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -23,342 +25,21 @@ namespace ServiceSystem.Controllers
         public int LastID { get; set; }
     }
 
-    public class DetailsStrategy
+    public class SystemStats
     {
-        public static Dictionary<string, string> GetDetails(int detailsId, string serviceType, SqlConnection con)
-        {
-
-            Dictionary<string, string> toReturn = null;
-
-            if(serviceType == "Deadline")
-            {
-                toReturn = GetDeadlineDetails(detailsId, con);
-            }
-            else if(serviceType == "Session")
-            {
-                toReturn = GetSessionDetails(detailsId, con);
-            }
-            else if(serviceType == "Course")
-            {
-                toReturn = GetCourseDetails(detailsId, con);
-            }
-
-            toReturn.Add("SERVICE_TYPE", serviceType);
-
-            return toReturn;
-        }
-
-        private static  Dictionary<string, string> GetDeadlineDetails(int detailsId, SqlConnection con)
-        {
-            string cmdString = "SELECT * FROM Deadline_Details WHERE ID=@Id";
-
-            Dictionary<string, string> toReturn = new Dictionary<string, string>();
-
-            SqlDataAdapter da = new SqlDataAdapter(cmdString, con);
-            da.SelectCommand.Parameters.AddWithValue("@Id", detailsId);
-
-            DataSet set = new DataSet();
-
-            try
-            {
-                da.Fill(set);
-
-                if(set.Tables[0].Rows.Count > 0)
-                {
-                    List<TimeMeasure> measures = JsonConvert.DeserializeObject<List<TimeMeasure>>(set.Tables[0].Rows[0]["TIME_MEASURES"].ToString());
-
-                    toReturn.Add("Тривалість", StringifyTimeMeasures(measures));
-
-                    List<PaymentMeasure> pMeasures = JsonConvert.DeserializeObject<List<PaymentMeasure>>
-                        (set.Tables[0].Rows[0]["PAYMENT_MEASURES"].ToString());
-
-                    toReturn.Add("Вартість", StringifyPaymentMeasures(pMeasures));
-                }
-                else
-                {
-                    toReturn = null;
-                }
-            }
-            catch
-            {
-                toReturn = null;
-            }
-
-            return toReturn;
-        }
-
-        private static string StringifyTimeMeasures(List<TimeMeasure> measures)
-        {
-            StringBuilder durationColumnBuilder = new StringBuilder("");
-
-            foreach (TimeMeasure measure in measures)
-            {
-
-                StringBuilder minDurationStr = new StringBuilder();
-                StringBuilder maxDurationStr = new StringBuilder();
-
-                int minMonths = 0, minWeeks = 0, minDays = 0;
-
-                if (measure.MinDuration.Days / 30 > 0)
-                {
-                    minMonths = measure.MinDuration.Days / 30;
-                    minDurationStr.Append(minMonths.ToString());
-                    minDurationStr.Append(" місяців ");
-                }
-
-                if ((measure.MinDuration.Days - 30 * minMonths) / 7 > 0)
-                {
-                    minWeeks = (measure.MinDuration.Days - 30 * minMonths) / 7;
-                    minDurationStr.Append(minWeeks.ToString());
-                    minDurationStr.Append(" тижнів ");
-                }
-
-                if ((measure.MinDuration.Days - 30 * minMonths - 7 * minWeeks) > 0)
-                {
-                    minDays = measure.MinDuration.Days - 30 * minMonths - 7 * minWeeks;
-                    minDurationStr.Append(minDays.ToString());
-                    minDurationStr.Append(" днів ");
-                }
-
-                if (measure.MinDuration.Hours > 0)
-                {
-                    minDurationStr.Append(measure.MinDuration.Hours.ToString());
-                    minDurationStr.Append(" годин ");
-                }
-
-                if (measure.MinDuration.Minutes > 0)
-                {
-                    minDurationStr.Append(measure.MinDuration.Minutes.ToString());
-                    minDurationStr.Append(" хвилин ");
-                }
-
-                int maxMonths = 0, maxWeeks = 0, maxDays = 0;
-
-                if (measure.MaxDuration.Days / 30 > 0)
-                {
-                    maxMonths = measure.MaxDuration.Days / 30;
-                    maxDurationStr.Append(maxMonths.ToString());
-                    maxDurationStr.Append(" місяців ");
-                }
-
-                if ((measure.MaxDuration.Days - 30 * maxMonths) / 7 > 0)
-                {
-                    maxWeeks = (measure.MaxDuration.Days - 30 * maxMonths) / 7;
-                    maxDurationStr.Append(maxWeeks.ToString());
-                    maxDurationStr.Append(" тижнів ");
-                }
-
-                if ((measure.MaxDuration.Days - 30 * maxMonths - 7 * maxWeeks) > 0)
-                {
-                    maxDays = measure.MaxDuration.Days - 30 * maxMonths - 7 * maxWeeks;
-                    maxDurationStr.Append(maxDays.ToString());
-                    maxDurationStr.Append(" днів ");
-                }
-
-                if (measure.MaxDuration.Hours > 0)
-                {
-                    maxDurationStr.Append(measure.MaxDuration.Hours.ToString());
-                    maxDurationStr.Append(" годин ");
-                }
-
-                if (measure.MaxDuration.Minutes > 0)
-                {
-                    maxDurationStr.Append(measure.MaxDuration.Minutes.ToString());
-                    maxDurationStr.Append(" хвилин ");
-                }
-
-                durationColumnBuilder.Append("<h4> Від: ");
-                durationColumnBuilder.Append(minDurationStr.ToString());
-                durationColumnBuilder.Append("</h4> <h4> До: ");
-                durationColumnBuilder.Append(maxDurationStr.ToString());
-                durationColumnBuilder.Append(" </h4>");
-
-                if (measure.Description != null)
-                {
-                    durationColumnBuilder.Append("<p>");
-                    durationColumnBuilder.Append(measure.Description);
-                    durationColumnBuilder.Append("</p>");
-                }
-
-                durationColumnBuilder.Append("<br/>");
-                durationColumnBuilder.Append("<br/>");
-                durationColumnBuilder.Append("<br/>");
-            }
-
-            return durationColumnBuilder.ToString();
-        }
-
-        private static string StringifyPaymentMeasures(List<PaymentMeasure> measures)
-        {
-            StringBuilder priceColumnBuilder = new StringBuilder("");
-
-            foreach (PaymentMeasure measure in measures)
-            { 
-                string toAppend = String.Format("{0} (currency) / {1}", measure.PricePerUnit.ToString(),
-                 measure.ValueMeasure);
-
-                if (measure.Currency == "hryvnia")
-                {
-                    toAppend = toAppend.Replace("(currency)", CultureInfo.GetCultureInfo("uk-UA").NumberFormat.CurrencySymbol);
-                }
-                else if (measure.Currency == "dollar")
-                {
-                    toAppend = toAppend.Replace("(currency)", CultureInfo.GetCultureInfo("en-US").NumberFormat.CurrencySymbol);
-                }
-                else
-                {
-                    toAppend = toAppend.Replace("(currency)", CultureInfo.GetCultureInfo("en-GB").NumberFormat.CurrencySymbol);
-                }
-
-                priceColumnBuilder.Append("<h4>");
-                priceColumnBuilder.Append(toAppend);
-                priceColumnBuilder.Append("</h4>");
-
-                if (measure.Description != null)
-                {
-                    priceColumnBuilder.Append("<p>");
-                    priceColumnBuilder.Append(measure.Description);
-                    priceColumnBuilder.Append("</p>");
-                }
-
-                priceColumnBuilder.Append("<br/>");
-                priceColumnBuilder.Append("<br/>");
-            }
-
-            return priceColumnBuilder.ToString();
-        }
-
-        private static string StringifyDaysMeasures(List<Day> days)
-        {
-            StringBuilder weekBuilder = new StringBuilder("");
-
-            string[] daysStr = { "Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Нд" };
-
-            foreach (Day day in days)
-            {
-                weekBuilder.AppendFormat("{0}: {1} - {2} <br/>",
-                                daysStr[(int)day.DayOfWeek - 1],
-                               day.StartTime.ToString(@"hh\:mm"),
-                                day.EndTime.ToString(@"hh\:mm"));
-            }
-
-            return weekBuilder.ToString();
-        }
-
-        private static Dictionary<string, string> GetSessionDetails(int detailsId, SqlConnection con)
-        {
-            Dictionary<string, string> toReturn = new Dictionary<string, string>();
-
-            string cmdString = "SELECT * FROM Session_Details WHERE ID=@Id;";
-
-            SqlDataAdapter da = new SqlDataAdapter(cmdString, con);
-            da.SelectCommand.Parameters.AddWithValue("@Id", detailsId);
-
-            DataSet set = new DataSet();
-
-            try
-            {
-                da.Fill(set);
-
-                if(set.Tables[0].Rows.Count > 0)
-                {
-                    List<Day> days = JsonConvert.DeserializeObject<List<Day>>(set.Tables[0].Rows[0]["DAYS"].ToString());
-
-                    toReturn.Add("Час надання послуги", StringifyDaysMeasures(days));
-
-                    List<TimeMeasure> measures = JsonConvert.DeserializeObject<List<TimeMeasure>>(set.Tables[0].Rows[0]["TIME_MEASURES"].ToString());
-
-                    toReturn.Add("Тривалість", StringifyTimeMeasures(measures));
-
-                    List<PaymentMeasure> pMeasures = JsonConvert.DeserializeObject<List<PaymentMeasure>>
-                        (set.Tables[0].Rows[0]["PAYMENT_MEASURES"].ToString());
-
-                    toReturn.Add("Вартість", StringifyPaymentMeasures(pMeasures));
-                }
-                else
-                {
-                    toReturn = null;
-                }
-            }
-            catch
-            {
-                toReturn = null;
-            }
-
-            return toReturn;
-        }
-
-        private static Dictionary<string, string> GetCourseDetails(int detailsId, SqlConnection con)
-        {
-            Dictionary<string, string> toReturn = new Dictionary<string, string>();
-
-            string cmdString = "SELECT * FROM Course_Details WHERE ID=@Id;";
-
-            SqlDataAdapter da = new SqlDataAdapter(cmdString, con);
-            da.SelectCommand.Parameters.AddWithValue("@Id", detailsId);
-
-            DataSet set = new DataSet();
-
-            try
-            {
-                da.Fill(set);
-
-                if (set.Tables[0].Rows.Count > 0)
-                {
-                    toReturn.Add("Початок", set.Tables[0].Rows[0]["START_DATE"].ToString());
-                    toReturn.Add("Кінець", set.Tables[0].Rows[0]["END_DATE"].ToString());
-
-                    List<PaymentMeasure> measures = JsonConvert.DeserializeObject<List<PaymentMeasure>>(
-                        set.Tables[0].Rows[0]["PAYMENT_MEASURES"].ToString()
-                        );
-
-                    toReturn.Add("Вартість", StringifyPaymentMeasures(measures));
-
-                    if (set.Tables[0].Rows[0]["COURSE_PARAMS"].ToString() != "null")
-                    {
-                        bool isDefined = Convert.ToBoolean(set.Tables[0].Rows[0]["IS_DEFINED"].ToString());
-
-                        if (isDefined)
-                        {
-                            DefinedCourseParams parameters = JsonConvert.DeserializeObject<DefinedCourseParams>(
-                                set.Tables[0].Rows[0]["COURSE_PARAMS"].ToString()
-                                );
-
-                            toReturn.Add("Розклад", StringifyDaysMeasures(parameters.Days));
-                        }
-                        else
-                        {
-                            UndefinedCourseParams parameters = JsonConvert.DeserializeObject<UndefinedCourseParams>(
-                                set.Tables[0].Rows[0]["COURSE_PARAMS"].ToString()
-                                );
-
-                            StringBuilder daysBuilder = new StringBuilder("");
-
-                            foreach (var node in parameters.Days)
-                            {
-                                daysBuilder.AppendFormat("День {0} : {1} хв <br/>",
-                                    node.Key.ToString(), node.Value.ToString());
-                            }
-
-                            toReturn.Add("Розклад", daysBuilder.ToString());
-                        }
-                    }
-                }
-                else
-                {
-                    toReturn = null;
-                }
-            }
-            catch
-            {
-                toReturn = null;
-            }
-
-            return toReturn;
-        }
+        public int UsersNumber { get; set; }
+        public int ServicesNumber { get; set; }
+        public int ApplicationsNumber { get; set; }
+        public int DialoguesNumber { get; set; }
     }
 
+    public class AttachmentParams
+    {
+        public string Name { get; set; }
+        public int ServiceId { get; set; }
+    }
 
+    [Authorize]
     public class ServiceApiController : ApiController
     {
 
@@ -402,6 +83,80 @@ namespace ServiceSystem.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, toReturn);
         }
 
+        [AllowAnonymous]
+        [ActionName("SystemStats")]
+        [HttpGet]
+        public HttpResponseMessage GetSystemStats()
+        {
+            SystemStats toReturn = new SystemStats();
+
+            using (SqlConnection connection = new SqlConnection(System.Web.Configuration.WebConfigurationManager.ConnectionStrings["DBCS"].ConnectionString))
+            {
+                string cmdString = "SELECT * FROM dbo.GetServiceData()";
+
+                SqlDataAdapter da = new SqlDataAdapter(cmdString, connection);
+                DataSet set = new DataSet();
+
+                try
+                {
+                    da.Fill(set);
+
+                    DataRow row = set.Tables[0].Rows[0];
+
+                    toReturn.ApplicationsNumber = Convert.ToInt32(row["CurrentAppsNumber"]) + Convert.ToInt32(row["DoneAppsNumber"]);
+                    toReturn.ServicesNumber = Convert.ToInt32(row["ServicesNumber"]);
+                    toReturn.UsersNumber = Convert.ToInt32(row["UsersNumber"]);
+                    toReturn.DialoguesNumber = Convert.ToInt32(row["DialoguesNumber"]);
+                }
+                catch(Exception ex)
+                {
+                    return Request.CreateResponse(HttpStatusCode.InternalServerError, ex.Message);
+                }
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, toReturn);
+        }
+
+        [AllowAnonymous]
+        public HttpResponseMessage GetMediaFiles([FromUri] int service_id)
+        {
+            List<MediaFile> toReturn = new List<MediaFile>();
+
+            using (SqlConnection connection = new SqlConnection(System.Web.Configuration.WebConfigurationManager.ConnectionStrings["DBCS"].ConnectionString))
+            {
+                string cmdString = "SELECT ID, URL, DESCRIPTION FROM MediaFiles WHERE SERVICE_ID=@Id";
+
+                SqlDataAdapter da = new SqlDataAdapter(cmdString, connection);
+
+                da.SelectCommand.Parameters.AddWithValue("@Id", service_id);
+
+                DataSet set = new DataSet();
+
+                try
+                {
+                    da.Fill(set);
+
+                    foreach (DataRow row in set.Tables[0].Rows)
+                    {
+                        MediaFile file = new MediaFile();
+
+                        file.Id = Convert.ToInt32(row["ID"].ToString());
+                        file.Path = row["URL"].ToString();
+                        file.Description = row["DESCRIPTION"].ToString();
+                        file.ServiceId = service_id;
+
+                        toReturn.Add(file);
+                    }
+                }
+                catch(Exception ex)
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
+                }
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, toReturn);
+        }
+
         [ActionName("PostServiceParams")]
         public string Post([FromBody]ServiceParams parameters)
         {
@@ -410,7 +165,7 @@ namespace ServiceSystem.Controllers
 
                 List<Service> toReturn = new List<Service>();
 
-                string cmdString = "SELECT TOP 3 * FROM SERVICES WHERE (ID > @Id) AND ";
+                string cmdString = "SELECT TOP 5 * FROM SERVICES WHERE (ID > @Id) AND ";
 
                 List<string> filters = new List<string>();
                 Dictionary<string, object> sqlParams = new Dictionary<string, object>();
@@ -419,9 +174,25 @@ namespace ServiceSystem.Controllers
 
                 if(parameters.Name != "")
                 {
-                    filters.Add("(UPPER(NAME) LIKE '%' + UPPER(@Name) + '%')");
-                    sqlParams.Add("@Name", parameters.Name);
+                    StringBuilder toAdd = new StringBuilder("");
+
+                    if (parameters.DescriptionSearch)
+                    {
+                        toAdd.Append("((UPPER(NAME) LIKE '%' + UPPER(@Name) + '%')");
+                        sqlParams.Add("@Name", parameters.Name);
+
+                        toAdd.Append(" OR (DESCRIPTION LIKE '%' + @Description + '%'))");
+                        sqlParams.Add("@Description", parameters.Name);
+                    }
+                    else
+                    {
+                        toAdd.Append("(UPPER(NAME) LIKE '%' + UPPER(@Name) + '%')");
+                        sqlParams.Add("@Name", parameters.Name);
+                    }
+
+                    filters.Add(toAdd.ToString());
                 }
+
 
                 if(parameters.Category != "None")
                 {
@@ -429,11 +200,6 @@ namespace ServiceSystem.Controllers
                     sqlParams.Add("@Category", parameters.Category);
                 }
 
-                if(parameters.DescriptionSearch)
-                {
-                    filters.Add("(DESCRIPTION LIKE '%' + @Description + '%')");
-                    sqlParams.Add("@Description", parameters.Name);
-                }
 
                 if(parameters.Type != "None")
                 {
@@ -475,7 +241,7 @@ namespace ServiceSystem.Controllers
                         service.Id = Convert.ToInt32(row["ID"].ToString());
                         service.Name = row["NAME"].ToString();
                         service.Category = row["CATEGORIES"].ToString();
-
+                        service.Username = row["USERNAME"].ToString();
                         service.Description = row["DESCRIPTION"].ToString();
 
                         toReturn.Add(service);
@@ -495,8 +261,129 @@ namespace ServiceSystem.Controllers
             }
         }
 
-        
-        [ActionName("UserNotifications")]
+        public HttpResponseMessage DeleteMediaFile([FromUri]int id)
+        {
+            using (SqlConnection connection = new SqlConnection(System.Web.Configuration.WebConfigurationManager.ConnectionStrings["DBCS"].ConnectionString))
+            {
+                string cmdString = "SELECT URL FROM MediaFiles WHERE ID=@Id; DELETE FROM MediaFiles WHERE ID=@Id";
+
+                SqlCommand cmd = new SqlCommand(cmdString, connection);
+                cmd.Parameters.AddWithValue("@Id", id);
+
+                try
+                {
+                    connection.Open();
+                    string path = cmd.ExecuteScalar().ToString();
+
+                    if (path[0] == '~')
+                    {
+                        FileInfo file = new FileInfo(path);
+
+                        if (file.Exists)
+                        {
+                            file.Delete();
+                        }
+                    }
+                }
+                catch(Exception ex)
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
+                }
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, "OK");
+        }
+
+        [ActionName("GetServiceAttachments")]
+        public HttpResponseMessage GetServiceAttachments([FromUri] int service_id)
+        {
+            using (SqlConnection connection = new SqlConnection(System.Web.Configuration.WebConfigurationManager.ConnectionStrings["DBCS"].ConnectionString))
+            {
+                SqlDataAdapter da = new SqlDataAdapter("SELECT NAME FROM ServiceAttachments WHERE USED_SERVICE_ID=@ServiceId", connection);
+
+                da.SelectCommand.Parameters.AddWithValue("@ServiceId", service_id);
+
+                DataSet set = new DataSet();
+
+                try
+                {
+                    da.Fill(set);
+
+                    List<string> names = new List<string>();
+
+                    foreach(DataRow row in set.Tables[0].Rows)
+                    {
+                        names.Add(row["NAME"].ToString());
+                    }
+
+                    return Request.CreateResponse(HttpStatusCode.OK, names);
+                }
+                catch(Exception ex)
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
+                }
+
+            }
+        }
+
+        [ActionName("GetAttachment")]
+        [HttpPost]
+        public HttpResponseMessage GetAttachment([FromBody] AttachmentParams parameters)
+        {
+            using (SqlConnection connection = new SqlConnection(System.Web.Configuration.WebConfigurationManager.ConnectionStrings["DBCS"].ConnectionString))
+            {
+                SqlDataAdapter da = new SqlDataAdapter("SELECT DATA FROM ServiceAttachments WHERE USED_SERVICE_ID=@ServiceId AND NAME = @Name", connection);
+
+                da.SelectCommand.Parameters.AddWithValue("@Serviceid", parameters.ServiceId);
+                da.SelectCommand.Parameters.AddWithValue("@Name", parameters.Name);
+
+                DataSet set = new DataSet();
+
+                try
+                {
+                    da.Fill(set);
+
+                    byte[] toPass = (byte[])set.Tables[0].Rows[0]["DATA"];
+
+                    return Request.CreateResponse(HttpStatusCode.OK, toPass);
+                }
+                catch(Exception ex)
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
+                }
+            }
+        }
+
+        [HttpPost]
+        [ActionName("AddMediaFile")]
+        public HttpResponseMessage AddMediaFile([FromBody]MediaFile file)
+        {
+            using (SqlConnection connection = new SqlConnection(System.Web.Configuration.WebConfigurationManager.ConnectionStrings["DBCS"].ConnectionString))
+            {
+                string cmdString = "INSERT INTO MediaFiles VALUES(@Url, @Description, @ServiceId);";
+
+                SqlCommand cmd = new SqlCommand(cmdString, connection);
+
+                cmd.Parameters.AddWithValue("@Url", file.Path);
+                cmd.Parameters.AddWithValue("@Description", file.Description);
+                cmd.Parameters.AddWithValue("@ServiceId", file.ServiceId);
+
+                try
+                {
+                    connection.Open();
+                    cmd.ExecuteNonQuery();
+                }
+                catch(Exception ex)
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
+                }
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, "OK");
+        }
+
+
+[ActionName("UserNotifications")]
         public HttpResponseMessage GetUserNotifications()
         {
             List<Notification> notificatons = new List<Notification>();

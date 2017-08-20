@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Runtime.Caching;
 using System.Threading;
@@ -11,35 +13,43 @@ namespace ServiceSystem.Facebook
 {
     public class FacebookBackChannelHandler : HttpClientHandler
     {
+        public class FacebookOauthResponse
+        {
+            public string access_token { get; set; }
+            public string token_type { get; set; }
+            public int expires_in { get; set; }
+        }
+
         protected override async Task<HttpResponseMessage>
             SendAsync(HttpRequestMessage request,
                       CancellationToken cancellationToken)
         {
-            if (!request.RequestUri.AbsolutePath.Contains("/oauth"))
+            var result = await base.SendAsync(request, cancellationToken);
+            if (!request.RequestUri.AbsolutePath.Contains("access_token"))
             {
-
-                try
+                if (!request.RequestUri.AbsolutePath.Contains("/oauth"))
                 {
-                    string token = request.RequestUri.AbsoluteUri.Split('?').Where(x => x.Length > 12 && x.Substring(0, 12) == "access_token").Single();
-
-                    token = token.Substring(13);
-                    ObjectCache cache = MemoryCache.Default;
-
-                    CacheItemPolicy policy = new CacheItemPolicy();
-                    policy.AbsoluteExpiration =
-                        DateTimeOffset.Now.AddHours(1);
-
-                    cache.Set("access_token", token, policy);
-
-                    request.RequestUri = new Uri(
-                        request.RequestUri.AbsoluteUri.Replace("?access_token", "&access_token"));
+                    request.RequestUri = new Uri(request.RequestUri.AbsoluteUri.Replace("?access_token", "&access_token"));
                 }
-                catch(Exception ex)
-                {
 
-                }
+                return await base.SendAsync(request, cancellationToken);
             }
-            return await base.SendAsync(request, cancellationToken);
+
+            var content = await result.Content.ReadAsStringAsync();
+            var facebookOauthResponse = JsonConvert.DeserializeObject<FacebookOauthResponse>(content);
+
+            var outgoingQueryString = HttpUtility.ParseQueryString(string.Empty);
+            outgoingQueryString.Add(nameof(facebookOauthResponse.access_token), facebookOauthResponse.access_token);
+            outgoingQueryString.Add(nameof(facebookOauthResponse.expires_in), facebookOauthResponse.expires_in + string.Empty);
+            outgoingQueryString.Add(nameof(facebookOauthResponse.token_type), facebookOauthResponse.token_type);
+            var postdata = outgoingQueryString.ToString();
+
+            var modifiedResult = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(postdata)
+            };
+
+            return modifiedResult;
         }
     }
 }

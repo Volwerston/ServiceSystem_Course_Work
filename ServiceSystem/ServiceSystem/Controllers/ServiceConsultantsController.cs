@@ -19,8 +19,90 @@ namespace ServiceSystem.Controllers
         public int LastID { get; set; }
         public int ServiceId { get; set; }
     }
+
+    public class MailConsultantParams
+    {
+        public int ServiceId { get; set; }
+        public string Email { get; set; }
+    }
+
+    public class ConsultantChartParams
+    {
+        public string Email { get; set; }
+        public int Year { get; set; }
+        public int Month { get; set; }
+        public int ServiceId { get; set; }
+    }
+
+    public class FeedbackParams
+    {
+        public int ServiceId { get; set; }
+        public int Year { get; set; }
+        public int Month { get; set; }
+        public string Email { get; set; }
+    }
+
+    public class FeedbackInfo
+    {
+        public DateTime Date { get; set; }
+        public int Mark { get; set; }
+        public string Comment { get; set; }
+    }
+
     public class ServiceConsultantsController : ApiController
     {
+        [NonAction]
+        public static void WriteMessage(int consultant_id, string account_id, SqlConnection connection)
+        {
+            if (account_id == null)
+            {
+                string cmdString = "SELECT A.EMAIL FROM ServiceConsultants A INNER JOIN AccountSettings B ON A.EMAIL = B.USERNAME WHERE A.Id = @id AND B.MAIL_MESSAGES_ENABLED = 1";
+
+                SqlDataAdapter da = new SqlDataAdapter(cmdString, connection);
+
+                da.SelectCommand.Parameters.AddWithValue("@id", consultant_id);
+
+                DataSet set = new DataSet();
+
+                da.Fill(set);
+
+                if (set.Tables[0].Rows.Count > 0)
+                {
+                    string email = set.Tables[0].Rows[0]["EMAIL"].ToString();
+
+                    Dictionary<string, string> toPass = new Dictionary<string, string>();
+
+                    toPass.Add("username", email);
+
+                    MailManager.SendMessage(toPass, MailType.NOTIFICATION);
+                }
+            }
+            else
+            {
+                string cmdString = "SELECT A.Email FROM AspNetUsers A INNER JOIN AccountSettings B ON A.Email = B.USERNAME WHERE A.Id=@id AND B.MAIL_MESSAGES_ENABLED = 1";
+
+                SqlDataAdapter da = new SqlDataAdapter(cmdString, connection);
+
+                da.SelectCommand.Parameters.AddWithValue("@id", account_id);
+
+                DataSet set = new DataSet();
+
+                da.Fill(set);
+
+                if (set.Tables[0].Rows.Count > 0)
+                {
+                    string email = set.Tables[0].Rows[0]["Email"].ToString();
+
+                    Dictionary<string, string> toPass = new Dictionary<string, string>();
+
+                    toPass.Add("username", email);
+
+                    MailManager.SendMessage(toPass, MailType.NOTIFICATION);
+                }
+            }
+        }
+
+
         [ActionName("PostConsultantParams")]
         public HttpResponseMessage Post([FromBody]ConsultantParams cParams)
         {
@@ -77,7 +159,7 @@ namespace ServiceSystem.Controllers
 
                     int i = cParams.LastID;
 
-                    while (i < Math.Min(set.Tables[0].Rows.Count, cParams.LastID + 1))
+                    while (i < Math.Min(set.Tables[0].Rows.Count, cParams.LastID + 10))
                     {
                         ServiceConsultant consultant = new ServiceConsultant();
 
@@ -108,6 +190,50 @@ namespace ServiceSystem.Controllers
             }
         }
 
+        [HttpPost]
+        [ActionName("ConsultantStats")]
+        public HttpResponseMessage ConsultantCharts([FromBody]ConsultantChartParams parameters)
+        {
+            using (SqlConnection connection = new SqlConnection(System.Web.Configuration.WebConfigurationManager.ConnectionStrings["DBCS"].ConnectionString))
+            {
+                SqlDataAdapter da = new SqlDataAdapter("spGetConsultantApplicationsData", connection);
+
+                da.SelectCommand.CommandType = CommandType.StoredProcedure;
+
+                da.SelectCommand.Parameters.AddWithValue("@ServiceId", parameters.ServiceId);
+                da.SelectCommand.Parameters.AddWithValue("@TimeLimit", new DateTime(parameters.Year, parameters.Month, 1));
+                da.SelectCommand.Parameters.AddWithValue("@ConsultantEmail", parameters.Email);
+
+                DataSet set = new DataSet();
+
+                try
+                {
+                    ServiceConsultantsData data = new ServiceConsultantsData();
+
+                    da.Fill(set);
+
+                     if(set.Tables[0].Rows.Count > 0)
+                    {
+                        data.AdvancePendingApplications = Convert.ToInt32(set.Tables[0].Rows[0]["AdvancePendingCount"].ToString());
+                        data.MainPendingApplications = Convert.ToInt32(set.Tables[0].Rows[0]["MainPendingCount"].ToString());
+                        data.NoBillApplications = Convert.ToInt32(set.Tables[0].Rows[0]["NoBillCount"].ToString());
+                        data.MainPaidApplications = Convert.ToInt32(set.Tables[0].Rows[0]["MainPaidCount"].ToString());
+                        if (set.Tables[0].Rows[0]["AverageMark"].ToString() != "")
+                        {
+                            data.AverageMark = Convert.ToDouble(set.Tables[0].Rows[0]["AverageMark"].ToString());
+                        }
+                    }
+
+                    return Request.CreateResponse(HttpStatusCode.OK, data);
+                }
+                catch (Exception ex)
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
+                }
+            }
+        }
+
+        [Authorize]
         [HttpPost]
         public HttpResponseMessage ConfirmConsultant([FromBody]bool confirm)
         {
@@ -141,26 +267,28 @@ namespace ServiceSystem.Controllers
             }
         }
 
-    
+        [Authorize]
         [HttpPost]
         public HttpResponseMessage DeleteConsultant([FromBody]int id)
         {
             using (SqlConnection connection = new SqlConnection(System.Web.Configuration.WebConfigurationManager.ConnectionStrings["DBCS"].ConnectionString))
             {
-                SqlCommand cmd = new SqlCommand("spDeleteConsultant", connection);
-
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                cmd.Parameters.AddWithValue("@Id", id);
-
                 try
                 {
+                    WriteMessage(id, null, connection);
+
+                    SqlCommand cmd = new SqlCommand("spDeleteConsultant", connection);
+
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.AddWithValue("@Id", id);
+
                     connection.Open();
                     int code = (int)cmd.ExecuteScalar();
 
-                    if(code == 0)
+                    if (code == 0)
                     {
-                        return Request.CreateResponse(HttpStatusCode.MethodNotAllowed, 
+                        return Request.CreateResponse(HttpStatusCode.MethodNotAllowed,
                             "Impossible to delete consultant since he has not finished dialogues");
                     }
                     else
@@ -168,11 +296,57 @@ namespace ServiceSystem.Controllers
                         return Request.CreateResponse(HttpStatusCode.OK, "OK");
                     }
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     return Request.CreateResponse(HttpStatusCode.InternalServerError, ex.Message);
                 }
             }
+        }
+
+        [HttpPost]
+        [ActionName("AddMailConsultant")]
+        public HttpResponseMessage AddMailConsultant([FromBody]MailConsultantParams parameters)
+        {
+            if (!string.IsNullOrEmpty(parameters.Email))
+            {
+                using (SqlConnection connection = new SqlConnection(System.Web.Configuration.WebConfigurationManager.ConnectionStrings["DBCS"].ConnectionString))
+                {
+                    SqlCommand cmd = new SqlCommand("spAddMailConsultant", connection);
+
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.AddWithValue("@ConsultantEmail", parameters.Email);
+                    cmd.Parameters.AddWithValue("@ServiceId", parameters.ServiceId);
+
+                    try
+                    {
+                        connection.Open();
+
+                        int returnCode = (int)cmd.ExecuteScalar();
+
+                        if (returnCode > 0)
+                        {
+                            Dictionary<string, string> toPass = new Dictionary<string, string>();
+                            toPass.Add("username", parameters.Email);
+                            toPass.Add("service_id", parameters.ServiceId.ToString());
+
+                            MailManager.SendMessage(toPass, MailType.CONSULTANT_INVITATION);
+
+                            return Request.CreateResponse(HttpStatusCode.OK, "User successfully invited");
+                        }
+                        else
+                        {
+                            return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "User is already a consultant of this project");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
+                    }
+                }
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, "Fill in the email form, please");
         }
 
         [HttpPost]
@@ -181,6 +355,8 @@ namespace ServiceSystem.Controllers
         {
             using (SqlConnection connection = new SqlConnection(System.Web.Configuration.WebConfigurationManager.ConnectionStrings["DBCS"].ConnectionString))
             {
+
+                WriteMessage(0, consultant.Id, connection);
                 SqlCommand cmd = new SqlCommand("spAddConsultant", connection);
 
                 cmd.CommandType = CommandType.StoredProcedure;
@@ -197,7 +373,7 @@ namespace ServiceSystem.Controllers
                     cmd.ExecuteNonQuery();
                     transaction.Commit();
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     transaction.Rollback();
                     return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
@@ -206,6 +382,48 @@ namespace ServiceSystem.Controllers
 
 
             return Request.CreateResponse(HttpStatusCode.OK, "OK");
+        }
+
+        [ActionName("GetFeedbacks")]
+        [HttpPost]
+        public HttpResponseMessage GetFeedbacks([FromBody]FeedbackParams parameters)
+        {
+            List<FeedbackInfo> toReturn = new List<FeedbackInfo>();
+
+            using (SqlConnection connection = new SqlConnection(System.Web.Configuration.WebConfigurationManager.ConnectionStrings["DBCS"].ConnectionString))
+            {
+                SqlDataAdapter da = new SqlDataAdapter("spGetConsultantFeedbacks", connection);
+
+                da.SelectCommand.CommandType = CommandType.StoredProcedure;
+
+                da.SelectCommand.Parameters.AddWithValue("@ConsultantEmail", parameters.Email);
+                da.SelectCommand.Parameters.AddWithValue("@ServiceId", parameters.ServiceId);
+                da.SelectCommand.Parameters.AddWithValue("@TimeLimit", new DateTime(parameters.Year, parameters.Month, 1));
+
+                DataSet set = new DataSet();
+
+                try
+                {
+                    da.Fill(set);
+
+                    foreach(DataRow row in set.Tables[0].Rows)
+                    {
+                        FeedbackInfo info = new FeedbackInfo();
+
+                        info.Mark = Convert.ToInt32(row["Mark"].ToString());
+                        info.Date = Convert.ToDateTime(row["PaymentTime"].ToString());
+                        info.Comment = row["Comment"].ToString();
+
+                        toReturn.Add(info);
+                    }
+
+                    return Request.CreateResponse(HttpStatusCode.OK, toReturn);
+                }
+                catch(Exception ex)
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
+                }
+            }
         }
 
         [ActionName("GetServiceConsultants")]

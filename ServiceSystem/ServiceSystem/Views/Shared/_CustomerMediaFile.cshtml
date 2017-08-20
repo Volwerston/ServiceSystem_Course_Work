@@ -1,0 +1,19 @@
+﻿@model ServiceSystem.Models.MediaFile
+
+<div class="row" style="margin-top: 10px;" id="media_@Model.Id">
+    <div class="col-sm-offset-2 col-sm-8" style="border: 1px solid grey;border-radius: 3px; padding: 5px;">
+        <div class="embed-responsive">
+            @if (Model.Path[0] == '~')
+            {
+                <object style="margin: auto; vertical-align: central;" class="img-responsive" data="@Model.Path.Substring(1)"></object>
+            }
+            else
+            {
+                <object style="margin: auto; vertical-align: central;" class="img-responsive" data="@Model.Path"></object>
+            }
+        </div>
+        <p style="margin-top: 10px;">
+            @Model.Description
+        </p>
+    </div>
+</div>

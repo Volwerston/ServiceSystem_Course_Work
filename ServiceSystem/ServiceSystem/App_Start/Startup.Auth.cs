@@ -11,11 +11,9 @@ using Owin;
 using ServiceSystem.Providers;
 using ServiceSystem.Models;
 using Microsoft.Owin.Security.Facebook;
-using System.Net;
-using System.Security.Claims;
+using ServiceSystem.Facebook;
 using System.Threading.Tasks;
-using Microsoft.Owin.Security;
-using Microsoft.AspNet.Identity.Owin;
+using System.Security.Claims;
 
 namespace ServiceSystem
 {
@@ -31,15 +29,10 @@ namespace ServiceSystem
             // Configure the db context and user manager to use a single instance per request
             app.CreatePerOwinContext(ApplicationDbContext.Create);
             app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
-            app.CreatePerOwinContext<ApplicationSignInManager>(ApplicationSignInManager.Create);
 
             // Enable the application to use a cookie to store information for the signed in user
             // and to use a cookie to temporarily store information about a user logging in with a third party login provider
-            app.UseCookieAuthentication(new CookieAuthenticationOptions
-            {
-                AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
-                AuthenticationMode = AuthenticationMode.Active
-            });
+            app.UseCookieAuthentication(new CookieAuthenticationOptions());
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
             // Configure the application for OAuth based flow
@@ -48,6 +41,7 @@ namespace ServiceSystem
             {
                 TokenEndpointPath = new PathString("/Token"),
                 Provider = new ApplicationOAuthProvider(PublicClientId),
+                AuthorizeEndpointPath = new PathString("/api/Account/ExternalLogin"),
                 AccessTokenExpireTimeSpan = TimeSpan.FromDays(14),
                 // In production mode set AllowInsecureHttp = false
                 AllowInsecureHttp = true
@@ -66,36 +60,33 @@ namespace ServiceSystem
             //    consumerSecret: "");
 
             //app.UseFacebookAuthentication(
-            //    appId: "345453675848203",
-            //    appSecret: "f08f2116a756a511d419441ba3fe8e99"
-            //    );
+            //    appId: "671006846403592",
+            //    appSecret: "7f50b5cf42903a76670884d579ec396e");
 
             var facebookOptions = new FacebookAuthenticationOptions()
             {
-                AppId = "671006846403592",
-                AppSecret = "7f50b5cf42903a76670884d579ec396e",
-                BackchannelHttpHandler = new Facebook.FacebookBackChannelHandler(),
-                UserInformationEndpoint = "https://graph.facebook.com/v2.4/me?fields=id,email,name",
-                Provider = new FacebookAuthenticationProvider
+                AppId = "1105617286210100",
+                AppSecret = "fcadc466d472b4a81e6a396170405e43",
+                BackchannelHttpHandler = new FacebookBackChannelHandler(),
+                Provider = new Microsoft.Owin.Security.Facebook.FacebookAuthenticationProvider()
                 {
-                    OnAuthenticated = context =>
+                    OnAuthenticated = (context) =>
                     {
-                        context.Identity.AddClaim(new System.Security.Claims.Claim("FacebookAccessToken", context.AccessToken));
-                        return Task.FromResult(true);
+                        context.Identity.AddClaim(new Claim("FacebookAccessToken", context.AccessToken));
+                        return Task.FromResult(0);
                     }
-                }
+                },
+                UserInformationEndpoint = "https://graph.facebook.com/v2.8/me?fields=id,email"
             };
 
             facebookOptions.Scope.Add("email");
-            //facebookOptions.Scope.Add("first_name");
-            //facebookOptions.Scope.Add("last_name");
             app.UseFacebookAuthentication(facebookOptions);
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+                ClientId = "676553562771-bcr0vujgvkhgv36dcrf59v8ii55k6q1a.apps.googleusercontent.com",
+                ClientSecret = "S7pK7bb0E_HPhcgETMZsG-VI"
+            });
         }
     }
 }
