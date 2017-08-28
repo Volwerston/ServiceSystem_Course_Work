@@ -1,0 +1,50 @@
+﻿.header-block{
+    background-color:rgba(0,0,0,0.5);
+    margin-bottom: 20px;
+}
+
+.header-block__text{
+    color: white;
+}
+
+.authorizeForm{
+    display: table;
+    margin: auto; 
+    padding: 10px;
+}
+
+.authorizeForm__form{
+    padding: 15px;
+}
+
+.authorizeForm__submit{
+    margin: auto;
+}
+
+.authorizeForm__btnBlock{
+    margin-top: 10px;
+}
+
+.options{
+    text-align: center; 
+    border: 5px solid white; 
+    vertical-align: middle; 
+    min-height: 150px; 
+    background-color: cornflowerblue; 
+    color:white;
+}
+
+.options__text{
+    display: inline;
+}
+
+.stats{
+    margin-top:20px; 
+    margin-bottom:25px;
+}
+
+.statsItem{
+    background-color: gainsboro; 
+    border: 5px solid white;
+    min-height: 200px;
+}

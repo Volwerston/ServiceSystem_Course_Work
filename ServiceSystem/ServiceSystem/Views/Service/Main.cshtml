@@ -17,7 +17,7 @@ else
     <div class="col-sm-8 col-md-5 col-md-offset-4 col-sm-offset-2">
         <h3 class="text-center">Створення послуги</h3>
         <p class="text-center">Заповніть всі дані, необхідні для створення Вашої власної послуги</p>
-        @using (Html.BeginForm("Main", "Service", null, FormMethod.Post, new { enctype = "multipart/form-data", id = "service_form", style="display:table; margin:auto;"}))
+        @using (Html.BeginForm("Main", "Service", null, FormMethod.Post, new { enctype = "multipart/form-data", id = "service_form", style = "display:table; margin:auto;" }))
         {
             <div class="well form-horizontal" id="serviceConstructor">
                 <div id="constructor_header" style="border: 1px solid grey; padding-top:10px;">
@@ -81,10 +81,6 @@ else
         $(document).ready(function () {
 
             getAccessToken();
-
-            //for (var i = 0; i < validators.length; ++i) {
-            //    validators[i].Validate();
-            //}
 
             $("#service_form").submit(function (e) {
                 if (!validator.Validate())

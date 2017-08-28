@@ -1,0 +1,52 @@
+﻿@model IEnumerable<ServiceSystem.Models.Application>
+
+@if (Model != null && Model.Count() > 0)
+{
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered">
+            <thead>
+            <td>
+                <p><b>ID</b></p>
+            </td>
+            <td>
+                <p><b>Назва</b></p>
+            </td>
+            <td>
+                <p><b>Замовник</b></p>
+            </td>
+            <td>
+                <p><b>Статус</b></p>
+            </td>
+            <td>
+                <p><b>Остання зміна</b></p>
+            </td>
+            </thead>
+            <tbody>
+                @foreach (var app in Model)
+                {
+                    <tr class="dataHrefBlock" onclick='location.href="@Url.Action("ApplicationDetails", "Service")?id=@(app.Id)"'>
+                        <td>
+                            <p>@app.Id</p>
+                        </td>
+                        <td>
+                            <p>@app.ServiceName</p>
+                        </td>
+                        <td>
+                            <p>@app.Username</p>
+                        </td>
+                        <td>
+                            <p>@app.Status</p>
+                        </td>
+                        <td>
+                            <p>@app.StatusChangeDate.ToString()</p>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <p class="text-center">Заявок не знайдено</p>
+}

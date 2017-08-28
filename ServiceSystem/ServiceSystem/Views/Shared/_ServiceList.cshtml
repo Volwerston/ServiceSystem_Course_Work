@@ -1,0 +1,53 @@
+﻿@model IEnumerable<ServiceSystem.Models.Service>
+
+@if (Model != null && Model.Count() > 0)
+{
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered">
+            <thead>
+            <td>
+                <p><b>ID</b></p>
+            </td>
+            <td>
+                <p><b>Сервіс</b></p>
+            </td>
+            <td>
+                <p><b>Тип</b></p>
+            </td>
+            <td>
+                <p><b>Категорія</b></p>
+            </td>
+            <td>
+                <p><b>Статистика</b></p>
+            </td>
+            </thead>
+            <tbody>
+                @foreach (var service in Model){
+                    <tr class="dataHrefBlock">
+                        <td onclick='location.href="@Url.Action("ServiceDetails", "Service")?id=@(service.Id)"'>
+                        <p>@service.Id</p>
+                        </td>
+                        <td onclick='location.href="@Url.Action("ServiceDetails", "Service")?id=@(service.Id)"'>
+                        <p>    @service.Name    </p>
+                        </td>
+                        <td onclick='location.href="@Url.Action("ServiceDetails", "Service")?id=@(service.Id)"'>
+                        <p>    @service.Type    </p>
+                        </td>
+                        <td onclick='location.href="@Url.Action("ServiceDetails", "Service")?id=@(service.Id)"'>
+                        <p>    @service.Category    </p>
+                        </td>
+                         <td>
+                            <button type="button" onclick='location.href="@Url.Action("ServiceCharts", "Service")?id=@(service.Id)"' class="btn btn-success btn-block btn-sm">
+                                Деталі
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <p class="text-center">Сервісів не знайдено</p>
+}

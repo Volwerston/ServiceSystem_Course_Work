@@ -10,10 +10,6 @@ using System.Web;
 using System.Linq;
 using System.Web.Mvc;
 using System.Runtime.Caching;
-
-using iTextSharp;
-using iTextSharp.text.pdf;
-using iTextSharp.text;
 using ServiceSystem.Common;
 using ServiceSystem.Models.Auxiliary_Classes;
 

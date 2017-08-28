@@ -1,0 +1,52 @@
+﻿@model IEnumerable<ServiceSystem.Models.Dialogue>
+
+@if (Model != null && Model.Count() > 0)
+{
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered">
+            <thead>
+            <td>
+                <p><b>ID</b></p>
+            </td>
+            <td>
+                <p><b>Повідомлень</b></p>
+            </td>
+            <td>
+                <p><b>Учасників</b></p>
+            </td>
+            <td>
+                <p><b>Остання зміна</b></p>
+            </td>
+            <td>
+                <p><b>Останнє повідомлення</b></p>
+            </td>
+            </thead>
+            <tbody>
+                @foreach (var d in Model)
+                {
+                    <tr class="dataHrefBlock" onclick='location.href="@Url.Action("Dialogue", "Service")?id=@(d.Id)"'>
+                        <td>
+                            <p>@d.Id</p>
+                        </td>
+                        <td>
+                            <p>@(d.MessagesNumber)</p>
+                        </td>
+                        <td>
+                            <p>@(d.ParticipantsNumber)</p>
+                        </td>
+                        <td>
+                            <p>@(d.LastChangeTime.ToString())</p>
+                        </td>
+                        <td>
+                            <p class="text-center">@(d.LastMessage)</p>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <p class="text-center">Діалогів не знайдено</p>
+}

@@ -12,17 +12,19 @@
         messageState = ViewData["message_state"].ToString();
     }
 }
-    <div class="row" style="background-color:rgba(0,0,0,0.5)">
-        <div class="col-sm-5 col-sm-offset-1 text-center" style="color: white;">
+    <link rel="stylesheet" href="~/Content/index.css" />
+
+    <div class="row header-block">
+        <div class="col-sm-5 col-sm-offset-1 text-center header-block__text">
             <h2>Сервісна система</h2>
             <p>Пропонуємо Вашій увазі систему для створення і користування послугами інших клієнтів</p>
         </div>
         <div class="col-sm-4 col-sm-offset-1">
-            <div class="row" style="display: table;margin: auto; padding: 10px;">
+            <div class="row authorizeForm">
                 @using (Html.BeginForm())
             {
                     <div>
-                        <div class="form-horizontal" style="padding: 15px;">
+                        <div class="form-horizontal authorizeForm__form">
                             <div class="form-group">
                                 <input name="email" class="form-control" placeholder="E-mail" type="email" />
                                 <label hidden for="email" class="text-warning" id="email_label"></label>
@@ -31,12 +33,12 @@
                                 <input name="password" class="form-control" placeholder="Пароль" type="password" />
                                 <label hidden for="password" class="text-warning" id="password_label"></label>
                             </div>
-                            <input type="submit" style="margin: auto" name="log_in" class="btn btn-success btn-block" value="Увійти" />
-                            <div class="row" style="margin-top: 10px;">
-                                <div class="col-xs-4">
+                            <input type="submit" name="log_in" class="btn btn-success btn-block authorizeForm__submit" value="Увійти" />
+                            <div class="row authorizeForm__btnBlock">
+                                <div class="col-sm-4">
                                     @Html.ActionLink("Реєстрація", "Register", "Service", new { style = "color: white;" })
                                 </div>
-                                <div class="col-xs-8">
+                                <div class="col-sm-8">
                                     @Html.ActionLink("Відовлення паролю", "ChangePassword", "Service", new { style = "color: white;" })
                                 </div>
                             </div>
@@ -45,7 +47,7 @@
                 }
 
                 <div class="row">
-                    <div class="col-sm-6" style="margin-bottom: 5px;">
+                    <div class="col-sm-6">
                         <input type="button" class="btn btn-info btn-block" id="facebook_login" value="Facebook" />
                     </div>
                     <div class="col-sm-6">
@@ -56,35 +58,35 @@
         </div>
     </div>
 <div class="row">
-    <h1 class="text-center" style="margin-top:20px;">Можливості</h1>
-    <div class="col-sm-4" style="text-align: center; border: 5px solid white; vertical-align: middle; min-height: 150px; background-color: cornflowerblue; color:white;">
-        <h1 style="display: inline;">1. </h1>
-        <p style="display: inline;">Створюйте власні послуги та отримуйте з цього прибуток</p>
+    <h1 class="text-center">Можливості</h1>
+    <div class="col-sm-4 options">
+        <h1 class="options__text">1. </h1>
+        <p class="options__text">Створюйте власні послуги та отримуйте з цього прибуток</p>
     </div>
-    <div class="col-sm-4" style="text-align: center; border: 5px solid white; min-height: 150px; background-color: cornflowerblue; color:white;">
-        <h1 style="display: inline;">2. </h1>
-        <p style="display: inline;">Зручно домовляйтеся про отримання послуг, які Вас цікавлять</p>
+    <div class="col-sm-4 options">
+        <h1 class="options__text">2. </h1>
+        <p class="options__text">Зручно домовляйтеся про отримання послуг, які Вас цікавлять</p>
     </div>
-    <div class="col-sm-4" style="text-align: center; border: 5px solid white; min-height: 150px; background-color: cornflowerblue; color:white;">
-        <h1 style="display: inline;">3. </h1>
-        <p style="display: inline;">Будьте консультантом послуги і спілкуйтеся з клієнтами з усього світу!</p>
+    <div class="col-sm-4 options">
+        <h1 class="options__text">3. </h1>
+        <p class="options__text">Будьте консультантом послуги і спілкуйтеся з клієнтами з усього світу!</p>
     </div>
 </div>
-<div class="row" style="margin-top:20px; margin-bottom:25px;">
+<div class="row stats">
     <h1 class="text-center">Статистика</h1>
-    <div class="col-sm-3 text-center" style="background-color: gainsboro; border: 5px solid white;">
+    <div class="col-sm-3 text-center statsItem">
         <h1>@ViewData["ServicesNumber"].ToString()</h1>
         <p>Створено послуг</p>
     </div>
-    <div class="col-sm-3 text-center" style="background-color: gainsboro; border: 5px solid white;">
+    <div class="col-sm-3 text-center statsItem">
         <h1>@ViewData["UsersNumber"].ToString()</h1>
         <p>Користувачів зареєструвалося</p>
     </div>
-    <div class="col-sm-3 text-center" style="background-color: gainsboro; border: 5px solid white;">
+    <div class="col-sm-3 text-center statsItem">
         <h1>@ViewData["ApplicationsNumber"].ToString()</h1>
         <p>Створено заявок на послуги</p>
     </div>
-    <div class="col-sm-3 text-center" style="background-color: gainsboro; border: 5px solid white;">
+    <div class="col-sm-3 text-center statsItem">
         <h1>@ViewData["DialoguesNumber"].ToString()</h1>
         <p>Поточних діалогів між користувачами</p>
     </div>
@@ -94,7 +96,7 @@
 @section scripts{
     
 <script src="~/Scripts/FacebookAuth.js"></script>
-    <script type="text/javascript">
+ <script type="text/javascript">
 
         $(window).load(function () {
 

@@ -258,6 +258,7 @@
     <Compile Include="Common\SampleAuthorizeAttribute.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ApplicationController.cs" />
+    <Compile Include="Controllers\AuxiliaryController.cs" />
     <Compile Include="Controllers\BankBillController.cs" />
     <Compile Include="Controllers\BillController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
@@ -328,7 +329,10 @@
     <Content Include="Common\week_gradation_widget_hours.html" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\dialogue.css" />
     <Content Include="Content\growl.css" />
+    <Content Include="Content\index.css" />
+    <Content Include="Content\internalAccountPage.css" />
     <Content Include="Content\Site.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -419,11 +423,16 @@
     <Content Include="Views\Shared\_CustomerMediaFile.cshtml" />
     <Content Include="Views\Shared\_ProviderMediaFile.cshtml" />
     <Content Include="Views\Service\Description.cshtml" />
+    <Content Include="Views\Shared\_ServiceList.cshtml" />
+    <Content Include="Views\Shared\_DialogueList.cshtml" />
+    <Content Include="Views\Shared\_ApplicationList.cshtml" />
+    <Content Include="Views\Shared\_NotificationList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Common\Bills\" />
     <Folder Include="Common\MediaFiles\" />
+    <Folder Include="Views\Auxiliary\" />
     <Folder Include="Views\Error\" />
   </ItemGroup>
   <ItemGroup>

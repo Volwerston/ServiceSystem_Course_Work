@@ -1,0 +1,29 @@
+﻿@model IEnumerable<ServiceSystem.Models.Notification>
+
+@if (Model != null && Model.Count() > 0)
+{
+    foreach (var note in Model)
+    {
+        <div class="notificationBlock" id="notification_@(note.Id)">
+            <a class="close pull-right" id="note_@(note.Id)">&times;</a>
+            <div class="row notificationBody">
+                <div class="col-xs-6 notificationBody__text-simple">
+                    <p>From:   @(note.SenderName)    </p>
+                </div>
+                <div class="col-xs-6 notificationBody__text-simple">
+                    <p>To:     @(note.RecipientName)    </p>
+                </div>
+                <div class="col-xs-12 notificationBody__text-margin">
+                    <p>    @(note.SendingTime.ToString())    </p>
+                </div>
+                <div class="col-xs-12 notificationBody__text-margin">
+                    <p>    @(note.Text)    </p>
+                </div>
+            </div>
+        </div>
+    }
+}
+else
+{
+    <p class="text-center">Повідомлень не знайдено.</p>
+}

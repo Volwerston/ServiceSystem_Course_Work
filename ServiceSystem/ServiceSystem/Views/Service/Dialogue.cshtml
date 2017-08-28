@@ -4,25 +4,27 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="row" style="margin-top: 15px;">
-    <div class="col-xs-10 col-sm-offset-1" style="border: 1px solid grey; border-radius: 3px; padding: 20px;">
+<link rel="stylesheet" href="~/Content/dialogue.css" />
+
+<div class="row dialogue">
+    <div class="col-xs-10 col-sm-offset-1 messages">
         <div class="row">
-            <div class="col-sm-8 col-sm-offset-2" id="message_container" style="border: 1px solid grey;background-color: azure; max-height: 500px; overflow-y: scroll; overflow-x:hidden; border-radius: 3px; padding: 10px;">
+            <div class="col-sm-8 col-sm-offset-2 messages__container" id="message_container">
            <p class="text-center">Завантаження...</p>
              </div>
-            <div class="col-sm-8 col-sm-offset-2" style="margin-top: 10px;">
+            <div class="col-sm-8 col-sm-offset-2 inputBlock">
                 <div class="form-horizontal well">
                     <div class="form-group">
-                        <textarea class="form-control" id="text" style="margin: auto;" rows="10" placeholder="Текст...">
+                        <textarea class="form-control inputBlock__textarea" id="text" rows="10" placeholder="Текст...">
                         </textarea>
                     </div>
                     <div class="form-group">
-                        <input type="button" id="send_signalr_message" class="btn btn-block btn-success" style="margin: auto;" value="Надіслати" />
+                        <input type="button" id="send_signalr_message" class="btn btn-block btn-success inputBlock__button-send" value="Надіслати" />
                         @if (ViewData.ContainsKey("IsFromApplication") &&
                             !Convert.ToBoolean(ViewData["IsFromApplication"].ToString()) &&
                             User.Identity.Name == ViewData["CustomerEmail"].ToString())
                         {
-                            <input type="button" id="finish_dialogue" class="btn btn-block btn-success" style="margin: auto; margin-top: 10px;" data-toggle="modal" data-target="#dialogue_delete_modal" value="Видалити діалог" />
+                            <input type="button" id="finish_dialogue" class="btn btn-block btn-success inputBlock__button-delete" data-toggle="modal" data-target="#dialogue_delete_modal" value="Видалити діалог" />
                         }
                     </div>
                 </div>
@@ -42,8 +44,8 @@
                 <div class="row" id="comment_holder">
                     <div class="col-sm-offset-2">
                         <div class="row">
-                            <div class="col-sm-8 col-sm-offset-2" style="padding: 10px; display: table; margin: auto;">
-                                <label for="estimate_mark" class="control-label text-center" style="display: block;">
+                            <div class="col-sm-8 col-sm-offset-2 consultantStats">
+                                <label for="estimate_mark" class="control-label text-center consultantStats__points">
                                     Бал (1-10)
                                 </label>
                                 <div class="form-horizontal">
@@ -82,9 +84,9 @@
 @section scripts{
 <script>
     function GetDivForMessage(mes, status) {
-        var toReturn = '<div class="row" style="margin: 10px; padding: 10px; border: 2px solid green; border-radius: 3px;">'
-             + '<div class="col-sm-6" style="word-break:break-all">'
-             + '<p style="display:inline;"><b>' + mes.SenderFullName + '</b></p>';
+        var toReturn = '<div class="row message">'
+             + '<div class="col-sm-6 messageBody">'
+             + '<p class="messageBody__senderName"><b>' + mes.SenderFullName + '</b></p>';
         if (status == 'ONLINE') {
             toReturn += '<span class="label label-success ' + mes.SenderEmail.replace(".", "_").replace("@@", "_") + '">';
         }
@@ -98,7 +100,7 @@
              + '<div class="col-sm-3">'
              + '<small>' + mes.SendingTime.split('T')[0] + ' ' + mes.SendingTime.split('T')[1] + '</small>'
              + '</div>'
-             + '<div class="col-sm-11" style="margin-top:5px;">'
+             + '<div class="col-sm-11 messageBody__text">'
              + '<pre>' + mes.Text + '</pre>'
              + '</div>'
              + '</div>'

@@ -1,0 +1,65 @@
+﻿.dialogue{
+    margin-top: 15px;
+}
+
+.messages{
+    border: 1px solid grey; 
+    border-radius: 3px; 
+    padding: 20px;
+}
+
+.messages__container{
+    border: 1px solid grey;
+    background-color: azure; 
+    max-height: 500px;
+    overflow-y: scroll; 
+    overflow-x:hidden; 
+    border-radius: 3px; 
+    padding: 10px;
+}
+
+.inputBlock{
+    margin-top: 10px;
+}
+
+.inputBlock__textarea{
+    margin: auto;
+}
+
+.inputBlock__button-send{
+    margin: auto;
+}
+
+.inputBlock__button-delete{
+    margin: auto; 
+    margin-top: 10px;
+}
+
+.consultantStats{
+    padding: 10px; 
+    display: table; 
+    margin: auto;
+}
+
+.consultantStats__points{
+    display: block;
+}
+
+.message{
+    margin: 10px; 
+    padding: 10px; 
+    border: 2px solid green; 
+    border-radius: 3px;
+}
+
+.messageBody{
+    word-break:break-all;
+}
+
+.messageBody__senderName{
+    display:inline;
+}
+
+.messageBody__text{
+    margin-top:5px;
+}

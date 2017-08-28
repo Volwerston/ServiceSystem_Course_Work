@@ -1,0 +1,48 @@
+﻿.mainBlock{
+    border: 1px solid grey; 
+    border-radius: 5px; 
+    background-color: lightgray; 
+    max-width: 80%; 
+    padding: 20px; 
+    margin: auto;
+    margin-top: 15px; 
+    margin-bottom: 15px;
+}
+
+.mainBlock__singleUnit{
+    padding: 10px;
+}
+
+.personalBlock{
+    border: 1px solid grey;
+    background-color: azure; 
+    border-radius: 5px;
+}
+
+.mainBlock__settings{
+    margin-top: 10px;
+}
+
+.dataHrefBlock{
+    cursor: pointer;
+}
+
+.notificationBlock{
+    padding: 5px; 
+    margin: 10px;
+}
+
+.notificationBody{
+    margin-top: 5px; 
+    border: 1px solid green; 
+    border-radius: 3px;
+}
+
+.notificationBody__text-simple{
+    word-break: break-all;
+}
+
+.notificationBody__text-margin{
+    word-break: break-all; 
+    margin-top: 5px;
+}
