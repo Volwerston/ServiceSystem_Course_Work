@@ -1,0 +1,22 @@
+﻿.helper{
+    font-family:Arial;
+}
+
+.mainBlock{
+    margin-top: 25px;
+    margin-bottom:15px;
+}
+
+.mainBlock__body{
+    background-color:lightgray;
+}
+
+.registerForm{
+    display: table;
+    margin: auto; 
+    padding: 10px;
+}
+
+.registerForm__body{
+    padding: 20px;
+}

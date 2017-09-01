@@ -13,6 +13,9 @@
         isNotConfirmed = consultants.Where(x => x.Approved == false && x.Email == User.Identity.Name).Count() > 0;
     }
 }
+
+<link rel="stylesheet" href="~/Content/serviceDetails.css" />
+
 @if (isNotConfirmed)
 {
     <div id="consultant_request">
@@ -23,7 +26,7 @@
                         <h3 class="text-center">Вас було запрошено консультантом цього сервісу</h3>
                     </div>
                 </div>
-                <div class="row" style="margin-top: 10px;">
+                <div class="row consultantBlock">
                     <div class="col-xs-6">
                         <input type="button" class="btn btn-success btn-block" id="confirm_consultant" value="Підтвердити" />
                     </div>
@@ -51,10 +54,10 @@
         </div>
     </div>
 </div>
-<div class="row" style="margin-top: 10px;">
+<div class="row dataBlock">
     <div class="col-xs-8 col-sm-offset-2 well text-center">
-        <h3 style="background-color: gainsboro; font-family: Arial;">@Model.Name</h3>
-        <p style="font-family:Arial;"><b>Категорія</b>: @Model.Category</p>
+        <h3 class="dataBlock__name">@Model.Name</h3>
+        <p class="dataBlock__category"><b>Категорія</b>: @Model.Category</p>
         <p><b>@Model.Description</b></p>
         @if (ViewData["PARAMS"] != null)
         {
@@ -66,10 +69,10 @@
                 if (param.Key != "SERVICE_TYPE" && param.Key != "Тривалість" && param.Key != "Вартість")
                 {
                     <div class="row" style="margin-top: 5px;">
-                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3">
+                        <div class="col-xs-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3">
                             <p><b>@param.Key</b></p>
                         </div>
-                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 paramText">
+                        <div class="col-xs-3 paramText">
                             <p><i>@param.Value</i></p>
                         </div>
                     </div>
@@ -96,7 +99,7 @@
 
             if (User.Identity.Name == Model.Username)
             {
-                <div class="row" style="margin-top: 20px;">
+                <div class="row creatorBlock">
                     @using (Html.BeginForm("AddMediaFile", "Service", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
                     {
                         <input type="hidden" name="service_name" value="@Model.Name" />
@@ -104,26 +107,26 @@
                         <div class="col-sm-6 col-sm-offset-3">
                             <button id="slide_media_button" type="button" class="btn btn-default btn-block">+ додати медіа-файл</button>
                         </div>
-                        <div class="col-sm-8 col-sm-offset-2" id="slide_media_panel" style="display: none; border: 1px solid grey; border-radius: 3px; margin-top: 10px;">
+                        <div class="col-sm-8 col-sm-offset-2 mediaFile" id="slide_media_panel">
                             <label for="media_source_type" class="control-label col-sm-offset-2">Як додати файл?</label>
                             <div class="form-group">
                                 <input type="radio" checked name="media_source_type" value="url" />
-                                <p style="display: inline;">Через URL-адресу</p>
+                                <p class="mediaFile__checkText">Через URL-адресу</p>
                                 <br />
                                 <input type="radio" name="media_source_type" value="local" />
-                                <p style="display: inline;">Вручну з локальної машини</p>
+                                <p class="mediaFile__checkText">Вручну з локальної машини</p>
                                 <div id="media_source_container" style="margin-top: 10px;">
-                                    <input type="text" name="url_file" class="form-control" style="margin: auto;" placeholder="URL-адреса" />
+                                    <input type="url" name="url_file" class="form-control mediaFile__urlInput" placeholder="URL-адреса" />
                                 </div>
-                                <div class="form-group" style="margin-top: 15px;">
+                                <div class="form-group mediaFile__additionalInfo">
                                     <input type="checkbox" id="media_description_selector" />
                                     <label for="media_description_selector" class="control-label">додаткова інформація</label>
                                 </div>
                                 <div class="form-group" id="media_description_container" hidden>
-                                    <textarea rows="10" name="media_description" class="form-control" style="margin: auto;"></textarea>
+                                    <textarea rows="10" name="media_description" class="form-control mediaFile__textArea"></textarea>
                                 </div>
                             </div>
-                            <input type="submit" class="btn btn-success" id="add_media_file" value="Додати" style="margin: auto; margin-bottom: 5px;" />
+                            <input type="submit" class="btn btn-success" id="add_media_file" value="Додати"  />
                         </div>
                     }
                 </div>
@@ -132,15 +135,15 @@
             <div class="paramText">
                 @if (parameters.ContainsKey("Вартість"))
                 {
-                    <h3 style="background-color: gainsboro;">Вартість:</h3>
-                    <div style="margin-top: 10px;margin-bottom: 10px;" class="text-center">
+                    <h3 class="property__header-basic">Вартість:</h3>
+                    <div class="text-center property__value">
                         <p><i>@parameters["Вартість"]</i></p>
                     </div>
                 }
                 @if (parameters.ContainsKey("Тривалість"))
                 {
-                    <h3 style="background-color: gainsboro;">Тривалість:</h3>
-                    <div style="margin-top: 10px; margin-bottom: 10px;" class="text-center">
+                    <h3 class="property__header-basic">Тривалість:</h3>
+                    <div class="text-center property__value">
                         <p><i>@parameters["Тривалість"]</i></p>
                     </div>
                 }
@@ -150,8 +153,8 @@
             {
                 foreach (Property prop in Model.Properties)
                 {
-                    <h3 style="background-color: gainsboro; margin-top: 25px;">@prop.Name</h3>
-                    <div style="margin-top: 10px; margin-bottom: 10px;" class="text-center">
+                    <h3 class="property__header-extended">@prop.Name</h3>
+                    <div class="text-center property__value">
                         <p><i>@prop.Value</i></p>
                     </div>
                 }
@@ -162,7 +165,7 @@
             {
                 if (((List<string>)ViewData["Attachments"]).Count > 0)
                 {
-                <h3 class="text-center" style="margin-top: 25px;background-color: gainsboro;">Додатки</h3>
+                <h3 class="text-center property__header-extended">Додатки</h3>
             }
 
             foreach (string attachment in (List<string>)ViewData["Attachments"])
@@ -174,11 +177,11 @@
 
             @if (User.Identity.Name != Model.Username)
             {
-                <div class="row" style="margin-top: 15px;">
-                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <div class="row customerBlock">
+                    <div class="col-xs-6">
                         <input type="button" class="btn btn-info btn-block" value="Залишити заявку" id="application_create" />
                     </div>
-                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <div class="col-xs-6">
                         <input type="button" class="btn btn-info btn-block" data-toggle="modal" data-target="#consultant_ask_modal" value="Задати запитання" />
                     </div>
                 </div>
@@ -186,7 +189,7 @@
 
             @if (User.Identity.Name == Model.Username)
             {
-                <div class="row" style="margin-top: 15px;">
+                <div class="row customerBlock">
                     <div class="col-sm-10 col-sm-offset-1">
                         <div class="panel-group" id="accordion">
                             <div class="panel panel-default">
@@ -198,7 +201,7 @@
                                     </h4>
                                 </div>
                                 <div id="collapse1" class="panel-collapse collapse">
-                                    <div class="panel-body" id="panel_body_1">
+                                    <div class="panel-body consultantList" id="panel_body_1">
                                         @if (consultants != null)
                                         {                                          
                                             <div class="table-responsive">
@@ -213,7 +216,7 @@
                                                             <td></td>
                                                         </tr>
                                                     </thead>
-                                                    <tbody>
+                                                    <tbody id="consultants_list">
                                                         @foreach(var consultant in consultants)
                                                         {
                                                             <tr id="consultant_@consultant.Id">
@@ -239,7 +242,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row" style="margin-top: 10px;">
+                <div class="row consultantSearchBlock">
                     <div class="col-sm-4 col-sm-offset-4">
                         <input type="button" onclick='location.href="@Url.Action("ConsultantSearch", "Service", new { service_id = Model.Id })"' id="invite_consultants" class="btn btn-success btn-block" value="Запросити" />
                     </div>
@@ -281,12 +284,12 @@
             <br />
             <div class="col-xs-11 col-sm-10 col-sm-offset-1">
                 <div class="row">
-                    <form class="col-xs-12 col-sm-6 col-sm-offset-3" style="border: 2px solid green; border-radius: 3px; padding: 10px;">
+                    <form class="col-xs-12 col-sm-6 col-sm-offset-3 faq">
                         <div class="form-group">
-                            <input type="text" class="form-control" style="margin: auto;" placeholder="Запитання" name="question" />
+                            <input type="text" class="form-control faq__field" placeholder="Запитання" name="question" />
                         </div>
                         <div class="form-group">
-                            <textarea name="answer" class="form-control" style="margin: auto;" placeholder="Відповідь" rows="10"></textarea>
+                            <textarea name="answer" class="form-control faq__field" placeholder="Відповідь" rows="10"></textarea>
                         </div>
                         <div class="form-group">
                             <div class="col-xs-12 col-sm-8 col-sm-offset-2">
@@ -301,7 +304,7 @@
 </div>
 
 <div class="row" hidden id="application_holder">
-    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-md-offset-2 col-lg-offset-2">
+    <div class="col-xs-8 col-md-offset-2 col-lg-offset-2">
         @using (Html.BeginForm("ServiceDetails", "Service", new { serviceId = Model.Id },
                 FormMethod.Post, new { @class = "form-horizontal well", id="application_form" }))
         {
@@ -396,18 +399,18 @@
         var media_id = null;
 
         function GetDivForFAQ(faq) {
-            return '<div class="row" id="faq_' + faq.Id + '" style="border: 2px solid green; border-radius: 3px; padding: 10px; margin: 10px;">'
+            return '<div class="row faqItem" id="faq_' + faq.Id + '">'
                    + '<a href="#" class="close pull-right" id="close_' + faq.Id + '"><span class="glyphicon glyphicon-remove"></span></a>'
                    + '<div class="col-xs-12">'
                    + '<h4 class="text-center">Запитання</h4>'
                    + '</div>'
-                   + '<div class="col-xs-12" style="background-color: lightgray">'
+                   + '<div class="col-xs-12 faqItem__header">'
                    + '<p>' + faq.Question + '</p>'
                    + '</div>'
                    + '<div class="col-xs-12">'
                    + '<h4 class="text-center">Відповідь</h4>'
                    + '</div>'
-                   + '<div class="col-xs-12" style="background-color: lightgray">'
+                   + '<div class="col-xs-12 faqItem__header">'
                    + '<p>' + faq.Answer + '</p>'
                    + '</div>'
                    + '</div>';
@@ -522,6 +525,16 @@
 
             $("#add_faq").click(function () {
 
+                if ($('input[name="question"]').val() == "") {
+                    displayMessage("Warning", "Заповніть поле запитання");
+                    return;
+                }
+
+                if ($('textarea[name="answer"]').val() == "") {
+                    displayMessage("Warning", "Заповніть поле відповіді");
+                    return;
+                }
+
                 var toPass = {
                     Id: 0,
                     ServiceId: '@Model.Id',
@@ -553,7 +566,7 @@
                         });
                     },
                     error: function (res) {
-                        alert(res.responseText);
+                        displayMessage("Warning", res.responseText);
                     }
                 });
             });
@@ -585,7 +598,7 @@
                         displayMessage("Success","Діалог успішно створено. Для перегляду діалогу перейдіть в Особистий кабінет -> Діалоги");
                     },
                     error: function (res) {
-                        alert(res.responseText);
+                        displayMessage("Warning", res.responseText);
                     }
                 });
             });
@@ -603,13 +616,13 @@
                     success: function (res) {
                         $("#consultant_" + id).remove();
 
-                        if ($("#panel_body_1").children().length == 0) {
+                        if ($("#consultants_list").children().length == 0) {
                             $("#panel_body_1").empty();
                             $("#panel_body_1").append('<p class="text-center">Жодного консультанта не знайдено</p>');
                         }
                     },
                     error: function (res) {
-                        alert(res.responseText);
+                        displayMessage("Warning", res.responseText);
                     }
                 });
             });
@@ -643,7 +656,7 @@
                         $("#ask_modal").modal('hide');
                     },
                     error: function (res) {
-                        alert(res.responseText);
+                        displayMessage("Warning", res.responseText);
 
                         $("#ask_modal").modal('hide');
                     }

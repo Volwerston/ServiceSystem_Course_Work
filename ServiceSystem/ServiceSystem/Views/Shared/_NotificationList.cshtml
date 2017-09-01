@@ -7,17 +7,17 @@
         <div class="notificationBlock" id="notification_@(note.Id)">
             <a class="close pull-right" id="note_@(note.Id)">&times;</a>
             <div class="row notificationBody">
-                <div class="col-xs-6 notificationBody__text-simple">
-                    <p>From:   @(note.SenderName)    </p>
+                <div class="col-sm-6 notificationBody__text-simple">
+                    <p><b>From:</b>   @(note.SenderName)    </p>
                 </div>
-                <div class="col-xs-6 notificationBody__text-simple">
-                    <p>To:     @(note.RecipientName)    </p>
+                <div class="col-sm-6 notificationBody__text-simple">
+                    <p><b>To:</b>     @(note.RecipientName)    </p>
                 </div>
-                <div class="col-xs-12 notificationBody__text-margin">
+                <div class="col-xs-12 notificationBody__text-simple">
                     <p>    @(note.SendingTime.ToString())    </p>
                 </div>
                 <div class="col-xs-12 notificationBody__text-margin">
-                    <p>    @(note.Text)    </p>
+                    <p>    @Html.Raw(note.Text)    </p>
                 </div>
             </div>
         </div>

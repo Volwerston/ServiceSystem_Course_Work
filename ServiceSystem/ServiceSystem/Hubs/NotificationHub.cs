@@ -136,26 +136,41 @@ namespace ServiceSystem.Hubs
             ObjectCache cache = MemoryCache.Default;
 
             List<string> current_users = cache["current_users"] as List<string>;
-            string off_user = Context.User.Identity.Name;
-            current_users.Remove(Context.User.Identity.Name);
 
-
-            CacheItemPolicy policy = new CacheItemPolicy();
-            policy.AbsoluteExpiration =
-                DateTimeOffset.Now.AddHours(1);
-
-            cache.Set("current_users", current_users, policy);
-
-            int room_id = Convert.ToInt32(Context.QueryString["room_id"]);
-
-            if (current_users.Where(x => x == off_user).Count() == 0)
+            if (current_users == null)
             {
-                var offUserCredentials = new
-                {
-                    Name = off_user
-                };
+                current_users = new List<string>();
 
-                Clients.All.setUserOffline(offUserCredentials);
+                CacheItemPolicy policy = new CacheItemPolicy();
+                policy.AbsoluteExpiration =
+                    DateTimeOffset.Now.AddHours(1);
+
+                cache.Set("current_users", current_users, policy);
+            }
+            else
+            {
+                string off_user = Context.User.Identity.Name;
+                current_users.Remove(Context.User.Identity.Name);
+
+
+
+                CacheItemPolicy policy = new CacheItemPolicy();
+                policy.AbsoluteExpiration =
+                    DateTimeOffset.Now.AddHours(1);
+
+                cache.Set("current_users", current_users, policy);
+
+                int room_id = Convert.ToInt32(Context.QueryString["room_id"]);
+
+                if (current_users.Where(x => x == off_user).Count() == 0)
+                {
+                    var offUserCredentials = new
+                    {
+                        Name = off_user
+                    };
+
+                    Clients.All.setUserOffline(offUserCredentials);
+                }
             }
 
             return base.OnDisconnected(stopCalled);

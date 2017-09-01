@@ -4,22 +4,24 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="row" style="margin-top: 10px;">
+<link rel="stylesheet" href="~/Content/consultantSearch.css" />
+
+<div class="row mainBlock">
     <div class="col-xs-10 col-sm-offset-1">
         <div class="row">
             <div class="col-xs-6 col-sm-4">
-                <div class="form-horizontal well" style="display: table;">
+                <div class="form-horizontal well mainForm">
                     <div class="form-group">
-                        <input name="name" placeholder="Ім'я користувача" class="form-control" style="margin: auto;" />
+                        <input name="name" placeholder="Ім'я користувача" class="form-control mainForm__field" />
                     </div>
                     <div class="form-group">
-                        <input name="organisation" placeholder="Організація" class="form-control" style="margin: auto;" />
+                        <input name="organisation" placeholder="Організація" class="form-control mainForm__field" />
                     </div>
-                    <input class="btn btn-success btn-block" id="searchButton" style="margin: auto;" value="Шукати" />
-                    <input class="btn btn-success btn-block" style="margin: auto; margin-top: 10px;" id="enter_email" data-toggle="modal" data-target="#email_invitation"  value="E-mail запрошення" />
+                    <input class="btn btn-success btn-block mainForm__field" id="searchButton" value="Шукати" />
+                    <input class="btn btn-success btn-block mainForm__field-invitation" id="enter_email" data-toggle="modal" data-target="#email_invitation" value="E-mail запрошення" />
                 </div>
             </div>
-            <div class="col-xs-8 col-sm-7" style="margin-left: 15px;" id="servicesData">
+            <div class="col-xs-8 col-sm-7 dataBlock" id="servicesData">
             </div>
         </div>
     </div>
@@ -43,6 +45,20 @@
     </div>
 </div>
 
+<div id="loadingModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-2 col-sm-push-5">
+                        <img src="~/Common/ajax-loader.gif" class="img-responsive" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 
 
@@ -57,14 +73,14 @@
 
         function getDivForConsultant(consultant)
         {
-            return '<div class="row text-center" style="margin-bottom: 10px;display:none;" id="consultant_' + consultant.Id + '">'
-            + '<div style="border: 2px solid green; border-radius: 7px; word-break: break-all; background-color: blanchedalmond; min-height: 100px;" class="col-xs-10 col-md-offset-1">'
+            return '<div class="row text-center dataUnit" id="consultant_' + consultant.Id + '">'
+            + '<div class="col-xs-10 col-md-offset-1 dataUnit__body">'
             + '<h3>' + consultant.Surname + ' ' + consultant.Name + ' ' + consultant.FatherName + '</h3>'
             + '<p class="text-center"><b>E-mail:</b> ' + consultant.Email + '</p>'
             + '<p class="text-center"><b>Організація:</b> ' + consultant.Organisation + '</p>'
             + '<div class="row">'
             + '<div class="col-sm-6 col-md-4 col-sm-offset-3 col-md-offset-4">'
-            + '<input type="button" style="margin: 10px;" class="btn btn-success btn-block" name="invite_' + consultant.Id + '" value="Запросити">'
+            + '<input type="button" class="btn btn-success dataUnit__inviteBtn btn-block" name="invite_' + consultant.Id + '" value="Запросити">'
             + '</div>'
             + '</div>'
             + '</div>'
@@ -74,7 +90,7 @@
         $(document).ready(function () {
 
             $("#email_insert_done").click(function(){
-            
+
                 var toPass = {
                     Email: $('input[name="invitation_email"]').val(),
                     ServiceId: '@ViewData["ServiceId"].ToString()'
@@ -91,12 +107,12 @@
                     },
                     error: function(res){
                         displayMessage("Error", res.responseText);
-                    }            
+                    }
                 });
-            
+
             });
 
-            
+
             $(document).scroll(function () {
                 if ($(document).height() - ($(window).height() + $(window).scrollTop()) < 50) {
 
@@ -113,7 +129,7 @@
                         dataType: "json",
                         async: false,
                         headers: {
-                           Authorization: 'Bearer ' + localStorage.getItem("access_token")
+                            Authorization: 'Bearer ' + localStorage.getItem("access_token")
                         },
                         data: JSON.stringify(toPass),
                         contentType: "application/json; charset=utf-8",
@@ -125,11 +141,12 @@
                             if (toProceed != null) {
 
                                 for (var i = 0; i < toProceed.length; ++i) {
-                                    $("#servicesData").append(getDivForConsultant(toProceed[i])).children().last().fadeIn("slow");;
+                                    $("#servicesData").append(getDivForConsultant(toProceed[i])).children().last().fadeIn("slow");
                                 }
 
                                 $('input[name^="invite"]').click(function () {
 
+                                    $("#loadingModal").modal("show");
                                     var id = $(this).attr("name").split('_')[1];
 
                                     $.ajax({
@@ -139,9 +156,15 @@
                                         dataType: "json",
                                         data: JSON.stringify({Id: id, ServiceId: @ViewData["ServiceId"]}),
                                         success: function(res){
-                                            alert(res);
+                                            $("#consultant_" + id).remove();
+                                            $("#loadingModal").modal("hide");
+                                            if($("#servicesData").children().length == 0){
+                                                $("#servicesData").append('<p style="text-align: center">Користувачів не знайдено</p>');
+                                            }
+                                            displayMessage("Success", 'Користувача успішно запрошено');
                                         },
                                         error: function(res){
+                                            $("#loadingModal").modal("hide");
                                             displayMessage("Error", res.responseText);
                                         }
                                     });
@@ -198,6 +221,7 @@
                                 $("#servicesData").append(getDivForConsultant(toProceed[i])).children().last().fadeIn("slow");;
                             }
                             $('input[name^="invite"]').click(function () {
+                                $("#loadingModal").modal("show");
                                 var id = $(this).attr("name").split('_')[1];
 
                                 $.ajax({
@@ -207,10 +231,15 @@
                                     dataType: "json",
                                     data: JSON.stringify({Id: id, ServiceId: @ViewData["ServiceId"]}),
                                     success: function(res){
+                                        $("#loadingModal").modal("hide");
                                         $("#consultant_" + id).remove();
+                                        if($("#servicesData").children().length == 0){
+                                            $("#servicesData").append('<p style="text-align: center">Користувачів не знайдено</p>');
+                                        }
                                         displayMessage("Success", 'Користувача успішно запрошено');
                                     },
                                     error: function(res){
+                                        $("#loadingModal").modal("hide");
                                         displayMessage("Error", res.responseText);
                                     }
                                 });
@@ -231,6 +260,10 @@
                 });
             });
 
+        });
+
+        $(window).load(function(){
+            $("#searchButton").click();
         });
     </script>
 }

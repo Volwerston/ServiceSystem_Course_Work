@@ -1,0 +1,27 @@
+﻿.construtorHeader{
+    border: 1px solid grey; 
+    padding-top:10px;
+}
+
+.constructorHeader__serviceData{
+    margin-bottom: 5px; 
+    margin: auto;
+}
+
+.constructorHeader__serviceSelect{
+    margin: auto;
+}
+
+.constructorBody{
+    margin-top: 10px;
+}
+
+.constructorFooter{
+    margin-top: 10px;  
+    margin-bottom: 20px;
+}
+
+#makeServiceBtn{
+    margin: auto; 
+    margin-top: 10px;
+}

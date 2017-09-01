@@ -1,0 +1,94 @@
+﻿.consultantBlock{
+    margin-top: 10px;
+}
+
+.dataBlock{
+    margin-top: 10px;
+}
+
+.dataBlock__name{
+    background-color: gainsboro; font-family: Arial;
+}
+
+.dataBlock__category{
+    font-family:Arial;
+}
+
+.creatorBlock{
+    margin-top: 20px;
+}
+
+.mediaFile{
+    display: none; 
+    border: 1px solid grey; 
+    border-radius: 3px; 
+    margin-top: 10px;
+}
+
+.mediaFile__checkText{
+    display: inline;
+}
+
+.mediaFile__urlInput{
+    margin: auto;
+}
+
+.mediaFile__additionalInfo{
+    margin-top: 15px;
+}
+
+.mediaFile__textArea{
+    margin: auto;
+}
+
+#add_media_file{
+    margin: auto; 
+    margin-bottom: 5px;
+}
+
+.property__header-basic{
+    background-color: gainsboro;
+}
+
+.property__header-extended{
+    background-color: gainsboro; 
+    margin-top: 25px;
+}
+
+.property__value{
+    margin-top: 10px; 
+    margin-bottom: 10px;
+}
+
+.customerBlock{
+    margin-top: 15px;
+}
+
+.consultantSearchBlock{
+    margin-top: 10px;
+}
+
+.faq{
+    border: 2px solid green; 
+    border-radius: 3px; 
+    padding: 10px;
+}
+
+.faq__field{
+    margin: auto;
+}
+
+.faqItem{
+    border: 2px solid green; 
+    border-radius: 3px; 
+    padding: 10px; 
+    margin: 10px;
+}
+
+.faqItem__header{
+    background-color: lightgray;
+}
+
+.consultantList{
+    overflow-x: scroll;
+}

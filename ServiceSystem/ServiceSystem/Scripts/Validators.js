@@ -23,10 +23,11 @@ var Validator = function () {
             $('input[name="service_name"]').parent().addClass("has-error");
             $("#service_name_validation").removeAttr("hidden");
             $("#service_name_validation").text("Введіть назву послуги");
+            $("#service_name_validation").css({ textAlign: "center", display: "block" });
         }
         else {
             $('input[name="service_name"]').parent().removeClass("has-error");
-            $("#service_name_validation").attr('hidden', true);
+            $("#service_name_validation").css({display: "none"});
         }
 
         // category validation
@@ -36,10 +37,11 @@ var Validator = function () {
             $('select[name="service_category"]').parent().addClass("has-error");
             $("#service_category_validation").removeAttr("hidden");
             $("#service_category_validation").text("Оберіть категорію послуги");
+            $("#service_category_validation").css({ textAlign: "center", display: "block" });
         }
         else {
             $('select[name="service_category"]').parent().removeClass("has-error");
-            $("#service_category_validation").attr('hidden', true);
+            $("#service_category_validation").css({display: "none"});
         }
 
         // type validation
@@ -49,10 +51,11 @@ var Validator = function () {
             $('select[name="service_type"]').parent().addClass("has-error");
             $("#service_type_validation").removeAttr("hidden");
             $("#service_type_validation").text("Оберіть тип послуги");
+            $("#service_type_validation").css({ textAlign: "center", display: "block" });
         }
         else {
             $('select[name="service_type"]').parent().removeClass("has-error");
-            $("#service_type_validation").attr('hidden', true);
+            $("#service_type_validation").css({display: "none"});
         }
 
         // advance percent validation
@@ -65,10 +68,11 @@ var Validator = function () {
             $('input[name="advance_percent"]').parent().addClass("has-error");
             $("#advance_percent_validation").removeAttr("hidden");
             $("#advance_percent_validation").text("Неправильні дані для авансу");
+            $("#advance_percent_validation").css({ textAlign: "center", display: "block" });
         }
         else {
             $('input[name="advance_percent"]').parent().removeClass("has-error");
-            $("#advance_percent_validation").attr('hidden', true);
+            $("#advance_percent_validation").css({display: "none"});
         }
         
         return toReturn;
@@ -91,9 +95,10 @@ var Validator = function () {
                 $(this).parent().addClass("has-error");
                 $("#" + name + "_validation").removeAttr("hidden");
                 $("#" + name + "_validation").text("Оберіть валюту");
+                $("#" + name + "_validation").css({ textAlign: "center", display: "block" });
             } else {
                 $(this).parent().removeClass("has-error");
-                $("#" + name + "_validation").attr('hidden', true);
+                $("#" + name + "_validation").css({display: "none"});
             }
         });
 
@@ -109,9 +114,10 @@ var Validator = function () {
                 $(this).parent().addClass("has-error");
                 $("#" + name + "_validation").removeAttr("hidden");
                 $("#" + name + "_validation").text("Введіть одиницю виміру");
+                $("#" + name + "_validation").css({ textAlign: "center", display: "block" });
             } else {
                 $(this).parent().removeClass("has-error");
-                $("#" + name + "_validation").attr('hidden', true);
+                $("#" + name + "_validation").css({display: "none"});
             }
         });
 
@@ -131,9 +137,10 @@ var Validator = function () {
                     $(this).parent().addClass("has-error");
                     $("#" + name + "_validation").removeAttr("hidden");
                     $("#" + name + "_validation").text("Введіть ціну за одиницю виміру");
+                    $("#" + name + "_validation").css({ textAlign: "center", display: "block" });
                 } else {
                     $(this).parent().removeClass("has-error");
-                    $("#" + name + "_validation").attr('hidden', true);
+                    $("#" + name + "_validation").css({display: "none"});
                 }
             }
             });
@@ -156,9 +163,10 @@ var Validator = function () {
                 $(this).parent().addClass("has-error");
                 $("#" + name + "_validation").removeAttr("hidden");
                 $("#" + name + "_validation").text("Оберіть категорію для властивості");
+                $("#" + name + "_validation").css({ textAlign: "center", display: "block" });
             } else {
                 $(this).parent().removeClass("has-error");
-                $("#" + name + "_validation").attr('hidden', true);
+                $("#" + name + "_validation").css({display: "none"});
             }
         });
 
@@ -174,9 +182,10 @@ var Validator = function () {
                 $(this).parent().addClass("has-error");
                 $("#" + name + "_validation").removeAttr("hidden");
                 $("#" + name + "_validation").text("Оберіть назву властивості");
+                $("#" + name + "_validation").css({ textAlign: "center", display: "block" });
             } else {
                 $(this).parent().removeClass("has-error");
-                $("#" + name + "_validation").attr('hidden', true);
+                $("#" + name + "_validation").css({display: "none"});
             }
         });
 
@@ -198,9 +207,10 @@ var Validator = function () {
                 $(this).parent().addClass("has-error");
                 $("#" + name + "_validation").removeAttr("hidden");
                 $("#" + name + "_validation").text("Заповніть поле властивості");
+                $("#" + name + "_validation").css({ textAlign: "center", display: "block" });
             } else {
                 $(this).parent().removeClass("has-error");
-                $("#" + name + "_validation").attr('hidden', true);
+                $("#" + name + "_validation").css({display: "none"});
             }
         });
 
@@ -233,10 +243,11 @@ var DeadlineValidator = function () {
                 $('#' + name + "_validation").parent().addClass("has-error");
                 $('#' + name + "_validation").removeAttr("hidden");
                 $('#' + name + "_validation").text("Оберіть тип діапазону");
+                $("#" + name + "_validation").css({ textAlign: "center", display: "block" });
             }
             else {
                 $(this).parent().removeClass("has-error");
-                $("#" + name + "_validation").attr('hidden', true);
+                $("#" + name + "_validation").css({display: "none"});
 
                 var id = name.split('_')[2];
 
@@ -248,11 +259,12 @@ var DeadlineValidator = function () {
                         toReturn = false;
                         $('#service_min_duration_' + id + '_validation').parent().addClass("has-error");
                         $('#service_min_duration_' + id + '_validation').removeAttr("hidden");
-                        $('#service_min_duration_' + id + '_validation').text("Введіть мінімальну тривалість")
+                        $('#service_min_duration_' + id + '_validation').text("Введіть мінімальну тривалість");
+                        $('#service_min_duration_' + id + '_validation').css({ textAlign: "center", display: "block" });
                     }
                     else {
                         $('#service_min_duration_' + id + '_validation').parent().removeClass("has-error");
-                        $('#service_min_duration_' + id + '_validation').attr('hidden', true);
+                        $('#service_min_duration_' + id + '_validation').css({display: "none"});
                     }
                 }
                 else if ($(this).val() == "till") {
@@ -262,11 +274,12 @@ var DeadlineValidator = function () {
                         toReturn = false;
                         $('#service_max_duration_' + id + '_validation').parent().addClass("has-error");
                         $('#service_max_duration_' + id + '_validation').removeAttr("hidden");
-                        $('#service_max_duration_' + id + '_validation').text("Введіть максимальну тривалість")
+                        $('#service_max_duration_' + id + '_validation').text("Введіть максимальну тривалість");
+                        $('#service_max_duration_' + id + '_validation').css({ textAlign: "center", display: "block" });
                     }
                     else {
                         $('#service_max_duration_' + id + '_validation').parent().removeClass("has-error");
-                        $('#service_max_duration_' + id + '_validation').attr('hidden', true);
+                        $('#service_max_duration_' + id + '_validation').css({display: "none"});
                     }
                 }
                 else if ($(this).val() == "from_till") {
@@ -276,11 +289,12 @@ var DeadlineValidator = function () {
                         toReturn = false;
                         $('#service_min_duration_' + id + '_validation').parent().addClass("has-error");
                         $('#service_min_duration_' + id + '_validation').removeAttr("hidden");
-                        $('#service_min_duration_' + id + '_validation').text("Введіть мінімальну тривалість")
+                        $('#service_min_duration_' + id + '_validation').text("Введіть мінімальну тривалість");
+                        $('#service_min_duration_' + id + '_validation').css({ textAlign: "center", display: "block" });
                     }
                     else {
                         $('#service_min_duration_' + id + '_validation').parent().removeClass("has-error");
-                        $('#service_min_duration_' + id + '_validation').attr('hidden', true);
+                        $('#service_min_duration_' + id + '_validation').css({display: "none"});
                     }
 
                     if ($('input[name="service_max_duration_' + id + '"]').val() == "" ||
@@ -289,11 +303,12 @@ var DeadlineValidator = function () {
                         toReturn = false;
                         $('#service_max_duration_' + id + '_validation').parent().addClass("has-error");
                         $('#service_max_duration_' + id + '_validation').removeAttr("hidden");
-                        $('#service_max_duration_' + id + '_validation').text("Введіть максимальну тривалість")
+                        $('#service_max_duration_' + id + '_validation').text("Введіть максимальну тривалість");
+                        $('#service_max_duration_' + id + '_validation').css({ textAlign: "center", display: "block" });
                     }
                     else {
                         $('#service_max_duration_' + id + '_validation').parent().removeClass("has-error");
-                        $('#service_max_duration_' + id + '_validation').attr('hidden', true);
+                        $('#service_max_duration_' + id + '_validation').css({display: "none"});
                     }
                 }
             }
@@ -344,10 +359,12 @@ var SessionValidator = function () {
                     $("#" + days[i] + "_validation").parent().addClass("has-error");
                     $("#" + days[i] + "_validation").removeAttr("hidden");
                     $("#" + days[i] + "_validation").html(textToAdd);
+                    $("#" + days[i] + "_validation").css({ textAlign: "center", display: "block" });
+                    
                 }
                 else {
                     $("#" + days[i] + "_validation").parent().removeClass("has-error");
-                    $("#" + days[i] + "_validation").attr('hidden', true);
+                    $("#" + days[i] + "_validation").css({display: "none"});
                 }
             }
         }
@@ -357,10 +374,11 @@ var SessionValidator = function () {
             $("#all_validation").parent().addClass("has-error");
             $("#all_validation").removeAttr("hidden");
             $("#all_validation").text("Оберіть хоча б один день для проведення сеансу");
+            $("#all_validation").css({ textAlign: "center", display: "block" });
         }
         else {
             $("#all_validation").parent().removeClass("has-error");
-            $("#all_validation").attr('hidden', true);
+            $("#all_validation").css({display: "none"});
         }
 
         return toReturn;
@@ -381,10 +399,11 @@ var SessionValidator = function () {
                 $('#' + name + "_validation").parent().addClass("has-error");
                 $('#' + name + "_validation").removeAttr("hidden");
                 $('#' + name + "_validation").text("Оберіть тип діапазону");
+                $('#' + name + "_validation").css({ textAlign: "center", display: "block" });
             }
             else {
                 $(this).parent().removeClass("has-error");
-                $("#" + name + "_validation").attr('hidden', true);
+                $("#" + name + "_validation").css({display: "none"});
 
                 var id = name.split('_')[2];
 
@@ -395,11 +414,12 @@ var SessionValidator = function () {
                         toReturn = false;
                         $('#service_min_duration_' + id + '_validation').parent().addClass("has-error");
                         $('#service_min_duration_' + id + '_validation').removeAttr("hidden");
-                        $('#service_min_duration_' + id + '_validation').text("Введіть мінімальну тривалість")
+                        $('#service_min_duration_' + id + '_validation').text("Введіть мінімальну тривалість");
+                        $('#service_min_duration_' + id + '_validation').css({ textAlign: "center", display: "block" });
                     }
                     else {
                         $('#service_min_duration_' + id + '_validation').parent().removeClass("has-error");
-                        $('#service_min_duration_' + id + '_validation').attr('hidden', true);
+                        $('#service_min_duration_' + id + '_validation').css({display: "none"});
                     }
                 }
                 else if ($(this).val() == "till") {
@@ -409,11 +429,12 @@ var SessionValidator = function () {
                         toReturn = false;
                         $('#service_max_duration_' + id + '_validation').parent().addClass("has-error");
                         $('#service_max_duration_' + id + '_validation').removeAttr("hidden");
-                        $('#service_max_duration_' + id + '_validation').text("Введіть максимальну тривалість")
+                        $('#service_max_duration_' + id + '_validation').text("Введіть максимальну тривалість");
+                        $('#service_max_duration_' + id + '_validation').css({ textAlign: "center", display: "block" });
                     }
                     else {
                         $('#service_max_duration_' + id + '_validation').parent().removeClass("has-error");
-                        $('#service_max_duration_' + id + '_validation').attr('hidden', true);
+                        $('#service_max_duration_' + id + '_validation').css({display: "none"});
                     }
                 }
                 else if ($(this).val() == "from_till") {
@@ -423,11 +444,12 @@ var SessionValidator = function () {
                         toReturn = false;
                         $('#service_min_duration_' + id + '_validation').parent().addClass("has-error");
                         $('#service_min_duration_' + id + '_validation').removeAttr("hidden");
-                        $('#service_min_duration_' + id + '_validation').text("Введіть мінімальну тривалість")
+                        $('#service_min_duration_' + id + '_validation').text("Введіть мінімальну тривалість");
+                        $('#service_min_duration_' + id + '_validation').css({ textAlign: "center", display: "block" });
                     }
                     else {
                         $('#service_min_duration_' + id + '_validation').parent().removeClass("has-error");
-                        $('#service_min_duration_' + id + '_validation').attr('hidden', true);
+                        $('#service_min_duration_' + id + '_validation').css({display: "none"});
                     }
 
                     if ($('input[name="service_max_duration_' + id + '"]').val() == "" ||
@@ -436,11 +458,12 @@ var SessionValidator = function () {
                         toReturn = false;
                         $('#service_max_duration_' + id + '_validation').parent().addClass("has-error");
                         $('#service_max_duration_' + id + '_validation').removeAttr("hidden");
-                        $('#service_max_duration_' + id + '_validation').text("Введіть максимальну тривалість")
+                        $('#service_max_duration_' + id + '_validation').text("Введіть максимальну тривалість");
+                        $('#service_max_duration_' + id + '_validation').css({ textAlign: "center", display: "block" });
                     }
                     else {
                         $('#service_max_duration_' + id + '_validation').parent().removeClass("has-error");
-                        $('#service_max_duration_' + id + '_validation').attr('hidden', true);
+                        $('#service_max_duration_' + id + '_validation').css({display: "none"});
                     }
                 }
             }
@@ -476,7 +499,7 @@ var CourseValidator = function () {
         }
         else {
             $("#service_date_validation").parent().removeClass("has-error");
-            $("#service_date_validation").attr('hidden', true);
+            $("#service_date_validation").css({display: "none"});
         }
 
         if ($('input[name="is_time_defined"]').is(":checked")) {
@@ -486,10 +509,11 @@ var CourseValidator = function () {
                 $("#service_time_validation").parent().addClass("has-error");
                 $("#service_time_validation").removeAttr("hidden");
                 $("#service_time_validation").text("Введіть час завершення курсу");
+                $("#service_time_validation").css({ textAlign: "center", display: "block" });
             }
             else {
                 $("#service_time_validation").parent().removeClass("has-error");
-                $("#service_time_validation").attr('hidden', true);
+                $("#service_time_validation").css({display: "none"});
             }
         }
 
@@ -518,7 +542,8 @@ var DefinedCourseValidator = function () {
             toReturn = false;
             $("#week_gradation_type_validation").parent().addClass("has-error");
             $("#week_gradation_type_validation").removeAttr("hidden");
-            $("#week_gradation_type_validation").text("Введіть формат тижня")
+            $("#week_gradation_type_validation").text("Введіть формат тижня");
+            $("#week_gradation_type_validation").css({ textAlign: "center", display: "block" });
         }
         else {
             $("#week_gradation_type_validation").parent().removeClass("has-error");
@@ -551,10 +576,11 @@ var DefinedCourseValidator = function () {
                         $("#" + days[i] + "_validation").parent().addClass("has-error");
                         $("#" + days[i] + "_validation").removeAttr("hidden");
                         $("#" + days[i] + "_validation").html(textToAdd);
+                        $("#" + days[i] + "_validation").css({ textAlign: "center", display: "block" });
                     }
                     else {
                         $("#" + days[i] + "_validation").parent().removeClass("has-error");
-                        $("#" + days[i] + "_validation").attr('hidden', true);
+                        $("#" + days[i] + "_validation").css({display: "none"});
                     }
                 }
             }
@@ -564,10 +590,11 @@ var DefinedCourseValidator = function () {
                 $("#all_validation").parent().addClass("has-error");
                 $("#all_validation").removeAttr("hidden");
                 $("#all_validation").text("Оберіть хоча б один день для проведення сеансу");
+                $("#all_validation").css({ textAlign: "center", display: "block" });
             }
             else {
                 $("#all_validation").parent().removeClass("has-error");
-                $("#all_validation").attr('hidden', true);
+                $("#all_validation").css({display: "none"});
             }
         }
 
@@ -579,6 +606,7 @@ var DefinedCourseValidator = function () {
                 $("#number_of_days_validation").parent().addClass("has-error");
                 $("#number_of_days_validation").removeAttr("hidden");
                 $("#number_of_days_validation").text("Оберіть кількість днів");
+                $("#number_of_days_validation").css({ textAlign: "center", display: "block" });
             }
             else {
                 $("#number_of_days_validation").parent().removeClass("has-error");
@@ -597,7 +625,7 @@ var DefinedCourseValidator = function () {
                         $("#" + $(this).attr('name') + "_validation").parent().addClass("has-error");
                         $("#" + $(this).attr('name') + "_validation").removeAttr("hidden");
                         $("#" + $(this).attr('name') + "_validation").text("Введіть кількість хвилин");
-
+                        $("#" + $(this).attr('name') + "_validation").css({ textAlign: "center", display: "block" });
                     }
                     else {
                         $("#" + $(this).attr('name') + "_validation").parent().removeClass("has-error");

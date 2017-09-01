@@ -1,0 +1,37 @@
+﻿.mainBlock{
+    margin-top: 10px;
+}
+
+.mainForm{
+    display: table;
+}
+
+.mainForm__field{
+    margin: auto;
+}
+
+.mainForm__field-invitation{
+     margin: auto;
+     margin-top: 10px;
+}
+
+.dataBlock{
+    margin-left: 15px;
+}
+
+.dataUnit{
+    margin-bottom: 10px;
+    display:none;
+}
+
+.dataUnit__body{
+    border: 2px solid green; 
+    border-radius: 7px; 
+    word-break: break-all; 
+    background-color: blanchedalmond; 
+    min-height: 100px;
+}
+
+.dataUnit__inviteBtn{
+    margin: 10px;
+}

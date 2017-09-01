@@ -4,7 +4,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="row" ng-app="FeedbackApp" style="margin-top: 10px;">
+<link rel="stylesheet" href="~/Content/serviceCharts.css" />
+
+<div class="row mainBlock" ng-app="FeedbackApp">
     <div class="col-xs-8 col-sm-6 col-sm-offset-3" ng-controller="FeedbackController">
         <div class="row well">
             <div class="col-xs-6">
@@ -13,7 +15,7 @@
                 <input type="hidden" id="consultant_model" />
             </div>
             <div class="col-xs-6">
-                <select name="month" ng-model="month" class="form-control" style="margin-bottom: 10px;">
+                <select name="month" ng-model="month" class="form-control mainBlock__month">
                     <option value="1">Січень</option>
                     <option value="2">Лютий</option>
                     <option value="3">Березень</option>
@@ -32,20 +34,20 @@
                 <button type="button" id="find_service_data" class="btn btn-block btn-success">Показати</button>
             </div>
         </div>
-        <div class="row well" style="margin-top:15px;" id="service_container" hidden>
+        <div class="row well mainBlock__dataContainer" id="service_container" hidden>
         </div>
-        <div class="row well" style="margin-top:15px;" id="consultant_container" hidden>
+        <div class="row well mainBlock__dataContainer" id="consultant_container" hidden>
         </div>
-        <div class="row" style="margin-top:15px;">
+        <div class="row mainBlock__dataContainer">
             <div class="col-sm-6 col-sm-offset-3">
                 <div id="feedback_toggle" hidden>
-                    <button type="button" ng-click="showFeedbacks()" style="margin-bottom: 10px;" class="btn btn-success btn-block">
+                    <button type="button" ng-click="showFeedbacks()" class="btn btn-success btn-block mainBlock__button">
                         Показати відгуки
                     </button>
                 </div>
             </div>
         </div>
-        <div class="row well" hidden id="feedback_container" style="margin-top:10px;">
+        <div class="row well feedbackContainer" hidden id="feedback_container">
             <div class="col-xs-12">
                 <table class="table table-bordered">
                     <thead>

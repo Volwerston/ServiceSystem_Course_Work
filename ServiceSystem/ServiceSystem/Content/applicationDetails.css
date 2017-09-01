@@ -1,0 +1,30 @@
+﻿.appBlock{
+    margin-top: 10px;
+}
+
+.appBlock__body{
+    padding: 10px; 
+    background-color: azure; 
+    border-radius: 5px 5px 0px 0px;
+}
+
+.tableData{
+    padding: 10px; 
+    border: 1px solid black;
+}
+
+.receipt{
+    padding: 10px; 
+    background-color: azure; 
+    border-radius: 0px 0px 5px 5px; 
+    margin-bottom: 10px;
+}
+
+.receipt__fileSource{
+    min-height: 500px;
+}
+
+.receipt__button{
+    margin: auto;
+    margin-top: 10px;
+}

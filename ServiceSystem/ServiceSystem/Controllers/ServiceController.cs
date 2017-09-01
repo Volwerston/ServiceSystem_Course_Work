@@ -12,13 +12,12 @@ using System.Web.Mvc;
 using System.Runtime.Caching;
 using ServiceSystem.Common;
 using ServiceSystem.Models.Auxiliary_Classes;
+using System.Net;
 
 namespace ServiceSystem.Controllers
 {
-
     public class ServiceController : Controller
     {
-
         public ActionResult Register()
         {
             return View();
@@ -88,17 +87,6 @@ namespace ServiceSystem.Controllers
             return View();
         }
 
-        [HttpPost]
-        public ActionResult ChangePassword(string email)
-        {
-            using (HttpClient client = WebApiClient.InitializeClient(Request.Url.Scheme + "://" + Request.Url.Authority + Request.ApplicationPath.TrimEnd('/') + "/"))
-            {
-                HttpResponseMessage response = client.GetAsync("api/Account/ChangeUserPassword?email=" + email).Result;
-
-                return RedirectToAction("Index");
-            }
-        }
-
         public ActionResult SetNewPassword(string request_id, string message = "")
         {
             ViewData["request_id"] = request_id;
@@ -109,29 +97,6 @@ namespace ServiceSystem.Controllers
             }
 
             return View();
-        }
-
-        [HttpPost]
-        public ActionResult SetNewPassword(string request_id, string password, string confirm_password)
-        {
-            if (password != confirm_password || password == "" || confirm_password == "")
-            {
-                return RedirectToAction("SetNewPassword", "Service", new { request_id = request_id, message = "Passwords do not match" });
-            }
-
-            using (HttpClient client = WebApiClient.InitializeClient(Request.Url.Scheme + "://" + Request.Url.Authority + Request.ApplicationPath.TrimEnd('/') + "/"))
-            {
-                HttpResponseMessage response = client.PostAsJsonAsync("api/Account/SetNewUserPassword",
-                    new Tuple<string, string, string>(request_id, password, confirm_password)
-                    ).Result;
-
-                if (response.IsSuccessStatusCode)
-                {
-                    return RedirectToAction("Index");
-                }
-            }
-
-            return RedirectToAction("SetNewPassword", "Service",new { request_id = request_id, message = "Internal Server Error" });
         }
 
         [HttpPost]
@@ -180,6 +145,7 @@ namespace ServiceSystem.Controllers
         [SampleAuthorize]
         public ActionResult Main(string message)
         {
+            if(!String.IsNullOrEmpty(message))
             ViewData["message"] = message;
 
             Dictionary<string, string> constructorBlocks = DocumentGenerator.GetConstructorBlocks();

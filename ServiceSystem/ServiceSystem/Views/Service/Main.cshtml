@@ -2,16 +2,18 @@
 @{
     ViewBag.Title = "Main";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    string message = null;
+    string type = null;
+
+    if (ViewData.ContainsKey("message"))
+    {
+        type = ViewData["message"].ToString().Split(new char[] { '_' })[0];
+        message = ViewData["message"].ToString().Split(new char[] { '_' })[1];
+    }
 }
 
-@if(ViewData.ContainsKey("message"))
-{
-    <p>@ViewData["message"]</p>
-}
-else
-{
-    <p>No data</p>
-}
+<link rel="stylesheet" href="~/Content/main.css" />
 
 <div class="row">
     <div class="col-sm-8 col-md-5 col-md-offset-4 col-sm-offset-2">
@@ -20,13 +22,13 @@ else
         @using (Html.BeginForm("Main", "Service", null, FormMethod.Post, new { enctype = "multipart/form-data", id = "service_form", style = "display:table; margin:auto;" }))
         {
             <div class="well form-horizontal" id="serviceConstructor">
-                <div id="constructor_header" style="border: 1px solid grey; padding-top:10px;">
+                <div id="constructor_header" class="construtorHeader">
                     <div class="form-group">
-                        <input type="text" name="service_name" placeholder="Назва послуги" style="margin-bottom: 5px; margin: auto;" class="form-control"/>
-                        <label for="service_name" class="text-danger control-label col-sm-offset-2" hidden id="service_name_validation"></label>
+                        <input type="text" name="service_name" placeholder="Назва послуги" class="form-control constructorHeader__serviceData"/>
+                        <label for="service_name" class="text-danger control-label" hidden id="service_name_validation"></label>
                     </div>
                     <div class="form-group">
-                        <select class="form-control" style="margin: auto;" name="service_category">
+                        <select class="form-control constructorHeader__serviceSelect"  name="service_category">
                             <option value="None">Категорія</option>
                             <option value="IT">IT</option>
                             <option value="Law">Юриспунденція</option>
@@ -35,35 +37,35 @@ else
                             <option value="Engineering">Інженерія</option>
                             <option value="Household">Домогосподарство</option>
                         </select>
-                        <label for="service_category" class="text-danger control-label col-sm-offset-2" hidden id="service_category_validation"></label>
+                        <label for="service_category" class="text-danger control-label" hidden id="service_category_validation"></label>
                     </div>
                     <div class="form-group">
-                        <textarea rows="10" name="service_description" placeholder="Опис послуги" style="margin-bottom: 5px; margin:auto;" class="form-control"></textarea>
+                        <textarea rows="10" name="service_description" placeholder="Опис послуги"  class="form-control constructorHeader__serviceData"></textarea>
                     </div>
                     <div class="form-group">
-                        <input type="file" name="service_attachments" multiple style="margin-bottom: 5px; margin: auto;" class="form-control" />
+                        <input type="file" name="service_attachments" multiple  class="form-control constructorHeader__serviceData" />
                     </div>
                     <div class="form-group">
-                        <select name="service_type" style="margin: auto;" class="form-control" id="baseController">
+                        <select name="service_type" class="form-control constructorHeader__serviceSelect" id="baseController">
                             <option value="none">Тип послуги</option>
                             <option value="session">Сеанс</option>
                             <option value="course">Курс</option>
                             <option value="deadline">Дедлайн</option>
                         </select>
-                        <label for="service_type" class="text-danger control-label col-sm-offset-2" hidden id="service_type_validation"></label>
+                        <label for="service_type" class="text-danger control-label" hidden id="service_type_validation"></label>
                     </div>
                     <div class="form-group">
-                        <input type="number" class="form-control" style="margin: auto;" placeholder="Початковий внесок (1% - 99%)" name="advance_percent" id="advance_percentage" />
-                        <label for="advance_percent" class="text-danger control-label col-sm-offset-2" hidden id="advance_percent_validation"></label>
+                        <input type="number" class="form-control constructorHeader__serviceSelect" placeholder="Початковий внесок (1% - 99%)" name="advance_percent" id="advance_percentage" />
+                        <label for="advance_percent" class="text-danger control-label" hidden id="advance_percent_validation"></label>
                     </div>
                 </div>
-                <div id="constructor_body" style="margin-top: 10px;">
+                <div id="constructor_body" class="constructorBody">
                 </div>
-                <div id="constructor_footer" style="margin-top: 10px;  margin-bottom: 20px;">
+                <div id="constructor_footer" class="constructorFooter">
                 </div>
                 <input type="button" name="add_properties_selector" class="btn btn-default" value="+ додати властивість" />
                 <input type="button" name="remove_properties_selector" disabled class="btn btn-default" value="- видалити властивість" />
-                <input type="submit" style="margin: auto; margin-top: 10px;" class="btn btn-info btn-block" value="Сформувати послугу" />
+                <input type="submit" id="makeServiceBtn" class="btn btn-info btn-block" value="Сформувати послугу" />
             </div>
         }
     </div>
@@ -81,6 +83,10 @@ else
         $(document).ready(function () {
 
             getAccessToken();
+
+            if(@type != null){
+                window.displayMessage(@type, @message);
+            }
 
             $("#service_form").submit(function (e) {
                 if (!validator.Validate())
@@ -107,6 +113,7 @@ else
                     toAppend = toAppend.replace(/&gt;/g, ">");
 
                     $("#constructor_body").append(toAppend);
+                    $('label[id$="validation"]').removeClass("col-sm-offset-2");
 
                     $("#price_measure_description_selector_1").change(function () {
 
@@ -134,6 +141,7 @@ else
                         toAppend = toAppend.replace(/[*]/g, price_widgets.toString());
 
                         $("#price_measures").append(toAppend);
+                        $('label[id$="validation"]').removeClass("col-sm-offset-2");
 
                         $("#price_measure_description_selector_" + price_widgets).change(function () {
 
@@ -187,6 +195,7 @@ else
                             toAppend = toAppend.replace(/[*]/g, "1");
 
                             $("#duration_measure_data_1").append(toAppend);
+                            $('label[id$="validation"]').removeClass("col-sm-offset-2");
                         }
                         else if ($(this).val() == "from") {
                             var toAppend = '@ViewData["duration_measure_from"]';
@@ -197,6 +206,7 @@ else
                             toAppend = toAppend.replace(/[*]/g, "1");
 
                             $("#duration_measure_data_1").append(toAppend);
+                            $('label[id$="validation"]').removeClass("col-sm-offset-2");
                         }
                         else if ($(this).val() == "till") {
                             var toAppend = '@ViewData["duration_measure_till"]';
@@ -207,6 +217,7 @@ else
                             toAppend = toAppend.replace(/[*]/g, "1");
 
                             $("#duration_measure_data_1").append(toAppend);
+                            $('label[id$="validation"]').removeClass("col-sm-offset-2");
                         }
 
                     });
@@ -225,6 +236,7 @@ else
                         toAppend = toAppend.replace(/[*]/g, duration_widgets.toString());
 
                         $("#duration_measures").append(toAppend);
+                        $('label[id$="validation"]').removeClass("col-sm-offset-2");
 
                         $(".days").change(function () {
 
@@ -268,6 +280,7 @@ else
                                 toAppend = toAppend.replace(/[*]/g, index.toString());
 
                                 $("#duration_measure_data_" + index).append(toAppend);
+                                $('label[id$="validation"]').removeClass("col-sm-offset-2");
                             }
                             else if ($(this).val() == "from") {
                                 var toAppend = '@ViewData["duration_measure_from"]';
@@ -278,6 +291,7 @@ else
                                 toAppend = toAppend.replace(/[*]/g, index.toString());
 
                                 $("#duration_measure_data_" + index).append(toAppend);
+                                $('label[id$="validation"]').removeClass("col-sm-offset-2");
                             }
                             else if ($(this).val() == "till") {
                                 var toAppend = '@ViewData["duration_measure_till"]';
@@ -288,6 +302,7 @@ else
                                 toAppend = toAppend.replace(/[*]/g, index.toString());
 
                                 $("#duration_measure_data_" + index).append(toAppend);
+                                $('label[id$="validation"]').removeClass("col-sm-offset-2");
                             }
 
                         });
@@ -327,6 +342,7 @@ else
                     toAppend = toAppend.replace(/&gt;/g, ">");
 
                     $("#constructor_body").append(toAppend);
+                    $('label[id$="validation"]').removeClass("col-sm-offset-2");
 
                     $('input[name="is_time_defined"]').change(function () {
 
@@ -369,6 +385,7 @@ else
                         toAppend = toAppend.replace(/[*]/g, price_widgets.toString());
 
                         $("#price_measures").append(toAppend);
+                        $('label[id$="validation"]').removeClass("col-sm-offset-2");
 
                         $("#price_measure_description_selector_" + price_widgets).change(function () {
 
@@ -407,6 +424,7 @@ else
                             toAppend = toAppend.replace(/&gt;/g, ">");
 
                             $("#week_gradation_block").append(toAppend);
+                            $('label[id$="validation"]').removeClass("col-sm-offset-2");
 
                             $('select[name="week_gradation_type"]').change(function () {
 
@@ -420,6 +438,7 @@ else
                                     toAppend = toAppend.replace(/&gt;/g, ">");
 
                                     $("#week_gradation_data").append(toAppend);
+                                    $('label[id$="validation"]').removeClass("col-sm-offset-2");
 
                                     $(".days").change(function () {
 
@@ -441,6 +460,7 @@ else
                                     toAppend = toAppend.replace(/&gt;/g, ">");
 
                                     $("#week_gradation_data").append(toAppend);
+                                    $('label[id$="validation"]').removeClass("col-sm-offset-2");
 
                                     $('select[name="number_of_days"]').change(function () {
 
@@ -453,7 +473,7 @@ else
                                             + '<label for="day' + (i + 1) + 'Duration" class="col-xs-3 col-sm-offset-3">День ' + (i + 1) + '</label>'
                                             + '<input name="day' + (i + 1) + 'Duration" type="text" class="col-xs-2" id="day' + (i + 1) + 'Duration">'
                                             + '<label for="day' + (i + 1) + 'Duration" class="col-xs-1">хв</label>'
-                                            + '<label for="day' + (i + 1) + 'Duration" id="day' + (i + 1) + 'Duration_validation" class="control-label has-error col-sm-offset-2"></label>'
+                                            + '<label for="day' + (i + 1) + 'Duration" id="day' + (i + 1) + 'Duration_validation" class="control-label has-error"></label>'
                                             + '</div>');
                                         }
 
@@ -486,6 +506,7 @@ else
                     toAppend = toAppend.replace(/&gt;/g, ">");
 
                     $("#constructor_body").append(toAppend);
+                    $('label[id$="validation"]').removeClass("col-sm-offset-2");
 
                     $("#price_measure_description_selector_1").change(function () {
 
@@ -513,6 +534,7 @@ else
                         toAppend = toAppend.replace(/[*]/g, price_widgets.toString());
 
                         $("#price_measures").append(toAppend);
+                        $('label[id$="validation"]').removeClass("col-sm-offset-2");
 
                         $("#price_measure_description_selector_" + price_widgets).change(function () {
 
@@ -556,6 +578,7 @@ else
                             toAppend = toAppend.replace(/[*]/g, "1");
 
                             $("#duration_measure_data_1").append(toAppend);
+                            $('label[id$="validation"]').removeClass("col-sm-offset-2");
                         }
                         else if ($(this).val() == "from") {
                             var toAppend = '@ViewData["duration_measure_from"]';
@@ -566,6 +589,7 @@ else
                             toAppend = toAppend.replace(/[*]/g, "1");
 
                             $("#duration_measure_data_1").append(toAppend);
+                            $('label[id$="validation"]').removeClass("col-sm-offset-2");
                         }
                         else if ($(this).val() == "till") {
                             var toAppend = '@ViewData["duration_measure_till"]';
@@ -576,6 +600,7 @@ else
                             toAppend = toAppend.replace(/[*]/g, "1");
 
                             $("#duration_measure_data_1").append(toAppend);
+                            $('label[id$="validation"]').removeClass("col-sm-offset-2");
                         }
 
                     });
@@ -594,6 +619,7 @@ else
                         toAppend = toAppend.replace(/[*]/g, duration_widgets.toString());
 
                         $("#duration_measures").append(toAppend);
+                        $('label[id$="validation"]').removeClass("col-sm-offset-2");
 
                         $("#duration_measure_description_selector_" + duration_widgets).change(function () {
 
@@ -627,6 +653,7 @@ else
                                 toAppend = toAppend.replace(/[*]/g, index.toString());
 
                                 $("#duration_measure_data_" + index).append(toAppend);
+                                $('label[id$="validation"]').removeClass("col-sm-offset-2");
                             }
                             else if ($(this).val() == "from") {
                                 var toAppend = '@ViewData["duration_measure_from"]';
@@ -637,6 +664,7 @@ else
                                 toAppend = toAppend.replace(/[*]/g, index.toString());
 
                                 $("#duration_measure_data_" + index).append(toAppend);
+                                $('label[id$="validation"]').removeClass("col-sm-offset-2");
                             }
                             else if ($(this).val() == "till") {
                                 var toAppend = '@ViewData["duration_measure_till"]';
@@ -647,6 +675,7 @@ else
                                 toAppend = toAppend.replace(/[*]/g, index.toString());
 
                                 $("#duration_measure_data_" + index).append(toAppend);
+                                $('label[id$="validation"]').removeClass("col-sm-offset-2");
                             }
 
                         });
@@ -694,6 +723,7 @@ else
                 toAppend = toAppend.replace(/[*]/g, properties.toString());
 
                 $("#constructor_footer").append(toAppend);
+                $('label[id$="validation"]').removeClass("col-sm-offset-2");
 
                 $('select[name="property_type_' + properties + '"]').change(function () {
 
@@ -710,14 +740,14 @@ else
                         if ($(this).val() == "textarea") {
                             elem.append('<div class="form-group">'
                                 + '<textarea class="form-control" style="margin: auto;" name="default_widget_value_' + currProperty + '" />'
-                                + '<label for="default_widget_value_' + currProperty + '" class="text-danger control-label col-sm-offset-2" hidden id="default_widget_value_' + currProperty + '_validation"></label>'
+                                + '<label for="default_widget_value_' + currProperty + '" class="text-danger control-label" hidden id="default_widget_value_' + currProperty + '_validation"></label>'
                                 + '</div>'
                                 );
                         }
                         else {
                             elem.append('<div class="form-group">'
                           + '<input type="' + $(this).val() + '" class="form-control" style="margin:auto;" name="default_widget_value_' + currProperty + '"/>'
-                          + '<label for="default_widget_value_' + currProperty + '" class="text-danger control-label col-sm-offset-2" hidden id="default_widget_value_' + currProperty + '_validation"></label>'
+                          + '<label for="default_widget_value_' + currProperty + '" class="text-danger control-label" hidden id="default_widget_value_' + currProperty + '_validation"></label>'
                           + '</div>'
                           );
                         }

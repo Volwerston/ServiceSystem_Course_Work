@@ -76,7 +76,7 @@ namespace ServiceSystem.Controllers
 
                     da.Fill(set);
 
-                    if(set.Tables[0].Rows.Count > 0)
+                    if (set.Tables[0].Rows.Count > 0)
                     {
                         toReturn = true;
                     }
@@ -169,55 +169,48 @@ namespace ServiceSystem.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public async Task<HttpResponseMessage> SetNewUserPassword(Tuple<string, string, string> data)
+        public async Task<IHttpActionResult> SetNewUserPassword([FromBody]Tuple<string, string, string> data)
         {
             string request_id = data.Item1;
             string password = data.Item2;
 
             using (SqlConnection con = new SqlConnection(System.Web.Configuration.WebConfigurationManager.ConnectionStrings["DBCS"].ConnectionString))
             {
-                string cmdString = "SELECT * FROM ChangePasswordLog WHERE REQUEST_ID=@id; DELETE FROM ChangePasswordLog WHERE REQUEST_ID=@id;";
+                string cmdString = "SELECT * FROM ChangePasswordLog WHERE REQUEST_ID=@id;";
 
                 SqlCommand cmd = new SqlCommand(cmdString, con);
 
                 cmd.Parameters.AddWithValue("@id", request_id);
 
-
                 try
                 {
                     con.Open();
 
-                    DateTime date;
+                    DateTime date = DateTime.Now.AddHours(-48);
                     string email = null;
 
-                    using (SqlDataReader rdr = cmd.ExecuteReader())
+                    using (SqlDataReader rdr = await cmd.ExecuteReaderAsync())
                     {
-
                         if (rdr.Read())
                         {
                             email = rdr["EMAIL"].ToString();
                             date = Convert.ToDateTime(rdr["REQUEST_TIME"].ToString());
                         }
+
+                        if ((DateTime.Now - date).TotalHours > 24)
+                        {
+                            throw new Exception("Your request has timed out. Please send another one and try again");
+                        }
                     }
 
                     string id = GetUserId(con, email);
+                    SetNullPassword(id);
 
-                    try
-                    {
-                        SetNullPassword(id);
-
-                        await SetPassword(new SetPasswordBindingModel { Id = id, NewPassword = data.Item2, ConfirmPassword = data.Item3 });
-
-                        return Request.CreateResponse(HttpStatusCode.OK, "OK");
-                    }
-                    catch
-                    {
-                        return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Internal server error");
-                    }
+                    return await SetPassword(new SetPasswordBindingModel { Id = id, NewPassword = data.Item2, ConfirmPassword = data.Item3 });
                 }
-                catch
+                catch(Exception e)
                 {
-                    return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Internal server error");
+                    return InternalServerError(e);
                 }
             }
         }
@@ -266,16 +259,16 @@ namespace ServiceSystem.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        public HttpResponseMessage ChangeUserPassword(string email)
+        public async Task<HttpResponseMessage> ChangeUserPassword(string email)
         {
             string guid = Guid.NewGuid().ToString();
 
             string letterSent = WriteChangePasswordLetter(email, guid);
 
-            if(letterSent == "OK")
+            if (letterSent == "OK")
             {
                 using (SqlConnection con = new SqlConnection(System.Web.Configuration.WebConfigurationManager.ConnectionStrings["DBCS"].ConnectionString))
-                { 
+                {
                     string cmdString = "INSERT INTO ChangePasswordLog VALUES(GETDATE(), @RequestId, @mail);";
 
                     SqlCommand cmd = new SqlCommand(cmdString, con);
@@ -286,11 +279,11 @@ namespace ServiceSystem.Controllers
                     try
                     {
                         con.Open();
-                        cmd.ExecuteNonQuery();
+                        await cmd.ExecuteNonQueryAsync();
 
                         return Request.CreateResponse(HttpStatusCode.OK, "Letter was sent");
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         return Request.CreateResponse(HttpStatusCode.InternalServerError, ex.Message);
                     }
@@ -303,7 +296,7 @@ namespace ServiceSystem.Controllers
         }
 
 
-        
+
         private string WriteChangePasswordLetter(string email, string guid)
         {
             string smtpHost = "smtp.gmail.com";
@@ -320,7 +313,7 @@ namespace ServiceSystem.Controllers
             string msgTo = email;
             string msgSubject = "Password Notification";
 
-            string msgBody = "Please follow this link: http://servicesystem1.somee.com/Service/SetNewPassword?request_id=" + 
+            string msgBody = "Please follow this link: http://service.local.com/Service/SetNewPassword?request_id=" +
                 guid + " to change your password";
 
             MailMessage message = new MailMessage(msgFrom, msgTo, msgSubject, msgBody);
@@ -333,10 +326,9 @@ namespace ServiceSystem.Controllers
 
                 return "OK";
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return ex.Message;
-
             }
         }
 
@@ -400,7 +392,7 @@ namespace ServiceSystem.Controllers
 
             IdentityResult result = await UserManager.ChangePasswordAsync(model.Id, model.OldPassword,
                 model.NewPassword);
-            
+
             if (!result.Succeeded)
             {
                 return GetErrorResult(result);
@@ -518,7 +510,7 @@ namespace ServiceSystem.Controllers
             ExternalLoginData externalLogin =
                 externalLogin = ExternalLoginData.FromIdentity(User.Identity as ClaimsIdentity);
 
-           if (externalLogin == null)
+            if (externalLogin == null)
             {
                 return InternalServerError();
             }
@@ -537,9 +529,9 @@ namespace ServiceSystem.Controllers
             if (hasRegistered)
             {
                 Authentication.SignOut(DefaultAuthenticationTypes.ExternalCookie);
-                
-                 ClaimsIdentity oAuthIdentity = await user.GenerateUserIdentityAsync(UserManager,
-                    OAuthDefaults.AuthenticationType);
+
+                ClaimsIdentity oAuthIdentity = await user.GenerateUserIdentityAsync(UserManager,
+                   OAuthDefaults.AuthenticationType);
                 ClaimsIdentity cookieIdentity = await user.GenerateUserIdentityAsync(UserManager,
                     CookieAuthenticationDefaults.AuthenticationType);
 
@@ -660,7 +652,7 @@ namespace ServiceSystem.Controllers
                     connection.Open();
                     SqlDataReader rdr = cmd.ExecuteReader();
 
-                    if(rdr.Read())
+                    if (rdr.Read())
                     {
                         rdr.Close();
                         toReturn = SetEmailConfirmed(connection, confirmationToken);
@@ -672,7 +664,7 @@ namespace ServiceSystem.Controllers
                 }
             }
 
-            return toReturn; 
+            return toReturn;
         }
 
         [AllowAnonymous]
@@ -708,7 +700,7 @@ namespace ServiceSystem.Controllers
 
                     return Request.CreateResponse(HttpStatusCode.OK, "OK");
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
                 }
@@ -750,7 +742,8 @@ namespace ServiceSystem.Controllers
                 return BadRequest("Provided data is invalid");
             }
 
-            var user = new ApplicationUser() {
+            var user = new ApplicationUser()
+            {
                 UserName = model.Email,
                 Email = model.Email,
                 FirstName = model.FirstName,
@@ -827,11 +820,6 @@ namespace ServiceSystem.Controllers
 
             result = await UserManager.CreateAsync(user);
 
-            //if (!result.Succeeded)
-            //{
-            //    return GetErrorResult(result);
-            //}
-
             if (result.Succeeded)
             {
                 result = await UserManager.AddLoginAsync(user.Id, info.Login);
@@ -843,7 +831,7 @@ namespace ServiceSystem.Controllers
 
             if (!result.Succeeded)
             {
-                return GetErrorResult(result); 
+                return GetErrorResult(result);
             }
             return Ok();
         }

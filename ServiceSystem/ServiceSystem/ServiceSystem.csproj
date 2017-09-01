@@ -315,6 +315,7 @@
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Common\0KU1nvBuEk4.jpg" />
+    <Content Include="Common\ajax-loader.gif" />
     <Content Include="Common\duration_measure_from_till.html" />
     <Content Include="Common\default_property_widget.html" />
     <Content Include="Common\duration_measure_from.html" />
@@ -327,12 +328,21 @@
     <Content Include="Common\week_gradation_widget.html" />
     <Content Include="Common\week_gradation_widget_duration.html" />
     <Content Include="Common\week_gradation_widget_hours.html" />
+    <Content Include="Content\applicationDetails.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\changePassword.css" />
+    <Content Include="Content\consultantSearch.css" />
     <Content Include="Content\dialogue.css" />
     <Content Include="Content\growl.css" />
     <Content Include="Content\index.css" />
     <Content Include="Content\internalAccountPage.css" />
+    <Content Include="Content\main.css" />
+    <Content Include="Content\register.css" />
+    <Content Include="Content\serviceCharts.css" />
+    <Content Include="Content\serviceDetails.css" />
+    <Content Include="Content\serviceSearch.css" />
+    <Content Include="Content\setNewPassword.css" />
     <Content Include="Content\Site.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -382,7 +392,9 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\Validators.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>

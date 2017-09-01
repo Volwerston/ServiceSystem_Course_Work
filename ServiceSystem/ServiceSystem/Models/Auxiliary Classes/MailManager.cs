@@ -78,7 +78,7 @@ namespace ServiceSystem.Models
             builder.Append(values["username"]);
             builder.Append("<br/>");
 
-            builder.Append("Вас запрошено консультантом <a href='http://servicesystem1.somee.com/Service/ServiceDetails/");
+            builder.Append("Вас запрошено консультантом <a href='http://service.local.com/Service/ServiceDetails/");
             builder.Append(values["service_id"]);
             builder.Append("'>проекту</a><br/>");
 
@@ -93,7 +93,7 @@ namespace ServiceSystem.Models
             builder.Append(values["username"]);
             builder.Append("<br/>");
 
-            builder.Append("Ви отримали нове сповіщення. Щоб переглянути його, авторизуйтеся в <a href='http://servicesystem1.somee.com'>системі</a><br/>");
+            builder.Append("Ви отримали нове сповіщення. Щоб переглянути його, авторизуйтеся в <a href='http://service.local.com'>системі</a><br/>");
 
             return builder.ToString();
         }
@@ -106,7 +106,7 @@ namespace ServiceSystem.Models
             builder.Append("<br/>");
 
             builder.Append("Ви отримали нове повідомлення у діалозі ");
-            builder.Append("<a href='http://servicesystem1.somee.com/Service/Dialogue/");
+            builder.Append("<a href='http://service.local.com/Service/Dialogue/");
             builder.Append(values["dialogue_id"]);
             builder.Append("'>");
             builder.Append(values["dialogue_id"]);

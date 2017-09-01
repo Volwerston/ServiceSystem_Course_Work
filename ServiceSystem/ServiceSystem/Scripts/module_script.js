@@ -24,7 +24,7 @@ var myApp = angular.module("FeedbackApp", [])
                     }
 
 
-                    $http.post('/api/ServiceConsultants/GetFeedbacks',$scope.toPass)
+                    $http.post('/api/ServiceConsultants/GetFeedbacks', $scope.toPass)
                          .then(function (response) {
                              $scope.feedbacks = response.data;
                          },
@@ -70,5 +70,5 @@ var myApp = angular.module("FeedbackApp", [])
                     $scope.isReverse = ($scope.orderItem == item) ? !$scope.isReverse : false;
                     $scope.orderItem = item;
                 }
-                
+
             });

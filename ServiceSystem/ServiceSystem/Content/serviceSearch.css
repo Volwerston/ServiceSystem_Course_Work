@@ -1,0 +1,48 @@
+﻿.searchBlock{
+    display: table; 
+    float: left; 
+    margin: 15px;
+}
+
+.searchBlock__criteria{
+    margin: auto;
+}
+
+.searchBlock__button{
+    margin: auto;
+}
+
+.dataBlock{
+    margin-top:15px;
+}
+
+.dataBlock__info{
+    margin: 15px; 
+    margin-right: 0px;
+}
+
+.dataUnit{
+    margin-bottom: 10px; 
+    display:none;
+}
+
+.dataUnit__body{
+    border: 2px solid green; 
+    border-radius: 7px; 
+    word-break: break-all; 
+    background-color: blanchedalmond; 
+    min-height: 100px;
+}
+
+.dataUnit__title{
+    color: black;
+}
+
+.dataUnit__description{
+    color: maroon; 
+    background-color: azure;
+}
+
+.dataUnit__user{
+    color: maroon;
+}
