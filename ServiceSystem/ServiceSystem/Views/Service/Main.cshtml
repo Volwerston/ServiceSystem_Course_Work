@@ -3,14 +3,8 @@
     ViewBag.Title = "Main";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
-    string message = null;
-    string type = null;
-
-    if (ViewData.ContainsKey("message"))
-    {
-        type = ViewData["message"].ToString().Split(new char[] { '_' })[0];
-        message = ViewData["message"].ToString().Split(new char[] { '_' })[1];
-    }
+    string type = ViewData["type"].ToString();
+    string message = ViewData["message"].ToString();
 }
 
 <link rel="stylesheet" href="~/Content/main.css" />
@@ -84,8 +78,8 @@
 
             getAccessToken();
 
-            if(@type != null){
-                window.displayMessage(@type, @message);
+            if ('@type' != "none") {
+                displayMessage('@type', '@message');
             }
 
             $("#service_form").submit(function (e) {

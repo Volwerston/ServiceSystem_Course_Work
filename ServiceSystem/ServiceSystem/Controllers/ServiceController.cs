@@ -155,6 +155,17 @@ namespace ServiceSystem.Controllers
                 ViewData[block.Key] = block.Value;
             }
 
+            if (!String.IsNullOrEmpty(message))
+            {
+                ViewData["type"] = message.Split('|')[0];
+                ViewData["message"] = message.Split('|')[1];
+            }
+            else
+            {
+                ViewData["type"] = "none";
+                ViewData["message"] = "none";
+            }
+
             return View();
         }
 
@@ -388,19 +399,34 @@ namespace ServiceSystem.Controllers
         [HttpPost]
         public ActionResult Main(FormCollection collection, IEnumerable<HttpPostedFileBase> service_attachments)
         {
-            Service service = ServiceManager.GenerateService(collection, service_attachments);
-            ObjectCache cache = MemoryCache.Default;
-
-            using (HttpClient client = WebApiClient.InitializeAuthorizedClient(Request.Url.Scheme + "://" + Request.Url.Authority + Request.ApplicationPath.TrimEnd('/') + "/", "Bearer", cache["access_token"] as string))
+            try
             {
-                JsonMediaTypeFormatter formatter = new JsonMediaTypeFormatter();
+                Service service = ServiceManager.GenerateService(collection, service_attachments);
+                ObjectCache cache = MemoryCache.Default;
 
-                formatter.SerializerSettings.TypeNameHandling = TypeNameHandling.All;
+                using (HttpClient client = WebApiClient.InitializeAuthorizedClient(Request.Url.Scheme + "://" + Request.Url.Authority + Request.ApplicationPath.TrimEnd('/') + "/", "Bearer", cache["access_token"] as string))
+                {
+                    JsonMediaTypeFormatter formatter = new JsonMediaTypeFormatter();
 
-                HttpResponseMessage message = client.PostAsync("api/ServiceApi/PostService", service, formatter).Result;
+                    formatter.SerializerSettings.TypeNameHandling = TypeNameHandling.All;
+
+                    HttpResponseMessage message = client.PostAsync("api/ServiceApi/PostService", service, formatter).Result;
+
+                    if (message.IsSuccessStatusCode)
+                    {
+
+                        return RedirectToAction("Main", "Service", new { message = "Success|Сервіс успішно створено. Перегляньте його на сторінці \"Особистий кабінет \"" });
+                    }
+                    else
+                    {
+                        return RedirectToAction("Main", "Service", new { message = "Error|Сталася помилка. Будь ласка, повторіть спробу" });
+                    }
+                }
             }
-
-            return RedirectToAction("Main", "Service", null);
+            catch
+            {
+                return RedirectToAction("Main", "Service", new { message = "Error|Сталася помилка. Будь ласка, повторіть спробу" });
+            }
         }
 
         [SampleAuthorize]
