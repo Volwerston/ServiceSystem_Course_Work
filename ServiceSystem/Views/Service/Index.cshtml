@@ -1,0 +1,166 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_StartView.cshtml";
+
+    string message = "";
+    string messageState = "";
+
+    if (ViewData.ContainsKey("message"))
+    {
+        message = ViewData["message"].ToString();
+        messageState = ViewData["message_state"].ToString();
+    }
+}
+    <link rel="stylesheet" href="~/Content/index.css" />
+
+    <div class="row header-block">
+        <div class="col-sm-5 col-sm-offset-1 text-center header-block__text">
+            <h2>Сервісна система</h2>
+            <p>Пропонуємо Вашій увазі систему для створення і користування послугами інших клієнтів</p>
+        </div>
+        <div class="col-sm-4 col-sm-offset-1">
+            <div class="row authorizeForm">
+                @using (Html.BeginForm())
+            {
+                    <div>
+                        <div class="form-horizontal authorizeForm__form">
+                            <div class="form-group">
+                                <input name="email" class="form-control" placeholder="E-mail" type="email" />
+                                <label hidden for="email" class="text-warning" id="email_label"></label>
+                            </div>
+                            <div class="form-group">
+                                <input name="password" class="form-control" placeholder="Пароль" type="password" />
+                                <label hidden for="password" class="text-warning" id="password_label"></label>
+                            </div>
+                            <input type="submit" name="log_in" class="btn btn-success btn-block authorizeForm__submit" value="Увійти" />
+                            <div class="row authorizeForm__btnBlock">
+                                <div class="col-sm-4">
+                                    @Html.ActionLink("Реєстрація", "Register", "Service", new { style = "color: white;" })
+                                </div>
+                                <div class="col-sm-8">
+                                    @Html.ActionLink("Відовлення паролю", "ChangePassword", "Service", new { style = "color: white;" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        <input type="button" class="btn btn-info btn-block" id="facebook_login" value="Facebook" />
+                    </div>
+                    <div class="col-sm-6">
+                        <input type="button" class="btn btn-danger btn-block" id="google_login" value="Google" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<div class="row">
+    <h1 class="text-center">Можливості</h1>
+    <div class="col-sm-4 options">
+        <h1 class="options__text">1. </h1>
+        <p class="options__text">Створюйте власні послуги та отримуйте з цього прибуток</p>
+    </div>
+    <div class="col-sm-4 options">
+        <h1 class="options__text">2. </h1>
+        <p class="options__text">Зручно домовляйтеся про отримання послуг, які Вас цікавлять</p>
+    </div>
+    <div class="col-sm-4 options">
+        <h1 class="options__text">3. </h1>
+        <p class="options__text">Будьте консультантом послуги і спілкуйтеся з клієнтами з усього світу!</p>
+    </div>
+</div>
+<div class="row stats">
+    <h1 class="text-center">Статистика</h1>
+    <div class="col-sm-3 text-center statsItem">
+        <h1>@ViewData["ServicesNumber"].ToString()</h1>
+        <p>Створено послуг</p>
+    </div>
+    <div class="col-sm-3 text-center statsItem">
+        <h1>@ViewData["UsersNumber"].ToString()</h1>
+        <p>Користувачів зареєструвалося</p>
+    </div>
+    <div class="col-sm-3 text-center statsItem">
+        <h1>@ViewData["ApplicationsNumber"].ToString()</h1>
+        <p>Створено заявок на послуги</p>
+    </div>
+    <div class="col-sm-3 text-center statsItem">
+        <h1>@ViewData["DialoguesNumber"].ToString()</h1>
+        <p>Поточних діалогів між користувачами</p>
+    </div>
+</div>
+
+
+@section scripts{
+    
+<script src="~/Scripts/FacebookAuth.js"></script>
+ <script type="text/javascript">
+
+        $(window).load(function () {
+
+            if('@message' != ""){
+                displayMessage('@messageState', '@message');
+            }
+
+        });
+
+        $(document).ready(function () {
+
+            $('input[name="password"]').blur(function () {
+                if ($(this).val() == "") {
+                    $(this).parent().addClass("has-error");
+                    $("#password_label").removeAttr("hidden");
+                    $("#password_label").text("Введіть пароль");
+                }
+                else {
+                    $(this).parent().removeClass("has-error");
+                    if (!$("#password_label").is(":hidden")) {
+                        $("#password_label").val("");
+                        $("#password_label").attr('hidden', true);
+                    }
+                }
+            });
+
+            $('input[name="password"]').focus(function () {
+                $(this).parent().removeClass("has-error");
+                if (!$("#password_label").is(":hidden")) {
+                    $("#password_label").val("");
+                    $("#password_label").attr('hidden', true);
+                }
+            });
+
+            $('input[name="email"]').blur(function () {
+                if ($(this).val() == "") {
+                    $(this).parent().addClass("has-error");
+                    $("#email_label").removeAttr("hidden");
+                    $("#email_label").text("Введіть e-mail");
+                }
+                else {
+                    $(this).parent().removeClass("has-error");
+                    if (!$("#email_label").is(":hidden")) {
+                        $("#email_label").val("");
+                        $("#email_label").attr('hidden', true);
+                    }
+                }
+            });
+
+            $('input[name="email"]').focus(function () {
+                $(this).parent().removeClass("has-error");
+                if (!$("#email_label").is(":hidden")) {
+                    $("#email_label").val("");
+                    $("#email_label").attr('hidden', true);
+                }
+            });
+
+            $("#facebook_login").click(function () {
+                window.location.href = "/api/Account/ExternalLogin?provider=Facebook&response_type=token&client_id=self&redirect_uri=http%3A%2F%2Fservice.local.com%2FService%2FIndex&state=q4KP4wkLHQv70jEJYb_kLU1zgrQJlPy0v1ZmofDJABU1";
+            });
+
+            $("#google_login").click(function () {
+                window.location.href = "/api/Account/ExternalLogin?provider=Google&response_type=token&client_id=self&redirect_uri=http%3A%2F%2Fservice.local.com%2FService%2FIndex&state=t9utgUbp-";
+            });
+        });
+    </script>
+    }

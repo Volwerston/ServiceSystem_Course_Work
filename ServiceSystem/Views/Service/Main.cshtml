@@ -1,0 +1,768 @@
+﻿
+@{
+    ViewBag.Title = "Main";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    string message = null;
+    string type = null;
+
+    type = ViewData["type"].ToString();
+    message = ViewData["message"].ToString();
+
+}
+<link rel="stylesheet" href="~/Content/main.css" />
+<div class="row">
+    <div class="col-sm-8 col-md-5 col-md-offset-4 col-sm-offset-2">
+        <h3 class="text-center">Створення послуги</h3>
+        <p class="text-center">Заповніть всі дані, необхідні для створення Вашої власної послуги</p>
+        @using (Html.BeginForm("Main", "Service", null, FormMethod.Post, new { enctype = "multipart/form-data", id = "service_form", style = "display:table; margin:auto;" }))
+        {
+            <div class="well form-horizontal" id="serviceConstructor">
+                <div id="constructor_header" class="construtorHeader">
+                    <div class="form-group">
+                        <input type="text" name="service_name" placeholder="Назва послуги" class="form-control constructorHeader__serviceData" />
+                        <label for="service_name" class="text-danger control-label" hidden id="service_name_validation"></label>
+                    </div>
+                    <div class="form-group">
+                        <select class="form-control constructorHeader__serviceSelect" name="service_category">
+                            <option value="None">Категорія</option>
+                            <option value="IT">IT</option>
+                            <option value="Law">Юриспунденція</option>
+                            <option value="Economy">Економіка</option>
+                            <option value="Education">Освіта</option>
+                            <option value="Engineering">Інженерія</option>
+                            <option value="Household">Домогосподарство</option>
+                        </select>
+                        <label for="service_category" class="text-danger control-label" hidden id="service_category_validation"></label>
+                    </div>
+                    <div class="form-group">
+                        <textarea rows="10" name="service_description" placeholder="Опис послуги" class="form-control constructorHeader__serviceData"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <input type="file" name="service_attachments" multiple class="form-control constructorHeader__serviceData" />
+                    </div>
+                    <div class="form-group">
+                        <select name="service_type" class="form-control constructorHeader__serviceSelect" id="baseController">
+                            <option value="none">Тип послуги</option>
+                            <option value="session">Сеанс</option>
+                            <option value="course">Курс</option>
+                            <option value="deadline">Дедлайн</option>
+                        </select>
+                        <label for="service_type" class="text-danger control-label" hidden id="service_type_validation"></label>
+                    </div>
+                    <div class="form-group">
+                        <input type="number" class="form-control constructorHeader__serviceSelect" placeholder="Початковий внесок (1% - 99%)" name="advance_percent" id="advance_percentage" />
+                        <label for="advance_percent" class="text-danger control-label" hidden id="advance_percent_validation"></label>
+                    </div>
+                </div>
+                <div id="constructor_body" class="constructorBody">
+                </div>
+                <div id="constructor_footer" class="constructorFooter">
+                </div>
+                <input type="button" name="add_properties_selector" class="btn btn-default" value="+ додати властивість" />
+                <input type="button" name="remove_properties_selector" disabled class="btn btn-default" value="- видалити властивість" />
+                <input type="submit" id="makeServiceBtn" class="btn btn-info btn-block" value="Сформувати послугу" />
+            </div>
+        }
+    </div>
+</div>
+<script src="~/Scripts/Validators.js"></script>
+@section scripts{
+    <script src="~/Scripts/FacebookAuth.js"></script>
+    <script type="text/javascript">
+
+        var validator = new Validator();
+
+        var properties = 0;
+
+        $(document).ready(function () {
+
+            getAccessToken();
+
+            if ('@type' != "none") {
+                displayMessage('@type', '@message');
+            }
+
+            $("#service_form").submit(function (e) {
+                if (!validator.Validate()) {
+                    e.preventDefault();
+                }
+            });
+
+            $('select[name="service_type"]').change(function () {
+
+                $("#constructor_body").empty();
+
+                if ($(this).val() == "session") {
+
+                    validator = new SessionValidator();
+
+                    var duration_widgets = 1;
+                    var price_widgets = 1;
+
+                    var toAppend = '@ViewData["service_session_block"].ToString()';
+
+                    toAppend = toAppend.replace(/&quot;/g, "\"");
+                    toAppend = toAppend.replace(/&lt;/g, "<");
+                    toAppend = toAppend.replace(/&gt;/g, ">");
+
+                    $("#constructor_body").append(toAppend);
+                    $('label[id$="validation"]').removeClass("col-sm-offset-2");
+
+                    $("#price_measure_description_selector_1").change(function () {
+
+                        if ($(this).is(':checked')) {
+                            $("#price_description_block_1").removeAttr("hidden");
+                        }
+                        else {
+                            $("#price_description_block_1").attr("hidden", true);
+                        }
+
+                    });
+
+                    $('input[name="add_price_measure_selector"]').click(function () {
+
+                        price_widgets++;
+
+                        $('input[name="remove_price_measure_selector"]').removeAttr("disabled");
+
+
+                        var toAppend = '@ViewData["price_measure_widget"].ToString()';
+
+                        toAppend = toAppend.replace(/&quot;/g, "\"");
+                        toAppend = toAppend.replace(/&lt;/g, "<");
+                        toAppend = toAppend.replace(/&gt;/g, ">");
+                        toAppend = toAppend.replace(/[*]/g, price_widgets.toString());
+
+                        $("#price_measures").append(toAppend);
+                        $('label[id$="validation"]').removeClass("col-sm-offset-2");
+
+                        $("#price_measure_description_selector_" + price_widgets).change(function () {
+
+                            var data = $(this).attr('name').split("_");
+
+                            var index = data[data.length - 1];
+
+                            if ($(this).is(':checked')) {
+                                $("#price_description_block_" + index).removeAttr("hidden");
+                            }
+                            else {
+                                $("#price_description_block_" + index).attr("hidden", true);
+                            }
+
+                        });
+
+                    });
+
+                    $('input[name="remove_price_measure_selector"]').click(function () {
+
+                        $("#price_measure_widget_" + price_widgets).remove();
+
+                        --price_widgets;
+
+                        if (price_widgets == 1) {
+                            $('input[name="remove_price_measure_selector"]').attr("disabled", true);
+                        }
+                    });
+
+                    $(".days").change(function () {
+
+                        if ($(this).is(':checked')) {
+                            $("#" + $(this).attr('id') + "_hours").removeAttr("hidden");
+                        }
+                        else {
+                            $("#" + $(this).attr('id') + "_hours").attr("hidden", true)
+                        }
+
+                    });
+
+                    $('select[name="range_type_1"]').change(function () {
+
+                        $("#duration_measure_data_1").empty();
+
+                        if ($(this).val() == "from_till") {
+                            var toAppend = '@ViewData["duration_measure_from_till"]';
+
+                            toAppend = toAppend.replace(/&quot;/g, "\"");
+                            toAppend = toAppend.replace(/&lt;/g, "<");
+                            toAppend = toAppend.replace(/&gt;/g, ">");
+                            toAppend = toAppend.replace(/[*]/g, "1");
+
+                            $("#duration_measure_data_1").append(toAppend);
+                            $('label[id$="validation"]').removeClass("col-sm-offset-2");
+                        }
+                        else if ($(this).val() == "from") {
+                            var toAppend = '@ViewData["duration_measure_from"]';
+
+                            toAppend = toAppend.replace(/&quot;/g, "\"");
+                            toAppend = toAppend.replace(/&lt;/g, "<");
+                            toAppend = toAppend.replace(/&gt;/g, ">");
+                            toAppend = toAppend.replace(/[*]/g, "1");
+
+                            $("#duration_measure_data_1").append(toAppend);
+                            $('label[id$="validation"]').removeClass("col-sm-offset-2");
+                        }
+                        else if ($(this).val() == "till") {
+                            var toAppend = '@ViewData["duration_measure_till"]';
+
+                            toAppend = toAppend.replace(/&quot;/g, "\"");
+                            toAppend = toAppend.replace(/&lt;/g, "<");
+                            toAppend = toAppend.replace(/&gt;/g, ">");
+                            toAppend = toAppend.replace(/[*]/g, "1");
+
+                            $("#duration_measure_data_1").append(toAppend);
+                            $('label[id$="validation"]').removeClass("col-sm-offset-2");
+                        }
+
+                    });
+
+                    $('input[name="add_duration_measure_selector"]').click(function () {
+
+                        duration_widgets++;
+
+                        $('input[name="remove_duration_measure_selector"]').removeAttr("disabled");
+
+                        var toAppend = '@ViewData["duration_measure_widget"].ToString()';
+
+                        toAppend = toAppend.replace(/&quot;/g, "\"");
+                        toAppend = toAppend.replace(/&lt;/g, "<");
+                        toAppend = toAppend.replace(/&gt;/g, ">");
+                        toAppend = toAppend.replace(/[*]/g, duration_widgets.toString());
+
+                        $("#duration_measures").append(toAppend);
+                        $('label[id$="validation"]').removeClass("col-sm-offset-2");
+
+                        $(".days").change(function () {
+
+                            if ($(this).is(':checked')) {
+                                $("#" + $(this).attr('id') + "_hours").removeAttr("hidden");
+                            }
+                            else {
+                                $("#" + $(this).attr('id') + "_hours").attr("hidden", true)
+                            }
+
+                        });
+
+                        $("#duration_measure_description_selector_" + duration_widgets).change(function () {
+
+                            var data = $(this).attr('name').split("_");
+
+                            var index = data[data.length - 1];
+
+                            if ($(this).is(':checked')) {
+                                $("#duration_description_block_" + index).removeAttr("hidden");
+                            }
+                            else {
+                                $("#duration_description_block_" + index).attr("hidden", true);
+                            }
+                        });
+
+                        $('select[name="range_type_' + duration_widgets + '"]').change(function () {
+
+                            var data = $(this).attr('name').split("_");
+
+                            var index = data[data.length - 1];
+
+                            $("#duration_measure_data_" + index).empty();
+
+                            if ($(this).val() == "from_till") {
+                                var toAppend = '@ViewData["duration_measure_from_till"]';
+
+                                toAppend = toAppend.replace(/&quot;/g, "\"");
+                                toAppend = toAppend.replace(/&lt;/g, "<");
+                                toAppend = toAppend.replace(/&gt;/g, ">");
+                                toAppend = toAppend.replace(/[*]/g, index.toString());
+
+                                $("#duration_measure_data_" + index).append(toAppend);
+                                $('label[id$="validation"]').removeClass("col-sm-offset-2");
+                            }
+                            else if ($(this).val() == "from") {
+                                var toAppend = '@ViewData["duration_measure_from"]';
+
+                                toAppend = toAppend.replace(/&quot;/g, "\"");
+                                toAppend = toAppend.replace(/&lt;/g, "<");
+                                toAppend = toAppend.replace(/&gt;/g, ">");
+                                toAppend = toAppend.replace(/[*]/g, index.toString());
+
+                                $("#duration_measure_data_" + index).append(toAppend);
+                                $('label[id$="validation"]').removeClass("col-sm-offset-2");
+                            }
+                            else if ($(this).val() == "till") {
+                                var toAppend = '@ViewData["duration_measure_till"]';
+
+                                toAppend = toAppend.replace(/&quot;/g, "\"");
+                                toAppend = toAppend.replace(/&lt;/g, "<");
+                                toAppend = toAppend.replace(/&gt;/g, ">");
+                                toAppend = toAppend.replace(/[*]/g, index.toString());
+
+                                $("#duration_measure_data_" + index).append(toAppend);
+                                $('label[id$="validation"]').removeClass("col-sm-offset-2");
+                            }
+
+                        });
+                    });
+
+
+                    $('input[name="remove_duration_measure_selector"]').click(function () {
+
+                        $("#duration_measure_widget_" + duration_widgets).remove();
+
+                        duration_widgets--;
+
+                        if (duration_widgets == 1) {
+                            $('input[name="remove_duration_measure_selector"]').attr("disabled", true);
+                        }
+                    });
+
+                    $("#duration_measure_description_selector_1").change(function () {
+
+                        if ($(this).is(':checked')) {
+                            $("#duration_measure_description_block_1").removeAttr("hidden");
+                        }
+                        else {
+                            $("#duration_measure_description_block_1").attr("hidden", true);
+                        }
+                    });
+
+                }
+                else if ($(this).val() == "course") {
+
+                    validator = new DefinedCourseValidator();
+
+                    var toAppend = '@ViewData["service_course_block"].ToString()';
+
+                    toAppend = toAppend.replace(/&quot;/g, "\"");
+                    toAppend = toAppend.replace(/&lt;/g, "<");
+                    toAppend = toAppend.replace(/&gt;/g, ">");
+
+                    $("#constructor_body").append(toAppend);
+                    $('label[id$="validation"]').removeClass("col-sm-offset-2");
+
+                    $('input[name="is_time_defined"]').change(function () {
+
+                        if ($(this).is(":checked")) {
+                            validator = new DefinedCourseValidator();
+                            $("#course_time_block").removeAttr("hidden");
+                        }
+                        else {
+                            validator = new DefinedCourseValidator();
+                            $("#course_time_block").attr("hidden", true);
+                        }
+
+                    });
+
+                    var price_widgets = 1;
+
+                    $("#price_measure_description_selector_1").change(function () {
+
+                        if ($(this).is(':checked')) {
+                            $("#price_description_block_1").removeAttr("hidden");
+                        }
+                        else {
+                            $("#price_description_block_1").attr("hidden", true);
+                        }
+
+                    });
+
+                    $('input[name="add_price_measure_selector"]').click(function () {
+
+                        price_widgets++;
+
+                        $('input[name="remove_price_measure_selector"]').removeAttr("disabled");
+
+
+                        var toAppend = '@ViewData["price_measure_widget"].ToString()';
+
+                        toAppend = toAppend.replace(/&quot;/g, "\"");
+                        toAppend = toAppend.replace(/&lt;/g, "<");
+                        toAppend = toAppend.replace(/&gt;/g, ">");
+                        toAppend = toAppend.replace(/[*]/g, price_widgets.toString());
+
+                        $("#price_measures").append(toAppend);
+                        $('label[id$="validation"]').removeClass("col-sm-offset-2");
+
+                        $("#price_measure_description_selector_" + price_widgets).change(function () {
+
+                            var data = $(this).attr('name').split("_");
+
+                            var index = data[data.length - 1];
+
+                            if ($(this).is(':checked')) {
+                                $("#price_description_block_" + index).removeAttr("hidden");
+                            }
+                            else {
+                                $("#price_description_block_" + index).attr("hidden", true);
+                            }
+
+                        });
+
+                    });
+
+                    $('input[name="remove_price_measure_selector"]').click(function () {
+
+                        $("#price_measure_widget_" + price_widgets).remove();
+
+                        --price_widgets;
+
+                        if (price_widgets == 1) {
+                            $('input[name="remove_price_measure_selector"]').attr("disabled", true);
+                        }
+                    });
+
+                    $('input[name="is_week_defined"]').change(function () {
+
+                        if ($(this).is(":checked")) {
+                            var toAppend = '@ViewData["week_gradation_widget"]';
+                            toAppend = toAppend.replace(/&quot;/g, "\"");
+                            toAppend = toAppend.replace(/&lt;/g, "<");
+                            toAppend = toAppend.replace(/&gt;/g, ">");
+
+                            $("#week_gradation_block").append(toAppend);
+                            $('label[id$="validation"]').removeClass("col-sm-offset-2");
+
+                            $('select[name="week_gradation_type"]').change(function () {
+
+                                $("#week_gradation_data").empty();
+
+                                if ($(this).val() == "day_hour") {
+                                    var toAppend = '@ViewData["week_gradation_widget_hours"]';
+
+                                    toAppend = toAppend.replace(/&quot;/g, "\"");
+                                    toAppend = toAppend.replace(/&lt;/g, "<");
+                                    toAppend = toAppend.replace(/&gt;/g, ">");
+
+                                    $("#week_gradation_data").append(toAppend);
+                                    $('label[id$="validation"]').removeClass("col-sm-offset-2");
+
+                                    $(".days").change(function () {
+
+                                        if ($(this).is(':checked')) {
+                                            $("#" + $(this).attr('id') + "Hours").removeAttr("hidden");
+                                        }
+                                        else {
+                                            $("#" + $(this).attr('id') + "Hours").attr("hidden", true);
+                                        }
+
+                                    });
+
+                                }
+                                else if ($(this).val() == "day_duration") {
+                                    var toAppend = '@ViewData["week_gradation_widget_duration"]';
+
+                                    toAppend = toAppend.replace(/&quot;/g, "\"");
+                                    toAppend = toAppend.replace(/&lt;/g, "<");
+                                    toAppend = toAppend.replace(/&gt;/g, ">");
+
+                                    $("#week_gradation_data").append(toAppend);
+                                    $('label[id$="validation"]').removeClass("col-sm-offset-2");
+
+                                    $('select[name="number_of_days"]').change(function () {
+
+                                        $("#days_duration_block").empty();
+
+                                        var numOfDays = $(this).val();
+
+                                        for (var i = 0; i < numOfDays; ++i) {
+                                            $("#days_duration_block").append('<div class="form-group">'
+                                            + '<label for="day' + (i + 1) + 'Duration" class="col-xs-3 col-sm-offset-3">День ' + (i + 1) + '</label>'
+                                            + '<input name="day' + (i + 1) + 'Duration" type="text" class="col-xs-2" id="day' + (i + 1) + 'Duration">'
+                                            + '<label for="day' + (i + 1) + 'Duration" class="col-xs-1">хв</label>'
+                                            + '<label for="day' + (i + 1) + 'Duration" id="day' + (i + 1) + 'Duration_validation" class="control-label has-error"></label>'
+                                            + '</div>');
+                                        }
+
+
+                                    });
+                                }
+
+
+                            });
+
+                        }
+                        else {
+                            $("#week_gradation_block").empty();
+                        }
+
+                    });
+
+                }
+                else if ($(this).val() == "deadline") {
+
+                    validator = new DeadlineValidator();
+
+                    var duration_widgets = 1;
+                    var price_widgets = 1;
+
+                    var toAppend = '@ViewData["service_deadline_block"].ToString()';
+
+                    toAppend = toAppend.replace(/&quot;/g, "\"");
+                    toAppend = toAppend.replace(/&lt;/g, "<");
+                    toAppend = toAppend.replace(/&gt;/g, ">");
+
+                    $("#constructor_body").append(toAppend);
+                    $('label[id$="validation"]').removeClass("col-sm-offset-2");
+
+                    $("#price_measure_description_selector_1").change(function () {
+
+                        if ($(this).is(':checked')) {
+                            $("#price_description_block_1").removeAttr("hidden");
+                        }
+                        else {
+                            $("#price_description_block_1").attr("hidden", true);
+                        }
+
+                    });
+
+                    $('input[name="add_price_measure_selector"]').click(function () {
+
+                        price_widgets++;
+
+                        $('input[name="remove_price_measure_selector"]').removeAttr("disabled");
+
+
+                        var toAppend = '@ViewData["price_measure_widget"].ToString()';
+
+                        toAppend = toAppend.replace(/&quot;/g, "\"");
+                        toAppend = toAppend.replace(/&lt;/g, "<");
+                        toAppend = toAppend.replace(/&gt;/g, ">");
+                        toAppend = toAppend.replace(/[*]/g, price_widgets.toString());
+
+                        $("#price_measures").append(toAppend);
+                        $('label[id$="validation"]').removeClass("col-sm-offset-2");
+
+                        $("#price_measure_description_selector_" + price_widgets).change(function () {
+
+                            var data = $(this).attr('name').split("_");
+
+                            var index = data[data.length - 1];
+
+
+                            if ($(this).is(':checked')) {
+                                $("#price_description_block_" + index).removeAttr("hidden");
+                            }
+                            else {
+                                $("#price_description_block_" + index).attr("hidden", true);
+                            }
+
+                        });
+
+                    });
+
+                    $('input[name="remove_price_measure_selector"]').click(function () {
+
+                        $("#price_measure_widget_" + price_widgets).remove();
+
+                        --price_widgets;
+
+                        if (price_widgets == 1) {
+                            $('input[name="remove_price_measure_selector"]').attr("disabled", true);
+                        }
+                    });
+
+                    $('select[name="range_type_1"]').change(function () {
+
+                        $("#duration_measure_data_1").empty();
+
+                        if ($(this).val() == "from_till") {
+                            var toAppend = '@ViewData["duration_measure_from_till"]';
+
+                            toAppend = toAppend.replace(/&quot;/g, "\"");
+                            toAppend = toAppend.replace(/&lt;/g, "<");
+                            toAppend = toAppend.replace(/&gt;/g, ">");
+                            toAppend = toAppend.replace(/[*]/g, "1");
+
+                            $("#duration_measure_data_1").append(toAppend);
+                            $('label[id$="validation"]').removeClass("col-sm-offset-2");
+                        }
+                        else if ($(this).val() == "from") {
+                            var toAppend = '@ViewData["duration_measure_from"]';
+
+                            toAppend = toAppend.replace(/&quot;/g, "\"");
+                            toAppend = toAppend.replace(/&lt;/g, "<");
+                            toAppend = toAppend.replace(/&gt;/g, ">");
+                            toAppend = toAppend.replace(/[*]/g, "1");
+
+                            $("#duration_measure_data_1").append(toAppend);
+                            $('label[id$="validation"]').removeClass("col-sm-offset-2");
+                        }
+                        else if ($(this).val() == "till") {
+                            var toAppend = '@ViewData["duration_measure_till"]';
+
+                            toAppend = toAppend.replace(/&quot;/g, "\"");
+                            toAppend = toAppend.replace(/&lt;/g, "<");
+                            toAppend = toAppend.replace(/&gt;/g, ">");
+                            toAppend = toAppend.replace(/[*]/g, "1");
+
+                            $("#duration_measure_data_1").append(toAppend);
+                            $('label[id$="validation"]').removeClass("col-sm-offset-2");
+                        }
+
+                    });
+
+                    $('input[name="add_duration_measure_selector"]').click(function () {
+
+                        duration_widgets++;
+
+                        $('input[name="remove_duration_measure_selector"]').removeAttr("disabled");
+
+                        var toAppend = '@ViewData["duration_measure_widget"].ToString()';
+
+                        toAppend = toAppend.replace(/&quot;/g, "\"");
+                        toAppend = toAppend.replace(/&lt;/g, "<");
+                        toAppend = toAppend.replace(/&gt;/g, ">");
+                        toAppend = toAppend.replace(/[*]/g, duration_widgets.toString());
+
+                        $("#duration_measures").append(toAppend);
+                        $('label[id$="validation"]').removeClass("col-sm-offset-2");
+
+                        $("#duration_measure_description_selector_" + duration_widgets).change(function () {
+
+                            var data = $(this).attr('name').split("_");
+
+                            var index = data[data.length - 1];
+
+                            if ($(this).is(':checked')) {
+                                $("#duration_description_block_" + index).removeAttr("hidden");
+                            }
+                            else {
+                                $("#duration_description_block_" + index).attr("hidden", true);
+                            }
+                        });
+
+                        $('select[name="range_type_' + duration_widgets + '"]').change(function () {
+
+                            var data = $(this).attr('name').split("_");
+
+                            var index = data[data.length - 1];
+
+                            $("#duration_measure_data_" + index).empty();
+
+                            if ($(this).val() == "from_till") {
+
+                                var toAppend = '@ViewData["duration_measure_from_till"]';
+
+                                toAppend = toAppend.replace(/&quot;/g, "\"");
+                                toAppend = toAppend.replace(/&lt;/g, "<");
+                                toAppend = toAppend.replace(/&gt;/g, ">");
+                                toAppend = toAppend.replace(/[*]/g, index.toString());
+
+                                $("#duration_measure_data_" + index).append(toAppend);
+                                $('label[id$="validation"]').removeClass("col-sm-offset-2");
+                            }
+                            else if ($(this).val() == "from") {
+                                var toAppend = '@ViewData["duration_measure_from"]';
+
+                                toAppend = toAppend.replace(/&quot;/g, "\"");
+                                toAppend = toAppend.replace(/&lt;/g, "<");
+                                toAppend = toAppend.replace(/&gt;/g, ">");
+                                toAppend = toAppend.replace(/[*]/g, index.toString());
+
+                                $("#duration_measure_data_" + index).append(toAppend);
+                                $('label[id$="validation"]').removeClass("col-sm-offset-2");
+                            }
+                            else if ($(this).val() == "till") {
+                                var toAppend = '@ViewData["duration_measure_till"]';
+
+                                toAppend = toAppend.replace(/&quot;/g, "\"");
+                                toAppend = toAppend.replace(/&lt;/g, "<");
+                                toAppend = toAppend.replace(/&gt;/g, ">");
+                                toAppend = toAppend.replace(/[*]/g, index.toString());
+
+                                $("#duration_measure_data_" + index).append(toAppend);
+                                $('label[id$="validation"]').removeClass("col-sm-offset-2");
+                            }
+
+                        });
+                    });
+
+
+                    $('input[name="remove_duration_measure_selector"]').click(function () {
+
+                        $("#duration_measure_widget_" + duration_widgets).remove();
+
+                        duration_widgets--;
+
+                        if (duration_widgets == 1) {
+                            $('input[name="remove_duration_measure_selector"]').attr("disabled", true);
+                        }
+                    });
+
+                    $("#duration_measure_description_selector_1").change(function () {
+
+                        if ($(this).is(':checked')) {
+                            $("#duration_measure_description_block_1").removeAttr("hidden");
+                        }
+                        else {
+                            $("#duration_measure_description_block_1").attr("hidden", true);
+                        }
+
+                    });
+                }
+                else {
+                    validator = new Validator();
+                }
+
+            });
+
+            $('input[name="add_properties_selector"]').click(function () {
+                properties++;
+
+                $('input[name="remove_properties_selector"]').removeAttr("disabled");
+
+                var toAppend = '@ViewData["default_property_widget"].ToString()';
+
+                toAppend = toAppend.replace(/&quot;/g, "\"");
+                toAppend = toAppend.replace(/&lt;/g, "<");
+                toAppend = toAppend.replace(/&gt;/g, ">");
+                toAppend = toAppend.replace(/[*]/g, properties.toString());
+
+                $("#constructor_footer").append(toAppend);
+                $('label[id$="validation"]').removeClass("col-sm-offset-2");
+
+                $('select[name="property_type_' + properties + '"]').change(function () {
+
+                    var data = $(this).attr('name').split("_");
+
+                    var currProperty = data[data.length - 1];
+
+                    var elem = $("#default_widget_data_block_" + currProperty);
+
+                    elem.empty();
+
+                    if ($(this).val() != "none") {
+
+                        if ($(this).val() == "textarea") {
+                            elem.append('<div class="form-group">'
+                                + '<textarea class="form-control" style="margin: auto;" name="default_widget_value_' + currProperty + '" />'
+                                + '<label for="default_widget_value_' + currProperty + '" class="text-danger control-label" hidden id="default_widget_value_' + currProperty + '_validation"></label>'
+                                + '</div>'
+                                );
+                        }
+                        else {
+                            elem.append('<div class="form-group">'
+                          + '<input type="' + $(this).val() + '" class="form-control" style="margin:auto;" name="default_widget_value_' + currProperty + '"/>'
+                          + '<label for="default_widget_value_' + currProperty + '" class="text-danger control-label" hidden id="default_widget_value_' + currProperty + '_validation"></label>'
+                          + '</div>'
+                          );
+                        }
+                    }
+
+                });
+
+            });
+
+            $('input[name="remove_properties_selector"]').click(function () {
+
+                $("#default_property_widget_" + properties).remove();
+
+                properties--;
+
+                if (properties == 0) {
+                    $('input[name="remove_properties_selector"]').attr("disabled", true);
+                }
+
+            });
+
+        });
+    </script>
+}

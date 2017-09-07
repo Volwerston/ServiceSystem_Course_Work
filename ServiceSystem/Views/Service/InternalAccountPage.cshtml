@@ -1,0 +1,323 @@
+﻿@model ServiceSystem.Models.UserInfoViewModel
+
+@{
+    ViewBag.Title = "InternalAccountPage";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="~/Content/internalAccountPage.css" />
+
+<div class="mainBlock">
+    <div class="row mainBlock__singleUnit">
+        <div class="col-sm-10 col-md-6 col-md-offset-3 col-sm-offset-1 personalBlock">
+            <div>
+                <dl class="dl-horizontal">
+                    <dt>
+                        ПІБ:
+                    </dt>
+
+                    <dd>
+                        <p>@Model.LastName @Model.FirstName @Model.FatherName</p>
+                    </dd>
+
+                    <dt>
+                        Організація:
+                    </dt>
+
+                    <dd>
+                        <p>@Html.DisplayFor(model => model.Organisation)</p>
+                    </dd>
+
+                    <dt>
+                        E-mail:
+                    </dt>
+
+                    <dd>
+                        <p>@Model.Email</p>
+                    </dd>
+
+                </dl>
+            </div>
+        </div>
+    </div>
+    <div class="row mainBlock__singleUnit">
+        <div class="col-xs-12">
+            <div class="panel-group" id="accordion">
+                <div class="panel panel-default">
+                    <div class="panel-heading" id="panel_1">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+                                Послуги
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapse1" class="panel-collapse collapse">
+                        <div class="panel-body" id="panel_body_1">
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" id="panel_2">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
+                                Заявки на мої послуги
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapse2" class="panel-collapse collapse">
+                        <div class="panel-body" id="panel_body_2">
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" id="panel_3">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">
+                                Залишені мною заявки
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapse3" class="panel-collapse collapse">
+                        <div class="panel-body" id="panel_body_3">
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" id="panel_4">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">
+                                Діалоги
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapse4" class="panel-collapse collapse">
+                        <div class="panel-body" id="panel_body_4">
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" id="panel_5">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse5">
+                                Повідомлення
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapse5" class="panel-collapse collapse">
+                        <div class="panel-body" id="panel_body_5">
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" id="panel_6">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse6">
+                                Налаштування
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapse6" class="panel-collapse collapse">
+                        <div class="panel-body" id="panel_body_6">
+                            <div class="row">
+                                <div class="col-sm-8 col-sm-offset-2">
+                                    <input type="checkbox" name="receive_email" />
+                                    <label for="receive_email">отримувати сповіщення на електронну пошту</label>
+                                </div>
+                            </div>
+                            <div class="row mainBlock__settings">
+                                <div class="col-sm-4 col-sm-offset-4">
+                                    <input type="button" name="confirm_user_changes" class="btn btn-success btn-block" value="Зберегти" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+@section scripts{
+
+    <script type="text/javascript">
+
+        function bindEvents() {
+            $('a[id^="note"]').click(function () {
+
+                var note_id = $(this).attr('id').split('_')[1];
+
+                $.ajax({
+                    method: "POST",
+                    url: "/api/ServiceApi/DeleteNotification",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    data: JSON.stringify(note_id),
+                    headers: {
+                        Authorization: 'Bearer ' + localStorage.getItem('access_token')
+                    },
+                    success: function (res) {
+                        $("#notification_" + note_id).remove();
+
+                        if ($("#panel_body_5").children().length == 0) {
+                            $("#panel_body_5").append('<p class="text-center">Повідомлень не знайдено</p>')
+                        }
+                    },
+                    error: function (res) {
+                        displayMessage("Error", res.responseText);
+                    }
+                });
+            });
+        }
+
+        $(document).ready(function () {
+
+            $('input[name="confirm_user_changes"]').click(function () {
+
+                var toPass = {
+                    Email: '@Model.Email',
+                    ReceiveEmail: $('input[name="receive_email"]').is(":checked")
+                }
+
+                $.ajax({
+                    method: "POST",
+                    url: "/api/Account/PostUserSettings",
+                    headers: {
+                        Authorization: 'Bearer ' + localStorage.getItem("access_token"),
+                    },
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    data: JSON.stringify(toPass),
+                    success: function (res) {
+                        displayMessage("Success", "Changes successfully submitted");
+                    },
+                    error: function (res) {
+                        displayMessage("Error", res.responseText);
+                    }
+                });
+            });
+
+            $("#panel_1").click(function () {
+
+                if (!($("#collapse1").hasClass("in"))) {
+                    if ($("#panel_body_1").children().length == 0) {
+                        $.ajax({
+                            method: "GET",
+                            url: "/Auxiliary/GetServiceList",
+                            async: false,
+                            headers: {
+                                Authorization: 'Bearer ' + localStorage.getItem("access_token"),
+                            },
+                            contentType: "application/json; charset=utf-8",
+                            success: function (res) {
+                                $("#panel_body_1").append(res);
+                            },
+                            error: function (res) {
+                                displayMessage("Error", res.responseText);
+                            }
+                        });
+                    }
+                }
+            });
+
+
+            $("#panel_4").click(function () {
+
+                if (!($("#collapse4").hasClass("in"))) {
+                    if ($("#panel_body_4").children().length == 0) {
+                        $.ajax({
+                            method: "GET",
+                            url: "/Auxiliary/GetDialogueList",
+                            async: false,
+                            headers: {
+                                Authorization: 'Bearer ' + localStorage.getItem("access_token"),
+                            },
+                            contentType: "application/json; charset=utf-8",
+                            success: function (res) {
+                                $("#panel_body_4").append(res);
+                            },
+                            error: function (res) {
+                                displayMessage("Error", res.responseText);
+                            }
+                        });
+                    }
+                }
+            });
+
+            $("#panel_2").click(function () {
+                if (!($("#collapse2").hasClass("in"))) {
+                    if ($("#panel_body_2").children().length == 0) {
+                        $.ajax({
+                            method: "GET",
+                            url: "/Auxiliary/GetApplicationList?name=" + '@Model.Email' + '&type=external',
+                            async: false,
+                            headers: {
+                                Authorization: 'Bearer ' + localStorage.getItem("access_token"),
+                            },
+                            contentType: "application/json; charset=utf-8",
+                            success: function (res) {
+                                $("#panel_body_2").append(res);
+                            },
+                            error: function (res) {
+                                displayMessage("Error", res.responseText);
+                            }
+                        });
+                    }
+                }
+            });
+
+
+            $("#panel_3").click(function () {
+                if (!($("#collapse3").hasClass("in"))) {
+                    if ($("#panel_body_3").children().length == 0) {
+                        $.ajax({
+                            method: "GET",
+                            url: "/Auxiliary/GetApplicationList?name=" + '@Model.Email' + '&type=internal',
+                            async: false,
+                            headers: {
+                                Authorization: 'Bearer ' + localStorage.getItem("access_token"),
+                            },
+                            contentType: "application/json; charset=utf-8",
+                            success: function (res) {
+                                $("#panel_body_3").append(res);
+                            },
+                            error: function (res) {
+                                displayMessage("Error", res.responseText);
+                            }
+                        });
+                    }
+                }
+            });
+
+            $("#panel_5").click(function () {
+
+                if (!($("#collapse5").hasClass("in"))) {
+                    if ($("#panel_body_5").children().length == 0) {
+                        $.ajax({
+                            method: "GET",
+                            url: "/Auxiliary/GetNotificationList",
+                            async: false,
+                            headers: {
+                                Authorization: 'Bearer ' + localStorage.getItem("access_token"),
+                            },
+                            contentType: "application/json; charset=utf-8",
+                            success: function (res) {
+                                $("#panel_body_5").prepend(res);
+                                bindEvents();
+                            },
+                            error: function (res) {
+                                displayMessage("Error", res.responseText);
+                            }
+                        });
+                    }
+                }
+            });
+
+        });
+
+
+    </script>
+
+}

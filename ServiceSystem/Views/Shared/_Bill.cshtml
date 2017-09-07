@@ -1,0 +1,87 @@
+﻿@model IEnumerable<SelectListItem>
+
+<div class="row" style="margin-top: 10px;">
+    <div class="col-sm-8 col-sm-offset-2" style="border: 2px solid green; border-radius: 3px; padding: 10px;">
+        @using (Html.BeginForm("ApplicationDetails", "Service", null, FormMethod.Post, new { @class = "form-horizontal text-center", id="bill_create_form" }))
+        {
+            <input type="hidden" value="@ViewData["ApplicationId"]" name="application_id" />
+            <label for="date_limit" class="control-label">Оберіть міру ціни:</label>
+            <div class="form-group">
+                @Html.DropDownList("price_measure", Model, new { @class = "form-control", style="margin: auto;" })
+                <label for="price_measure" class="text-danger control-label" hidden id="price_measure_validation"></label>
+            </div>       
+            <div class="form-group">
+                <input type="number" style="margin: auto;" placeholder="Передоплата" name="advance_percent" class="form-control" />
+                <label for="advance_percent" class="text-danger control-label" hidden id="advance_percent_validation"></label>
+            </div>
+            <div class="form-group">
+                <input type="text" style="margin: auto;" placeholder="Вартість  послуги" name="price" class="form-control" />
+                <label for="price" class="text-danger control-label" hidden id="price_validation"></label>
+            </div>
+            <label for="date_limit_advance" class="control-label">Здійснити передоплату до:</label>
+            <div class="form-group">
+                <input type="date" style="margin: auto;" class="form-control" name="date_limit_advance" id="date_limit_advance" />
+                <label for="date_limit_advance" class="text-danger control-label" hidden id="date_limit_advance_validation"></label>
+            </div>
+            <label for="date_limit_main" class="control-label">Здійснити основний платіж до:</label>
+            <div class="form-group">
+                <input type="date" style="margin: auto;" class="form-control" name="date_limit_main" id="date_limit_main" />
+                <label for="date_limit_main" class="text-danger control-label" hidden id="date_limit_main_validation"></label>
+            </div>
+            <div class="form-group">
+                <input type="checkbox" name="has_time_limit" id="has_time_limit" />
+                <label for="has_time_limit">уточнити час</label>
+            </div>
+            <div id="time_limit_holder" hidden>
+                <label for="time_limit_advance" class="control-label">Межа часу (передоплата):</label>
+                <div class="form-group">
+                    <input type="time" style="margin: auto;" class="form-control" name="time_limit_advance" id="time_limit_advance" />
+                    <label for="time_limit_advance" class="text-danger control-label" hidden id="time_limit_advance_validation"></label>
+                </div>
+                <label for="time_limit_main" class="control-label">Межа часу (основний платіж):</label>
+                <div class="form-group">
+                    <input type="time" style="margin: auto;" class="form-control" name="time_limit_main" id="time_limit_main" />
+                    <label for="time_limit_main" class="text-danger control-label" hidden id="time_limit_main_validation"></label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="payment_selector" class="control-label text-center">Оберіть спосіб оплати</label>
+                <select class="form-control" name="payment_selector" style="margin: auto;">
+                    <option value="wm">Webmoney</option>
+                    <option value="privat">ПриватБанк</option>
+                </select>
+            </div>
+            <div id="wm_container">
+                <div class="form-group">
+                    <input type="text" name="wm_purse" class="form-control" style="margin: auto;" placeholder="Ваш WMU гаманець" />
+                    <label for="wm_purse" class="text-danger control-label" hidden id="wm_purse_validation"></label>
+                </div>
+            </div>
+            <div id="privat_container" hidden>
+                <div class="form-group">
+                    <input type="text" name="account" placeholder="Номер рахунку" class="form-control" style="margin: auto" />
+                    <label for="account" class="text-danger control-label" hidden id="account_validation"></label>
+                </div>
+                <div class="form-group">
+                    <input type="text" name="edrpou" placeholder="ЄДРПОУ банку" class="form-control" style="margin: auto" />
+                    <label for="edrpou" class="text-danger control-label" hidden id="edrpou_validation"></label>
+                </div>
+                <div class="form-group">
+                    <input type="text" name="mfo" placeholder="МФО банку" class="form-control" style="margin: auto" />
+                    <label for="mfo" class="text-danger control-label" hidden id="mfo_validation"></label>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="checkbox" name="add_comment" />
+                <label for="add_comment">додати коментар</label>
+            </div>
+            <div id="comment_holder" hidden>
+                <div class="form-group">
+                   <textarea name="comment_text" style="margin: auto;" class="form-control" placeholder="Ваш коментар" rows="10">
+                   </textarea>
+                </div>
+            </div>
+            <input type="submit" class="btn btn-block btn-success" style="margin: auto" value="ОК" />
+        }
+    </div>
+</div>

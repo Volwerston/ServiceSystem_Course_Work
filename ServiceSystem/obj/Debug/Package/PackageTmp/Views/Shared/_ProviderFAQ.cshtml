@@ -1,0 +1,17 @@
+﻿@model ServiceSystem.Models.FAQ
+
+<div class="row" id="faq_@Model.Id" style="border: 2px solid green; border-radius: 3px; padding: 10px; margin: 10px;">
+    <a href="#" class="close pull-right" id="close_@Model.Id"><span class="glyphicon glyphicon-remove"></span></a>
+    <div class="col-xs-12">
+        <h3 class="text-center">Запитання</h3>
+    </div>
+    <div class="col-xs-12" style="background-color: lightgray">
+        <p>@Model.Question</p>
+    </div>
+    <div class="col-xs-12">
+        <h3 class="text-center">Відповідь</h3>
+    </div>
+    <div class="col-xs-12" style="background-color: lightgray">
+        <p>@Model.Answer</p>
+    </div>
+</div>

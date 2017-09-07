@@ -1,0 +1,41 @@
+﻿
+@{
+    ViewBag.Title = "GetToken";
+    Layout = "~/Views/Shared/_StartView.cshtml";
+}
+
+
+@section scripts{
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            $.ajax({
+                method: "POST",
+                url: "/token",
+                contentType: "application/json",
+                data: {
+                    username: '@ViewData["email"]',
+                    password: '@ViewData["password"]',
+                    grant_type: 'password'
+                },
+                success: function (res) {
+
+                    localStorage.setItem("access_token", res.access_token);
+                    document.cookie = 'access_token=' + res.access_token;
+
+                    window.location.href = '@Url.Action("Main", "Service")';
+                },
+                error: function (xhr, error, message) {
+                    window.location.href = '@Url.Action("Index", "Service")';
+                }
+            });
+
+
+        });
+
+    </script>
+
+
+}

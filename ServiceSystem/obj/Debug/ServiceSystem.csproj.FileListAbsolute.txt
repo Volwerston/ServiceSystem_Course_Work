@@ -1,0 +1,1280 @@
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\ApplicationInsights.config
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\roslyn\csc.exe
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\roslyn\vbc.exe
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\roslyn\VBCSCompiler.exe
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\ServiceSystem.dll.config
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\ServiceSystem.dll
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\ServiceSystem.pdb
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\Antlr3.Runtime.dll
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\EntityFramework.dll
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\EntityFramework.SqlServer.dll
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\Microsoft.AI.Agent.Intercept.dll
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\Microsoft.AI.DependencyCollector.dll
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\Microsoft.AI.PerfCounterCollector.dll
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\Microsoft.AI.ServerTelemetryChannel.dll
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\Microsoft.AI.Web.dll
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\Microsoft.AI.WindowsServer.dll
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\Microsoft.ApplicationInsights.dll
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.Core.dll
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.Owin.dll
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.dll
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Host.SystemWeb.dll
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Cookies.dll
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.dll
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Facebook.dll
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Google.dll
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.OAuth.dll
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Twitter.dll
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\Newtonsoft.Json.dll
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\Owin.dll
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\System.Net.Http.Formatting.dll
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\System.Web.Helpers.dll
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\System.Web.Http.dll
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\System.Web.Http.Owin.dll
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\System.Web.Http.WebHost.dll
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\System.Web.Mvc.dll
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\System.Web.Optimization.dll
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\System.Web.Razor.dll
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.Deployment.dll
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.dll
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.Razor.dll
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\WebGrease.dll
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\Microsoft.AI.DependencyCollector.xml
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\Microsoft.AI.ServerTelemetryChannel.xml
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\Microsoft.AI.Web.xml
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\Microsoft.AI.WindowsServer.xml
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\Microsoft.ApplicationInsights.xml
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\Newtonsoft.Json.xml
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\System.Net.Http.Formatting.xml
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\System.Web.Helpers.xml
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\System.Web.Http.xml
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\System.Web.Http.WebHost.xml
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\System.Web.Mvc.xml
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\System.Web.Optimization.xml
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\System.Web.Razor.xml
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.xml
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.Deployment.xml
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.Razor.xml
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\Antlr3.Runtime.pdb
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\EntityFramework.xml
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\EntityFramework.SqlServer.xml
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.Core.xml
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.Owin.xml
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.xml
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Host.SystemWeb.xml
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.xml
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Facebook.xml
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Cookies.xml
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.OAuth.xml
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Google.xml
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Twitter.xml
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\bin\System.Web.Http.Owin.xml
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\obj\Debug\ServiceSystem.csprojResolveAssemblyReference.cache
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\obj\Debug\ServiceSystem.dll
+C:\Users\Юра\Desktop\ServiceSystem\ServiceSystem\obj\Debug\ServiceSystem.pdb
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\ApplicationInsights.config
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\roslyn\csc.exe
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\roslyn\vbc.exe
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\roslyn\VBCSCompiler.exe
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\ServiceSystem.dll.config
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\ServiceSystem.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\ServiceSystem.pdb
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Antlr3.Runtime.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\EntityFramework.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\EntityFramework.SqlServer.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.AI.Agent.Intercept.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.AI.DependencyCollector.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.AI.PerfCounterCollector.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.AI.ServerTelemetryChannel.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.AI.Web.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.AI.WindowsServer.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.ApplicationInsights.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.Core.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.Owin.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Host.SystemWeb.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Cookies.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Facebook.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Google.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.OAuth.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Twitter.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Newtonsoft.Json.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Owin.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\System.Net.Http.Formatting.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\System.Web.Helpers.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\System.Web.Http.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\System.Web.Http.Owin.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\System.Web.Http.WebHost.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\System.Web.Mvc.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\System.Web.Optimization.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\System.Web.Razor.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.Deployment.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.Razor.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\WebGrease.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.AI.DependencyCollector.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.AI.ServerTelemetryChannel.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.AI.Web.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.AI.WindowsServer.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.ApplicationInsights.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Newtonsoft.Json.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\System.Net.Http.Formatting.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\System.Web.Helpers.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\System.Web.Http.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\System.Web.Http.WebHost.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\System.Web.Mvc.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\System.Web.Optimization.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\System.Web.Razor.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.Deployment.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.Razor.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Antlr3.Runtime.pdb
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\EntityFramework.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\EntityFramework.SqlServer.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.Core.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.Owin.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Host.SystemWeb.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Facebook.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Cookies.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.OAuth.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Google.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Twitter.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\System.Web.Http.Owin.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\obj\Debug\ServiceSystem.csprojResolveAssemblyReference.cache
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\obj\Debug\ServiceSystem.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\obj\Debug\ServiceSystem.pdb
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\ApplicationInsights.config
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\roslyn\csc.exe
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\roslyn\vbc.exe
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\roslyn\VBCSCompiler.exe
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\ServiceSystem.dll.config
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\ServiceSystem.dll
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\ServiceSystem.pdb
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\Antlr3.Runtime.dll
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\EntityFramework.dll
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\EntityFramework.SqlServer.dll
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.Agent.Intercept.dll
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.DependencyCollector.dll
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.PerfCounterCollector.dll
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.ServerTelemetryChannel.dll
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.Web.dll
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.WindowsServer.dll
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\Microsoft.ApplicationInsights.dll
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.Core.dll
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.Owin.dll
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.dll
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Host.SystemWeb.dll
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Cookies.dll
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.dll
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Facebook.dll
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Google.dll
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.OAuth.dll
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Twitter.dll
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\Newtonsoft.Json.dll
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\Owin.dll
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\System.Net.Http.Formatting.dll
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\System.Web.Helpers.dll
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\System.Web.Http.dll
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\System.Web.Http.Owin.dll
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\System.Web.Http.WebHost.dll
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\System.Web.Mvc.dll
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\System.Web.Optimization.dll
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\System.Web.Razor.dll
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.Deployment.dll
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.dll
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.Razor.dll
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\WebGrease.dll
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.DependencyCollector.xml
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.ServerTelemetryChannel.xml
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.Web.xml
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.WindowsServer.xml
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\Microsoft.ApplicationInsights.xml
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\Newtonsoft.Json.xml
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\System.Net.Http.Formatting.xml
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\System.Web.Helpers.xml
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\System.Web.Http.xml
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\System.Web.Http.WebHost.xml
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\System.Web.Mvc.xml
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\System.Web.Optimization.xml
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\System.Web.Razor.xml
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.xml
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.Deployment.xml
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.Razor.xml
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\Antlr3.Runtime.pdb
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\EntityFramework.xml
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\EntityFramework.SqlServer.xml
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.Core.xml
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.Owin.xml
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.xml
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Host.SystemWeb.xml
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.xml
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Facebook.xml
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Cookies.xml
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.OAuth.xml
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Google.xml
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Twitter.xml
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\bin\System.Web.Http.Owin.xml
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\obj\Debug\ServiceSystem.csprojResolveAssemblyReference.cache
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\obj\Debug\ServiceSystem.dll
+C:\Users\Юра\Desktop\ServicesSystem\ServiceSystem\ServiceSystem\obj\Debug\ServiceSystem.pdb
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\ApplicationInsights.config
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\roslyn\csc.exe
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\roslyn\vbc.exe
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\roslyn\VBCSCompiler.exe
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\ServiceSystem.dll.config
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\ServiceSystem.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\ServiceSystem.pdb
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Antlr3.Runtime.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\EntityFramework.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\EntityFramework.SqlServer.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.AI.Agent.Intercept.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.AI.DependencyCollector.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.AI.PerfCounterCollector.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.AI.ServerTelemetryChannel.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.AI.Web.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.AI.WindowsServer.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.ApplicationInsights.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.Core.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.Owin.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Host.SystemWeb.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Cookies.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Facebook.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Google.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.OAuth.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Twitter.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Newtonsoft.Json.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Owin.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\System.Net.Http.Formatting.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\System.Web.Helpers.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\System.Web.Http.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\System.Web.Http.Owin.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\System.Web.Http.WebHost.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\System.Web.Mvc.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\System.Web.Optimization.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\System.Web.Razor.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.Deployment.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.Razor.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\WebGrease.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.AI.DependencyCollector.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.AI.ServerTelemetryChannel.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.AI.Web.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.AI.WindowsServer.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.ApplicationInsights.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Newtonsoft.Json.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\System.Net.Http.Formatting.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\System.Web.Helpers.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\System.Web.Http.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\System.Web.Http.WebHost.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\System.Web.Mvc.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\System.Web.Optimization.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\System.Web.Razor.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.Deployment.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.Razor.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Antlr3.Runtime.pdb
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\EntityFramework.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\EntityFramework.SqlServer.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.Core.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.Owin.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Host.SystemWeb.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Facebook.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Cookies.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.OAuth.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Google.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Twitter.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\System.Web.Http.Owin.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\obj\Debug\ServiceSystem.csprojResolveAssemblyReference.cache
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\obj\Debug\ServiceSystem.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\obj\Debug\ServiceSystem.pdb
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\itextsharp.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\itextsharp.pdfa.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\itextsharp.xtra.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\itextsharp.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\itextsharp.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\itextsharp.pdfa.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\itextsharp.xtra.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\itextsharp.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.SignalR.Core.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.SignalR.SystemWeb.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.SignalR.Core.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.SignalR.SystemWeb.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.SignalR.Core.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.SignalR.SystemWeb.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.SignalR.Core.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.SignalR.SystemWeb.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\ApplicationInsights.config
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\csc.exe
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\vbc.exe
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\VBCSCompiler.exe
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\ServiceSystem.dll.config
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\ServiceSystem.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\ServiceSystem.pdb
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Antlr3.Runtime.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\EntityFramework.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\EntityFramework.SqlServer.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Facebook.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\itextsharp.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\itextsharp.pdfa.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\itextsharp.xtra.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.Agent.Intercept.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.DependencyCollector.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.PerfCounterCollector.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.ServerTelemetryChannel.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.Web.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.WindowsServer.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.ApplicationInsights.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.Core.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.Owin.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.SignalR.Core.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.SignalR.SystemWeb.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Host.SystemWeb.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Cookies.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Facebook.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Google.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.OAuth.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Twitter.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Newtonsoft.Json.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Owin.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Net.Http.Formatting.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Helpers.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Http.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Http.Owin.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Http.WebHost.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Mvc.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Optimization.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Razor.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.Deployment.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.Razor.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\WebGrease.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Facebook.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\itextsharp.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.DependencyCollector.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.ServerTelemetryChannel.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.Web.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.WindowsServer.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.ApplicationInsights.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.SignalR.Core.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.SignalR.SystemWeb.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Newtonsoft.Json.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Net.Http.Formatting.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Helpers.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Http.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Http.WebHost.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Mvc.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Optimization.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Razor.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.Deployment.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.Razor.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Antlr3.Runtime.pdb
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\EntityFramework.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\EntityFramework.SqlServer.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.Core.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.Owin.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Host.SystemWeb.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Facebook.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Cookies.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.OAuth.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Google.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Twitter.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Http.Owin.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\obj\Debug\ServiceSystem.csprojResolveAssemblyReference.cache
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\obj\Debug\ServiceSystem.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\obj\Debug\ServiceSystem.pdb
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\ApplicationInsights.config
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\csc.exe
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\vbc.exe
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\VBCSCompiler.exe
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\ServiceSystem.dll.config
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\ServiceSystem.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\ServiceSystem.pdb
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Antlr3.Runtime.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\EntityFramework.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\EntityFramework.SqlServer.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Facebook.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\itextsharp.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\itextsharp.pdfa.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\itextsharp.xtra.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.Agent.Intercept.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.DependencyCollector.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.PerfCounterCollector.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.ServerTelemetryChannel.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.Web.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.WindowsServer.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.ApplicationInsights.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.Core.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.Owin.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.SignalR.Core.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.SignalR.SystemWeb.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Host.SystemWeb.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Cookies.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Facebook.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Google.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.OAuth.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Twitter.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Newtonsoft.Json.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Owin.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Net.Http.Formatting.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Helpers.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Http.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Http.Owin.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Http.WebHost.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Mvc.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Optimization.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Razor.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.Deployment.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.Razor.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\WebGrease.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Facebook.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\itextsharp.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.DependencyCollector.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.ServerTelemetryChannel.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.Web.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.WindowsServer.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.ApplicationInsights.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.SignalR.Core.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.SignalR.SystemWeb.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Newtonsoft.Json.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Net.Http.Formatting.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Helpers.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Http.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Http.WebHost.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Mvc.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Optimization.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Razor.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.Deployment.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.Razor.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Antlr3.Runtime.pdb
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\EntityFramework.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\EntityFramework.SqlServer.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.Core.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.Owin.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Host.SystemWeb.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Facebook.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Cookies.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.OAuth.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Google.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Twitter.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Http.Owin.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\obj\Debug\ServiceSystem.csprojResolveAssemblyReference.cache
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\obj\Debug\ServiceSystem.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\obj\Debug\ServiceSystem.pdb
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\ApplicationInsights.config
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\csc.exe
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\vbc.exe
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\VBCSCompiler.exe
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\ServiceSystem.dll.config
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\ServiceSystem.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\ServiceSystem.pdb
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Antlr3.Runtime.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\EntityFramework.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\EntityFramework.SqlServer.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Facebook.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\itextsharp.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\itextsharp.pdfa.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\itextsharp.xtra.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.Agent.Intercept.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.DependencyCollector.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.PerfCounterCollector.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.ServerTelemetryChannel.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.Web.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.WindowsServer.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.ApplicationInsights.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.Core.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.Owin.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.SignalR.Core.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.SignalR.SystemWeb.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Host.SystemWeb.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Cookies.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Facebook.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Google.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.OAuth.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Twitter.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Newtonsoft.Json.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Owin.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Net.Http.Formatting.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Helpers.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Http.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Http.Owin.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Http.WebHost.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Mvc.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Optimization.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Razor.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.Deployment.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.Razor.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\WebGrease.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Facebook.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\itextsharp.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.DependencyCollector.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.ServerTelemetryChannel.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.Web.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.WindowsServer.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.ApplicationInsights.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.SignalR.Core.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.SignalR.SystemWeb.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Newtonsoft.Json.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Net.Http.Formatting.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Helpers.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Http.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Http.WebHost.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Mvc.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Optimization.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Razor.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.Deployment.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.Razor.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Antlr3.Runtime.pdb
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\EntityFramework.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\EntityFramework.SqlServer.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.Core.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.Owin.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Host.SystemWeb.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Facebook.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Cookies.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.OAuth.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Google.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Twitter.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Http.Owin.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\obj\Debug\ServiceSystem.csprojResolveAssemblyReference.cache
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\obj\Debug\ServiceSystem.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\obj\Debug\ServiceSystem.pdb
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\ApplicationInsights.config
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\csc.exe
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\vbc.exe
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\VBCSCompiler.exe
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\ServiceSystem.dll.config
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\ServiceSystem.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\ServiceSystem.pdb
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Antlr3.Runtime.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\EntityFramework.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\EntityFramework.SqlServer.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Facebook.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\itextsharp.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\itextsharp.pdfa.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\itextsharp.xtra.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.Agent.Intercept.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.DependencyCollector.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.PerfCounterCollector.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.ServerTelemetryChannel.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.Web.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.WindowsServer.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.ApplicationInsights.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.Core.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.Owin.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.SignalR.Core.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.SignalR.SystemWeb.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Host.SystemWeb.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Cookies.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Facebook.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Google.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.OAuth.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Twitter.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Newtonsoft.Json.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Owin.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Net.Http.Formatting.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Helpers.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Http.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Http.Owin.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Http.WebHost.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Mvc.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Optimization.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Razor.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.Deployment.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.Razor.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\WebGrease.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Facebook.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\itextsharp.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.DependencyCollector.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.ServerTelemetryChannel.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.Web.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.WindowsServer.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.ApplicationInsights.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.SignalR.Core.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.SignalR.SystemWeb.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Newtonsoft.Json.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Net.Http.Formatting.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Helpers.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Http.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Http.WebHost.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Mvc.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Optimization.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Razor.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.Deployment.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.Razor.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Antlr3.Runtime.pdb
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\EntityFramework.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\EntityFramework.SqlServer.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.Core.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.Owin.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Host.SystemWeb.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Facebook.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Cookies.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.OAuth.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Google.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Twitter.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Http.Owin.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\obj\Debug\ServiceSystem.csprojResolveAssemblyReference.cache
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\obj\Debug\ServiceSystem.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\ServiceSystem\obj\Debug\ServiceSystem.pdb
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Facebook.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Facebook.xml
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Facebook.dll
+C:\Users\Юра\Desktop\Service System\ServiceSystem\ServiceSystem\bin\Facebook.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\ApplicationInsights.config
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\csc.exe
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\vbc.exe
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\VBCSCompiler.exe
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\ServiceSystem.dll.config
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\ServiceSystem.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\ServiceSystem.pdb
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Antlr3.Runtime.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\EntityFramework.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\EntityFramework.SqlServer.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Facebook.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\itextsharp.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\itextsharp.pdfa.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\itextsharp.xtra.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.Agent.Intercept.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.DependencyCollector.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.PerfCounterCollector.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.ServerTelemetryChannel.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.Web.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.WindowsServer.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.ApplicationInsights.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.Core.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.Owin.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.SignalR.Core.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.SignalR.SystemWeb.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Host.SystemWeb.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Cookies.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Facebook.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Google.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.OAuth.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Twitter.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Newtonsoft.Json.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Owin.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Net.Http.Formatting.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Helpers.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Http.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Http.Owin.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Http.WebHost.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Mvc.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Optimization.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Razor.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.Deployment.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.Razor.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\WebGrease.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Facebook.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\itextsharp.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.DependencyCollector.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.ServerTelemetryChannel.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.Web.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.WindowsServer.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.ApplicationInsights.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.SignalR.Core.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.SignalR.SystemWeb.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Newtonsoft.Json.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Net.Http.Formatting.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Helpers.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Http.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Http.WebHost.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Mvc.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Optimization.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Razor.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.Deployment.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.Razor.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Antlr3.Runtime.pdb
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\EntityFramework.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\EntityFramework.SqlServer.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.Core.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.Owin.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Host.SystemWeb.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Facebook.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Cookies.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.OAuth.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Google.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Twitter.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Http.Owin.xml
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\obj\Debug\ServiceSystem.csprojResolveAssemblyReference.cache
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\obj\Debug\ServiceSystem.dll
+C:\Users\User\Desktop\Service System\ServiceSystem\ServiceSystem\ServiceSystem\obj\Debug\ServiceSystem.pdb
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\ApplicationInsights.config
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\csc.exe
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\vbc.exe
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\VBCSCompiler.exe
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\ServiceSystem.dll.config
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\ServiceSystem.dll
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\ServiceSystem.pdb
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Antlr3.Runtime.dll
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\EntityFramework.dll
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\EntityFramework.SqlServer.dll
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Facebook.dll
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\itextsharp.dll
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\itextsharp.pdfa.dll
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\itextsharp.xtra.dll
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.Agent.Intercept.dll
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.DependencyCollector.dll
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.PerfCounterCollector.dll
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.ServerTelemetryChannel.dll
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.Web.dll
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.WindowsServer.dll
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.ApplicationInsights.dll
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.Core.dll
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.Owin.dll
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.SignalR.Core.dll
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.SignalR.SystemWeb.dll
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.dll
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Host.SystemWeb.dll
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Cookies.dll
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.dll
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Facebook.dll
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Google.dll
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.OAuth.dll
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Twitter.dll
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Newtonsoft.Json.dll
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Owin.dll
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Net.Http.Formatting.dll
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Helpers.dll
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Http.dll
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Http.Owin.dll
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Http.WebHost.dll
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Mvc.dll
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Optimization.dll
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Razor.dll
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.Deployment.dll
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.dll
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.Razor.dll
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\WebGrease.dll
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Facebook.xml
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\itextsharp.xml
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.DependencyCollector.xml
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.ServerTelemetryChannel.xml
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.Web.xml
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.WindowsServer.xml
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.ApplicationInsights.xml
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.SignalR.Core.xml
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.SignalR.SystemWeb.xml
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Newtonsoft.Json.xml
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Net.Http.Formatting.xml
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Helpers.xml
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Http.xml
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Http.WebHost.xml
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Mvc.xml
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Optimization.xml
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Razor.xml
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.xml
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.Deployment.xml
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.Razor.xml
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Antlr3.Runtime.pdb
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\EntityFramework.xml
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\EntityFramework.SqlServer.xml
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.Core.xml
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.Owin.xml
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.xml
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Host.SystemWeb.xml
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.xml
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Facebook.xml
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Cookies.xml
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.OAuth.xml
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Google.xml
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Twitter.xml
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Http.Owin.xml
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\obj\Debug\ServiceSystem.csprojResolveAssemblyReference.cache
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\obj\Debug\ServiceSystem.dll
+C:\Users\User\Desktop\Mockup_Screens\Service System\ServiceSystem\ServiceSystem\ServiceSystem\obj\Debug\ServiceSystem.pdb
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\ApplicationInsights.config
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\csc.exe
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\vbc.exe
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\VBCSCompiler.exe
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\ServiceSystem.dll.config
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\ServiceSystem.dll
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\ServiceSystem.pdb
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\Antlr3.Runtime.dll
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\EntityFramework.dll
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\EntityFramework.SqlServer.dll
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\Facebook.dll
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\itextsharp.dll
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\itextsharp.pdfa.dll
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\itextsharp.xtra.dll
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.Agent.Intercept.dll
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.DependencyCollector.dll
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.PerfCounterCollector.dll
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.ServerTelemetryChannel.dll
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.Web.dll
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.WindowsServer.dll
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.ApplicationInsights.dll
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.Core.dll
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.Owin.dll
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.SignalR.Core.dll
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.SignalR.SystemWeb.dll
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.dll
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Host.SystemWeb.dll
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Cookies.dll
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.dll
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Facebook.dll
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Google.dll
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.OAuth.dll
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Twitter.dll
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\Newtonsoft.Json.dll
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\Owin.dll
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Net.Http.Formatting.dll
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Helpers.dll
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Http.dll
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Http.Owin.dll
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Http.WebHost.dll
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Mvc.dll
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Optimization.dll
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Razor.dll
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.Deployment.dll
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.dll
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.Razor.dll
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\WebGrease.dll
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\Facebook.xml
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\itextsharp.xml
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.DependencyCollector.xml
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.ServerTelemetryChannel.xml
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.Web.xml
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.WindowsServer.xml
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.ApplicationInsights.xml
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.SignalR.Core.xml
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.SignalR.SystemWeb.xml
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\Newtonsoft.Json.xml
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Net.Http.Formatting.xml
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Helpers.xml
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Http.xml
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Http.WebHost.xml
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Mvc.xml
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Optimization.xml
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Razor.xml
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.xml
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.Deployment.xml
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.Razor.xml
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\Antlr3.Runtime.pdb
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\EntityFramework.xml
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\EntityFramework.SqlServer.xml
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.Core.xml
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.Owin.xml
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.xml
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Host.SystemWeb.xml
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.xml
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Facebook.xml
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Cookies.xml
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.OAuth.xml
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Google.xml
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Twitter.xml
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Http.Owin.xml
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\obj\Debug\ServiceSystem.csprojResolveAssemblyReference.cache
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\obj\Debug\ServiceSystem.dll
+C:\Users\Юра\Source\Repos\ServiceSystem\ServiceSystem\ServiceSystem\obj\Debug\ServiceSystem.pdb
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\ApplicationInsights.config
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\csc.exe
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.CodeAnalysis.dll
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.CSharp.Core.targets
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.VisualBasic.Core.targets
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\System.Collections.Immutable.dll
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\System.Reflection.Metadata.dll
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\vbc.exe
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\VBCSCompiler.exe
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\roslyn\VBCSCompiler.exe.config
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\ServiceSystem.dll.config
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\ServiceSystem.dll
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\ServiceSystem.pdb
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\Antlr3.Runtime.dll
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\EntityFramework.dll
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\EntityFramework.SqlServer.dll
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\Facebook.dll
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\itextsharp.dll
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\itextsharp.pdfa.dll
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\itextsharp.xtra.dll
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.Agent.Intercept.dll
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.DependencyCollector.dll
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.PerfCounterCollector.dll
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.ServerTelemetryChannel.dll
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.Web.dll
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.WindowsServer.dll
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.ApplicationInsights.dll
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.Core.dll
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.Owin.dll
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.SignalR.Core.dll
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.SignalR.SystemWeb.dll
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.dll
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Host.SystemWeb.dll
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Cookies.dll
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.dll
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Facebook.dll
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Google.dll
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.OAuth.dll
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Twitter.dll
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Web.Infrastructure.dll
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\Newtonsoft.Json.dll
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\Owin.dll
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Net.Http.Formatting.dll
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Helpers.dll
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Http.dll
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Http.Owin.dll
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Http.WebHost.dll
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Mvc.dll
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Optimization.dll
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Razor.dll
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.Deployment.dll
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.dll
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.Razor.dll
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\WebGrease.dll
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\Facebook.xml
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\itextsharp.xml
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.DependencyCollector.xml
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.ServerTelemetryChannel.xml
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.Web.xml
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AI.WindowsServer.xml
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.ApplicationInsights.xml
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.SignalR.Core.xml
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.SignalR.SystemWeb.xml
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\Newtonsoft.Json.xml
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Net.Http.Formatting.xml
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Helpers.xml
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Http.xml
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Http.WebHost.xml
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Mvc.xml
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Optimization.xml
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Razor.xml
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.xml
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.Deployment.xml
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.Razor.xml
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\Antlr3.Runtime.pdb
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\EntityFramework.xml
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\EntityFramework.SqlServer.xml
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.Core.xml
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.Owin.xml
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.xml
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Host.SystemWeb.xml
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.xml
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Facebook.xml
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Cookies.xml
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.OAuth.xml
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Google.xml
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Twitter.xml
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+D:\ServiceSystem\ServiceSystem\ServiceSystem\bin\System.Web.Http.Owin.xml
+D:\ServiceSystem\ServiceSystem\ServiceSystem\obj\Debug\ServiceSystem.csprojResolveAssemblyReference.cache
+D:\ServiceSystem\ServiceSystem\ServiceSystem\obj\Debug\ServiceSystem.dll
+D:\ServiceSystem\ServiceSystem\ServiceSystem\obj\Debug\ServiceSystem.pdb
+D:\ServiceSystem\ServiceSystem\bin\ApplicationInsights.config
+D:\ServiceSystem\ServiceSystem\bin\roslyn\csc.exe
+D:\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+D:\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+D:\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.CodeAnalysis.dll
+D:\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+D:\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.CSharp.Core.targets
+D:\ServiceSystem\ServiceSystem\bin\roslyn\Microsoft.VisualBasic.Core.targets
+D:\ServiceSystem\ServiceSystem\bin\roslyn\System.Collections.Immutable.dll
+D:\ServiceSystem\ServiceSystem\bin\roslyn\System.Reflection.Metadata.dll
+D:\ServiceSystem\ServiceSystem\bin\roslyn\vbc.exe
+D:\ServiceSystem\ServiceSystem\bin\roslyn\VBCSCompiler.exe
+D:\ServiceSystem\ServiceSystem\bin\roslyn\VBCSCompiler.exe.config
+D:\ServiceSystem\ServiceSystem\bin\ServiceSystem.dll.config
+D:\ServiceSystem\ServiceSystem\bin\ServiceSystem.dll
+D:\ServiceSystem\ServiceSystem\bin\ServiceSystem.pdb
+D:\ServiceSystem\ServiceSystem\bin\Antlr3.Runtime.dll
+D:\ServiceSystem\ServiceSystem\bin\EntityFramework.dll
+D:\ServiceSystem\ServiceSystem\bin\EntityFramework.SqlServer.dll
+D:\ServiceSystem\ServiceSystem\bin\Facebook.dll
+D:\ServiceSystem\ServiceSystem\bin\itextsharp.dll
+D:\ServiceSystem\ServiceSystem\bin\itextsharp.pdfa.dll
+D:\ServiceSystem\ServiceSystem\bin\itextsharp.xtra.dll
+D:\ServiceSystem\ServiceSystem\bin\Microsoft.AI.Agent.Intercept.dll
+D:\ServiceSystem\ServiceSystem\bin\Microsoft.AI.DependencyCollector.dll
+D:\ServiceSystem\ServiceSystem\bin\Microsoft.AI.PerfCounterCollector.dll
+D:\ServiceSystem\ServiceSystem\bin\Microsoft.AI.ServerTelemetryChannel.dll
+D:\ServiceSystem\ServiceSystem\bin\Microsoft.AI.Web.dll
+D:\ServiceSystem\ServiceSystem\bin\Microsoft.AI.WindowsServer.dll
+D:\ServiceSystem\ServiceSystem\bin\Microsoft.ApplicationInsights.dll
+D:\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.Core.dll
+D:\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+D:\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.Owin.dll
+D:\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.SignalR.Core.dll
+D:\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.SignalR.SystemWeb.dll
+D:\ServiceSystem\ServiceSystem\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+D:\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.dll
+D:\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Host.SystemWeb.dll
+D:\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Cookies.dll
+D:\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.dll
+D:\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Facebook.dll
+D:\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Google.dll
+D:\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+D:\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.OAuth.dll
+D:\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Twitter.dll
+D:\ServiceSystem\ServiceSystem\bin\Microsoft.Web.Infrastructure.dll
+D:\ServiceSystem\ServiceSystem\bin\Newtonsoft.Json.dll
+D:\ServiceSystem\ServiceSystem\bin\Owin.dll
+D:\ServiceSystem\ServiceSystem\bin\System.Net.Http.Formatting.dll
+D:\ServiceSystem\ServiceSystem\bin\System.Web.Helpers.dll
+D:\ServiceSystem\ServiceSystem\bin\System.Web.Http.dll
+D:\ServiceSystem\ServiceSystem\bin\System.Web.Http.Owin.dll
+D:\ServiceSystem\ServiceSystem\bin\System.Web.Http.WebHost.dll
+D:\ServiceSystem\ServiceSystem\bin\System.Web.Mvc.dll
+D:\ServiceSystem\ServiceSystem\bin\System.Web.Optimization.dll
+D:\ServiceSystem\ServiceSystem\bin\System.Web.Razor.dll
+D:\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.Deployment.dll
+D:\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.dll
+D:\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.Razor.dll
+D:\ServiceSystem\ServiceSystem\bin\WebGrease.dll
+D:\ServiceSystem\ServiceSystem\bin\Facebook.xml
+D:\ServiceSystem\ServiceSystem\bin\itextsharp.xml
+D:\ServiceSystem\ServiceSystem\bin\Microsoft.AI.DependencyCollector.xml
+D:\ServiceSystem\ServiceSystem\bin\Microsoft.AI.ServerTelemetryChannel.xml
+D:\ServiceSystem\ServiceSystem\bin\Microsoft.AI.Web.xml
+D:\ServiceSystem\ServiceSystem\bin\Microsoft.AI.WindowsServer.xml
+D:\ServiceSystem\ServiceSystem\bin\Microsoft.ApplicationInsights.xml
+D:\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.SignalR.Core.xml
+D:\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.SignalR.SystemWeb.xml
+D:\ServiceSystem\ServiceSystem\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+D:\ServiceSystem\ServiceSystem\bin\Newtonsoft.Json.xml
+D:\ServiceSystem\ServiceSystem\bin\System.Net.Http.Formatting.xml
+D:\ServiceSystem\ServiceSystem\bin\System.Web.Helpers.xml
+D:\ServiceSystem\ServiceSystem\bin\System.Web.Http.xml
+D:\ServiceSystem\ServiceSystem\bin\System.Web.Http.WebHost.xml
+D:\ServiceSystem\ServiceSystem\bin\System.Web.Mvc.xml
+D:\ServiceSystem\ServiceSystem\bin\System.Web.Optimization.xml
+D:\ServiceSystem\ServiceSystem\bin\System.Web.Razor.xml
+D:\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.xml
+D:\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.Deployment.xml
+D:\ServiceSystem\ServiceSystem\bin\System.Web.WebPages.Razor.xml
+D:\ServiceSystem\ServiceSystem\bin\Antlr3.Runtime.pdb
+D:\ServiceSystem\ServiceSystem\bin\EntityFramework.xml
+D:\ServiceSystem\ServiceSystem\bin\EntityFramework.SqlServer.xml
+D:\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.Core.xml
+D:\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.Owin.xml
+D:\ServiceSystem\ServiceSystem\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+D:\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.xml
+D:\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Host.SystemWeb.xml
+D:\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.xml
+D:\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Facebook.xml
+D:\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Cookies.xml
+D:\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.OAuth.xml
+D:\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Google.xml
+D:\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.Twitter.xml
+D:\ServiceSystem\ServiceSystem\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+D:\ServiceSystem\ServiceSystem\bin\System.Web.Http.Owin.xml
+D:\ServiceSystem\ServiceSystem\obj\Debug\ServiceSystem.csprojResolveAssemblyReference.cache
+D:\ServiceSystem\ServiceSystem\obj\Debug\ServiceSystem.dll
+D:\ServiceSystem\ServiceSystem\obj\Debug\ServiceSystem.pdb

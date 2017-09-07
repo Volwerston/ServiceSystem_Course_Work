@@ -1,0 +1,96 @@
+﻿
+@{
+    ViewBag.Title = "ErrorLog";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
+<br/>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="form-horizontal" style="display: table; margin: auto;">
+            <div class="form-group">
+                <input type="date" class="form-control" name="date" />
+            </div>
+            <div class="form-group">
+                <button id="search_ok" class="btn btn-block btn-success">Confirm</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <table id="exc_table" class="display">
+            <thead>
+                <tr>
+                    <th>Exact Time</th>
+                    <th>Message</th>
+                    <th>Stack Trace</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+
+
+@section scripts{
+<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>    
+<script type="text/javascript">
+
+    function getData(toPass) {
+        var table = $("#exc_table").DataTable();
+        table.clear().draw();
+        $.ajax({
+            method: "GET",
+            url: "/Admin/GetDateExceptions?dt=" + toPass,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (res) {
+                for (var i = 0; i < res.length; ++i) {
+                    var message = res[i].Message != null ? res[i].Message : "";
+                    var dt = res[i].Data.ExactTime != null ? res[i].Data.ExactTime : "";
+                    var stackTrace = res[i].StackTraceString != null ? res[i].StackTraceString : "";
+                    table.row.add([dt.toString(), message.toString(), stackTrace.toString()]).draw();
+                    }
+            },
+            error: function (res) {
+                displayMessage("Error", res.statusText);
+            }
+        });
+    }
+
+    $(document).ready(function () {
+
+        var dateNewFormat, onlyDate, today = new Date();
+
+        dateNewFormat = today.getFullYear() + '-';
+        if (today.getMonth().length == 2) {
+
+            dateNewFormat += (today.getMonth() + 1);
+        }
+        else {
+            dateNewFormat += '0' + (today.getMonth() + 1);
+        }
+
+        onlyDate = today.getDate();
+
+        if (onlyDate.toString().length == 2) {
+
+            dateNewFormat += "-" + onlyDate;
+        }
+        else {
+            dateNewFormat += '-0' + onlyDate;
+        }
+
+        $('input[name="date"]').val(dateNewFormat);
+        var dt = $('#exc_table').DataTable();
+        getData(dateNewFormat);
+
+        $("#search_ok").click(function () {
+            getData($('input[name="date"]').val());
+        });
+    });
+</script>
+}
+
