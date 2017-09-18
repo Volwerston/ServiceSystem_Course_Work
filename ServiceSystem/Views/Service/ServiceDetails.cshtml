@@ -368,7 +368,7 @@
 </div>
 
 <div class="row" hidden id="application_holder">
-    <div class="col-xs-8 col-md-offset-2 col-lg-offset-2">
+    <div class="col-xs-8 col-sm-offset-2">
         @using (Html.BeginForm("ServiceDetails", "Service", new { serviceId = Model.Id },
                 FormMethod.Post, new { @class = "form-horizontal well", id="application_form" }))
         {

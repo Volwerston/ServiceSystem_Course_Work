@@ -39,6 +39,47 @@ namespace ServiceSystem.Hubs
             }
         }
 
+        public void Disconnect(string userName)
+        {
+            ObjectCache cache = MemoryCache.Default;
+
+            List<string> current_users = cache["current_users"] as List<string>;
+
+            if (current_users == null)
+            {
+                current_users = new List<string>();
+
+                CacheItemPolicy policy = new CacheItemPolicy();
+                policy.AbsoluteExpiration =
+                    DateTimeOffset.Now.AddHours(1);
+
+                cache.Set("current_users", current_users, policy);
+            }
+            else
+            {
+                string off_user = Context.User.Identity.Name;
+                current_users.Remove(Context.User.Identity.Name);
+
+                CacheItemPolicy policy = new CacheItemPolicy();
+                policy.AbsoluteExpiration =
+                    DateTimeOffset.Now.AddHours(1);
+
+                cache.Set("current_users", current_users, policy);
+
+                int room_id = Convert.ToInt32(Context.QueryString["room_id"]);
+
+                if (current_users.Where(x => x == off_user).Count() == 0)
+                {
+                    var offUserCredentials = new
+                    {
+                        Name = off_user
+                    };
+
+                    Clients.All.setUserOffline(offUserCredentials);
+                }
+            }
+        }
+
         public override System.Threading.Tasks.Task OnConnected()
         {
             ObjectCache cache = MemoryCache.Default;
@@ -50,7 +91,10 @@ namespace ServiceSystem.Hubs
                 current_users = new List<string>();
             }
 
-            current_users.Add(Context.User.Identity.Name);
+            if (!current_users.Contains(Context.User.Identity.Name))
+            {
+                current_users.Add(Context.User.Identity.Name);
+            }
 
             CacheItemPolicy policy = new CacheItemPolicy();
             policy.AbsoluteExpiration =
@@ -129,51 +173,6 @@ namespace ServiceSystem.Hubs
             List<string> current_users = cache["current_users"] as List<string>;
 
             return current_users.Where(x => x == userName).Count() > 0;
-        }
-
-        public override Task OnDisconnected(bool stopCalled)
-        {
-            ObjectCache cache = MemoryCache.Default;
-
-            List<string> current_users = cache["current_users"] as List<string>;
-
-            if (current_users == null)
-            {
-                current_users = new List<string>();
-
-                CacheItemPolicy policy = new CacheItemPolicy();
-                policy.AbsoluteExpiration =
-                    DateTimeOffset.Now.AddHours(1);
-
-                cache.Set("current_users", current_users, policy);
-            }
-            else
-            {
-                string off_user = Context.User.Identity.Name;
-                current_users.Remove(Context.User.Identity.Name);
-
-
-
-                CacheItemPolicy policy = new CacheItemPolicy();
-                policy.AbsoluteExpiration =
-                    DateTimeOffset.Now.AddHours(1);
-
-                cache.Set("current_users", current_users, policy);
-
-                int room_id = Convert.ToInt32(Context.QueryString["room_id"]);
-
-                if (current_users.Where(x => x == off_user).Count() == 0)
-                {
-                    var offUserCredentials = new
-                    {
-                        Name = off_user
-                    };
-
-                    Clients.All.setUserOffline(offUserCredentials);
-                }
-            }
-
-            return base.OnDisconnected(stopCalled);
         }
     }
 }

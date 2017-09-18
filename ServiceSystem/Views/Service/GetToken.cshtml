@@ -23,7 +23,8 @@
                 success: function (res) {
 
                     localStorage.setItem("access_token", res.access_token);
-                    document.cookie = 'access_token=' + res.access_token;
+                    document.cookie = 'access_token=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+                    document.cookie = 'access_token=' + res.access_token + ';path=/;';
 
                     window.location.href = '@Url.Action("Main", "Service")';
                 },

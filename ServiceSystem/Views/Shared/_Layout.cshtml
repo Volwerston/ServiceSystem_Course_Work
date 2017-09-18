@@ -7,18 +7,17 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
-
-    @if(ViewBag.Title != "Description")
+    @if (ViewBag.Title != "Description")
     {
         <style>
-            #body_container{
+            #body_container {
                 min-width: 512px;
             }
         </style>
     }
 </head>
 <body style="background-color: gainsboro;">
-    
+
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -32,7 +31,7 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>
-                     @Html.ActionLink("Головна", "Main", "Service",null)
+                        @Html.ActionLink("Головна", "Main", "Service", null)
                     </li>
                     <li>
                         @Html.ActionLink("Послуги", "ServiceSearch", "Service", null)
@@ -46,18 +45,17 @@
                         @Html.ActionLink("Особистий кабінет", "InternalAccountPage", "Service", null)
                     </li>
                     <li>
-                       <a href="#" id="exit_button">Вийти</a>
+                        <a href="#" id="exit_button">Вийти</a>
                     </li>
                 </ul>
             </div>
         </div>
     </div>
-    
+
     <div class="container body-content" id="body_container">
         @RenderBody()
     </div>
-
-    @{ 
+    @{
         int room_id = -1;
 
         if (ViewData.ContainsKey("room_id"))
@@ -65,7 +63,6 @@
             room_id = Convert.ToInt32(ViewData["room_id"].ToString());
         }
     }
-
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     <script src="~/Scripts/jquery.signalR-2.2.1.min.js"></script>
@@ -74,43 +71,6 @@
     <script src="~/Scripts/growl.js"></script>
     <script type="text/javascript">
 
-        function displayMessage(aTitle, aText) {
-            if (aTitle == "Success") {
-                $.growl.notice({ title: aTitle, message: aText });
-            }
-            else if (aTitle == "Warning") {
-                $.growl.warning({ title: aTitle, message: aText });
-            }
-            else if (aTitle == "Error") {
-                $.growl.error({ title: aTitle, message: aText });
-            }
-            else {
-                $.growl({ title: aTitle, message: aText });
-            }
-        }
-
-        var notification = null;
-
-        $(document).ready(function () {
-
-            $("#exit_button").click(function () {
-                $.ajax({
-                    method: "POST",
-                    url: '/api/Account/Logout',
-                    contentType: "application/json; charset=utf-8",
-                    headers: {
-                        Authorization: 'Bearer ' + localStorage.getItem("access_token")
-                    },
-                    success: function () {
-                        window.location.href = '@Url.Action("Index", "Service")';
-                    },
-                    error: function (res) {
-                        displayMessage("Error", res.responseText);
-                    }
-                });
-            });
-
-        });
 
         $(function () {
 
@@ -140,10 +100,48 @@
                     }
                 });
             });
+
+            function displayMessage(aTitle, aText) {
+                if (aTitle == "Success") {
+                    $.growl.notice({ title: aTitle, message: aText });
+                }
+                else if (aTitle == "Warning") {
+                    $.growl.warning({ title: aTitle, message: aText });
+                }
+                else if (aTitle == "Error") {
+                    $.growl.error({ title: aTitle, message: aText });
+                }
+                else {
+                    $.growl({ title: aTitle, message: aText });
+                }
+            }
+
+            $(document).ready(function () {
+
+                $("#exit_button").click(function () {
+                    var name = '@User.Identity.Name';
+                    $.ajax({
+                        method: "POST",
+                        url: '/api/Account/Logout',
+                        contentType: "application/json; charset=utf-8",
+                        headers: {
+                            Authorization: 'Bearer ' + localStorage.getItem("access_token")
+                        },
+                        success: function () {
+                            notification.server.disconnect(name);
+                            window.location.href = '@Url.Action("Index", "Service")';
+                        },
+                        error: function (res) {
+                            displayMessage("Error", res.responseText);
+                        }
+                    });
+                });
+
+            });
+
         });
     </script>
     @RenderSection("scripts", required: false)
-
     <footer>
         <div class="container-fluid text-center" style="height: 35px;">
             <p>&copy; Yuriy Stetskyi 2016-@DateTime.Now.Year</p>
