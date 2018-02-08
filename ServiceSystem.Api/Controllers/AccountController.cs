@@ -14,8 +14,8 @@ using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
 using ServiceSystem.Models;
-using ServiceSystem.Providers;
-using ServiceSystem.Results;
+using ServiceSystem.Api.Providers;
+using ServiceSystem.Api.Results;
 using System.Net.Mail;
 using System.Net;
 using System.Data.SqlClient;
@@ -26,6 +26,7 @@ using Newtonsoft.Json;
 using System.Security.Principal;
 using Facebook;
 using ServiceSystem.Models.Auxiliary_Classes;
+using ServiceSystem.Api;
 
 namespace ServiceSystem.Controllers
 {
@@ -273,7 +274,6 @@ namespace ServiceSystem.Controllers
             }
         }
 
-        [Route("UserId")]
         private string GetUserId(SqlConnection con, string email)
         {
             string toReturn = "";
