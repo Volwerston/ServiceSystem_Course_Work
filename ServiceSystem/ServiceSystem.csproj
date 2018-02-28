@@ -48,8 +48,9 @@
       <HintPath>..\packages\Facebook.7.0.6\lib\net45\Facebook.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="itextsharp">
-      <HintPath>.\itextsharp.dll</HintPath>
+    <Reference Include="itextsharp, Version=5.5.13.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\iTextSharp.5.5.13\lib\itextsharp.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="itextsharp.pdfa">
       <HintPath>.\itextsharp.pdfa.dll</HintPath>
@@ -382,6 +383,7 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\FacebookAuth.js" />
     <Content Include="Scripts\growl.js" />
+    <Content Include="Scripts\Helper\ConsultantSearchHelper.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
