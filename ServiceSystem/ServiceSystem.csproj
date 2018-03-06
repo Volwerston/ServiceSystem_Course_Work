@@ -384,6 +384,7 @@
     <Content Include="Scripts\FacebookAuth.js" />
     <Content Include="Scripts\growl.js" />
     <Content Include="Scripts\Helper\ConsultantSearchHelper.js" />
+    <Content Include="Scripts\Helper\ServiceChartsHelper.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
