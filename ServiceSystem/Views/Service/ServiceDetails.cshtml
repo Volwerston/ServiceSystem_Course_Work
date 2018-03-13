@@ -454,56 +454,25 @@
 
 @section scripts{
     <script src="~/Scripts/AppValidators.js"></script>
+    <script src="~/Scripts/Helper/ServiceDetailsHelper.js"></script>
     <script type="text/javascript">
 
-        var confirmConsultant = null;
-        var id = null;
-        var faq_id = null;
-        var validator = null;
-        var media_id = null;
-
-        function GetDivForFAQ(faq) {
-            return '<div class="row faqItem" id="faq_' + faq.Id + '">'
-                   + '<a href="#" class="close pull-right" id="close_' + faq.Id + '"><span class="glyphicon glyphicon-remove"></span></a>'
-                   + '<div class="col-xs-12">'
-                   + '<h4 class="text-center">Запитання</h4>'
-                   + '</div>'
-                   + '<div class="col-xs-12 faqItem__header">'
-                   + '<p>' + faq.Question + '</p>'
-                   + '</div>'
-                   + '<div class="col-xs-12">'
-                   + '<h4 class="text-center">Відповідь</h4>'
-                   + '</div>'
-                   + '<div class="col-xs-12 faqItem__header">'
-                   + '<p>' + faq.Answer + '</p>'
-                   + '</div>'
-                   + '</div>';
-        }
+        var helper = new ServiceDetailsHelper(@Model.Id);
 
         $(document).ready(function () {
 
+            helper.setValidator();
+
             $("#slide_media_button").click(function () {
-
                 $("#slide_media_panel").slideToggle("slow");
-
             });
 
             $("#service_activate").click(function () {
-                $.ajax({
-                    method: "POST",
-                    url: "/api/ServiceApi/ChangeServiceStatus",
-                    headers: {
-                        Authorization: 'Bearer ' + localStorage.getItem("access_token"),
-                    },
-                    contentType: "application/json; charset=utf-8",
-                    data: JSON.stringify({ IsActive: true, Id: '@Model.Id' }),
-                    success: function (res) {
-                        window.location = '/Service/ServiceDetails?id=' + '@Model.Id';
-                    },
-                    error: function (res) {
-                        displayMessage("Error", JSON.stringify(res));
-                    }
-                });
+                helper.toggleService(true);
+            });
+
+            $("#service_deactivate").click(function () {
+                helper.toggleService(false);
             });
 
             $("#media_form").submit(function () {
@@ -523,24 +492,6 @@
                 }
 
                 return true;
-            });
-
-            $("#service_deactivate").click(function () {
-                $.ajax({
-                    method: "POST",
-                    url: "/api/ServiceApi/ChangeServiceStatus",
-                    headers: {
-                        Authorization: 'Bearer ' + localStorage.getItem("access_token"),
-                    },
-                    contentType: "application/json; charset=utf-8",
-                    data: JSON.stringify({ IsActive: false, Id: '@Model.Id' }),
-                    success: function (res) {
-                        window.location = '/Service/ServiceDetails?id=' + '@Model.Id';
-                    },
-                    error: function (res) {
-                        displayMessage("Error", JSON.stringify(res));
-                    }
-                });
             });
 
             $("#media_description_selector").change(function () {
@@ -563,15 +514,8 @@
                 }
             });
 
-            if ($('input[name="applicationType"]').val() == "Session") {
-                validator = new SessionValidator();
-            }
-            else if ($('input[name="applicationType"]').val() == "Deadline") {
-                validator = new DeadlineAppValidator();
-            }
-
             $("#application_form").submit(function (e) {
-                if (validator != null && !validator.Validate()) {
+                if (helper.inputInvalid()) {
                     e.preventDefault();
                 }
             });
@@ -579,7 +523,7 @@
             $('a[class^="close"]').click(function (e) {
                 e.preventDefault();
 
-                faq_id = $(this).attr('id').split('_')[1];
+                helper.faq_id = $(this).attr('id').split('_')[1];
 
                 $("#faq_delete_modal").modal('show');
             });
@@ -593,103 +537,16 @@
             });
 
             $("#faq_deletion_done").click(function () {
-
-                $("#faq_delete_modal").modal('hide');
-
-                $.ajax({
-                    method: "DELETE",
-                    url: "/api/FAQ/Delete?id=" + faq_id,
-                    contentType: "application/json; charset=utf-8",
-                    success: function (res) {
-                        if ($("#faq_container").children().length == 1) {
-                            $("#faq_container").empty();
-                            $("#faq_container").append('<p class="empty_message text-center">Запитань не знайдено.</p>');
-                        }
-                        else {
-                            $("#faq_" + faq_id).hide();
-                        }
-                    },
-                    error: function (res) {
-                        displayMessage("Error", res.responseText);
-                    }
-                });
-
+                helper.deleteFaq();
             });
 
             $("#media_deletion_done").click(function () {
-
-                $("#media_delete_modal").modal('hide');
-
-                $.ajax({
-                    method: "DELETE",
-                    url: "/api/ServiceApi/DeleteMediaFile?id=" + media_id,
-                    headers: {
-                        Authorization: 'Bearer ' + localStorage.getItem("access_token"),
-                    },
-                    contentType: "application/json; charset=utf-8",
-                    success: function (res) {
-                        if ($("#media_container").children().length == 1) {
-                            $("#media_container").empty();
-                        }
-                        else {
-                            $("#media_" + media_id).hide();
-                        }
-                    },
-                    error: function (res) {
-                        displayMessage("Error", res.responseText);
-                    }
-                });
-
+                helper.deleteMedia();
             });
 
             $("#add_faq").click(function () {
-
-                if ($('input[name="question"]').val() == "") {
-                    displayMessage("Warning", "Заповніть поле запитання");
-                    return;
-                }
-
-                if ($('textarea[name="answer"]').val() == "") {
-                    displayMessage("Warning", "Заповніть поле відповіді");
-                    return;
-                }
-
-                var toPass = {
-                    Id: 0,
-                    ServiceId: '@Model.Id',
-                    Question: $('input[name="question"]').val(),
-                    Answer: $('textarea[name="answer"]').val()
-                };
-
-                $.ajax({
-                    method: "POST",
-                    url: "/api/FAQ/Post",
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    data: JSON.stringify(toPass),
-                    success: function (res) {
-                        if ($("#faq_container").find(".empty_message").length > 0) {
-                            $("#faq_container").empty();
-                        }
-
-                        toPass.Id = JSON.parse(res);
-
-                        $("#faq_container").append(GetDivForFAQ(toPass));
-
-                        $('#close_' + toPass.Id).click(function (e) {
-                            e.preventDefault();
-
-                            faq_id = toPass.Id;
-
-                            $("#faq_delete_modal").modal('show');
-                        });
-                    },
-                    error: function (res) {
-                        displayMessage("Warning", res.responseText);
-                    }
-                });
+                helper.addFaq();
             });
-
 
             $('input[name^="remove"]').click(function () {
                 id = $(this).attr('name').split('_')[1];
@@ -698,54 +555,12 @@
             });
 
             $("#create_dialogue").click(function () {
-
-                var toPass = {
-                    ServiceId: '@Model.Id',
-                    CustomerEmail: '@User.Identity.Name'
-                };
-
-                $.ajax({
-                    method: "POST",
-                    url: "/api/Dialogue/CreateDialogue",
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    headers: {
-                        Authorization: 'Bearer ' + localStorage.getItem("access_token"),
-                    },
-                    data: JSON.stringify(toPass),
-                    success: function (res) {
-                        displayMessage("Success","Діалог успішно створено. Для перегляду діалогу перейдіть в Особистий кабінет -> Діалоги");
-                    },
-                    error: function (res) {
-                        displayMessage("Warning", res.responseText);
-                    }
-                });
+                helper.createDialogue();
             });
 
             $("#deletion_done").click(function () {
-                $.ajax({
-                    method: "POST",
-                    url: "/api/ServiceConsultants/DeleteConsultant",
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    headers: {
-                        Authorization: 'Bearer ' + localStorage.getItem("access_token"),
-                    },
-                    data: JSON.stringify(id),
-                    success: function (res) {
-                        $("#consultant_" + id).remove();
-
-                        if ($("#consultants_list").children().length == 0) {
-                            $("#panel_body_1").empty();
-                            $("#panel_body_1").append('<p class="text-center">Жодного консультанта не знайдено</p>');
-                        }
-                    },
-                    error: function (res) {
-                        displayMessage("Warning", res.responseText);
-                    }
-                });
+                helper.deleteConsultant();
             });
-
 
             $("#confirm_consultant").click(function (e) {
                 confirmConsultant = true;
@@ -760,77 +575,10 @@
             });
 
             $("#confirmation_done").click(function () {
-
-                $.ajax({
-                    method: "POST",
-                    url: "/api/ServiceConsultants/ConfirmConsultant",
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    headers: {
-                        Authorization: 'Bearer ' + localStorage.getItem("access_token"),
-                    },
-                    data: JSON.stringify(confirmConsultant),
-                    success: function (res) {
-                        $("#consultant_request").remove();
-                        $("#ask_modal").modal('hide');
-                    },
-                    error: function (res) {
-                        displayMessage("Warning", res.responseText);
-
-                        $("#ask_modal").modal('hide');
-                    }
-                });
-
+                helper.confirmConsultant();
             });
 
-            var paramDivs = $(".paramText");
-
-            paramDivs.each(function (index, element) {
-
-                var innerElements = $(this).children();
-
-                innerElements.each(function (i, elem) {
-
-                    var data = $(this).html();
-
-                    data = data.replace(/&gt;/g, ">");
-                    data = data.replace(/&lt;/g, "<");
-                    data = data.replace(/&quot;/, "\"");
-
-                    $(this).empty();
-
-                    $(this).html(data);
-
-
-                    $("#application_create").click(function () {
-
-                        $("#application_holder").removeAttr("hidden");
-
-                        $("body").animate({ scrollTop: $(document).height() }, 1000);
-
-                        if ($('input[name="applicationType"]').val() == "Deadline") {
-                            validator = new FsdDeadlineAppValidator();
-                            $("#from_some_date").removeAttr("hidden");
-                            $("#by_last_date").attr("hidden", true);
-                        }
-
-                    });
-
-                    $('input[name="deadline_type"]').change(function () {
-
-                        if ($(this).val() == "from_some_date") {
-                            validator = new FsdDeadlineAppValidator();
-                            $("#from_some_date").removeAttr("hidden");
-                            $("#by_last_date").attr("hidden", true);
-                        }
-                        else if ($(this).val() == "by_last_date") {
-                            validator = new BldDeadlineAppValidator();
-                            $("#by_last_date").removeAttr("hidden");
-                            $("#from_some_date").attr("hidden", true);
-                        }
-                    });
-                });
-            });
+            helper.htmlDecode();
         });
 
     </script>
