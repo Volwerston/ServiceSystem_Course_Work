@@ -29,7 +29,7 @@
         });
     }
 
-    this.getDivForFAQ = function(faq) {
+    this.getDivForFAQ = function (faq) {
         return `<div class="row faqItem" id="faq_${faq.Id}">
                 <a href="#" class ="close pull-right" id="close_${faq.Id}">
                 <span class ="glyphicon glyphicon-remove"></span></a>
@@ -159,58 +159,58 @@
                 displayMessage("Warning", res.responseText);
             }
         });
+    }
 
-        this.createDialogue = function () {
-            var toPass = {
-                ServiceId: this.serviceId,
-                CustomerEmail: this.userEmail
-            };
+    this.createDialogue = function () {
+        var toPass = {
+            ServiceId: this.serviceId,
+            CustomerEmail: this.userEmail
+        };
 
-            var self = this;
+        var self = this;
 
-            $.ajax({
-                method: "POST",
-                url: "/api/Dialogue/CreateDialogue",
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                headers: {
-                    Authorization: 'Bearer ' + localStorage.getItem("access_token"),
-                },
-                data: JSON.stringify(toPass),
-                success: function (res) {
-                    displayMessage("Success", "Діалог успішно створено. Для перегляду діалогу перейдіть в Особистий кабінет -> Діалоги");
-                },
-                error: function (res) {
-                    displayMessage("Warning", res.responseText);
+        $.ajax({
+            method: "POST",
+            url: "/api/Dialogue/CreateDialogue",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            headers: {
+                Authorization: 'Bearer ' + localStorage.getItem("access_token"),
+            },
+            data: JSON.stringify(toPass),
+            success: function (res) {
+                displayMessage("Success", "Діалог успішно створено. Для перегляду діалогу перейдіть в Особистий кабінет -> Діалоги");
+            },
+            error: function (res) {
+                displayMessage("Warning", res.responseText);
+            }
+        });
+    }
+
+    this.deleteConsultant = function () {
+        var self = this;
+
+        $.ajax({
+            method: "POST",
+            url: "/api/ServiceConsultants/DeleteConsultant",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            headers: {
+                Authorization: 'Bearer ' + localStorage.getItem("access_token"),
+            },
+            data: JSON.stringify(self.id),
+            success: function (res) {
+                $("#consultant_" + self.id).remove();
+
+                if ($("#consultants_list").children().length == 0) {
+                    $("#panel_body_1").empty();
+                    $("#panel_body_1").append('<p class="text-center">Жодного консультанта не знайдено</p>');
                 }
-            });
-        }
-
-        this.deleteConsultant = function () {
-            var self = this;
-
-            $.ajax({
-                method: "POST",
-                url: "/api/ServiceConsultants/DeleteConsultant",
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                headers: {
-                    Authorization: 'Bearer ' + localStorage.getItem("access_token"),
-                },
-                data: JSON.stringify(self.id),
-                success: function (res) {
-                    $("#consultant_" + self.id).remove();
-
-                    if ($("#consultants_list").children().length == 0) {
-                        $("#panel_body_1").empty();
-                        $("#panel_body_1").append('<p class="text-center">Жодного консультанта не знайдено</p>');
-                    }
-                },
-                error: function (res) {
-                    displayMessage("Warning", res.responseText);
-                }
-            });
-        }
+            },
+            error: function (res) {
+                displayMessage("Warning", res.responseText);
+            }
+        });
     }
 
     this.consultantConfirm = function () {
@@ -289,4 +289,4 @@
             });
         });
     }
-}
+};

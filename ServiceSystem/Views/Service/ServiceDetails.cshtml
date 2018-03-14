@@ -457,7 +457,7 @@
     <script src="~/Scripts/Helper/ServiceDetailsHelper.js"></script>
     <script type="text/javascript">
 
-        var helper = new ServiceDetailsHelper(@Model.Id);
+        var helper = new ServiceDetailsHelper(@Model.Id, '@User.Identity.Name');
 
         $(document).ready(function () {
 
@@ -531,7 +531,7 @@
             $('a[class^="media_close"]').click(function (e) {
                 e.preventDefault();
 
-                media_id = $(this).attr('id').split('_')[2];
+                helper.media_id = $(this).attr('id').split('_')[2];
 
                 $("#media_delete_modal").modal('show');
             });
@@ -549,7 +549,8 @@
             });
 
             $('input[name^="remove"]').click(function () {
-                id = $(this).attr('name').split('_')[1];
+
+                helper.id = $(this).attr('name').split('_')[1];
 
                 $("#delete_modal").modal('show');
             });
@@ -563,13 +564,13 @@
             });
 
             $("#confirm_consultant").click(function (e) {
-                confirmConsultant = true;
-
+                helper.confirmConsultant = true;
+             
                 $("#ask_modal").modal('show');
             });
 
             $("#reject_consultant").click(function (e) {
-                confirmConsultant = false;
+                helper.confirmConsultant = false;
 
                 $("#ask_modal").modal('show');
             });
