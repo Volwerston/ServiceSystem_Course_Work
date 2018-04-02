@@ -65,8 +65,8 @@ namespace ServiceSystem
 
             var facebookOptions = new FacebookAuthenticationOptions()
             {
-                AppId = "1105617286210100",
-                AppSecret = "fcadc466d472b4a81e6a396170405e43",
+                AppId = "931448083664161",
+                AppSecret = "cf1c0d5b85c4d65b0def07b0ec0539b6",
                 BackchannelHttpHandler = new FacebookBackChannelHandler(),
                 Provider = new Microsoft.Owin.Security.Facebook.FacebookAuthenticationProvider()
                 {

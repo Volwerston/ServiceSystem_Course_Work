@@ -129,6 +129,7 @@
                         },
                         success: function () {
                             notification.server.disconnect(name);
+                            localStorage.removeItem("access_token");
                             window.location.href = '@Url.Action("Index", "Service")';
                         },
                         error: function (res) {
